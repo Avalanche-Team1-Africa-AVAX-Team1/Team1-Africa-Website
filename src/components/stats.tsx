@@ -4,7 +4,7 @@ import event2 from '../assets/event2-img.png'
 
 const Stats = () => {
     return(
-            <div className='relative flex h-[80vh] flex-col justify-center items-center'>
+            <div className='relative flex h-screen flex-col justify-center items-center overflow-hidden'>
                 <div className='flex justify-center items-center'>
                     <p className='text-[50px] font-semibold text-center w-[50%]'>Team1 Africa <span className='text-[#6D6D6D]'>is a vibrant grassroots movement committed to equipping</span> African builders, creators, and educators with the tools, resources, and opportunities to thrive in the Avalanche blockchain ecosystem.</p>
                 </div>
