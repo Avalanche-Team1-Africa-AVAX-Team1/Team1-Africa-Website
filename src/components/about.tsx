@@ -1,4 +1,6 @@
 import communityImg from '../assets/community.png'
+import arrow from '../assets/white-arrow.svg'
+import arrowup from '../assets/arrow-up.svg'
 
 const AboutUs = () => {
   return (
@@ -29,38 +31,13 @@ const AboutUs = () => {
                   through hands-on events, education, and collaboration.
                 </p>
 
-                <button className='bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium transition-colors flex items-center gap-2'>
+                <div className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'>
                   About Us
-                  <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
-                  </svg>
-                </button>
+                  <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
+                  <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Right Side - Image with Video Overlay */}
-          <div className='relative'>
-            {/* <img
-              src={communityImg}
-              alt='Team1 Africa Community'
-              className='w-full h-auto rounded-2xl shadow-2xl'
-            /> */}
-
-            {/* Play Video Button Overlay */}
-            {/* <div className='absolute inset-0 flex items-center justify-center'>
-              <button className='bg-white/90 hover:bg-white text-black px-8 py-4 rounded-full font-medium shadow-lg transition-all hover:scale-105 flex items-center gap-3'>
-                <div className='w-8 h-8 bg-black rounded-full flex items-center justify-center'>
-                  <svg className='w-4 h-4 text-white ml-0.5' fill='currentColor' viewBox='0 0 24 24'>
-                    <path d='M8 5v14l11-7z' />
-                  </svg>
-                </div>
-                <p>Play Video</p>
-                <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
-                </svg>
-              </button>
-            </div> */}
           </div>
 
           {/* Floating Action Buttons */}
@@ -83,8 +60,23 @@ const AboutUs = () => {
       </div>
 
 
-      <div>
+      <div className='relative'>
         <img src={communityImg} alt="" />
+
+        {/* Play Video Button Overlay */}
+        <div className='absolute inset-0 flex items-center justify-center'>
+          <button className='bg-white/90 hover:bg-white text-black px-8 py-4 rounded-full font-medium shadow-lg transition-all hover:scale-105 flex items-center gap-3'>
+            <div className='w-8 h-8 bg-black rounded-full flex items-center justify-center'>
+              <svg className='w-4 h-4 text-white ml-0.5' fill='currentColor' viewBox='0 0 24 24'>
+                <path d='M8 5v14l11-7z' />
+              </svg>
+            </div>
+            <p>Play Video</p>
+            <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   )
