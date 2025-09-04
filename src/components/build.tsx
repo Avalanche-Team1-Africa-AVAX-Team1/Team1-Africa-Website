@@ -1,4 +1,6 @@
-import { Rocket, Gamepad2, GraduationCap } from 'lucide-react';
+import rocket from '../assets/rocket.svg'
+import gamepad from '../assets/gamepad.svg'
+import scroll from '../assets/scroll.svg'
 import builders from '../assets/builders.png'
 import community from '../assets/communitybanner.png'
 import pixel from '../assets/pixel-avax.png'
@@ -47,15 +49,15 @@ const Build = () => {
 
             <div className="w-full">
                 {/* Build Section */}
-                <div className="bg-[#F1E228] px-20 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
+                <div className="bg-[#F1E228] cursor-pointer px-20 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
                     <div className="flex justify-between items-center w-full">
                         <div className="flex-shrink-0">
-                            <Rocket size={48} className="text-black" />
+                            <img src={rocket} alt="" width={60} height={60} className="text-black" />
                         </div>
                         <div className="flex-1 flex justify-end">
                             <div className="w-[35%]">
                                 <h2 className="text-4xl font-semibold text-black">Build</h2>
-                                <p className="text-xl text-black leading-relaxed">
+                                <p className="text-lg text-black py-2">
                                     We support developers and startups through grants, mentorship, and technical workshops to build impactful dApps on Avalanche.
                                 </p>
                             </div>
@@ -64,15 +66,15 @@ const Build = () => {
                 </div>
 
                 {/* Create Section */}
-                <div className="bg-[#11B55A] px-20 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
+                <div className="bg-[#11B55A] cursor-pointer px-20 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
                     <div className="flex justify-between items-center w-full">
                         <div className="flex-shrink-0">
-                            <Gamepad2 size={48} className="text-white" />
+                            <img src={gamepad} alt="" width={60} height={60} className="text-white" />
                         </div>
                         <div className="flex-1 flex justify-end">
                             <div className="w-[35%]">
                                 <h2 className="text-4xl font-bold text-white">Create</h2>
-                                <p className="text-xl text-white leading-relaxed">We empower African artists, designers, and storytellers to express their creativity using Avalanche-powered NFTs and platforms.
+                                <p className="text-lg text-white py-2">We empower African artists, designers, and storytellers to express their creativity using Avalanche-powered NFTs and platforms.
                                 </p>
                             </div>
                         </div>
@@ -80,16 +82,16 @@ const Build = () => {
                 </div>
 
                 {/* Educate Section */}
-                <div className="bg-[#2996F3] px-20 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
+                <div className="bg-[#2996F3] cursor-pointe px-20 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
                     <div className="flex justify-between items-center w-full">
                         <div className="flex-shrink-0">
-                            <GraduationCap size={48} className="text-white" />
+                            <img src={scroll} alt="" width={60} height={60} className="text-white" />
                         </div>
                         <div className="flex-1 flex justify-end">
                             <div className="w-[35%]">
                                 <h2 className="text-4xl font-bold">Educate</h2>
-                                <p className="text-xl leading-relaxed">
-                                    Through training, university outreach, and online content, we bring
+                                <p className="text-lg py-2">
+                            Through training, university outreach, and online content, we bring
                                     Avalanche literacy to schools, hubs, and grassroots communities.
                                 </p>
                             </div>
