@@ -40,8 +40,31 @@ const AboutUs = () => {
             </div>
           </div>
 
-          {/* Floating Action Buttons */}
-          <div className='fixed bottom-8 right-8 flex flex-col gap-4'>
+
+        </div>
+      </div>
+
+
+              <div className='relative'>
+          <img src={communityImg} alt="" />
+
+          {/* Play Video Button Overlay */}
+          <div className='absolute inset-0 flex items-center justify-center'>
+            <button className='bg-white/90 hover:bg-white text-black px-8 py-4 rounded-full font-medium shadow-lg transition-all hover:scale-105 flex items-center gap-3'>
+              <div className='w-8 h-8 bg-black rounded-full flex items-center justify-center'>
+                <svg className='w-4 h-4 text-white ml-0.5' fill='currentColor' viewBox='0 0 24 24'>
+                  <path d='M8 5v14l11-7z' />
+                </svg>
+              </div>
+              <p>Play Video</p>
+              <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
+              </svg>
+            </button>
+          </div>
+
+          {/* Audio Control Buttons on Image */}
+          <div className='absolute bottom-8 right-8 flex flex-col gap-4'>
             {/* Sound Toggle Button */}
             <button className='w-14 h-14 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg flex items-center justify-center transition-colors'>
               <svg className='w-6 h-6' fill='currentColor' viewBox='0 0 24 24'>
@@ -57,27 +80,6 @@ const AboutUs = () => {
             </button>
           </div>
         </div>
-      </div>
-
-
-      <div className='relative'>
-        <img src={communityImg} alt="" />
-
-        {/* Play Video Button Overlay */}
-        <div className='absolute inset-0 flex items-center justify-center'>
-          <button className='bg-white/90 hover:bg-white text-black px-8 py-4 rounded-full font-medium shadow-lg transition-all hover:scale-105 flex items-center gap-3'>
-            <div className='w-8 h-8 bg-black rounded-full flex items-center justify-center'>
-              <svg className='w-4 h-4 text-white ml-0.5' fill='currentColor' viewBox='0 0 24 24'>
-                <path d='M8 5v14l11-7z' />
-              </svg>
-            </div>
-            <p>Play Video</p>
-            <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
-            </svg>
-          </button>
-        </div>
-      </div>
     </div>
   )
 }

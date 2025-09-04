@@ -10,8 +10,8 @@ const Stats = () => {
                 </div>
 
                 {/* positioned images */}
-                <img src={event1} alt="event1" width={300} height={150} className='absolute bottom-10 left-20' />
-                <img src={event2} alt="event2" width={300} height={150} className='absolute top-10 right-20' />
+                <img src={event1} alt="event1" width={300} height={150} className='absolute bottom-36 left-20' />
+                <img src={event2} alt="event2" width={300} height={150} className='absolute top-36 right-20' />
 
                 <div className='flex justify-center items-center gap-40 text-center'>
                     <div className='leading-tight'>
