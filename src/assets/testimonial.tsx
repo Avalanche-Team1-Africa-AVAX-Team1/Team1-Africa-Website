@@ -163,7 +163,7 @@ const TestimonialSlider = () => {
     }, []);
 
     return (
-        <div className="w-full overflow-hidden mt-16">
+        <div className="w-full overflow-hidden m-16">
             {/* Background Design - WALL OF LOVE text behind card */}
             <div className="relative pt-40">
                 <div className="flex items-center justify-center pointer-events-none leading-none">

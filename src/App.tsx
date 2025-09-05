@@ -7,6 +7,7 @@ import Partners from './components/partners'
 import Build from './components/build'
 import Gallery from './components/gallery'
 import TestimonialSlider from './assets/testimonial'
+import Events from './components/events'
 function App() {
 
   return (
@@ -19,6 +20,7 @@ function App() {
       <Build />
       <Gallery />
       <TestimonialSlider />
+      <Events />
     </>
   )
 }
