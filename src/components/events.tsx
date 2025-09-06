@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
+import arrow from '../assets/white-arrow.svg'
+import arrowup from '../assets/arrow-up.svg'
 
 // Import images properly
 import event1 from '../assets/event1-img.png';
 import event2 from '../assets/event2-img.png';
+import event3 from '../assets/event3.png';
+import event4 from '../assets/event4.png';
+import event5 from '../assets/event5.png';
+import event6 from '../assets/event6.png';
+import event7 from '../assets/event7.png';
+import event8 from '../assets/event8.png';
 
 const Events = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -12,16 +20,16 @@ const Events = () => {
     const baseImages = [
         { src: event1, alt: "Team1 Africa Event 1" },
         { src: event2, alt: "Team1 Africa Event 2" },
-        { src: event1, alt: "Team1 Africa Event 3" },
-        { src: event2, alt: "Team1 Africa Event 4" },
-        { src: event1, alt: "Team1 Africa Event 5" },
-        { src: event2, alt: "Team1 Africa Event 6" },
-        { src: event1, alt: "Team1 Africa Event 7" },
-        { src: event2, alt: "Team1 Africa Event 8" },
-        { src: event1, alt: "Team1 Africa Event 9" },
-        { src: event2, alt: "Team1 Africa Event 10" },
-        { src: event1, alt: "Team1 Africa Event 11" },
-        { src: event2, alt: "Team1 Africa Event 12" },
+        { src: event3, alt: "Team1 Africa Event 3" },
+        { src: event4, alt: "Team1 Africa Event 4" },
+        { src: event5, alt: "Team1 Africa Event 5" },
+        { src: event6, alt: "Team1 Africa Event 6" },
+        { src: event7, alt: "Team1 Africa Event 7" },
+        { src: event8, alt: "Team1 Africa Event 8" },
+        // { src: event1, alt: "Team1 Africa Event 9" },
+        // { src: event2, alt: "Team1 Africa Event 10" },
+        // { src: event1, alt: "Team1 Africa Event 11" },
+        // { src: event2, alt: "Team1 Africa Event 12" },
     ];
 
     // Note: Using baseImages directly with modulo arithmetic for seamless infinite loop
@@ -78,8 +86,8 @@ const Events = () => {
         const adjustedPosition = relativePosition - fadeZoneWidth;
         const t = adjustedPosition / (coreVisiblePositions - 1); // Normalize to 0-1 for the main arch
 
-        // Arch curve mathematics for smooth continuous positioning
-        const x = Math.round((5 + (t * 90)) * 100) / 100; // Round to 2 decimal places for stability
+        // Arch curve mathematics for smooth continuous positioning with more spacing
+        const x = Math.round((2 + (t * 96)) * 100) / 100; // Increased spacing: 2% to 98% instead of 5% to 95%
 
         // Create arch curve for Y position
         const archHeight = 25;
@@ -119,7 +127,7 @@ const Events = () => {
 
             {/* Events Arch - CONTINUOUS INFINITE SCROLL */}
             <div
-                className="relative w-full h-[900px] mb-16 flex items-center justify-center overflow-hidden"
+                className="relative w-full h-[900px] flex items-center justify-center overflow-hidden"
             >
                 <div className="arch-container relative w-full h-full">
                     {/* Render only 5 visible images with smooth continuous movement */}
@@ -131,7 +139,7 @@ const Events = () => {
                         return (
                             <div
                                 key={`${image.alt}-${index}`}
-                                className="absolute cursor-pointer hover:scale-110 transition-transform duration-300"
+                                className="absolute cursor-pointer transition-transform duration-300"
                                 style={{
                                     willChange: 'transform', // Optimize for animations
                                     backfaceVisibility: 'hidden', // Reduce flickering
@@ -145,47 +153,40 @@ const Events = () => {
                                     margin: '0 10px', // Add horizontal spacing
                                 }}
                             >
-                                <div className="bg-white rounded-2xl p-4 w-full h-full mx-2"> {/* Added horizontal margin */}
-                                    <img
-                                        src={image.src}
-                                        alt={image.alt}
-                                        className="w-full h-full object-cover rounded-xl"
-                                        onLoad={() => console.log(`✅ Flowing Arch Image loaded`)}
-                                        onError={(e) => {
-                                            console.error(`❌ Flowing Arch Image failed`);
-                                            const target = e.target as HTMLImageElement;
-                                            target.style.backgroundColor = '#ff9999';
-                                        }}
-                                    />
-                                </div>
+                                <img
+                                    src={image.src}
+                                    alt={image.alt}
+                                    className="w-full h-full object-cover rounded-xl"
+                                    onLoad={() => console.log(`✅ Flowing Arch Image loaded`)}
+                                    onError={(e) => {
+                                        console.error(`❌ Flowing Arch Image failed`);
+                                        const target = e.target as HTMLImageElement;
+                                        target.style.backgroundColor = '#ff9999';
+                                    }}
+                                />
                             </div>
                         );
                     })}
                 </div>
-            </div>
 
-            {/* Description */}
-            <div className="text-center mb-4 border-2 border-red-600">
-                <p className='text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed'>
-                    Events organized and built by Africans, for Africans, amplifying voices and
-                    empowering builders within the Avalanche ecosystem. Explore photos capturing all
-                    the action from the most recent Team1 Africa Avalanche events.
-                </p>
-            </div>
+                <div className='absolute bottom-0 left-0 right-0'>
+                    {/* Description */}
+                    <div className="text-center mb-4">
+                        <p className='text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed'>
+                            Events organized and built by Africans, for Africans, amplifying voices and
+                            empowering builders within the Avalanche ecosystem. Explore photos capturing all
+                            the action from the most recent Team1 Africa Avalanche events.
+                        </p>
 
-            {/* Call to Action */}
-            <div className="text-center">
-                <button className="inline-flex items-center px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300 group">
-                    See All Events
-                    <svg
-                        className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
+                    </div>
+
+                    {/* Call to Action */}
+                    <div className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'>
+                        About Us
+                        <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
+                        <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
+                    </div>
+                </div>
             </div>
 
             {/* Responsive Styles */}

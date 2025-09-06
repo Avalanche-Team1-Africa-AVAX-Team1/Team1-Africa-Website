@@ -16,7 +16,7 @@ const Gallery = () => {
             </div>
 
             <div className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mt-3 rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'>
-                View Gallery
+                View Full Gallery
                 <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
                 <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
             </div>
