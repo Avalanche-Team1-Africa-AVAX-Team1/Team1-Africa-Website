@@ -30,14 +30,19 @@ const Events = () => {
 
     // Note: Using baseImages directly with modulo arithmetic for seamless infinite loop
 
-    // Continuous smooth scrolling
+    // Continuous smooth scrolling with requestAnimationFrame
     useEffect(() => {
-        const interval = setInterval(() => {
-            setScrollPosition((prev) => prev - 0.001); // Slower, smoother movement
-        }, 16); // 60fps for smooth animation
-
-        return () => clearInterval(interval);
-    });
+        let animationId: number;
+        
+        const animate = () => {
+            setScrollPosition((prev) => prev - 0.0025);
+            animationId = requestAnimationFrame(animate);
+        };
+        
+        animationId = requestAnimationFrame(animate);
+        
+        return () => cancelAnimationFrame(animationId);
+    }, []);
 
     // Calculate arch position for any image index with smooth continuous movement
     const getArchPosition = (index: number, offset: number) => {
@@ -139,10 +144,9 @@ const Events = () => {
                                 style={{
                                     willChange: 'transform', // Optimize for animations
                                     backfaceVisibility: 'hidden', // Reduce flickering
-                                    transform3d: 'translate3d(0,0,0)', // Force hardware acceleration
                                     left: `${position.x}%`,
                                     top: `${position.y}%`,
-                                    transform: `translate(-50%, -50%) rotate(${position.rotation}deg) scale(${position.scale})`,
+                                    transform: `translate3d(-50%, -50%, 0) rotate(${position.rotation}deg) scale(${position.scale})`,
                                     width: '430px',
                                     height: '530px',
                                     zIndex: position.zIndex,
