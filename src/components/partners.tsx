@@ -28,7 +28,7 @@ const Partners = () => {
                 <div className='w-full border-dashed border-gray-300 mb-0'></div>
 
                 {/* Table content */}
-                <div className='grid grid-cols-4 border-l-2 border-r-2 border-dashed border-gray-300'>
+                <div className='grid grid-cols-4 border-dashed border-gray-300'>
                     {/* Row 1 */}
                     <div className='flex flex-col items-center py-12 px-8 border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 hover:bg-red-50 hover:shadow-lg group'>
                         <img src={avax} alt="avalanche" className='w-48 h-16 object-contain mb-4 transition-transform duration-300 group-hover:scale-110' />
