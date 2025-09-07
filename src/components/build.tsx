@@ -11,7 +11,7 @@ import arrowup from '../assets/arrow-up.svg'
 
 const Build = () => {
     return (
-        <div className=''>
+        <div>
             <div className='py-64'>
                 <div className='relative top-[-10%] left-0 flex items-center justify-center'>
                     <img src={pixel} width={2000} height={150} />
@@ -47,9 +47,9 @@ const Build = () => {
                 </div>
             </div>
 
-            <div className="w-full">
+            <div className="-ml-8" style={{ width: 'calc(100% + 4rem)' }}>
                 {/* Build Section */}
-                <div className="bg-[#F1E228] cursor-pointer px-20 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
+                <div className="bg-[#F1E228] cursor-pointer px-5 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
                     <div className="flex justify-between items-center w-full">
                         <div className="flex-shrink-0">
                             <img src={rocket} alt="" width={60} height={60} className="text-black" />
@@ -66,14 +66,14 @@ const Build = () => {
                 </div>
 
                 {/* Create Section */}
-                <div className="bg-[#11B55A] cursor-pointer px-20 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
+                <div className="bg-[#11B55A] cursor-pointer px-5 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
                     <div className="flex justify-between items-center w-full">
                         <div className="flex-shrink-0">
                             <img src={gamepad} alt="" width={60} height={60} className="text-white" />
                         </div>
                         <div className="flex-1 flex justify-end">
                             <div className="w-[35%]">
-                                <h2 className="text-4xl font-bold text-white">Create</h2>
+                                <h2 className="text-4xl font-semibold text-white">Create</h2>
                                 <p className="text-lg text-white py-2">We empower African artists, designers, and storytellers to express their creativity using Avalanche-powered NFTs and platforms.
                                 </p>
                             </div>
@@ -82,14 +82,14 @@ const Build = () => {
                 </div>
 
                 {/* Educate Section */}
-                <div className="bg-[#2996F3] cursor-pointe px-20 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
+                <div className="bg-[#2996F3] cursor-pointe px-5 py-3 flex items-center hover:pb-10 transition-all duration-500 ease-in-out">
                     <div className="flex justify-between items-center w-full">
                         <div className="flex-shrink-0">
                             <img src={scroll} alt="" width={60} height={60} className="text-white" />
                         </div>
                         <div className="flex-1 flex justify-end">
                             <div className="w-[35%]">
-                                <h2 className="text-4xl font-bold">Educate</h2>
+                                <h2 className="text-4xl font-semibold">Educate</h2>
                                 <p className="text-lg py-2">
                             Through training, university outreach, and online content, we bring
                                     Avalanche literacy to schools, hubs, and grassroots communities.
