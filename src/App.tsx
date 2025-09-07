@@ -9,6 +9,7 @@ import Gallery from './components/gallery'
 import TestimonialSlider from './assets/testimonial'
 import Events from './components/events'
 import Footer from './components/footer'
+import Games from './components/games'
 function App() {
 
   return (
@@ -24,6 +25,7 @@ function App() {
         <TestimonialSlider />
       </div>
       <Events />
+      <Games />
       <Footer />
     </>
   )

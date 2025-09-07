@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import arrow from '../assets/white-arrow.svg'
 import arrowup from '../assets/arrow-up.svg'
 
@@ -14,9 +14,9 @@ import event8 from '../assets/event8.png';
 
 const Events = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
-    // const [isPaused, setIsPaused] = useState(false);
+    const animationIdRef = useRef<number | null>(null);
 
-    // 12 event images using the same pattern as original
+    // 8 event images using the same pattern as original
     const baseImages = [
         { src: event1, alt: "Team1 Africa Event 1" },
         { src: event2, alt: "Team1 Africa Event 2" },
@@ -28,20 +28,20 @@ const Events = () => {
         { src: event8, alt: "Team1 Africa Event 8" },   
     ];
 
-    // Note: Using baseImages directly with modulo arithmetic for seamless infinite loop
-
-    // Continuous smooth scrolling with requestAnimationFrame
+    // Continuous smooth scrolling using requestAnimationFrame
     useEffect(() => {
-        let animationId: number;
-        
         const animate = () => {
             setScrollPosition((prev) => prev - 0.0025);
-            animationId = requestAnimationFrame(animate);
+            animationIdRef.current = requestAnimationFrame(animate);
         };
-        
-        animationId = requestAnimationFrame(animate);
-        
-        return () => cancelAnimationFrame(animationId);
+
+        animationIdRef.current = requestAnimationFrame(animate);
+
+        return () => {
+            if (animationIdRef.current) {
+                cancelAnimationFrame(animationIdRef.current);
+            }
+        };
     }, []);
 
     // Calculate arch position for any image index with smooth continuous movement
@@ -131,7 +131,7 @@ const Events = () => {
                 className="relative w-full h-[900px] flex items-center justify-center overflow-hidden"
             >
                 <div className="arch-container relative w-full h-full">
-                    {/* Render only 5 visible images with smooth continuous movement */}
+                    {/* Render only visible images with smooth continuous movement */}
                     {baseImages.map((image, index) => {
                         const position = getArchPosition(index, scrollPosition);
 
