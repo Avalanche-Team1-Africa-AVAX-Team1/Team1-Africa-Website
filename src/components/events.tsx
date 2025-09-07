@@ -33,7 +33,7 @@ const Events = () => {
     // Continuous smooth scrolling
     useEffect(() => {
         const interval = setInterval(() => {
-            setScrollPosition((prev) => prev + 0.002); // Slightly slower for smoother movement
+            setScrollPosition((prev) => prev - 0.001); // Slower, smoother movement
         }, 16); // 60fps for smooth animation
 
         return () => clearInterval(interval);
@@ -83,22 +83,22 @@ const Events = () => {
         const t = adjustedPosition / (coreVisiblePositions - 1); // Normalize to 0-1 for the main arch
 
         // Arch curve mathematics for smooth continuous positioning with more spacing
-        const x = Math.round((2 + (t * 96)) * 100) / 100; // Increased spacing: 2% to 98% instead of 5% to 95%
+        const x = 2 + (t * 96); // Remove rounding for smoother movement
 
         // Create arch curve for Y position
         const archHeight = 25;
         const centerY = 65;
-        const y = Math.round((centerY - (Math.sin(t * Math.PI) * archHeight)) * 100) / 100;
+        const y = centerY - (Math.sin(t * Math.PI) * archHeight); // Remove rounding for smoother movement
 
         // Rotation based on position along arch
-        const rotation = Math.round(((t - 0.5) * 30) * 100) / 100; // Round rotation for stability
+        const rotation = (t - 0.5) * 30; // Remove rounding for smoother movement
 
         // Keep all images the same size
         const scale = 1; // All images same size
 
         // Z-index based on position (center highest for proper layering)
         const distanceFromCenter = Math.abs(t - 0.5) * 2; // 0 to 1
-        const zIndex = Math.round(10 - (distanceFromCenter * 9));
+        const zIndex = Math.floor(10 - (distanceFromCenter * 9)); // Use Math.floor instead of Math.round for stability
 
         return {
             x,
@@ -135,18 +135,19 @@ const Events = () => {
                         return (
                             <div
                                 key={`${image.alt}-${index}`}
-                                className="absolute cursor-pointer transition-transform duration-300"
+                                className="absolute cursor-pointer"
                                 style={{
                                     willChange: 'transform', // Optimize for animations
                                     backfaceVisibility: 'hidden', // Reduce flickering
+                                    transform3d: 'translate3d(0,0,0)', // Force hardware acceleration
                                     left: `${position.x}%`,
                                     top: `${position.y}%`,
                                     transform: `translate(-50%, -50%) rotate(${position.rotation}deg) scale(${position.scale})`,
-                                    width: '430px', // Slightly smaller for better spacing
+                                    width: '430px',
                                     height: '530px',
                                     zIndex: position.zIndex,
                                     opacity: position.opacity,
-                                    margin: '0 10px', // Add horizontal spacing
+                                    margin: '0 10px',
                                 }}
                             >
                                 <img
