@@ -25,11 +25,7 @@ const Events = () => {
         { src: event5, alt: "Team1 Africa Event 5" },
         { src: event6, alt: "Team1 Africa Event 6" },
         { src: event7, alt: "Team1 Africa Event 7" },
-        { src: event8, alt: "Team1 Africa Event 8" },
-        // { src: event1, alt: "Team1 Africa Event 9" },
-        // { src: event2, alt: "Team1 Africa Event 10" },
-        // { src: event1, alt: "Team1 Africa Event 11" },
-        // { src: event2, alt: "Team1 Africa Event 12" },
+        { src: event8, alt: "Team1 Africa Event 8" },   
     ];
 
     // Note: Using baseImages directly with modulo arithmetic for seamless infinite loop
@@ -182,7 +178,7 @@ const Events = () => {
 
                     {/* Call to Action */}
                     <div className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'>
-                        About Us
+                        See All Events
                         <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
                         <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
                     </div>

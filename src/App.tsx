@@ -8,19 +8,23 @@ import Build from './components/build'
 import Gallery from './components/gallery'
 import TestimonialSlider from './assets/testimonial'
 import Events from './components/events'
+import Footer from './components/footer'
 function App() {
 
   return (
     <>
-      <Navbar />
-      <Spinner />
-      <Stats />
-      <AboutUs />
-      <Partners />
-      <Build />
-      <Gallery />
-      <TestimonialSlider />
+      <div className="px-8">
+        <Navbar />
+        <Spinner />
+        <Stats />
+        <AboutUs />
+        <Partners />
+        <Build />
+        <Gallery />
+        <TestimonialSlider />
+      </div>
       <Events />
+      <Footer />
     </>
   )
 }
