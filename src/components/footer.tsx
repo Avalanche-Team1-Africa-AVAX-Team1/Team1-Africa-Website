@@ -88,7 +88,7 @@ const Footer = () => {
             {/* Copyright */}
             <div className='flex justify-between items-center'>
                 <p>© 2025 Team1 Africa. All rights reserved.</p>
-                <p>Deon Lexjo Deo</p>
+                <p>Deon Lexjo Dio</p>
             </div>
         </div>
     );
