@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-      <div className="px-8">
+      <div className="px-2 md:px-8">
         <Navbar />
         <Spinner />
         <Stats />
