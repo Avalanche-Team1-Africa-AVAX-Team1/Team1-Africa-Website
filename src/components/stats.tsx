@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import event1 from '../assets/event1-img.png'
 import event2 from '../assets/event2-img.png'
 
