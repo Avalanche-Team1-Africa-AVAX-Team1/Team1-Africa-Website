@@ -9,7 +9,7 @@ import web3bridge from '../assets/web3bridge.png'
 
 const Partners = () => {
     return (
-        <div className='px-4 py-16 flex flex-col items-center justify-center border border-red-500'>
+        <div className='px-4 py-16 flex flex-col items-center justify-center'>
             {/* PartnersBadge */}
             <div className='mb-2'>
                 <span className='bg-red-500 px-4 py-2 rounded-lg text-sm inline-block transform -rotate-12 font-bold'>
