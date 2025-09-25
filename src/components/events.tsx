@@ -16,6 +16,7 @@ const Events = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const animationIdRef = useRef<number | null>(null);
     const [isFlatLayout, setIsFlatLayout] = useState(false); // Flatten curve on tablet/phone
+    const [viewportWidth, setViewportWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1920);
     const speedRef = useRef(0.0025); // Base scroll speed; tweaked on tablet
 
     // 8 event images using the same pattern as original
@@ -46,12 +47,14 @@ const Events = () => {
         };
     }, []);
 
-    // Toggle flat layout for tablet and smaller screens
+    // Toggle flat layout for tablet and smaller screens and keep viewport width
     useEffect(() => {
         const updateLayoutMode = () => {
-            setIsFlatLayout(window.innerWidth <= 1023); // Tablet and below
+            const width = window.innerWidth;
+            setViewportWidth(width);
+            setIsFlatLayout(width <= 1023); // Tablet and below
             // Slow down animation slightly on tablets
-            if (window.innerWidth <= 1023) {
+            if (width <= 1023) {
                 speedRef.current = 0.0012; // Slow down more on tablet per request
             } else {
                 speedRef.current = 0.0025; // Default speed elsewhere
@@ -65,8 +68,8 @@ const Events = () => {
     // Calculate arch position for any image index with smooth continuous movement
     const getArchPosition = (index: number, offset: number) => {
         const totalImages = baseImages.length;
-        const coreVisiblePositions = isFlatLayout ? 4 : 5; // Show 4 items in flat mode to reduce big gaps
-        const fadeZoneWidth = isFlatLayout ? 0.6 : 1.2; // Slightly narrower fade zones on small screens
+        const coreVisiblePositions = isFlatLayout ? 3 : 5; // Main visible items (fewer on small screens)
+        const fadeZoneWidth = isFlatLayout ? 1.0 : 1.2; // Slightly wider fade on small screens to create space
         const totalVisibleRange = coreVisiblePositions + (fadeZoneWidth * 2); // Extended range including fade zones
 
         // Calculate the continuous position of this image relative to the viewport
@@ -74,7 +77,7 @@ const Events = () => {
 
         // Don't render if completely outside the extended range
         if (relativePosition >= totalVisibleRange) {
-            return { visible: false };
+            return { visible: false } as any;
         }
 
         // Calculate opacity for smooth edge transitions
@@ -97,7 +100,7 @@ const Events = () => {
 
         // If opacity is too low, don't render
         if (opacity < 0.05) {
-            return { visible: false };
+            return { visible: false } as any;
         }
 
         // Adjust positioning to account for the fade zones
@@ -106,11 +109,24 @@ const Events = () => {
         const t = adjustedPosition / (coreVisiblePositions - 1); // Normalize to 0-1 for the main arch
 
         // Compute X/Y/rotation. For tablet/phone, use flat row; otherwise, keep arch
-        const x = 2 + (t * 96);
+        let x: number;
+        if (isFlatLayout) {
+            // Tune span per small breakpoint to keep consistent gaps
+            let start = 5;
+            let span = 90; // default for small
+            if (viewportWidth <= 480) { start = 4; span = 92; } // more spread on small phones
+            else if (viewportWidth <= 640) { start = 5; span = 90; }
+            else if (viewportWidth <= 900) { start = 7; span = 84; } // tighter on tablets to avoid excess spacing
+            else { start = 7; span = 82; } // 901-1023
+            x = start + (t * span);
+        } else {
+            x = 2 + (t * 96);
+        }
+
         let y: number;
         let rotation: number;
         if (isFlatLayout) {
-            y = 42; // Raise row a bit more on tablet/mobile to remove extra top space
+            y = 48; // Flat row vertically for small screens
             rotation = 0;
         } else {
             const archHeight = 25;
@@ -134,7 +150,7 @@ const Events = () => {
             opacity,
             zIndex: Math.max(zIndex, 1),
             visible: true
-        };
+        } as any;
     };
 
     return (
@@ -150,7 +166,7 @@ const Events = () => {
             {/* Events Arch - CONTINUOUS INFINITE SCROLL */}
             {/* Reduce container height across screens; keep 4K baseline */}
             <div
-                className="relative border-2 border-red-500 w-full h-[900px] lt-1920:h-[680px] lt-1440:h-[560px] lt-1024:h-[340px] lt-768:h-[320px] lt-480:h-[300px] flex items-center justify-center overflow-hidden lt-1024:-mt-8 lt-768:-mt-10"
+                className="relative w-full h-[900px] lt-1920:h-[680px] lt-1440:h-[560px] lt-1024:h-[420px] lt-768:h-[360px] lt-480:h-[320px] flex items-center justify-center overflow-hidden"
             >
                 <div className="arch-container relative w-full h-full">
                     {/* Render only visible images with smooth continuous movement */}
@@ -173,7 +189,7 @@ const Events = () => {
                                     height: '530px',
                                     zIndex: position.zIndex,
                                     opacity: position.opacity,
-                                    margin: '0 6px', // Reduce base horizontal spacing between items
+                                    margin: '0 14px', // base spacing
                                 }}
                             >
                                 <img
@@ -232,39 +248,39 @@ const Events = () => {
             <style>{`
                 @media (max-width: 1919px) {
                     .arch-container > div {
-                        width: 300px !important; /* Smaller on laptop large */
+                        width: 300px !important; /* Laptop large */
                         height: 400px !important;
-                        margin: 0 12px !important; /* Tighten spacing */
+                        margin: 0 18px !important; /* Slightly more spacing */
                     }
                 }
                 @media (max-width: 1440px) {
                     .arch-container > div {
-                        width: 260px !important; /* Smaller on laptops */
+                        width: 260px !important; /* Laptops */
                         height: 340px !important;
-                        margin: 0 10px !important; /* Tighten spacing */
+                        margin: 0 16px !important; /* Adequate spacing */
                     }
                 }
                 @media (max-width: 1200px) {
                     .arch-container > div {
                         width: 240px !important;
-                        height: 320px !important;
-                        margin: 0 8px !important; /* Tight spacing */
+                        height: 300px !important;
+                        margin: 0 12px !important; /* Tighter on tablets */
                     }
                 }
                 
                 @media (max-width: 900px) {
                     .arch-container > div {
                         width: 210px !important;
-                        height: 290px !important;
-                        margin: 0 6px !important; /* Reduce spacing on tablets */
+                        height: 270px !important;
+                        margin: 0 12px !important; /* Balanced tablet spacing */
                     }
                 }
                 
                 @media (max-width: 640px) {
                     .arch-container > div {
                         width: 185px !important;
-                        height: 250px !important;
-                        margin: 0 6px !important; /* Reduce spacing on large phones */
+                        height: 240px !important;
+                        margin: 0 16px !important; /* Larger phone spacing */
                     }
                 }
 
@@ -272,8 +288,8 @@ const Events = () => {
                 @media (max-width: 480px) {
                     .arch-container > div {
                         width: 165px !important;
-                        height: 230px !important;
-                        margin: 0 6px !important; /* Reduce spacing on small phones */
+                        height: 220px !important;
+                        margin: 0 18px !important; /* Small phone spacing */
                     }
                 }
             `}</style>
