@@ -15,6 +15,8 @@ import event8 from '../assets/event8.png';
 const Events = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const animationIdRef = useRef<number | null>(null);
+    const [isFlatLayout, setIsFlatLayout] = useState(false); // Flatten curve on tablet/phone
+    const speedRef = useRef(0.0025); // Base scroll speed; tweaked on tablet
 
     // 8 event images using the same pattern as original
     const baseImages = [
@@ -31,7 +33,7 @@ const Events = () => {
     // Continuous smooth scrolling using requestAnimationFrame
     useEffect(() => {
         const animate = () => {
-            setScrollPosition((prev) => prev - 0.0025);
+            setScrollPosition((prev) => prev - speedRef.current); // Use responsive speed
             animationIdRef.current = requestAnimationFrame(animate);
         };
 
@@ -44,11 +46,27 @@ const Events = () => {
         };
     }, []);
 
+    // Toggle flat layout for tablet and smaller screens
+    useEffect(() => {
+        const updateLayoutMode = () => {
+            setIsFlatLayout(window.innerWidth <= 1023); // Tablet and below
+            // Slow down animation slightly on tablets
+            if (window.innerWidth <= 1023) {
+                speedRef.current = 0.0012; // Slow down more on tablet per request
+            } else {
+                speedRef.current = 0.0025; // Default speed elsewhere
+            }
+        };
+        updateLayoutMode();
+        window.addEventListener('resize', updateLayoutMode);
+        return () => window.removeEventListener('resize', updateLayoutMode);
+    }, []);
+
     // Calculate arch position for any image index with smooth continuous movement
     const getArchPosition = (index: number, offset: number) => {
         const totalImages = baseImages.length;
-        const coreVisiblePositions = 5; // Main 5 images that are fully visible
-        const fadeZoneWidth = 1.2; // Width of fade zones on each side
+        const coreVisiblePositions = isFlatLayout ? 3 : 5; // Fewer visible on tablet/phone to create spacing
+        const fadeZoneWidth = isFlatLayout ? 0.8 : 1.2; // Narrower fade zones on small screens
         const totalVisibleRange = coreVisiblePositions + (fadeZoneWidth * 2); // Extended range including fade zones
 
         // Calculate the continuous position of this image relative to the viewport
@@ -87,16 +105,19 @@ const Events = () => {
         const adjustedPosition = relativePosition - fadeZoneWidth;
         const t = adjustedPosition / (coreVisiblePositions - 1); // Normalize to 0-1 for the main arch
 
-        // Arch curve mathematics for smooth continuous positioning with more spacing
-        const x = 2 + (t * 96); // Remove rounding for smoother movement
-
-        // Create arch curve for Y position
-        const archHeight = 25;
-        const centerY = 65;
-        const y = centerY - (Math.sin(t * Math.PI) * archHeight); // Remove rounding for smoother movement
-
-        // Rotation based on position along arch
-        const rotation = (t - 0.5) * 30; // Remove rounding for smoother movement
+        // Compute X/Y/rotation. For tablet/phone, use flat row; otherwise, keep arch
+        const x = 2 + (t * 96);
+        let y: number;
+        let rotation: number;
+        if (isFlatLayout) {
+            y = 42; // Raise row a bit more on tablet/mobile to remove extra top space
+            rotation = 0;
+        } else {
+            const archHeight = 25;
+            const centerY = 65;
+            y = centerY - (Math.sin(t * Math.PI) * archHeight);
+            rotation = (t - 0.5) * 30;
+        }
 
         // Keep all images the same size
         const scale = 1; // All images same size
@@ -127,8 +148,9 @@ const Events = () => {
             </div>
 
             {/* Events Arch - CONTINUOUS INFINITE SCROLL */}
+            {/* Reduce container height across screens; keep 4K baseline */}
             <div
-                className="relative w-full h-[900px] flex items-center justify-center overflow-hidden"
+                className="relative w-full h-[900px] lt-1920:h-[680px] lt-1440:h-[560px] lt-1024:h-[420px] lt-768:h-[380px] lt-480:h-[360px] flex items-center justify-center overflow-hidden"
             >
                 <div className="arch-container relative w-full h-full">
                     {/* Render only visible images with smooth continuous movement */}
@@ -170,7 +192,7 @@ const Events = () => {
                     })}
                 </div>
 
-                <div className='absolute bottom-0 left-0 right-0 z-10'>
+                <div className='absolute bottom-0 left-0 right-0 z-10 lt-1024:hidden'> {/* Keep overlay text on desktop; hide on tablet/mobile */}
                     {/* Description */}
                     <div className="text-center mb-4">
                         <p className='text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed'>
@@ -190,38 +212,68 @@ const Events = () => {
                 </div>
             </div>
 
+            {/* Mobile/Tablet description below images (image above text) */}
+            <div className='hidden lt-1024:block mt-6 px-4'> {/* Show static text below on tablet/mobile */}
+                <div className="text-center mb-4">
+                    <p className='text-base lt-768:text-[0.95rem] text-gray-600 max-w-2xl mx-auto leading-relaxed'>
+                        Events organized and built by Africans, for Africans, amplifying voices and
+                        empowering builders within the Avalanche ecosystem. Explore photos capturing all
+                        the action from the most recent Team1 Africa Avalanche events.
+                    </p>
+                </div>
+                <div className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'>
+                    See All Events
+                    <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
+                    <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
+                </div>
+            </div>
+
             {/* Responsive Styles - extend existing rules without touching 4K baseline */}
             <style>{`
+                @media (max-width: 1919px) {
+                    .arch-container > div {
+                        width: 320px !important; /* Smaller on laptop large */
+                        height: 420px !important;
+                        margin: 0 14px !important; /* Add a bit more spacing */
+                    }
+                }
+                @media (max-width: 1440px) {
+                    .arch-container > div {
+                        width: 280px !important; /* Smaller on laptops */
+                        height: 360px !important;
+                        margin: 0 12px !important; /* Slight spacing */
+                    }
+                }
                 @media (max-width: 1200px) {
                     .arch-container > div {
-                        width: 300px !important;
-                        height: 420px !important;
-                        margin: 0 8px !important;
+                        width: 270px !important;
+                        height: 340px !important;
+                        margin: 0 12px !important;
                     }
                 }
                 
                 @media (max-width: 900px) {
                     .arch-container > div {
-                        width: 260px !important;
-                        height: 360px !important;
-                        margin: 0 6px !important;
+                        width: 220px !important;
+                        height: 300px !important;
+                        margin: 0 10px !important; /* Balanced spacing on tablets */
                     }
                 }
                 
                 @media (max-width: 640px) {
                     .arch-container > div {
-                        width: 220px !important;
-                        height: 300px !important;
-                        margin: 0 4px !important;
+                        width: 190px !important;
+                        height: 260px !important;
+                        margin: 0 12px !important; /* Balanced gap on large phones */
                     }
                 }
 
                 /* Further tighten for very small phones */
                 @media (max-width: 480px) {
                     .arch-container > div {
-                        width: 190px !important;
-                        height: 260px !important;
-                        margin: 0 3px !important;
+                        width: 170px !important;
+                        height: 240px !important;
+                        margin: 0 12px !important; /* Balanced gap on small phones */
                     }
                 }
             `}</style>
