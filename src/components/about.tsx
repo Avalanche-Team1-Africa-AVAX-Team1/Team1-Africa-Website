@@ -20,7 +20,7 @@ const AboutUs = () => {
 
             {/* Keep two-column on md+, stack on small; tighten gaps on small */}
             <div className='flex flex-col md:flex-row items-start justify-between w-full gap-8 lt-1024:gap-6 lt-768:gap-5 lt-480:gap-4'>
-              <div className='lg:basis-[60%] md:basis-[120%] md:border-2 md:border-red-500'>
+              <div className='lg:basis-[60%] md:basis-[120%]'>
                 {/* Scale heading down progressively on smaller screens; 4K unchanged */}
                 <h1 className='text-4xl lt-1440:text-3xl lt-1024:text-2xl lt-768:text-xl lt-480:text-lg font-bold text-black leading-tight'>
                   Empowering Africa's Builders, Creators & Educators on Avalanche
