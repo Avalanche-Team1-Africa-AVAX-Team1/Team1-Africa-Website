@@ -163,17 +163,17 @@ const TestimonialSlider = () => {
     }, []);
 
     return (
-        <div className="w-full overflow-hidden m-16">
+        <div className="w-full overflow-hidden m-16 lt-1440:m-12 lt-1024:m-8 lt-768:m-6 lt-480:m-4"> {/* Reduce margins on smaller screens; keep ≥1920px as-is */}
             {/* Background Design - WALL OF LOVE text behind card */}
-            <div className="relative pt-40">
+            <div className="relative pt-40 lt-1440:pt-32 lt-1024:pt-24 lt-768:pt-20 lt-480:pt-14"> {/* Scale vertical space below the background heading; slightly tighter on small phones */}
                 <div className="flex items-center justify-center pointer-events-none leading-none">
-                    <h1 className="text-[150px] tracking-[-1rem] text-black select-none whitespace-nowrap" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                    <h1 className="text-[150px] lt-1440:text-[120px] lt-1024:text-[90px] lt-768:text-[56px] lt-480:text-[36px] tracking-[-1rem] lt-1440:tracking-[-0.75rem] lt-1024:tracking-[-0.5rem] lt-768:tracking-[-0.25rem] lt-480:tracking-[-0.15rem] text-black select-none whitespace-nowrap" style={{ fontFamily: "'Press Start 2P', monospace" }}> {/* Make 'WALL OF LOVE' smaller on mobile and reduce tracking */}
                         WALL OF <span className="text-red-500">LOVE</span>
                     </h1>
                 </div>
                 {/* Testimonies Badge */}
-                <div className="flex justify-center items-center absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <span className="bg-red-500 px-4 py-2 rounded-lg text-sm font-bold transform -rotate-12">
+                <div className="flex justify-center items-center absolute top-[40%] lt-1024:top-[36%] lt-768:top-[30%] lt-480:top-[26%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"> {/* Reposition badge on smaller screens */}
+                    <span className="bg-red-500 px-4 py-2 lt-768:px-3 lt-768:py-1.5 rounded-lg text-sm lt-768:text-xs font-bold transform -rotate-12"> {/* Slightly smaller badge on small screens */}
                         Testimonies
                     </span>
                 </div>
@@ -183,10 +183,10 @@ const TestimonialSlider = () => {
 
             {/* Testimonial Cards Container */}
             <div className="relative">
-                <div className='w-full cursor-pointer flex items-center justify-center py-2 translate-y-[-30%] transform rotate-[-5deg]'>
+                <div className='w-full cursor-pointer flex items-center justify-center py-2 translate-y-[-30%] lt-1024:translate-y-0 transform rotate-[-5deg] lt-1024:rotate-0'> {/* Remove heavy tilt/offset on smaller screens for readability */}
                     <div 
                         ref={containerRef}
-                        className={`relative w-[35%] h-[20rem] select-none transition-all duration-200 ${
+                        className={`relative w-[35%] lt-1920:w-[42%] lt-1440:w-[50%] lt-1024:w-[64%] lt-768:w-[86%] lt-480:w-[90%] max-w-[640px] h-[20rem] lt-1024:h-[22rem] lt-768:h-[24rem] lt-480:h-[26rem] select-none transition-all duration-200 ${
                             isHovering ? 'cursor-pointer scale-102' : 'hover:scale-101'
                         }`}
                         onMouseEnter={handleMouseEnter}
@@ -237,11 +237,11 @@ const TestimonialSlider = () => {
                                     }}
                                 >
                                     {/* Card Stack Effect */}
-                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform rotate-1 translate-x-1 translate-y-1"></div>
-                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform -rotate-1 translate-x-0.5 translate-y-0.5"></div>
+                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform rotate-1 translate-x-1 translate-y-1 lt-768:rotate-0 lt-768:translate-x-0 lt-768:translate-y-0"></div> {/* Neutralize skew/offset on small screens to keep equal padding */}
+                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform -rotate-1 translate-x-0.5 translate-y-0.5 lt-768:rotate-0 lt-768:translate-x-0 lt-768:translate-y-0"></div> {/* Neutralize skew/offset on small screens */}
 
                                     {/* Main Card */}
-                                    <div className="relative bg-white rounded-2xl border-2 border-black p-6 shadow-lg h-full flex flex-col justify-center">
+                                    <div className="relative bg-white rounded-2xl border-2 border-black p-6 lt-1024:p-5 lt-768:p-4 lt-480:p-3 shadow-lg h-full flex flex-col justify-center"> {/* Card padding scales down */}
                                         {/* Twitter X Icon */}
                                         <div className="absolute top-4 right-4">
                                             <svg width="20" height="20" viewBox="0 0 24 24" fill="#1DA1F2">
@@ -254,7 +254,7 @@ const TestimonialSlider = () => {
                                             <img
                                                 src={testimonial.avatar}
                                                 alt={testimonial.name}
-                                                className="w-12 h-12 rounded-full mr-3"
+                                                className="w-12 h-12 lt-768:w-10 lt-768:h-10 lt-480:w-9 lt-480:h-9 rounded-full mr-3" /* Smaller avatar on small screens */
                                             />
                                             <div>
                                                 <h3 className="font-bold text-gray-900">{testimonial.name}</h3>
@@ -263,7 +263,7 @@ const TestimonialSlider = () => {
                                         </div>
 
                                         {/* Testimonial Text */}
-                                        <p className="text-gray-900 text-lg mb-4 leading-relaxed">
+                                        <p className="text-gray-900 text-lg lt-1024:text-base lt-768:text-[0.95rem] lt-480:text-[0.9rem] mb-4 leading-relaxed"> {/* Scale body text down */}
                                             {testimonial.text}
                                         </p>
 
@@ -308,7 +308,7 @@ const TestimonialSlider = () => {
                 )}
 
                 {/* Slide Indicators */}
-                <div className="absolute bottom-[0%] left-1/2 flex space-x-2 z-20 pb-2">
+                <div className="absolute bottom-[0%] left-1/2 transform -translate-x-1/2 flex space-x-2 z-20 pb-2 lt-768:pb-1"> {/* Always center dots; baseline visuals unchanged */}
                     {testimonials.map((_, index) => (
                         <button
                             key={index}
