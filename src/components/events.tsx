@@ -65,8 +65,8 @@ const Events = () => {
     // Calculate arch position for any image index with smooth continuous movement
     const getArchPosition = (index: number, offset: number) => {
         const totalImages = baseImages.length;
-        const coreVisiblePositions = isFlatLayout ? 3 : 5; // Fewer visible on tablet/phone to create spacing
-        const fadeZoneWidth = isFlatLayout ? 0.8 : 1.2; // Narrower fade zones on small screens
+        const coreVisiblePositions = isFlatLayout ? 4 : 5; // Show 4 items in flat mode to reduce big gaps
+        const fadeZoneWidth = isFlatLayout ? 0.6 : 1.2; // Slightly narrower fade zones on small screens
         const totalVisibleRange = coreVisiblePositions + (fadeZoneWidth * 2); // Extended range including fade zones
 
         // Calculate the continuous position of this image relative to the viewport
@@ -150,7 +150,7 @@ const Events = () => {
             {/* Events Arch - CONTINUOUS INFINITE SCROLL */}
             {/* Reduce container height across screens; keep 4K baseline */}
             <div
-                className="relative w-full h-[900px] lt-1920:h-[680px] lt-1440:h-[560px] lt-1024:h-[420px] lt-768:h-[380px] lt-480:h-[360px] flex items-center justify-center overflow-hidden"
+                className="relative border-2 border-red-500 w-full h-[900px] lt-1920:h-[680px] lt-1440:h-[560px] lt-1024:h-[340px] lt-768:h-[320px] lt-480:h-[300px] flex items-center justify-center overflow-hidden lt-1024:-mt-8 lt-768:-mt-10"
             >
                 <div className="arch-container relative w-full h-full">
                     {/* Render only visible images with smooth continuous movement */}
@@ -173,7 +173,7 @@ const Events = () => {
                                     height: '530px',
                                     zIndex: position.zIndex,
                                     opacity: position.opacity,
-                                    margin: '0 10px',
+                                    margin: '0 6px', // Reduce base horizontal spacing between items
                                 }}
                             >
                                 <img
@@ -232,48 +232,48 @@ const Events = () => {
             <style>{`
                 @media (max-width: 1919px) {
                     .arch-container > div {
-                        width: 320px !important; /* Smaller on laptop large */
-                        height: 420px !important;
-                        margin: 0 14px !important; /* Add a bit more spacing */
+                        width: 300px !important; /* Smaller on laptop large */
+                        height: 400px !important;
+                        margin: 0 12px !important; /* Tighten spacing */
                     }
                 }
                 @media (max-width: 1440px) {
                     .arch-container > div {
-                        width: 280px !important; /* Smaller on laptops */
-                        height: 360px !important;
-                        margin: 0 12px !important; /* Slight spacing */
+                        width: 260px !important; /* Smaller on laptops */
+                        height: 340px !important;
+                        margin: 0 10px !important; /* Tighten spacing */
                     }
                 }
                 @media (max-width: 1200px) {
                     .arch-container > div {
-                        width: 270px !important;
-                        height: 340px !important;
-                        margin: 0 12px !important;
+                        width: 240px !important;
+                        height: 320px !important;
+                        margin: 0 8px !important; /* Tight spacing */
                     }
                 }
                 
                 @media (max-width: 900px) {
                     .arch-container > div {
-                        width: 220px !important;
-                        height: 300px !important;
-                        margin: 0 10px !important; /* Balanced spacing on tablets */
+                        width: 210px !important;
+                        height: 290px !important;
+                        margin: 0 6px !important; /* Reduce spacing on tablets */
                     }
                 }
                 
                 @media (max-width: 640px) {
                     .arch-container > div {
-                        width: 190px !important;
-                        height: 260px !important;
-                        margin: 0 12px !important; /* Balanced gap on large phones */
+                        width: 185px !important;
+                        height: 250px !important;
+                        margin: 0 6px !important; /* Reduce spacing on large phones */
                     }
                 }
 
                 /* Further tighten for very small phones */
                 @media (max-width: 480px) {
                     .arch-container > div {
-                        width: 170px !important;
-                        height: 240px !important;
-                        margin: 0 12px !important; /* Balanced gap on small phones */
+                        width: 165px !important;
+                        height: 230px !important;
+                        margin: 0 6px !important; /* Reduce spacing on small phones */
                     }
                 }
             `}</style>
