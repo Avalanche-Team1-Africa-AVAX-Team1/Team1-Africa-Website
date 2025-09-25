@@ -163,7 +163,7 @@ const TestimonialSlider = () => {
     }, []);
 
     return (
-        <div className="m-16 lt-1440:m-12 lt-1024:m-8 lt-768:m-6 lt-480:m-4 lt-1920:max-w-[1400px] lt-1920:mx-auto lt-1440:px-6 lt-1024:px-4 lt-768:px-3 lt-480:px-2 border-2 border-red-500"> {/* Add symmetric side padding across breakpoints for equal px and cap width below 4K */}
+        <div className="m-16 lt-1440:m-12 lt-1024:m-8 lt-768:m-6 lt-480:m-4 lt-1920:max-w-[1400px] lt-1920:mx-auto lt-1440:px-6 lt-1024:px-4 lt-768:px-3 lt-480:px-2"> {/* Add symmetric side padding across breakpoints for equal px and cap width below 4K */}
             {/* Background Design - WALL OF LOVE text behind card */}
             <div className="relative pt-40 lt-1920:pt-36 lt-1440:pt-28 lt-1024:pt-24 lt-768:pt-20 lt-480:pt-12"> {/* Scale vertical space below the background heading; slightly tighter on small phones */}
                 <div className="flex items-center justify-center pointer-events-none leading-none">
