@@ -120,7 +120,12 @@ const Events = () => {
             else { start = 7; span = 82; } // 901-1023
             x = start + (t * span);
         } else {
-            x = 2 + (t * 96);
+            // For laptops, slightly reduce span to increase spacing between cards
+            let startX = 2;
+            let span = 96;
+            if (viewportWidth <= 1440) { startX = 6; span = 88; }
+            else if (viewportWidth <= 1919) { startX = 4; span = 92; }
+            x = startX + (t * span);
         }
 
         let y: number;
@@ -129,8 +134,11 @@ const Events = () => {
             y = 48; // Flat row vertically for small screens
             rotation = 0;
         } else {
-            const archHeight = 25;
-            const centerY = 65;
+            // Raise the arch slightly and reduce height on laptops so text overlay has space
+            let archHeight = 25;
+            let centerY = 65;
+            if (viewportWidth <= 1440) { archHeight = 20; centerY = 58; }
+            else if (viewportWidth <= 1919) { archHeight = 22; centerY = 60; }
             y = centerY - (Math.sin(t * Math.PI) * archHeight);
             rotation = (t - 0.5) * 30;
         }
@@ -199,7 +207,7 @@ const Events = () => {
                                     onLoad={() => console.log(`✅ Flowing Arch Image loaded`)}
                                     onError={(e) => {
                                         console.error(`❌ Flowing Arch Image failed`);
-                                        const target = e.target as HTMLImageElement;
+                                        const target = (e.target as HTMLImageElement);
                                         target.style.backgroundColor = '#ff9999';
                                     }}
                                 />
@@ -250,21 +258,21 @@ const Events = () => {
                     .arch-container > div {
                         width: 300px !important; /* Laptop large */
                         height: 400px !important;
-                        margin: 0 18px !important; /* Slightly more spacing */
+                        margin: 0 24px !important; /* More spacing on large laptop */
                     }
                 }
                 @media (max-width: 1440px) {
                     .arch-container > div {
                         width: 260px !important; /* Laptops */
                         height: 340px !important;
-                        margin: 0 16px !important; /* Adequate spacing */
+                        margin: 0 22px !important; /* Adequate spacing on laptops */
                     }
                 }
                 @media (max-width: 1200px) {
                     .arch-container > div {
                         width: 240px !important;
                         height: 300px !important;
-                        margin: 0 12px !important; /* Tighter on tablets */
+                        margin: 0 14px !important; /* Tighter on tablets */
                     }
                 }
                 
