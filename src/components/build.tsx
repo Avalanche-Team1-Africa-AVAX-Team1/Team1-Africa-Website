@@ -16,12 +16,12 @@ const Build = () => {
             <div className='py-64 lt-1440:py-56 lt-1024:py-40 lt-768:py-28 lt-480:py-20'>
                 <div className='relative top-[-10%] left-0 flex items-center justify-center'>
                     {/* Scale pixel ribbon down responsively on smaller screens */}
-                    <img src={pixel} width={2000} height={150} className='lt-1440:w-[1400px] lt-1024:w-[1100px] lt-768:w-[820px] lt-480:w-[640px]' />
+                    <img src={pixel} width={2000} height={150} className='lt-1440:w-[1400px] lt-1024:w-[1100px] lt-768:w-[820px] lt-480:w-[400px]' />
 
                     <div>
                         {/* Tweak positions and size of floating images on smaller screens */}
-                        <img src={builders} width={250} height={150} alt="" className="absolute bottom-[100%] left-72 lt-1440:left-56 lt-1024:left-40 lt-768:left-20 lt-480:left-10 lt-1024:w-[220px] lt-768:w-[190px] lt-480:w-[160px]" />
-                        <img src={community} width={250} height={150} alt="" className="absolute bottom-[100%] right-72 lt-1440:right-56 lt-1024:right-40 lt-768:right-20 lt-480:right-10 lt-1024:w-[220px] lt-768:w-[190px] lt-480:w-[160px]" />
+                        <img src={builders} width={250} height={150} alt="" className="absolute bottom-[100%] left-72 lt-1440:left-2 lt-1024:left-10 lt-768:left-20 lt-480:left-10 lt-1024:w-[150px] lt-768:w-[190px] lt-480:w-[80px] lt-1440:w-[180px] xl:w-[150px] xl:left-0 2xl:left-96" />
+                        <img src={community} width={250} height={150} alt="" className="absolute bottom-[100%] right-72 lt-1440:right-2 lt-1024:right-10 lt-768:right-20 lt-480:right-10 lt-1024:w-[150px] lt-768:w-[190px] lt-480:w-[100px] lt-1440:w-[180px] xl:w-[150px] xl:right-0 2xl:right-96" />
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@ const Build = () => {
                 </div>
 
                 {/* Let the right column expand full width on smaller screens */}
-                <div className='w-[19%] lt-1440:w-[28%] lt-1024:w-full'>
+                <div className='w-[40%] lt-1440:w-[40%] lt-1024:w-full'>
                     <div className='text-gray-600 text-lg lt-1440:text-base lt-1024:text-[0.95rem]'>
                         <p>Our mission is to bridge the gap between innovation and opportunity by cultivating an inclusive environment where tech talent thrives, ideas grow, and impact multiplies.</p>
                     </div>
