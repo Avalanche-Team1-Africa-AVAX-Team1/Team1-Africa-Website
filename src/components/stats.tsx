@@ -73,7 +73,7 @@ const Stats = () => {
             <div ref={statsRef} className='relative flex h-screen lt-1024:h-auto lt-1024:py-16 flex-col justify-around md:justify-center items-center overflow-hidden'>
                 <div className='flex justify-center items-center px-4'>
                     {/* Scale intro paragraph on smaller screens; constrain width */}
-                    <p className='text-[1.4rem] md:text-[50px] lt-1024:text-[1.25rem] lt-768:text-[1.1rem] lt-480:text-[1rem] font-semibold text-center md:w-[50%] w-full max-w-[900px]'>Team1 Africa <span className='text-[#6D6D6D]'>is a vibrant grassroots movement committed to equipping</span> African builders, creators, and educators with the tools, resources, and opportunities to thrive in the Avalanche blockchain ecosystem.</p>
+                    <p className='text-[1.4rem] md:text-[50px] lt-1024:text-[1.25rem] lt-768:text-[1.1rem] lt-480:text-[1rem] font-semibold text-center md:w-[50%] w-full '>Team1 Africa <span className='text-[#6D6D6D]'>is a vibrant grassroots movement committed to equipping</span> African builders, creators, and educators with the tools, resources, and opportunities to thrive in the Avalanche blockchain ecosystem.</p>
                 </div>
 
                 {/* positioned images */}

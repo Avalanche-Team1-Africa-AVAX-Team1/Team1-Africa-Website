@@ -163,11 +163,11 @@ const TestimonialSlider = () => {
     }, []);
 
     return (
-        <div className="w-full overflow-hidden m-16 lt-1440:m-12 lt-1024:m-8 lt-768:m-6 lt-480:m-4 lt-1440:px-6 lt-1024:px-4 lt-768:px-3 lt-480:px-2"> {/* Add symmetric side padding across breakpoints for equal px */}
+        <div className="m-16 lt-1440:m-12 lt-1024:m-8 lt-768:m-6 lt-480:m-4 lt-1920:max-w-[1400px] lt-1920:mx-auto lt-1440:px-6 lt-1024:px-4 lt-768:px-3 lt-480:px-2 border-2 border-red-500"> {/* Add symmetric side padding across breakpoints for equal px and cap width below 4K */}
             {/* Background Design - WALL OF LOVE text behind card */}
-            <div className="relative pt-40 lt-1440:pt-32 lt-1024:pt-24 lt-768:pt-20 lt-480:pt-12"> {/* Scale vertical space below the background heading; slightly tighter on small phones */}
+            <div className="relative pt-40 lt-1920:pt-36 lt-1440:pt-28 lt-1024:pt-24 lt-768:pt-20 lt-480:pt-12"> {/* Scale vertical space below the background heading; slightly tighter on small phones */}
                 <div className="flex items-center justify-center pointer-events-none leading-none">
-                    <h1 className="text-[150px] lt-1440:text-[104px] lt-1024:text-[84px] lt-768:text-[48px] lt-480:text-[28px] tracking-[-1rem] lt-1440:tracking-[-0.6rem] lt-1024:tracking-[-0.4rem] lt-768:tracking-[-0.2rem] lt-480:tracking-[-0.12rem] text-black select-none whitespace-nowrap" style={{ fontFamily: "'Press Start 2P', monospace" }}> {/* Slightly smaller on laptop/large-laptop */}
+                    <h1 className="text-[150px] lt-1920:text-[128px] lt-1440:text-[80px] lt-1024:text-[60px] lt-768:text-[46px] lt-480:text-[28px] tracking-[-1rem] lt-1920:tracking-[-0.8rem] lt-1440:tracking-[-0.55rem] lt-1024:tracking-[-0.36rem] lt-768:tracking-[-0.2rem] lt-480:tracking-[-0.12rem] leading-[0.95] text-black select-none whitespace-nowrap" style={{ fontFamily: "'Press Start 2P', monospace" }}> {/* Make header smaller on ≤1920 and tighten leading */}
                         WALL OF <span className="text-red-500">LOVE</span>
                     </h1>
                 </div>
@@ -183,7 +183,7 @@ const TestimonialSlider = () => {
 
             {/* Testimonial Cards Container */}
             <div className="relative">
-                <div className='w-full cursor-pointer flex items-center justify-center py-2 translate-y-[-30%] lt-1024:translate-y-0 transform rotate-[-5deg] lt-1440:rotate-0 lt-1024:rotate-0'> {/* Remove tilt for ≤1440 to keep card visually centered */}
+                <div className='w-full cursor-pointer flex items-center justify-center py-2 translate-y-[-30%] lt-1440:translate-y-[-10%] lt-1024:translate-y-0 transform rotate-[-5deg] lt-1440:rotate-0 lt-1024:rotate-0'> {/* Reduce vertical offset for ≤1440 and remove tilt to keep card centered */}
                     <div 
                         ref={containerRef}
                         className={`relative w-[35%] lt-1920:w-[42%] lt-1440:w-[50%] lt-1024:w-[64%] lt-768:w-[86%] lt-480:w-[90%] max-w-[640px] mx-auto h-[20rem] lt-1920:h-[19rem] lt-1440:h-[18rem] lt-1024:h-[17rem] lt-768:h-[16rem] lt-480:h-[15rem] select-none transition-all duration-200 ${
@@ -237,11 +237,11 @@ const TestimonialSlider = () => {
                                     }}
                                 >
                                     {/* Card Stack Effect */}
-                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform rotate-1 translate-x-1 translate-y-1 lt-1440:rotate-0 lt-1440:translate-x-0 lt-1440:translate-y-0 lt-768:rotate-0 lt-768:translate-x-0 lt-768:translate-y-0"></div> {/* Remove skew/offset for ≤1440 to balance left/right padding */}
-                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform -rotate-1 translate-x-0.5 translate-y-0.5 lt-1440:rotate-0 lt-1440:translate-x-0 lt-1440:translate-y-0 lt-768:rotate-0 lt-768:translate-x-0 lt-768:translate-y-0"></div> {/* Remove skew/offset for ≤1440 */}
+                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform rotate-1 translate-x-1 translate-y-1 lt-1440:hidden"></div> {/* Hide stack layer on ≤1440 to avoid asymmetric look */}
+                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform -rotate-1 translate-x-0.5 translate-y-0.5 lt-1440:hidden"></div> {/* Hide stack layer on ≤1440 */}
 
                                     {/* Main Card */}
-                                    <div className="relative bg-white rounded-2xl border-2 border-black p-6 lt-1024:p-5 lt-768:p-4 lt-480:p-3 shadow-lg h-full flex flex-col justify-center"> {/* Card padding scales down */}
+                                    <div className="relative bg-white rounded-2xl border-2 border-black box-border p-6 lt-1024:p-5 lt-768:p-4 lt-480:p-3 shadow-lg h-full flex flex-col justify-center"> {/* Ensure symmetric padding with box-border */}
                                         {/* Twitter X Icon */}
                                         <div className="absolute top-4 right-4">
                                             <svg width="20" height="20" viewBox="0 0 24 24" fill="#1DA1F2">
