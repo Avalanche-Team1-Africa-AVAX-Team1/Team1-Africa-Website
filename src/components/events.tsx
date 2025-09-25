@@ -190,7 +190,7 @@ const Events = () => {
                 </div>
             </div>
 
-            {/* Responsive Styles */}
+            {/* Responsive Styles - extend existing rules without touching 4K baseline */}
             <style>{`
                 @media (max-width: 1200px) {
                     .arch-container > div {
@@ -213,6 +213,15 @@ const Events = () => {
                         width: 220px !important;
                         height: 300px !important;
                         margin: 0 4px !important;
+                    }
+                }
+
+                /* Further tighten for very small phones */
+                @media (max-width: 480px) {
+                    .arch-container > div {
+                        width: 190px !important;
+                        height: 260px !important;
+                        margin: 0 3px !important;
                     }
                 }
             `}</style>

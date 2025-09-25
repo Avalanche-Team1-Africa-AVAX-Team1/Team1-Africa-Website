@@ -4,8 +4,7 @@ import collage from '../assets/collage.png'
 
 const Gallery = () => {
     return (
-        {/* Reduce top padding on smaller screens; keep 4K baseline */}
-        <div className='px-4 pt-16 lt-1440:pt-14 lt-1024:pt-12 lt-768:pt-10 lt-480:pt-8 flex flex-col items-center justify-center'>
+        <div className='px-4 pt-16 lt-1440:pt-14 lt-1024:pt-12 lt-768:pt-10 lt-480:pt-8 flex flex-col items-center justify-center'> {/* Reduce top padding on smaller screens; keep 4K baseline */}
             {/* GalleryBadge */}
             <div className='flex flex-col items-center justify-center'>
                 <span className='bg-red-500 px-4 py-2 rounded-lg text-sm inline-block transform -rotate-12 font-bold'>
