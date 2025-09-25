@@ -13,7 +13,7 @@ const Gallery = () => {
                 {/* Scale heading down progressively on smaller screens */}
                 <p className='text-[48px] lt-1440:text-[40px] lt-1024:text-[34px] lt-768:text-[28px] lt-480:text-[24px] font-bold'>Africa is Building</p>
 
-                <p className='text-xl lt-1440:text-lg lt-1024:text-base lt-768:text-[0.95rem] text-gray-600'>Explore moments of innovation, learning, and celebration from across the continent.</p>
+                <p className='text-xl lt-1440:text-lg lt-1024:text-base lt-768:text-[0.95rem] text-gray-600 text-center'>Explore moments of innovation, learning, and celebration from across the continent.</p>
             </div>
 
             {/* Shrink CTA sizing on smaller screens */}
