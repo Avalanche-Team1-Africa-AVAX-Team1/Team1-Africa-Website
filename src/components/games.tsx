@@ -23,6 +23,15 @@ const FeaturedGames: React.FC = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [nextGameIndex, setNextGameIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState<'next' | 'prev'>('next');
+  const [isSmallScreen, setIsSmallScreen] = useState<boolean>(typeof window !== 'undefined' ? window.innerWidth <= 1023 : false); // Track ≤1023
+  const [showDetails, setShowDetails] = useState<boolean>(false); // Mobile/tablet details toggle
+
+  // Resize listener to keep small-screen state accurate
+  React.useEffect(() => {
+    const onResize = () => setIsSmallScreen(window.innerWidth <= 1023);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   const games: Game[] = [
     {
@@ -89,6 +98,7 @@ const FeaturedGames: React.FC = () => {
     setNextGameIndex(nextIndex);
     setSlideDirection('next');
     setIsTransitioning(true);
+    setShowDetails(false); // hide details when sliding on small screens
     setTimeout(() => {
       setCurrentGameIndex(nextIndex);
       setIsTransitioning(false);
@@ -101,6 +111,7 @@ const FeaturedGames: React.FC = () => {
     setNextGameIndex(prevIndex);
     setSlideDirection('prev');
     setIsTransitioning(true);
+    setShowDetails(false); // hide details when sliding on small screens
     setTimeout(() => {
       setCurrentGameIndex(prevIndex);
       setIsTransitioning(false);
@@ -120,25 +131,30 @@ const FeaturedGames: React.FC = () => {
             </div>
             <h1 className="text-4xl font-bold text-gray-900">Featured Games</h1>
           </div>
-          <div className="text-gray-600">
+          <div className="text-gray-600 lt-1024:hidden"> {/* Hide right copy on tablet/phone to reduce clutter */}
             <p className="text-lg">Showcase gaming on Avalanche and engage game</p>
             <p className="text-lg">developers/creators</p>
           </div>
         </div>
       </div>
 
-      {/* Cards Container - Breaking out of padding */}
-      <div className="relative w-[120vw] h-[900px] flex gap-10 pl-8">
+      {/* Mobile/Tablet Details button at top-right */}
+      <div className="hidden lt-1024:flex justify-end px-8 -mt-4 mb-2">
+        <button onClick={() => setShowDetails(s => !s)} className="px-4 py-2 rounded-full bg-gray-900 text-white text-sm">{showDetails ? 'Hide details' : 'Details'}</button>
+      </div>
+
+      {/* Cards Container - Responsive */}
+      <div className="relative w-[120vw] lt-1024:w-full h-[900px] lt-1920:h-[760px] lt-1440:h-[640px] lt-1024:h-[540px] lt-768:h-[480px] flex gap-10 lt-1024:gap-6 pl-8 lt-1024:pl-4">
         {/* Main Game Card */}
-        <div className="relative w-[60%] h-full bg-black rounded-2xl overflow-hidden">
-          {/* Gradient Overlay - Pure black on left, transparent on right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black to-transparent" />
+        <div className="relative group w-[60%] lt-1024:w-full h-full bg-black rounded-2xl overflow-hidden"> {/* group used for hover/tap interactions on small screens */}
+          {/* Gradient Overlay - desktop only */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black to-transparent lt-1024:hidden" /> {/* Keep original overlay on desktop/4K */}
 
           {/* Card Layout */}
-          <div className="relative z-10 h-full flex">
+          <div className="relative z-10 h-full flex lt-1024:block"> {/* Stack content on small screens */}
 
-            {/* Content Section */}
-            <div className="w-1/2 p-12 flex flex-col justify-between">
+            {/* Content Section (desktop/4K only) */}
+            <div className="w-1/2 p-12 flex flex-col justify-between lt-1024:hidden"> {/* Hide content on ≤1023: image-only view; ensure flex on laptops */}
               {/* Game Info */}
               <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
                 <h2 className="text-white text-5xl font-bold mb-6 leading-tight">
@@ -181,8 +197,8 @@ const FeaturedGames: React.FC = () => {
                   <p className="text-white font-medium text-lg">{currentGame.genre}</p>
                 </div>
 
-                {/* Navigation Controls */}
-                <div className="flex justify-center mt-10 items-center z-20">
+                {/* Navigation Controls - desktop only (preserve current 4K behavior) */}
+                <div className="flex justify-center mt-10 items-center z-20 lt-1024:hidden"> {/* Hide on ≤1023 */}
                   <button
                     onClick={prevGame}
                     className="w-24 h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors"
@@ -219,15 +235,15 @@ const FeaturedGames: React.FC = () => {
               </div>
             </div>
 
-            {/* Image Section */}
-            <div className="w-1/2 relative overflow-hidden">
+            {/* Image Section (always visible; full-bleed on small screens) */}
+            <div className="w-1/2 lt-1024:w-full relative overflow-hidden lt-1024:min-h-[340px] lt-1024:h-full"> {/* Image-only by default on small screens */}
               <div className="relative w-full h-full">
                 {/* Current Image */}
                 <img
                   key={`current-${currentGameIndex}`}
                   src={currentGame.image}
                   alt={currentGame.title}
-                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out ${isTransitioning
+                  className={`absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-500 ease-out ${isTransitioning
                     ? slideDirection === 'next'
                       ? '-translate-x-full'
                       : 'translate-x-full'
@@ -241,7 +257,7 @@ const FeaturedGames: React.FC = () => {
                     key={`next-${nextGameIndex}`}
                     src={games[nextGameIndex].image}
                     alt={games[nextGameIndex].title}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover z-0"
                     style={{
                       transform: slideDirection === 'next' ? 'translateX(100%)' : 'translateX(-100%)',
                       animation: slideDirection === 'next'
@@ -250,6 +266,21 @@ const FeaturedGames: React.FC = () => {
                     }}
                   />
                 )}
+              </div>
+
+              {/* Slide-in Details Overlay for ≤1023px */}
+              <div className={`hidden lt-1024:block absolute inset-0 bg-black/90 text-white px-6 py-6 transform transition-all duration-500 ease-out pointer-events-none z-20 ${showDetails ? 'translate-x-0 opacity-100 pointer-events-auto' : '-translate-x-full opacity-0'}`}> {/* Controlled by external Details button */}
+                <h2 className="text-2xl font-bold mb-3">{currentGame.title}</h2>
+                <p className="text-sm text-gray-300 mb-4">{currentGame.description}</p>
+                <div className="mb-3">
+                  <h3 className="text-gray-400 text-xs font-semibold mb-2">Platforms</h3>
+                  <div className="flex gap-2 flex-wrap">
+                    {currentGame.platforms.map((platform, index) => (
+                      <img key={index} src={platformIcons[platform as keyof typeof platformIcons] as string} alt={platform} className="w-8 h-8 object-contain" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm"><span className="text-gray-400">Genre:</span> {currentGame.genre}</p>
               </div>
             </div>
 
@@ -267,8 +298,8 @@ const FeaturedGames: React.FC = () => {
           </div>
         </div>
 
-        {/* Next Image Peek (only part of the image) */}
-        <div className="relative w-[40vw] h-full rounded-2xl overflow-hidden">
+        {/* Next Image Peek (hide on ≤1023 to keep only image content) */}
+        <div className="relative w-[40vw] h-full rounded-2xl overflow-hidden lt-1024:hidden">
           <img
             src={games[isTransitioning ? (nextGameIndex + 1) % games.length : (currentGameIndex + 1) % games.length].image}
             alt={games[isTransitioning ? (nextGameIndex + 1) % games.length : (currentGameIndex + 1) % games.length].title}
@@ -276,6 +307,34 @@ const FeaturedGames: React.FC = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
         </div>
+      </div>
+
+      {/* Mobile/Tablet Navigation under the card plus Details toggle */}
+      <div className="hidden lt-1024:flex justify-center items-center gap-6 mt-6 px-4"> {/* Outside card, visible on ≤1023 */}
+        <button onClick={prevGame} className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center">
+          <ChevronLeft size={18} />
+        </button>
+        <div className="flex gap-2">
+          {games.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                if (isTransitioning) return;
+                setIsTransitioning(true);
+                setShowDetails(false);
+                setTimeout(() => {
+                  setCurrentGameIndex(index);
+                  setIsTransitioning(false);
+                }, 300);
+              }}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-gray-900 scale-125' : 'bg-gray-400'}`}
+            />
+          ))}
+        </div>
+        <button onClick={nextGame} className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center">
+          <ChevronRight size={18} />
+        </button>
+        <button onClick={() => setShowDetails(s => !s)} className="ml-2 px-4 py-2 rounded-full bg-gray-900 text-white text-sm">{showDetails ? 'Hide details' : 'Details'}</button>
       </div>
     </div>
   );

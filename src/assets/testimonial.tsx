@@ -163,17 +163,17 @@ const TestimonialSlider = () => {
     }, []);
 
     return (
-        <div className="w-full overflow-hidden m-16">
+        <div className="m-16 lt-1440:m-12 lt-1024:m-8 lt-768:m-6 lt-480:m-4 lt-1920:max-w-[1400px] lt-1920:mx-auto lt-1440:px-6 lt-1024:px-4 lt-768:px-3 lt-480:px-2"> {/* Add symmetric side padding across breakpoints for equal px and cap width below 4K */}
             {/* Background Design - WALL OF LOVE text behind card */}
-            <div className="relative pt-40">
+            <div className="relative pt-40 lt-1920:pt-36 lt-1440:pt-28 lt-1024:pt-24 lt-768:pt-20 lt-480:pt-12"> {/* Scale vertical space below the background heading; slightly tighter on small phones */}
                 <div className="flex items-center justify-center pointer-events-none leading-none">
-                    <h1 className="text-[150px] tracking-[-1rem] text-black select-none whitespace-nowrap" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                    <h1 className="text-[150px] lt-1920:text-[128px] lt-1440:text-[80px] lt-1024:text-[60px] lt-768:text-[46px] lt-480:text-[28px] tracking-[-1rem] lt-1920:tracking-[-0.8rem] lt-1440:tracking-[-0.55rem] lt-1024:tracking-[-0.36rem] lt-768:tracking-[-0.2rem] lt-480:tracking-[-0.12rem] leading-[0.95] text-black select-none whitespace-nowrap" style={{ fontFamily: "'Press Start 2P', monospace" }}> {/* Make header smaller on ≤1920 and tighten leading */}
                         WALL OF <span className="text-red-500">LOVE</span>
                     </h1>
                 </div>
                 {/* Testimonies Badge */}
-                <div className="flex justify-center items-center absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <span className="bg-red-500 px-4 py-2 rounded-lg text-sm font-bold transform -rotate-12">
+                <div className="flex justify-center items-center absolute top-[40%] lt-1024:top-[36%] lt-768:top-[30%] lt-480:top-[26%] left-1/2 transform -translate-x-1/2 -translate-y-1/2"> {/* Reposition badge on smaller screens */}
+                    <span className="bg-red-500 px-4 py-2 lt-768:px-3 lt-768:py-1.5 rounded-lg text-sm lt-768:text-xs font-bold transform -rotate-12"> {/* Slightly smaller badge on small screens */}
                         Testimonies
                     </span>
                 </div>
@@ -183,10 +183,10 @@ const TestimonialSlider = () => {
 
             {/* Testimonial Cards Container */}
             <div className="relative">
-                <div className='w-full cursor-pointer flex items-center justify-center py-2 translate-y-[-30%] transform rotate-[-5deg]'>
+                <div className='w-full cursor-pointer flex items-center justify-center py-2 translate-y-[-30%] lt-1440:translate-y-[-10%] lt-1024:translate-y-0 transform rotate-[-5deg] lt-1440:rotate-0 lt-1024:rotate-0'> {/* Reduce vertical offset for ≤1440 and remove tilt to keep card centered */}
                     <div 
                         ref={containerRef}
-                        className={`relative w-[35%] h-[20rem] select-none transition-all duration-200 ${
+                        className={`relative w-[35%] lt-1920:w-[42%] lt-1440:w-[50%] lt-1024:w-[64%] lt-768:w-[86%] lt-480:w-[90%] max-w-[640px] mx-auto h-[20rem] lt-1920:h-[19rem] lt-1440:h-[18rem] lt-1024:h-[17rem] lt-768:h-[16rem] lt-480:h-[15rem] select-none transition-all duration-200 ${
                             isHovering ? 'cursor-pointer scale-102' : 'hover:scale-101'
                         }`}
                         onMouseEnter={handleMouseEnter}
@@ -237,11 +237,11 @@ const TestimonialSlider = () => {
                                     }}
                                 >
                                     {/* Card Stack Effect */}
-                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform rotate-1 translate-x-1 translate-y-1"></div>
-                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform -rotate-1 translate-x-0.5 translate-y-0.5"></div>
+                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform rotate-1 translate-x-1 translate-y-1 lt-1440:hidden"></div> {/* Hide stack layer on ≤1440 to avoid asymmetric look */}
+                                    <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform -rotate-1 translate-x-0.5 translate-y-0.5 lt-1440:hidden"></div> {/* Hide stack layer on ≤1440 */}
 
                                     {/* Main Card */}
-                                    <div className="relative bg-white rounded-2xl border-2 border-black p-6 shadow-lg h-full flex flex-col justify-center">
+                                    <div className="relative bg-white rounded-2xl border-2 border-black box-border p-6 lt-1024:p-5 lt-768:p-4 lt-480:p-3 shadow-lg h-full flex flex-col justify-center"> {/* Ensure symmetric padding with box-border */}
                                         {/* Twitter X Icon */}
                                         <div className="absolute top-4 right-4">
                                             <svg width="20" height="20" viewBox="0 0 24 24" fill="#1DA1F2">
@@ -254,7 +254,7 @@ const TestimonialSlider = () => {
                                             <img
                                                 src={testimonial.avatar}
                                                 alt={testimonial.name}
-                                                className="w-12 h-12 rounded-full mr-3"
+                                                className="w-12 h-12 lt-768:w-10 lt-768:h-10 lt-480:w-9 lt-480:h-9 rounded-full mr-3" /* Smaller avatar on small screens */
                                             />
                                             <div>
                                                 <h3 className="font-bold text-gray-900">{testimonial.name}</h3>
@@ -263,7 +263,7 @@ const TestimonialSlider = () => {
                                         </div>
 
                                         {/* Testimonial Text */}
-                                        <p className="text-gray-900 text-lg mb-4 leading-relaxed">
+                                        <p className="text-gray-900 text-lg lt-1024:text-base lt-768:text-[0.95rem] lt-480:text-[0.9rem] mb-4 leading-relaxed"> {/* Scale body text down */}
                                             {testimonial.text}
                                         </p>
 
@@ -308,7 +308,7 @@ const TestimonialSlider = () => {
                 )}
 
                 {/* Slide Indicators */}
-                <div className="absolute bottom-[0%] left-1/2 flex space-x-2 z-20 pb-2">
+                <div className="absolute bottom-[0%] left-1/2 transform -translate-x-1/2 flex space-x-2 z-20 pb-2 lt-768:pb-1"> {/* Always center dots; baseline visuals unchanged */}
                     {testimonials.map((_, index) => (
                         <button
                             key={index}
