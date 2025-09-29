@@ -156,13 +156,10 @@ const FeaturedGames: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile/Tablet Details button at top-right */}
-      <div className="hidden lt-1024:flex justify-end px-8 -mt-4 mb-2">
-        <button onClick={() => setShowDetails(s => !s)} className="px-4 py-2 rounded-full bg-gray-900 text-white text-sm">{showDetails ? 'Hide details' : 'Details'}</button>
-      </div>
+      
 
       {/* Cards Container - Responsive */}
-      <div className="relative w-[120vw] lt-1024:w-full h-[900px] lt-1920:h-[760px] lt-1440:h-[640px] lt-1024:h-[540px] lt-768:h-[480px] flex gap-10 lt-1024:gap-6 pl-8 lt-1024:pl-4">
+      <div className="relative w-[120vw] lt-1024:w-full h-[900px] lt-1920:h-[760px] lt-1440:h-[640px] lt-1024:h-[540px] lt-768:h-[480px] flex gap-10 lt-1024:gap-6 pl-8 lt-1024:px-4">
         {/* Main Game Card */}
         <div className="relative group w-[60%] lt-1024:w-full h-full bg-black rounded-2xl overflow-hidden"> {/* group used for hover/tap interactions on small screens */}
           {/* Gradient Overlay - desktop only */}
@@ -265,6 +262,12 @@ const FeaturedGames: React.FC = () => {
                         transition: transitionEnabled ? 'transform 500ms linear' : 'none'
                       }}
                     >
+                      <button
+                        onClick={() => setShowDetails(s => !s)}
+                        className="hidden lt-1024:flex absolute top-3 right-3 z-20 px-4 py-2 rounded-full bg-gray-900/80 text-white text-sm"
+                      >
+                        {showDetails ? 'Hide details' : 'Details'}
+                      </button>
                       <img src={game.image} alt={game.title} className="w-full h-full object-cover" />
                     </div>
                   ))}
@@ -311,7 +314,7 @@ const FeaturedGames: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile/Tablet Navigation under the card plus Details toggle */}
+      {/* Mobile/Tablet Navigation under the card */}
       <div className="hidden lt-1024:flex justify-center items-center gap-6 mt-6 px-4"> {/* Outside card, visible on ≤1023 */}
         <button onClick={prevGame} className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center">
           <ChevronLeft size={18} />
@@ -334,7 +337,6 @@ const FeaturedGames: React.FC = () => {
         <button onClick={nextGame} className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center">
           <ChevronRight size={18} />
         </button>
-        <button onClick={() => setShowDetails(s => !s)} className="ml-2 px-4 py-2 rounded-full bg-gray-900 text-white text-sm">{showDetails ? 'Hide details' : 'Details'}</button>
       </div>
     </div>
   );
