@@ -3,8 +3,9 @@ import { articles } from '../data/articles'
 
 const scrollByCards = (container: HTMLDivElement | null, dir: 1 | -1) => {
   if (!container) return
-  const amount = Math.min(container.clientWidth, 340) * dir
-  container.scrollBy({ left: amount, behavior: 'smooth' })
+  const firstCard = container.querySelector('[data-card]') as HTMLElement | null
+  const cardWidth = firstCard ? firstCard.clientWidth + 24 /* gap */ : Math.min(container.clientWidth, 380)
+  container.scrollBy({ left: cardWidth * dir, behavior: 'smooth' })
 }
 
 export default function Blog() {
@@ -32,16 +33,16 @@ export default function Blog() {
 
         <div ref={(el) => { scroller = el }} className="mt-6 flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory md:scroll-pl-2">
           {articles.map(a => (
-            <Link key={a.slug} to={`/blog/${a.slug}`} className="group w-[300px] shrink-0 snap-start">
-              <div className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:-translate-y-1">
-                <img src={a.featuredImage.url} alt={a.featuredImage.alt} loading="lazy" className="h-44 w-full object-cover" />
+            <Link key={a.slug} to={`/blog/${a.slug}`} className="group w-[420px] md:w-[480px] lg:w-[520px] shrink-0 snap-start">
+              <div data-card className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:-translate-y-1">
+                <img src={a.featuredImage.url} alt={a.featuredImage.alt} loading="lazy" className="h-64 md:h-72 lg:h-80 w-full object-cover" />
                 <div className="p-4">
                   <span className="rounded-full px-2.5 py-1 text-xs font-medium text-white" style={{ backgroundColor: a.category.color }}>{a.category.name}</span>
-                  <h3 className="mt-3 line-clamp-2 text-base font-semibold text-gray-900">{a.title}</h3>
-                  <div className="mt-2 text-xs text-gray-500">
+                  <h3 className="mt-3 line-clamp-2 text-2xl font-semibold text-gray-900">{a.title}</h3>
+                  <div className="mt-2 text-sm text-gray-500">
                     20th August, 2025 • {a.readTime} min read • {a.author.name}
                   </div>
-                  <p className="mt-2 line-clamp-2 text-sm text-gray-600">{a.excerpt}</p>
+                  <p className="mt-2 line-clamp-3 text-base text-gray-600">{a.excerpt}</p>
                 </div>
               </div>
             </Link>
