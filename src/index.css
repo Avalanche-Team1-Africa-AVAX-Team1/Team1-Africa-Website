@@ -11,3 +11,7 @@
     transform: translateX(-50%);
   }
 }
+
+/* Hide native scrollbars while preserving scroll behavior */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

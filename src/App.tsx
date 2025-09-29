@@ -10,6 +10,7 @@ import TestimonialSlider from './assets/testimonial'
 import Events from './components/events'
 import Footer from './components/footer'
 import Games from './components/games'
+import Blog from './components/blog'
 function App() {
 
   return (
@@ -25,6 +26,7 @@ function App() {
         <TestimonialSlider />
       </div>
       <Events />
+      <Blog />
       <Games />
       <Footer />
     </>
