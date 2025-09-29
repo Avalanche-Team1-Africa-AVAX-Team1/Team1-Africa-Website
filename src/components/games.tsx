@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
 import providenceImg from '../assets/providence.jpg';
 import offTheGridImg from '../assets/off-the-grid.jpg';
 import domiImg from '../assets/domi.webp';
@@ -262,12 +262,14 @@ const FeaturedGames: React.FC = () => {
                         transition: transitionEnabled ? 'transform 500ms linear' : 'none'
                       }}
                     >
-                      <button
-                        onClick={() => setShowDetails(s => !s)}
-                        className="hidden lt-1024:flex absolute top-3 right-3 z-20 px-4 py-2 rounded-full bg-gray-900/80 text-white text-sm"
-                      >
-                        {showDetails ? 'Hide details' : 'Details'}
-                      </button>
+                      {!showDetails && (
+                        <button
+                          onClick={() => setShowDetails(true)}
+                          className="hidden lt-1024:flex absolute top-3 right-3 z-20 px-4 py-2 rounded-full bg-gray-900/80 text-white text-sm"
+                        >
+                          Details
+                        </button>
+                      )}
                       <img src={game.image} alt={game.title} className="w-full h-full object-cover" />
                     </div>
                   ))}
@@ -276,6 +278,13 @@ const FeaturedGames: React.FC = () => {
 
               {/* Slide-in Details Overlay for ≤1023px */}
               <div className={`hidden lt-1024:block absolute inset-0 bg-black/90 text-white px-6 py-6 transform transition-all duration-500 ease-out pointer-events-none z-20 ${showDetails ? 'translate-x-0 opacity-100 pointer-events-auto' : '-translate-x-full opacity-0'}`}> {/* Controlled by external Details button */}
+                <button
+                  onClick={() => setShowDetails(false)}
+                  aria-label="Close details"
+                  className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
+                >
+                  <X size={18} />
+                </button>
                 <h2 className="text-2xl font-bold mb-3">{games[currentGameIndex].title}</h2>
                 <p className="text-sm text-gray-300 mb-4">{games[currentGameIndex].description}</p>
                 <div className="mb-3">
