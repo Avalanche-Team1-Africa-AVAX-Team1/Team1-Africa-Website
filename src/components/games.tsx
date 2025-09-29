@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
 import providenceImg from '../assets/providence.jpg';
 import offTheGridImg from '../assets/off-the-grid.jpg';
 import domiImg from '../assets/domi.webp';
@@ -21,19 +21,19 @@ interface Game {
 const FeaturedGames: React.FC = () => {
   const [currentGameIndex, setCurrentGameIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [nextGameIndex, setNextGameIndex] = useState(0);
-  const [slideDirection, setSlideDirection] = useState<'next' | 'prev'>('next');
-  const [isSmallScreen, setIsSmallScreen] = useState<boolean>(typeof window !== 'undefined' ? window.innerWidth <= 1023 : false); // Track ≤1023
+  const [slideIndex, setSlideIndex] = useState(1); // with clones: 0..slides.length-1
+  const [transitionEnabled, setTransitionEnabled] = useState(true);
+  // const [isSmallScreen, setIsSmallScreen] = useState<boolean>(typeof window !== 'undefined' ? window.innerWidth <= 1023 : false); // Track ≤1023
   const [showDetails, setShowDetails] = useState<boolean>(false); // Mobile/tablet details toggle
 
   // Resize listener to keep small-screen state accurate
-  React.useEffect(() => {
-    const onResize = () => setIsSmallScreen(window.innerWidth <= 1023);
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
+  // React.useEffect(() => {
+  //   const onResize = () => setIsSmallScreen(window.innerWidth <= 1023);
+  //   window.addEventListener('resize', onResize);
+  //   return () => window.removeEventListener('resize', onResize);
+  // }, []);
 
-  const games: Game[] = [
+  const games: Game[] = React.useMemo(() => [
     {
       id: 1,
       title: "PROVIDENCE",
@@ -82,7 +82,7 @@ const FeaturedGames: React.FC = () => {
       platforms: ["Windows", "Xbox", "Steam"],
       image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
     }
-  ];
+  ], []);
 
   const platformIcons = {
     "Windows": windowsIcon,
@@ -92,33 +92,51 @@ const FeaturedGames: React.FC = () => {
     "Nintendo Switch": nintendoSwitchIcon
   };
 
+  // Build slides with clones for seamless wrap-around
+  const slides = React.useMemo(() => {
+    const last = games[games.length - 1];
+    const first = games[0];
+    return [last, ...games, first];
+  }, [games]);
+
+  const handleTransitionEnd = () => {
+    if (slideIndex === slides.length - 1) {
+      // reached end clone, jump to first real without transition
+      setTransitionEnabled(false);
+      setSlideIndex(1);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setTransitionEnabled(true));
+      });
+    } else if (slideIndex === 0) {
+      // reached start clone, jump to last real without transition
+      setTransitionEnabled(false);
+      setSlideIndex(slides.length - 2);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setTransitionEnabled(true));
+      });
+    }
+    setIsTransitioning(false);
+  };
+
   const nextGame = () => {
     if (isTransitioning) return;
     const nextIndex = (currentGameIndex + 1) % games.length;
-    setNextGameIndex(nextIndex);
-    setSlideDirection('next');
     setIsTransitioning(true);
-    setShowDetails(false); // hide details when sliding on small screens
-    setTimeout(() => {
-      setCurrentGameIndex(nextIndex);
-      setIsTransitioning(false);
-    }, 500);
+    setShowDetails(false);
+    setCurrentGameIndex(nextIndex);
+    setSlideIndex((i) => i + 1);
   };
 
   const prevGame = () => {
     if (isTransitioning) return;
     const prevIndex = (currentGameIndex - 1 + games.length) % games.length;
-    setNextGameIndex(prevIndex);
-    setSlideDirection('prev');
     setIsTransitioning(true);
-    setShowDetails(false); // hide details when sliding on small screens
-    setTimeout(() => {
-      setCurrentGameIndex(prevIndex);
-      setIsTransitioning(false);
-    }, 500);
+    setShowDetails(false);
+    setCurrentGameIndex(prevIndex);
+    setSlideIndex((i) => i - 1);
   };
 
-  const currentGame = games[currentGameIndex];
+  // const currentGame = games[currentGameIndex];
 
   return (
     <div className="bg-gray-100 py-16">
@@ -138,13 +156,10 @@ const FeaturedGames: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile/Tablet Details button at top-right */}
-      <div className="hidden lt-1024:flex justify-end px-8 -mt-4 mb-2">
-        <button onClick={() => setShowDetails(s => !s)} className="px-4 py-2 rounded-full bg-gray-900 text-white text-sm">{showDetails ? 'Hide details' : 'Details'}</button>
-      </div>
+      
 
       {/* Cards Container - Responsive */}
-      <div className="relative w-[120vw] lt-1024:w-full h-[900px] lt-1920:h-[760px] lt-1440:h-[640px] lt-1024:h-[540px] lt-768:h-[480px] flex gap-10 lt-1024:gap-6 pl-8 lt-1024:pl-4">
+      <div className="relative w-[120vw] lt-1024:w-full h-[900px] lt-1920:h-[760px] lt-1440:h-[640px] lt-1024:h-[540px] lt-768:h-[480px] flex gap-10 lt-1024:gap-6 pl-8 lt-1024:px-4">
         {/* Main Game Card */}
         <div className="relative group w-[60%] lt-1024:w-full h-full bg-black rounded-2xl overflow-hidden"> {/* group used for hover/tap interactions on small screens */}
           {/* Gradient Overlay - desktop only */}
@@ -158,11 +173,11 @@ const FeaturedGames: React.FC = () => {
               {/* Game Info */}
               <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
                 <h2 className="text-white text-5xl font-bold mb-6 leading-tight">
-                  {currentGame.title}
+                  {games[currentGameIndex].title}
                 </h2>
 
                 <p className="text-gray-300 text-xl mb-8 leading-relaxed">
-                  {currentGame.description}
+                  {games[currentGameIndex].description}
                 </p>
 
                 <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-lg flex items-center gap-3 transition-all duration-300 hover:scale-105 border border-white/20">
@@ -176,7 +191,7 @@ const FeaturedGames: React.FC = () => {
                 <div className="mb-6">
                   <h3 className="text-gray-400 text-sm font-semibold mb-3">Platforms</h3>
                   <div className="flex gap-3 flex-wrap">
-                    {currentGame.platforms.map((platform, index) => (
+                    {games[currentGameIndex].platforms.map((platform, index) => (
                       <div
                         key={index}
                         className="w-12 h-12 backdrop-blur-sm rounded-lg flex items-center justify-center text-xl"
@@ -194,7 +209,7 @@ const FeaturedGames: React.FC = () => {
 
                 <div>
                   <h3 className="text-gray-400 text-sm font-semibold mb-2">Genre</h3>
-                  <p className="text-white font-medium text-lg">{currentGame.genre}</p>
+                  <p className="text-white font-medium text-lg">{games[currentGameIndex].genre}</p>
                 </div>
 
                 {/* Navigation Controls - desktop only (preserve current 4K behavior) */}
@@ -212,15 +227,13 @@ const FeaturedGames: React.FC = () => {
                       <button
                         key={index}
                         onClick={() => {
-                          if (isTransitioning) return;
+                          if (isTransitioning || index === currentGameIndex) return;
                           setIsTransitioning(true);
-                          setTimeout(() => {
-                            setCurrentGameIndex(index);
-                            setIsTransitioning(false);
-                          }, 300);
+                          setShowDetails(false);
+                          setCurrentGameIndex(index);
+                          setSlideIndex(index + 1);
                         }}
-                        className={`w-3 h-3 mx-4 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-white scale-125' : 'bg-gray-400 hover:bg-gray-300'
-                          }`}
+                        className={`w-3 h-3 mx-4 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-white scale-125' : 'bg-gray-400 hover:bg-gray-300'}`}
                       />
                     ))}
                   </div>
@@ -233,83 +246,84 @@ const FeaturedGames: React.FC = () => {
                   </button>
                 </div>
               </div>
+
             </div>
 
-            {/* Image Section (always visible; full-bleed on small screens) */}
+            {/* Image Section (moves on track) */}
             <div className="w-1/2 lt-1024:w-full relative overflow-hidden lt-1024:min-h-[340px] lt-1024:h-full"> {/* Image-only by default on small screens */}
-              <div className="relative w-full h-full">
-                {/* Current Image */}
-                <img
-                  key={`current-${currentGameIndex}`}
-                  src={currentGame.image}
-                  alt={currentGame.title}
-                  className={`absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-500 ease-out ${isTransitioning
-                    ? slideDirection === 'next'
-                      ? '-translate-x-full'
-                      : 'translate-x-full'
-                    : 'translate-x-0'
-                    }`}
-                />
-
-                {/* Incoming Image */}
-                {isTransitioning && (
-                  <img
-                    key={`next-${nextGameIndex}`}
-                    src={games[nextGameIndex].image}
-                    alt={games[nextGameIndex].title}
-                    className="absolute inset-0 w-full h-full object-cover z-0"
-                    style={{
-                      transform: slideDirection === 'next' ? 'translateX(100%)' : 'translateX(-100%)',
-                      animation: slideDirection === 'next'
-                        ? 'slideInFromRight 0.5s ease-out forwards'
-                        : 'slideInFromLeft 0.5s ease-out forwards'
-                    }}
-                  />
-                )}
+              <div className="w-full h-full overflow-hidden">
+                <div className="relative w-full h-full" onTransitionEnd={handleTransitionEnd}>
+                  {slides.map((game, idx) => (
+                    <div
+                      key={`main-slide-${game.id}-${idx}`}
+                      className="absolute top-0 left-0 w-full h-full"
+                      style={{
+                        transform: `translateX(${(idx - slideIndex) * 100}%)`,
+                        transition: transitionEnabled ? 'transform 500ms linear' : 'none'
+                      }}
+                    >
+                      {!showDetails && (
+                        <button
+                          onClick={() => setShowDetails(true)}
+                          className="hidden lt-1024:flex absolute top-3 right-3 z-20 px-4 py-2 rounded-full bg-gray-900/80 text-white text-sm"
+                        >
+                          Details
+                        </button>
+                      )}
+                      <img src={game.image} alt={game.title} className="w-full h-full object-cover" />
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Slide-in Details Overlay for ≤1023px */}
               <div className={`hidden lt-1024:block absolute inset-0 bg-black/90 text-white px-6 py-6 transform transition-all duration-500 ease-out pointer-events-none z-20 ${showDetails ? 'translate-x-0 opacity-100 pointer-events-auto' : '-translate-x-full opacity-0'}`}> {/* Controlled by external Details button */}
-                <h2 className="text-2xl font-bold mb-3">{currentGame.title}</h2>
-                <p className="text-sm text-gray-300 mb-4">{currentGame.description}</p>
+                <button
+                  onClick={() => setShowDetails(false)}
+                  aria-label="Close details"
+                  className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
+                >
+                  <X size={18} />
+                </button>
+                <h2 className="text-2xl font-bold mb-3">{games[currentGameIndex].title}</h2>
+                <p className="text-sm text-gray-300 mb-4">{games[currentGameIndex].description}</p>
                 <div className="mb-3">
                   <h3 className="text-gray-400 text-xs font-semibold mb-2">Platforms</h3>
                   <div className="flex gap-2 flex-wrap">
-                    {currentGame.platforms.map((platform, index) => (
+                    {games[currentGameIndex].platforms.map((platform, index) => (
                       <img key={index} src={platformIcons[platform as keyof typeof platformIcons] as string} alt={platform} className="w-8 h-8 object-contain" />
                     ))}
                   </div>
                 </div>
-                <p className="text-sm"><span className="text-gray-400">Genre:</span> {currentGame.genre}</p>
+                <p className="text-sm"><span className="text-gray-400">Genre:</span> {games[currentGameIndex].genre}</p>
               </div>
             </div>
-
-            {/* CSS Animations */}
-            <style>{`
-                @keyframes slideInFromRight {
-                  from { transform: translateX(100%); }
-                  to { transform: translateX(0%); }
-                }
-                @keyframes slideInFromLeft {
-                  from { transform: translateX(-100%); }
-                  to { transform: translateX(0%); }
-                }
-              `}</style>
           </div>
         </div>
 
         {/* Next Image Peek (hide on ≤1023 to keep only image content) */}
         <div className="relative w-[40vw] h-full rounded-2xl overflow-hidden lt-1024:hidden">
-          <img
-            src={games[isTransitioning ? (nextGameIndex + 1) % games.length : (currentGameIndex + 1) % games.length].image}
-            alt={games[isTransitioning ? (nextGameIndex + 1) % games.length : (currentGameIndex + 1) % games.length].title}
-            className="absolute top-0 left-0 h-full w-[40vw] object-cover"
-          />
+          <div className="w-full h-full overflow-hidden">
+            <div className="relative w-full h-full">
+              {slides.map((game, idx) => (
+                <div
+                  key={`peek-slide-${game.id}-${idx}`}
+                  className="absolute top-0 left-0 w-full h-full"
+                  style={{
+                    transform: `translateX(${(idx - (slideIndex + 1)) * 100}%)`,
+                    transition: transitionEnabled ? 'transform 500ms linear' : 'none'
+                  }}
+                >
+                  <img src={game.image} alt={game.title} className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
           <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
         </div>
       </div>
 
-      {/* Mobile/Tablet Navigation under the card plus Details toggle */}
+      {/* Mobile/Tablet Navigation under the card */}
       <div className="hidden lt-1024:flex justify-center items-center gap-6 mt-6 px-4"> {/* Outside card, visible on ≤1023 */}
         <button onClick={prevGame} className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center">
           <ChevronLeft size={18} />
@@ -319,13 +333,11 @@ const FeaturedGames: React.FC = () => {
             <button
               key={index}
               onClick={() => {
-                if (isTransitioning) return;
+                if (isTransitioning || index === currentGameIndex) return;
                 setIsTransitioning(true);
                 setShowDetails(false);
-                setTimeout(() => {
-                  setCurrentGameIndex(index);
-                  setIsTransitioning(false);
-                }, 300);
+                setCurrentGameIndex(index);
+                setSlideIndex(index + 1);
               }}
               className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-gray-900 scale-125' : 'bg-gray-400'}`}
             />
@@ -334,7 +346,6 @@ const FeaturedGames: React.FC = () => {
         <button onClick={nextGame} className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center">
           <ChevronRight size={18} />
         </button>
-        <button onClick={() => setShowDetails(s => !s)} className="ml-2 px-4 py-2 rounded-full bg-gray-900 text-white text-sm">{showDetails ? 'Hide details' : 'Details'}</button>
       </div>
     </div>
   );
