@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import logo from '../assets/logo.png';
+// import logo from '../assets/logo.png';
 import arrow from '../assets/arrow.svg';
 import arrowUp from '../assets/arrow-up.svg';
+import logo from '../assets/team1logo.png';
 
 const Navbar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -10,7 +11,7 @@ const Navbar = () => {
         <nav className="w-full">
             {/* Reduced vertical padding on smaller screens; ≥1920px unchanged */}
             <div className="flex items-center justify-between py-4 lt-1024:py-3 lt-768:py-2">
-                <div className="flex items-center">
+                <div className="flex items-center bg-black rounded-full">
                     <img src={logo} alt="team1-logo" width={50} height={50} />
                 </div>
 
