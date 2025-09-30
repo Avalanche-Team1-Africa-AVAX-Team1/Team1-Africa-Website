@@ -177,6 +177,10 @@ const TestimonialSlider = () => {
         setVisibleCards(prev => Math.min(prev + 2, testimonials.length));
     };
 
+    const handleViewLess = () => {
+        setVisibleCards(2);
+    };
+
     return (
         <div className="bg-gray-50">
             {/* Mobile Static View - Simple card grid with View More */}
@@ -230,16 +234,24 @@ const TestimonialSlider = () => {
                     ))}
                 </div>
 
-                {visibleCards < testimonials.length && (
-                    <div className="flex justify-center mt-8">
+                <div className="flex justify-center gap-4 mt-8">
+                    {visibleCards < testimonials.length && (
                         <button
                             onClick={handleLoadMore}
                             className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200"
                         >
                             View More
                         </button>
-                    </div>
-                )}
+                    )}
+                    {visibleCards > 2 && (
+                        <button
+                            onClick={handleViewLess}
+                            className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200"
+                        >
+                            View Less
+                        </button>
+                    )}
+                </div>
             </div>
 
             {/* Desktop Animated View - Keep exactly as is */}
