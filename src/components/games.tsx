@@ -23,6 +23,7 @@ const FeaturedGames: React.FC = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showDetails, setShowDetails] = useState<boolean>(false);
   const [cardPositions, setCardPositions] = useState<number[]>([0, 1, 2]);
+  const [visibleGames, setVisibleGames] = useState(2);
 
   const games: Game[] = React.useMemo(() => [
     {
@@ -117,8 +118,73 @@ const FeaturedGames: React.FC = () => {
     return (currentGameIndex + 2) % games.length;
   };
 
+  const handleLoadMore = () => {
+    setVisibleGames(prev => Math.min(prev + 2, games.length));
+  };
+
   return (
     <div className="bg-gray-100 py-16">
+      {/* Mobile Static View - Simple card grid with View More */}
+      <div className="lt-1024:block hidden px-6 py-12">
+        <div className="mb-8">
+          <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-6">
+            Games
+          </div>
+          <h1 className="text-3xl lt-768:text-2xl font-bold text-gray-900 mb-2">Featured Games</h1>
+        </div>
+
+        <div className="space-y-6">
+          {games.slice(0, visibleGames).map((game) => (
+            <div key={game.id} className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100">
+              <img src={game.image} alt={game.title} className="w-full h-48 object-cover" />
+              
+              <div className="p-5">
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">{game.title}</h2>
+                <p className="text-gray-600 mb-4 leading-relaxed">{game.description}</p>
+                
+                <div className="mb-4">
+                  <h3 className="text-gray-500 text-sm font-semibold mb-2">Platforms</h3>
+                  <div className="flex gap-3 flex-wrap">
+                    {game.platforms.map((platform, index) => (
+                      <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <img
+                          src={platformIcons[platform as keyof typeof platformIcons] as string}
+                          alt={platform}
+                          className="w-8 h-8 object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <h3 className="text-gray-500 text-sm font-semibold mb-1">Genre</h3>
+                  <p className="text-gray-900 font-medium">{game.genre}</p>
+                </div>
+
+                <button className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200">
+                  VIEW ON IMDB
+                  <ExternalLink size={18} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {visibleGames < games.length && (
+          <div className="flex justify-center mt-8">
+            <button
+              onClick={handleLoadMore}
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200"
+            >
+              View More
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Desktop Carousel View - Keep exactly as is */}
+      <div className="lt-1024:hidden block bg-gray-100 py-16">
       <div className="w-full px-8">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -362,6 +428,7 @@ const FeaturedGames: React.FC = () => {
         >
           <ChevronRight size={18} />
         </button>
+      </div>
       </div>
     </div>
   );
