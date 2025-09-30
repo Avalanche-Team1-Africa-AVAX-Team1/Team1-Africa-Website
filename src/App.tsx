@@ -10,6 +10,7 @@ import TestimonialSlider from './assets/testimonial'
 import Events from './components/events'
 import Footer from './components/footer'
 import Games from './components/games'
+import Blog from './components/blog'
 function App() {
 
   return (
@@ -22,9 +23,12 @@ function App() {
         <Partners />
         <Build />
         <Gallery />
-        <TestimonialSlider />
+        <div className="mt-16 lt-1024:mt-48">
+          <TestimonialSlider />
+        </div>
       </div>
       <Events />
+      <Blog />
       <Games />
       <Footer />
     </>
