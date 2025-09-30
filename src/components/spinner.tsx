@@ -1,4 +1,4 @@
-import star from '../assets/star.svg'
+import star from '../assets/Star.svg'
 
 interface EventBannerProps {
   events?: string[];

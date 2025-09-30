@@ -17,9 +17,9 @@ const Partners = () => {
                 </span>
             </div>
 
-            <div className='text-center md:w-[40%] mb-16'>
-                <p className='text-5xl font-bold leading-tight'>Trusted By Top Blockchain Teams That Know Every Step Matters.</p>
-                <p className='text-lg text-gray-600 pt-4'>We proudly collaborate with organizations that believe in Africa's potential.</p>
+            <div className='text-center md:w-[60%] mb-16'>
+                <p className='text-2xl md:text-3xl font-bold leading-tight'>Trusted By Top Blockchain Teams That Know Every Step Matters.</p>
+                <p className='text-sm md:text-sm text-gray-600 pt-1 md:pt-4'>We proudly collaborate with organizations that believe in Africa's potential.</p>
             </div>
 
             {/* Dotted Table Structure */}
