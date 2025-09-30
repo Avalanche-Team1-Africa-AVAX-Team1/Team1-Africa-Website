@@ -23,7 +23,9 @@ function App() {
         <Partners />
         <Build />
         <Gallery />
-        <TestimonialSlider />
+        <div className="mt-16 lt-1024:mt-48">
+          <TestimonialSlider />
+        </div>
       </div>
       <Events />
       <Blog />

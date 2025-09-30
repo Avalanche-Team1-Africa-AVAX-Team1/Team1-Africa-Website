@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,6 +8,7 @@ const TestimonialSlider = () => {
     const panelRef = useRef<HTMLDivElement>(null);
     const stackRef = useRef<HTMLDivElement>(null);
     const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+    const [visibleCards, setVisibleCards] = useState(2);
 
     const testimonials = [
         {
@@ -172,8 +173,77 @@ const TestimonialSlider = () => {
         return () => mm.revert();
     }, [testimonials.length]);
 
+    const handleLoadMore = () => {
+        setVisibleCards(prev => Math.min(prev + 2, testimonials.length));
+    };
+
     return (
         <div className="bg-gray-50">
+            {/* Mobile Static View - Simple card grid with View More */}
+            <div className="lt-1024:block hidden px-6 py-12">
+                <div className="text-center mb-8">
+                    <h2 className="text-4xl lt-768:text-3xl lt-480:text-2xl font-bold tracking-tight mb-4" 
+                        style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                        WALL OF <span className="text-red-500">LOVE</span>
+                    </h2>
+                    <span className="inline-block bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold transform -rotate-6">
+                        Testimonies
+                    </span>
+                </div>
+
+                <div className="max-w-4xl mx-auto space-y-6">
+                    {testimonials.slice(0, visibleCards).map((testimonial, index) => (
+                        <div
+                            key={index}
+                            className="bg-white rounded-2xl border-2 border-black shadow-lg p-5 lt-480:p-4 relative"
+                        >
+                            <div className="absolute top-4 right-4">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#1DA1F2">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                </svg>
+                            </div>
+
+                            <div className="flex items-center mb-4">
+                                <img
+                                    src={testimonial.avatar}
+                                    alt={testimonial.name}
+                                    className="w-12 h-12 lt-480:w-10 lt-480:h-10 rounded-full mr-3"
+                                />
+                                <div>
+                                    <h3 className="font-bold text-gray-900">{testimonial.name}</h3>
+                                    <p className="text-gray-500 text-sm">{testimonial.handle}</p>
+                                </div>
+                            </div>
+
+                            <p className="text-gray-900 text-base lt-480:text-sm mb-4 leading-relaxed">
+                                {testimonial.text}
+                            </p>
+
+                            <div className="flex items-center text-gray-400 text-sm">
+                                <span>{testimonial.time}</span>
+                                <span className="mx-2">•</span>
+                                <span>{testimonial.date}</span>
+                                <span className="mx-2">•</span>
+                                <span>{testimonial.team}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {visibleCards < testimonials.length && (
+                    <div className="flex justify-center mt-8">
+                        <button
+                            onClick={handleLoadMore}
+                            className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200"
+                        >
+                            View More
+                        </button>
+                    </div>
+                )}
+            </div>
+
+            {/* Desktop Animated View - Keep exactly as is */}
+            <div className="lt-1024:hidden block bg-gray-50">
             {/* Panel section - exactly like your reference */}
             <section ref={panelRef} className="panel relative py-28">
                 <div className="container mx-auto w-full">
@@ -260,6 +330,7 @@ const TestimonialSlider = () => {
                     </div>
                 </div>
             </section>
+            </div>
         </div>
     );
 };

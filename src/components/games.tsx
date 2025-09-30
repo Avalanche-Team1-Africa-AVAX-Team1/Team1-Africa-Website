@@ -134,7 +134,7 @@ const FeaturedGames: React.FC = () => {
         </div>
       </div>
 
-      <div className="relative border-4 border-red-500 w-[120vw] lt-1024:w-full h-[900px] lt-1920:h-[760px] lt-1440:h-[640px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
+      <div className="relative w-[120vw] lt-1024:w-full h-[900px] lt-1920:h-[760px] lt-1440:h-[640px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
         {/* Fixed Details Card - Left Side (Desktop Only) */}
         <div className="relative w-[30%] lt-1024:hidden h-full bg-black rounded-l-2xl p-12 flex flex-col justify-between z-10">
           <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
