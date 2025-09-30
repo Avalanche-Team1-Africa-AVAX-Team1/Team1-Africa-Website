@@ -70,7 +70,19 @@ export const articles: Article[] = [
     excerpt:
       'We highlight the women leading the community through education, mentorship, and on-chain entrepreneurship.',
     content:
-      `<p>Diversity strengthens ecosystems. Learn about programs designed to empower women founders and creators building on Avalanche.</p>`,
+      `<p>Diversity strengthens ecosystems. Learn about programs designed to empower women founders and creators building on Avalanche.</p>
+      <h2>Community Programs</h2>
+      <p>Across Africa and beyond, community leads are organizing workshops, office hours, and mentorship circles that help more women ship their first dApps. These programs emphasize practical skills: key management, smart contract patterns, security basics, and user onboarding.</p>
+      <h3>Mentorship that compounds</h3>
+      <p>Mentors pair weekly with cohorts to review product designs, track metrics, and prepare demos for community calls. By focusing on repeatable playbooks, cohorts share resources—grant templates, starter repositories, and content kits—so each group moves faster than the last.</p>
+      <blockquote>“When founders feel seen and supported, they tend to out-execute expectations.”</blockquote>
+      <h2>What they are building</h2>
+      <ul>
+        <li>Creator marketplaces using Subnets for predictable fees and compliance boundaries.</li>
+        <li>On-chain microgrants for art collectives and local communities.</li>
+        <li>Reputation primitives for verifiable teaching, speaking, and community leadership.</li>
+      </ul>
+      <p>These stories are only a glimpse of a growing movement. If you want to participate—whether as a mentor, creator, or partner—reach out to join our next cohort.</p>`,
     featuredImage: { url: collageImg, alt: 'Collage of community highlights' },
     category: { name: 'Education', color: '#F97316', slug: 'education' },
     author: { name: 'Avalanche Team1' },

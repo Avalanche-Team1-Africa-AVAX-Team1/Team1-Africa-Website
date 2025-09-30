@@ -176,7 +176,7 @@ const TestimonialSlider = () => {
         <div className="bg-gray-50">
             {/* Panel section - exactly like your reference */}
             <section ref={panelRef} className="panel relative py-28">
-                <div className="container mx-auto">
+                <div className="container mx-auto border-2 border-red-500  overflow-y-hidden">
                     {/* Background text */}
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
                         <div className="text-center">

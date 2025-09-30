@@ -34,15 +34,15 @@ export default function Blog() {
         <div ref={(el) => { scroller = el }} className="mt-6 flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory md:scroll-pl-2">
           {articles.map(a => (
             <Link key={a.slug} to={`/blog/${a.slug}`} className="group w-[420px] md:w-[480px] lg:w-[520px] shrink-0 snap-start">
-              <div data-card className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:-translate-y-1">
+              <div data-card className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:scale-105 flex flex-col min-h-[520px] md:min-h-[560px] lg:min-h-[600px]">
                 <img src={a.featuredImage.url} alt={a.featuredImage.alt} loading="lazy" className="h-64 md:h-72 lg:h-80 w-full object-cover" />
-                <div className="p-4">
-                  <span className="rounded-full px-2.5 py-1 text-xs font-medium text-white" style={{ backgroundColor: a.category.color }}>{a.category.name}</span>
-                  <h3 className="mt-3 line-clamp-2 text-2xl font-semibold text-gray-900">{a.title}</h3>
-                  <div className="mt-2 text-sm text-gray-500">
+                <div className="p-4 flex-1 flex flex-col">
+                  <span className="rounded-2xl px-4 py-2 text-xs font-medium text-white w-fit" style={{ backgroundColor: a.category.color }}>{a.category.name}</span>
+                  <h3 className="mt-3 clamp-2 text-2xl font-semibold text-gray-900">{a.title}</h3>
+                  <div className="mt-2 text-sm text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">
                     20th August, 2025 • {a.readTime} min read • {a.author.name}
                   </div>
-                  <p className="mt-2 line-clamp-3 text-base text-gray-600">{a.excerpt}</p>
+                  <p className="mt-2 clamp-3 text-base text-gray-600">{a.excerpt}</p>
                 </div>
               </div>
             </Link>

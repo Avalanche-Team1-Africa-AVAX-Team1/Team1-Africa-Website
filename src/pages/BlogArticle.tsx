@@ -115,52 +115,52 @@ export default function BlogArticle() {
   }
 
   return (
-    <article className="px-4 md:px-8 lg:px-16">
-      {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl bg-gray-100">
-        <img
-          src={article.featuredImage.url}
-          alt={article.featuredImage.alt}
-          loading="eager"
-          className="h-[320px] w-full object-cover md:h-[420px]"
-        />
-        <div className="absolute left-4 top-4">
-          <CategoryBadge label={article.category.name} color={article.category.color} />
+    <article className="px-4 md:px-8 lg:px-16 ">
+      <div className="mx-auto w-full max-w-6xl">
+        {/* Title + Meta */}
+        <div className="mt-6 max-w-4xl">
+          <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl">{article.title}</h1>
+          <MetaRow article={article} />
         </div>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent p-4 md:p-6">
-          <h1 className="pointer-events-auto max-w-4xl text-2xl font-bold leading-tight text-white md:text-4xl">
-            {article.title}
-          </h1>
+        
+        {/* Hero */}
+        <div className="relative overflow-hidden rounded-2xl bg-gray-100 mt-3">
+          <img
+            src={article.featuredImage.url}
+            alt={article.featuredImage.alt}
+            loading="eager"
+            className="h-[320px] w-full object-cover md:h-[420px]"
+          />
+          <div className="absolute left-4 top-4">
+            <CategoryBadge label={article.category.name} color={article.category.color} />
+          </div>
         </div>
+
+        {/* Content */}
+        <div className="mt-8 max-w-3xl text-gray-800">
+          <div
+            className="prose prose-neutral max-w-none prose-headings:font-semibold prose-a:text-red-600"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
+
+          <div className="mt-10">
+          <Link to="/" className="text-sm font-medium text-red-600 hover:underline">← Back to home</Link>
+          </div>
+        </div>
+
+        {/* Related */}
+        <section aria-label="Related articles" className="mt-16">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">Related Articles</h2>
+            <Link to="/" className="text-sm text-red-600 hover:underline">View all</Link>
+          </div>
+          <div className="no-scrollbar flex gap-6 overflow-x-auto pb-2">
+            {related.map(a => (
+              <RelatedCard key={a.slug} a={a} />
+            ))}
+          </div>
+        </section>
       </div>
-
-      {/* Meta */}
-      <MetaRow article={article} />
-
-      {/* Content */}
-      <div className="mx-auto mt-8 max-w-3xl text-gray-800">
-        <div
-          className="prose prose-neutral max-w-none prose-headings:font-semibold prose-a:text-red-600"
-          dangerouslySetInnerHTML={{ __html: article.content }}
-        />
-
-        <div className="mt-10">
-          <Link to="/blog" className="text-sm font-medium text-red-600 hover:underline">← Back to blog</Link>
-        </div>
-      </div>
-
-      {/* Related */}
-      <section aria-label="Related articles" className="mt-16">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">Related Articles</h2>
-          <Link to="/blog" className="text-sm text-red-600 hover:underline">View all</Link>
-        </div>
-        <div className="no-scrollbar flex gap-6 overflow-x-auto pb-2">
-          {related.map(a => (
-            <RelatedCard key={a.slug} a={a} />
-          ))}
-        </div>
-      </section>
     </article>
   )
 }
