@@ -56,7 +56,7 @@ const TestimonialSlider = () => {
             if (!cards.length || !panelRef.current || !stackRef.current) return;
 
             const offset = 20;
-            const cardHeight = cards[0].offsetHeight;
+            const cardHeight = cards[0]?.offsetHeight ?? 0;
             
             gsap.set(stackRef.current, {
                 height: cardHeight + cards.length * offset
@@ -176,11 +176,11 @@ const TestimonialSlider = () => {
         <div className="bg-gray-50">
             {/* Panel section - exactly like your reference */}
             <section ref={panelRef} className="panel relative py-28">
-                <div className="container mx-auto border-2 border-red-500  overflow-y-hidden">
+                <div className="container mx-auto w-full">
                     {/* Background text */}
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
                         <div className="text-center">
-                            <h1 className="text-[250px] lt-1920:text-[128px] lt-1440:text-[80px] lt-1024:text-[60px] lt-768:text-[46px] lt-480:text-[28px] tracking-[-4rem] lt-1920:tracking-[-0.8rem] lt-1440:tracking-[-0.55rem] lt-1024:tracking-[-0.36rem] lt-768:tracking-[-0.2rem] lt-480:tracking-[-0.12rem] leading-[0.95] text-black select-none whitespace-nowrap" 
+                            <h1 className="text-[320px] lt-1920:text-[128px] lt-1440:text-[90px] lt-1024:text-[60px] lt-768:text-[46px] lt-480:text-[28px] tracking-[-4rem] lt-1920:tracking-[-0.8rem] lt-1440:tracking-[-0.55rem] lt-1024:tracking-[-0.36rem] lt-768:tracking-[-0.2rem] lt-480:tracking-[-0.12rem] leading-[0.95] text-black select-none whitespace-nowrap" 
                                 style={{ fontFamily: "'Press Start 2P', monospace" }}>
                                 WALL OF <span className="text-red-500">LOVE</span>
                             </h1>
@@ -197,7 +197,7 @@ const TestimonialSlider = () => {
                     <div className="relative z-10 w-full flex items-center justify-center">
                         <div 
                             ref={stackRef}
-                            className="panel__stack relative w-[1500px] lt-1920:w-[42%] lt-1440:w-[50%] lt-1024:w-[64%] lt-768:w-[86%] lt-480:w-[90%] max-w-[640px]"
+                            className="panel__stack relative w-[1800px] lt-1920:w-[42%] lt-1440:w-[50%] lt-1024:w-[64%] lt-768:w-[86%] lt-480:w-[90%] max-w-[1280px]"
                             style={{
                                 display: 'grid',
                                 gridTemplateColumns: '1fr',
@@ -209,12 +209,12 @@ const TestimonialSlider = () => {
                             {testimonials.map((testimonial, index) => (
                                 <div
                                     key={index}
-                                    ref={el => cardsRef.current[index] = el}
+                                    ref={(el) => { cardsRef.current[index] = el }}
                                     className="panel__card bg-white rounded-2xl border-2 border-black shadow-lg p-6 lt-1024:p-5 lt-768:p-4 lt-480:p-3 w-full"
                                     style={{
                                         gridArea: '1/1/2/2',
                                         position: 'absolute',
-                                        height: '20rem',
+                                        height: '30rem',
                                         willChange: 'transform'
                                     }}
                                 >
