@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
 import providenceImg from '../assets/providence.jpg';
 import offTheGridImg from '../assets/off-the-grid.jpg';
-import domiImg from '../assets/domi.webp';
+import domiImg from '../assets/domi.png';
+import shrapnelImg from '../assets/shrapnel.png';
+import defiKingdomImg from '../assets/kingdom.png';
+import maplestoryImg from '../assets/maple.png';
 import steamIcon from '../assets/steam.svg';
 import windowsIcon from '../assets/windows.svg';
 import xboxIcon from '../assets/xbox.svg';
@@ -29,51 +32,52 @@ const FeaturedGames: React.FC = () => {
     {
       id: 1,
       title: "PROVIDENCE",
-      description: "Survive the singularity! Providence is a game that offers a unique survival-on-a-loop experience",
-      genre: "Survival-on-a-loop",
+      description: "Providence is a sci-fi survival extraction game built on Avalanche. Players become Trailblazers who venture from their Homesteads into unstable Slipworlds to scavenge resources, alien tech, and blueprints before the Singularity consumes the world. Each run is a tense mix of PvE and PvP as players race against collapsing timelines, hostile creatures, and rival explorers. With Unreal Engine 5 visuals and optional blockchain ownership of items, blueprints, and resources, Providence blends AAA survival gameplay with a player-driven economy.",
+      genre: "Survival / Extraction",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Nintendo Switch"],
       image: providenceImg
     },
     {
       id: 2,
       title: "Off The Grid",
-      description: "A cyberpunk adventure where reality meets digital consciousness in an ever-evolving virtual world",
-      genre: "Action-RPG",
+      description: "Off The Grid is a cyberpunk third-person extraction royale developed by Gunzilla Games. The game drops squads into massive battlegrounds where survival means looting powerful cybernetic upgrades, fighting rival players, and extracting valuable gear. Unique mechanics include harvesting enemy cyber-limbs and customizing your character with over 30 augmentations. Alongside the PvP chaos, a 60+ hour campaign story unfolds, weaving narrative missions into the same living world. Powered by the Avalanche-based GUNZ subnet, future updates bring blockchain-enabled trading and ownership of in-game assets.",
+      genre: "Action-RPG / Extraction Royale",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam"],
       image: offTheGridImg
     },
     {
       id: 3,
       title: "DOMI Online",
-      description: "Embark on an epic space exploration journey across infinite galaxies and discover ancient civilizations",
-      genre: "Space Exploration",
+      description: "DOMI Online is a hardcore fantasy MMORPG that rejects the hand-holding of modern MMOs. There are no level or skill caps, and death carries real consequences. Players must physically explore the vast world, travel to remote regions without shortcuts, and survive its dangers. Guilds can rise in power, claim towers, and build personal houses that grant strategic advantages. Seasonal leaderboards reward top adventurers, while blockchain layers add true ownership of items, token-based governance, and a sustainable play-to-own economy.",
+      genre: "MMORPG / Fantasy Sandbox",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Epic"],
       image: domiImg
     },
     {
       id: 4,
-      title: "NEON RUNNERS",
-      description: "High-octane racing through neon-lit cityscapes with customizable vehicles and dynamic weather",
-      genre: "Racing",
+      title: "Shrapnel",
+      description: "Shrapnel is a next-generation extraction shooter powered by Avalanche. Set in the aftermath of asteroid 38 Sigma’s impact with the moon, players enter The Sacrifice Zone as Operators tasked with recovering the rare resource Sigma. The risk is high—death means losing your gear. Beyond its tense FPS gameplay, Shrapnel empowers the community with creation tools: players can build maps, skins, and mods, mint them as NFTs, and trade within the ecosystem. Combining AAA visuals, blockchain ownership, and user-generated content, Shrapnel pushes the boundaries of Web3 shooters.",
+      genre: "Extraction Shooter / FPS",
       platforms: ["Windows", "PlayStation", "Xbox", "Nintendo Switch"],
-      image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=800&h=600&fit=crop"
+      image: shrapnelImg
     },
     {
       id: 5,
-      title: "ETHEREAL REALM",
-      description: "A mystical fantasy adventure through ancient magical realms with spellbinding combat systems",
-      genre: "Fantasy RPG",
+      title: "DeFi Kingdoms",
+      description: "DeFi Kingdoms blends pixel-art fantasy RPG mechanics with decentralized finance. Players summon and collect NFT Heroes, send them on quests, and battle in PvE and PvP while also engaging in staking, liquidity mining, and crafting. The world is presented as a charming RPG realm with banks, gardens, and taverns, each tied to DeFi systems. With its Crystalvale expansion on Avalanche, the game introduced the $CRYSTAL token alongside $JEWEL, powering summoning, upgrades, and in-game transactions. It’s both a game and a living DeFi ecosystem disguised as a fantasy adventure.",
+      genre: "Fantasy RPG / GameFi",
       platforms: ["Windows", "PlayStation", "Steam", "Epic"],
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop"
+      image: defiKingdomImg
     },
     {
       id: 6,
-      title: "QUANTUM HEIST",
-      description: "Plan and execute the perfect heist across multiple dimensions with time-bending mechanics",
-      genre: "Strategy",
+      title: "MapleStory",
+      description: "MapleStory Universe brings Nexon’s legendary MMORPG into Web3 with MapleStory N on Avalanche. Players return to the beloved 2D side-scrolling world with new layers of blockchain-powered ownership and interoperability. Items, characters, and creations can be tokenized, giving players true control over their digital assets. A major innovation is user-generated content: players can design and share experiences, earning rewards for their creations. MapleStory N combines nostalgia, community-driven content, and modern Web3 functionality to redefine one of gaming’s most iconic franchises.",
+      genre: "MMORPG / UGC",
       platforms: ["Windows", "Xbox", "Steam"],
-      image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=600&fit=crop"
+      image: maplestoryImg
     }
+    
   ], []);
 
   const platformIcons = {
@@ -166,8 +170,8 @@ const FeaturedGames: React.FC = () => {
                   <p className="text-gray-900 font-medium">{game.genre}</p>
                 </div>
 
-                <button className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200">
-                  VIEW ON IMDB
+                <button className="w-full bg-[#1C1D1F] hover:bg-gray-800 text-white py-3 px-6 flex items-center justify-center gap-2 transition-colors duration-200">
+                  WEBSITE
                   <ExternalLink size={18} />
                 </button>
               </div>
@@ -224,8 +228,8 @@ const FeaturedGames: React.FC = () => {
               {games[currentGameIndex].description}
             </p>
 
-            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-lg flex items-center gap-3 transition-all duration-300 hover:scale-105 border border-white/20">
-              VIEW ON IMDB
+            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-6 rounded-full flex items-center gap-3 transition-all duration-300 hover:scale-105 border border-white/20">
+              WEBSITE
               <ExternalLink size={20} />
             </button>
           </div>
