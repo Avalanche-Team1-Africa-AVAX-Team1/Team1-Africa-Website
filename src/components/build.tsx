@@ -24,18 +24,21 @@ const Build = () => {
                         <img src={pixel} width={2000} height={150} className='lt-1440:w-[1400px] lt-1024:w-[1100px] lt-768:w-[820px] lt-480:w-[400px] transition-[filter] duration-500 ease-in-out filter group-hover:brightness-0 group-hover:saturate-100' />
 
                         {/* Tiny icons entering from multiple sides */}
-                        <img src={love} alt='' className='pointer-events-none absolute -top-2 -left-2 sm:-top-3 sm:-left-3 md:-top-4 md:-left-4 w-5 sm:w-6 md:w-8 lg:w-10 xl:w-12 2xl:w-14 transition-all duration-700 ease-in-out opacity-0 -translate-x-3 -translate-y-3 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0' />
-                        <img src={heart} alt='' className='pointer-events-none absolute -top-2 -right-2 sm:-top-3 sm:-right-3 md:-top-4 md:-right-4 w-5 sm:w-6 md:w-8 lg:w-10 xl:w-12 2xl:w-14 transition-all duration-700 ease-in-out opacity-0 translate-x-3 -translate-y-3 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0' />
-                        <img src={paperplane} alt='' className='pointer-events-none absolute -bottom-2 -left-2 sm:-bottom-3 sm:-left-3 md:-bottom-4 md:-left-4 w-5 sm:w-6 md:w-8 lg:w-10 xl:w-12 2xl:w-14 transition-all duration-700 ease-in-out opacity-0 -translate-x-3 translate-y-3 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0' />
+                        <img src={love} alt='' className='pointer-events-none absolute -top-2 -left-2 sm:-top-3 sm:-left-3 md:-top-10 md:-left-10 w-5 sm:w-6 md:w-8 lg:w-10 xl:w-12 2xl:w-14 transition-all duration-700 ease-in-out opacity-0 -translate-x-3 -translate-y-3 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0' />
+                        <img src={heart} alt='' className='pointer-events-none absolute -top-2 -right-2 sm:-top-3 sm:-right-3 md:-top-4 md:-right-8 w-5 sm:w-6 md:w-8 lg:w-10 xl:w-12 2xl:w-14 transition-all duration-700 ease-in-out opacity-0 translate-x-3 -translate-y-3 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0' />
+                        <img src={paperplane} alt='' className='pointer-events-none absolute -bottom-2 -left-2 sm:-bottom-3 sm:-left-3 md:-bottom-4 md:-left-20 w-5 sm:w-6 md:w-8 lg:w-10 xl:w-12 2xl:w-14 transition-all duration-700 ease-in-out opacity-0 -translate-x-3 translate-y-3 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0' />
                         <img src={rocket} alt='' className='pointer-events-none absolute -bottom-2 -right-2 sm:-bottom-3 sm:-right-3 md:-bottom-4 md:-right-4 w-5 sm:w-6 md:w-8 lg:w-10 xl:w-12 2xl:w-14 transition-all duration-700 ease-in-out opacity-0 translate-x-3 translate-y-3 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0' />
+
+					{/* Builders / Community images anchored within ribbon width */}
+					<img src={builders} alt='' className='pointer-events-none absolute -top-1 left-[1%] sm:-top-1 sm:left-[2%] md:-top-2 md:left-[2%] lg:-top-2 lg:left-[2%] xl:-top-24 xl:left-[5%] w-16 sm:w-20 md:w-24 lg:w-28 xl:w-32 transition-all duration-700 ease-in-out opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100' />
+					<img src={community} alt='' className='pointer-events-none absolute -top-1 right-[1%] sm:-top-1 sm:right-[2%] md:-top-2 md:right-[2%] lg:-top-2 lg:right-[2%] xl:-top-20 xl:right-[5%] w-16 sm:w-20 md:w-24 lg:w-28 xl:w-32 transition-all duration-700 ease-in-out opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100' />
+
+                        {/* Speech bubbles removed - images retained */}
                     </div>
 
-                    {/* Larger floating images near the ribbon */}
-                    <div>
-                        {/* Tweak positions and size of floating images on smaller screens */}
-                        <img src={builders} width={250} height={150} alt="" className="pointer-events-none absolute bottom-[100%] left-72 lt-1440:left-2 lt-1024:left-10 lt-768:left-20 lt-480:left-10 lt-1024:w-[150px] lt-768:w-[190px] lt-480:w-[80px] lt-1440:w-[180px] xl:w-[150px] xl:left-0 2xl:left-96 transition-all duration-700 ease-in-out opacity-0 -translate-y-3 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100" />
-                        <img src={community} width={250} height={150} alt="" className="pointer-events-none absolute bottom-[100%] right-72 lt-1440:right-2 lt-1024:right-10 lt-768:right-20 lt-480:right-10 lt-1024:w-[150px] lt-768:w-[190px] lt-480:w-[100px] lt-1440:w-[180px] xl:w-[150px] xl:right-0 2xl:right-96 transition-all duration-700 ease-in-out opacity-0 -translate-y-3 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100" />
-                    </div>
+				{/* Larger floating images near the ribbon - removed (now anchored above) */}
+
+                    
                 </div>
             </div>
 
