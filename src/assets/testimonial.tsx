@@ -263,7 +263,7 @@ const TestimonialSlider = () => {
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
                         <div className="text-center">
                             <h1 className="text-[320px] lt-1920:text-[128px] lt-1440:text-[90px] lt-1024:text-[60px] lt-768:text-[46px] lt-480:text-[28px] tracking-[-4rem] lt-1920:tracking-[-0.8rem] lt-1440:tracking-[-0.55rem] lt-1024:tracking-[-0.36rem] lt-768:tracking-[-0.2rem] lt-480:tracking-[-0.12rem] leading-[0.95] text-black select-none whitespace-nowrap" 
-                                style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                                style={{ fontFamily: "'Press Start 2P'" }}>
                                 WALL OF <span className="text-red-500">LOVE</span>
                             </h1>
                             
