@@ -13,7 +13,7 @@ const Footer = () => {
     return (
         <div className='bg-black text-white p-8 lt-1024:p-6 lt-768:p-5 lt-480:p-4'> {/* Responsive padding on smaller screens */}
             <div className='flex justify-between lt-1024:flex-col lt-1024:gap-10'> {/* Stack columns on tablet/phone */}
-                <div className='w-full'>
+                <div className='lt-1024:w-full'>
                     <div>
                         <img src={logo} alt="team1-logo" width={150} height={150} />
                         {/* Make paragraph width responsive; keep 4K baseline untouched */}
@@ -45,7 +45,7 @@ const Footer = () => {
                 </div>
 
                 {/* Link columns become grid on smaller screens */}
-                <div className='flex gap-20 lt-1440:gap-12 lt-1024:grid lt-1024:grid-cols-2 lt-1024:gap-10 lt-768:gap-8 w-full'>
+                <div className='flex gap-20 lt-1440:gap-12 lt-1024:grid lt-1024:grid-cols-2 lt-1024:gap-10 lt-768:gap-8 justify-end lt-1024:justify-start'>
                     {/* Company */}
                     <div>
                         <p className='text-xl lt-1024:text-lg font-semibold'>Company</p>
@@ -83,8 +83,8 @@ const Footer = () => {
             </div>
 
             {/* Team1 Africa */}
-            <div className='my-10 lt-1024:my-8 lt-768:my-6 overflow-x-hidden px-2'> {/* Prevent horizontal scroll and add slight side padding on small */}
-                <p className="text-[170px] lt-1920:text-[130px] lt-1440:text-[80px] lt-1024:text-[60px] lt-768:text-[48px] lt-480:text-[36px] flex justify-center items-center font-bold text-white select-none whitespace-nowrap lt-1024:whitespace-normal tracking-normal lt-1024:tracking-tight lt-768:tracking-tighter leading-none lt-1024:leading-tight lt-768:leading-snug text-center" style={{ fontFamily: "'Press Start 2P', monospace" }}>TEAM1 AFRICA</p> {/* Allow wrap/adjust tracking & leading on smaller screens */}
+            <div className='my-10 lt-1024:my-8 lt-768:my-6 overflow-x-hidden px-2 py-8'> {/* Prevent horizontal scroll and add slight side padding on small */}
+                <p className="overflow-y-hidden text-[170px] lt-1920:text-[130px] lt-1440:text-[80px] lt-1024:text-[60px] lt-768:text-[48px] lt-480:text-[36px] flex justify-center items-center font-bold text-white select-none whitespace-nowrap lt-1024:whitespace-normal tracking-normal lt-1024:tracking-tight lt-768:tracking-tighter leading-none lt-1024:leading-tight lt-768:leading-snug text-center" style={{ fontFamily: "'Press Start 2P', monospace" }}>TEAM1 AFRICA</p> {/* Allow wrap/adjust tracking & leading on smaller screens */}
             </div>
 
             {/* Copyright */}
