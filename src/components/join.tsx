@@ -1,7 +1,7 @@
 import union from '../assets/uni.png'
 import dexalot from '../assets/dexalot.png'
 import arena from '../assets/Arena.png'
-import points from '../assets/points.png'
+import points from '../assets/Points.png'
 
 export default function join() {
     return (
