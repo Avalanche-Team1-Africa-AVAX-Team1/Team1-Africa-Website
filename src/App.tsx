@@ -11,6 +11,7 @@ import Events from './components/events'
 import Footer from './components/footer'
 import Games from './components/games'
 import Blog from './components/blog'
+import Join from './components/join'
 function App() {
 
   return (
@@ -28,8 +29,9 @@ function App() {
         </div>
       </div>
       <Events />
-      <Blog />
       <Games />
+      <Blog />
+      <Join />
       <Footer />
     </>
   )

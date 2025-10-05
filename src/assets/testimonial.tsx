@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Heart, MessageCircle, Repeat2, Share, BarChart3 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,37 +16,56 @@ const TestimonialSlider = () => {
             name: "Samuel Oliver",
             handle: "@oliesamuel",
             avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
-            text: "I'm not even in Web3, but after attending one event, I'm thinking of switching careers.",
+            text: "I'm not even in Web3, but after attending one event, I'm thinking of switching careers. The ecosystem here is vibrant, the people are passionate, and the opportunities are endless. Can't wait to see what we build together! 🚀",
             time: "3:23 AM",
-            date: "Aug 12",
-            team: "Team1 Africa"
+            date: "Aug 12, 2024",
+            team: "Team1 Africa",
+            likes: "1.2K",
+            retweets: "342",
+            replies: "89",
+            image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop",
+            verified: true
         },
         {
             name: "Amara Johnson",
             handle: "@amaratech",
             avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
-            text: "The community here is incredible. I've learned more in 3 months than I did in 2 years of self-study.",
+            text: "The community here is incredible. I've learned more in 3 months than I did in 2 years of self-study. From smart contracts to DeFi protocols, every session opens new doors. Big shoutout to all the mentors who make this possible! 💪",
             time: "5:45 PM",
-            date: "Aug 15",
-            team: "Team1 Africa"
+            date: "Aug 15, 2024",
+            team: "Team1 Africa",
+            likes: "2.8K",
+            retweets: "567",
+            replies: "134",
+            verified: true
         },
         {
             name: "David Chen",
             handle: "@davidbuilds",
             avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
-            text: "From zero to launching my first dApp. The mentorship program changed everything for me.",
+            text: "From zero to launching my first dApp. The mentorship program changed everything for me. Built a fully functional NFT marketplace on Avalanche in just 8 weeks. This is what happens when great education meets unstoppable passion! 🔥",
             time: "11:20 AM",
-            date: "Aug 18",
-            team: "Team1 Africa"
+            date: "Aug 18, 2024",
+            team: "Team1 Africa",
+            likes: "3.5K",
+            retweets: "892",
+            replies: "201",
+            image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+            verified: true
         },
         {
             name: "Fatima Ali",
             handle: "@fatimadesigns",
             avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
-            text: "As an artist, I never thought I'd understand blockchain. Now I'm minting my own NFTs!",
+            text: "As an artist, I never thought I'd understand blockchain. Now I'm minting my own NFTs! The workshops made complex concepts simple. My art is now reaching collectors worldwide, and I'm earning in ways I never imagined. Thank you Team1! 🎨✨",
             time: "2:15 PM",
-            date: "Aug 20",
-            team: "Team1 Africa"
+            date: "Aug 20, 2024",
+            team: "Team1 Africa",
+            likes: "4.1K",
+            retweets: "1.2K",
+            replies: "287",
+            image: "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?w=600&h=400&fit=crop",
+            verified: true
         }
     ];
 
@@ -183,7 +203,7 @@ const TestimonialSlider = () => {
 
     return (
         <div className="bg-gray-50">
-            {/* Mobile Static View - Simple card grid with View More */}
+            {/* Mobile Static View */}
             <div className="lt-1024:block hidden px-6 py-12">
                 <div className="text-center mb-8">
                     <h2 className="text-4xl lt-768:text-3xl lt-480:text-2xl font-bold tracking-tight mb-4" 
@@ -199,36 +219,76 @@ const TestimonialSlider = () => {
                     {testimonials.slice(0, visibleCards).map((testimonial, index) => (
                         <div
                             key={index}
-                            className="bg-white rounded-2xl border-2 border-black shadow-lg p-5 lt-480:p-4 relative"
+                            className="bg-white rounded-2xl border-2 border-black shadow-lg p-5 lt-480:p-4 relative overflow-hidden"
                         >
+                            {/* Twitter icon */}
                             <div className="absolute top-4 right-4">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#1DA1F2">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#1DA1F2">
                                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                                 </svg>
                             </div>
 
+                            {/* Header */}
                             <div className="flex items-center mb-4">
                                 <img
                                     src={testimonial.avatar}
                                     alt={testimonial.name}
-                                    className="w-12 h-12 lt-480:w-10 lt-480:h-10 rounded-full mr-3"
+                                    className="w-14 h-14 lt-480:w-12 lt-480:h-12 rounded-full mr-3 border-2 border-gray-200"
                                 />
                                 <div>
-                                    <h3 className="font-bold text-gray-900">{testimonial.name}</h3>
+                                    <div className="flex items-center gap-1">
+                                        <h3 className="font-bold text-gray-900">{testimonial.name}</h3>
+                                        {testimonial.verified && (
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#1DA1F2">
+                                                <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z" />
+                                            </svg>
+                                        )}
+                                    </div>
                                     <p className="text-gray-500 text-sm">{testimonial.handle}</p>
                                 </div>
                             </div>
 
+                            {/* Content */}
                             <p className="text-gray-900 text-base lt-480:text-sm mb-4 leading-relaxed">
                                 {testimonial.text}
                             </p>
 
-                            <div className="flex items-center text-gray-400 text-sm">
+                            {/* Image if exists */}
+                            {testimonial.image && (
+                                <div className="mb-4 rounded-xl overflow-hidden border border-gray-200">
+                                    <img src={testimonial.image} alt="Post content" className="w-full h-48 object-cover" />
+                                </div>
+                            )}
+
+                            {/* Metadata */}
+                            <div className="flex items-center text-gray-400 text-sm mb-4">
                                 <span>{testimonial.time}</span>
                                 <span className="mx-2">•</span>
                                 <span>{testimonial.date}</span>
                                 <span className="mx-2">•</span>
-                                <span>{testimonial.team}</span>
+                                <span className="text-blue-500">{testimonial.team}</span>
+                            </div>
+
+                            {/* Interaction bar */}
+                            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                                <div className="flex items-center gap-1 text-gray-500 hover:text-blue-500 cursor-pointer transition-colors">
+                                    <MessageCircle size={18} />
+                                    <span className="text-sm">{testimonial.replies}</span>
+                                </div>
+                                <div className="flex items-center gap-1 text-gray-500 hover:text-green-500 cursor-pointer transition-colors">
+                                    <Repeat2 size={18} />
+                                    <span className="text-sm">{testimonial.retweets}</span>
+                                </div>
+                                <div className="flex items-center gap-1 text-gray-500 hover:text-red-500 cursor-pointer transition-colors">
+                                    <Heart size={18} />
+                                    <span className="text-sm">{testimonial.likes}</span>
+                                </div>
+                                <div className="flex items-center gap-1 text-gray-500 hover:text-blue-500 cursor-pointer transition-colors">
+                                    <BarChart3 size={18} />
+                                </div>
+                                <div className="flex items-center gap-1 text-gray-500 hover:text-blue-500 cursor-pointer transition-colors">
+                                    <Share size={18} />
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -254,16 +314,15 @@ const TestimonialSlider = () => {
                 </div>
             </div>
 
-            {/* Desktop Animated View - Keep exactly as is */}
+            {/* Desktop Animated View */}
             <div className="lt-1024:hidden block bg-gray-50">
-            {/* Panel section - exactly like your reference */}
             <section ref={panelRef} className="panel relative py-28">
                 <div className="container mx-auto w-full">
                     {/* Background text */}
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
                         <div className="text-center">
                             <h1 className="text-[320px] lt-1920:text-[128px] lt-1440:text-[90px] lt-1024:text-[60px] lt-768:text-[46px] lt-480:text-[28px] tracking-[-4rem] lt-1920:tracking-[-0.8rem] lt-1440:tracking-[-0.55rem] lt-1024:tracking-[-0.36rem] lt-768:tracking-[-0.2rem] lt-480:tracking-[-0.12rem] leading-[0.95] text-black select-none whitespace-nowrap" 
-                                style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                                style={{ fontFamily: "'Press Start 2P'" }}>
                                 WALL OF <span className="text-red-500">LOVE</span>
                             </h1>
                             
@@ -292,7 +351,7 @@ const TestimonialSlider = () => {
                                 <div
                                     key={index}
                                     ref={(el) => { cardsRef.current[index] = el }}
-                                    className="panel__card bg-white rounded-2xl border-2 border-black shadow-lg p-6 lt-1024:p-5 lt-768:p-4 lt-480:p-3 w-full"
+                                    className="panel__card bg-white rounded-2xl border-2 border-black shadow-lg p-8 lt-1024:p-6 lt-768:p-5 lt-480:p-4 w-full overflow-hidden"
                                     style={{
                                         gridArea: '1/1/2/2',
                                         position: 'absolute',
@@ -307,34 +366,77 @@ const TestimonialSlider = () => {
                                         </>
                                     )}
 
-                                    <div className="absolute top-4 right-4">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#1DA1F2">
+                                    {/* Twitter icon */}
+                                    <div className="absolute top-6 right-6">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="#1DA1F2">
                                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                                         </svg>
                                     </div>
 
-                                    <div className="flex items-center mb-4">
+                                    {/* Header */}
+                                    <div className="flex items-center mb-6">
                                         <img
                                             src={testimonial.avatar}
                                             alt={testimonial.name}
-                                            className="w-12 h-12 lt-768:w-10 lt-768:h-10 lt-480:w-9 lt-480:h-9 rounded-full mr-3"
+                                            className="w-16 h-16 lt-768:w-14 lt-768:h-14 lt-480:w-12 lt-480:h-12 rounded-full mr-4 border-2 border-gray-200"
                                         />
                                         <div>
-                                            <h3 className="font-bold text-gray-900">{testimonial.name}</h3>
-                                            <p className="text-gray-500 text-sm">{testimonial.handle}</p>
+                                            <div className="flex items-center gap-2">
+                                                <h3 className="font-bold text-gray-900 text-xl">{testimonial.name}</h3>
+                                                {testimonial.verified && (
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#1DA1F2">
+                                                        <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z" />
+                                                    </svg>
+                                                )}
+                                            </div>
+                                            <p className="text-gray-500">{testimonial.handle}</p>
                                         </div>
                                     </div>
 
-                                    <p className="text-gray-900 text-lg lt-1024:text-base lt-768:text-[0.95rem] lt-480:text-[0.9rem] mb-4 leading-relaxed">
+                                    {/* Content */}
+                                    <p className="text-gray-900 text-lg lt-1024:text-base lt-768:text-[0.95rem] lt-480:text-[0.9rem] mb-5 leading-relaxed">
                                         {testimonial.text}
                                     </p>
 
-                                    <div className="flex items-center text-gray-400 text-sm">
-                                        <span>{testimonial.time}</span>
-                                        <span className="mx-2">•</span>
-                                        <span>{testimonial.date}</span>
-                                        <span className="mx-2">•</span>
-                                        <span>{testimonial.team}</span>
+                                    {/* Image if exists */}
+                                    {testimonial.image && (
+                                        <div className="mb-5 rounded-xl overflow-hidden border border-gray-200">
+                                            <img src={testimonial.image} alt="Post content" className="w-full h-44 object-cover" />
+                                        </div>
+                                    )}
+
+                                    {/* Bottom section */}
+                                    <div className="absolute bottom-8 left-8 right-8">
+                                        {/* Metadata */}
+                                        <div className="flex items-center text-gray-400 text-sm mb-4">
+                                            <span>{testimonial.time}</span>
+                                            <span className="mx-2">•</span>
+                                            <span>{testimonial.date}</span>
+                                            <span className="mx-2">•</span>
+                                            <span className="text-blue-500 font-medium">{testimonial.team}</span>
+                                        </div>
+
+                                        {/* Interaction bar */}
+                                        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                                            <div className="flex items-center gap-2 text-gray-500 hover:text-blue-500 cursor-pointer transition-colors">
+                                                <MessageCircle size={20} />
+                                                <span className="text-sm font-medium">{testimonial.replies}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-gray-500 hover:text-green-500 cursor-pointer transition-colors">
+                                                <Repeat2 size={20} />
+                                                <span className="text-sm font-medium">{testimonial.retweets}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-gray-500 hover:text-red-500 cursor-pointer transition-colors">
+                                                <Heart size={20} />
+                                                <span className="text-sm font-medium">{testimonial.likes}</span>
+                                            </div>
+                                            <div className="text-gray-500 hover:text-blue-500 cursor-pointer transition-colors">
+                                                <BarChart3 size={20} />
+                                            </div>
+                                            <div className="text-gray-500 hover:text-blue-500 cursor-pointer transition-colors">
+                                                <Share size={20} />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
