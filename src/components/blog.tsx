@@ -16,7 +16,7 @@ export default function Blog() {
   const mobileVisible = expanded ? articles : articles.slice(0, 3)
   const hasMore = articles.length > 3
   return (
-    <section className="px-2 md:px-8 py-12 overflow-hidden">
+    <section id="blog-section" className="px-2 md:px-8 py-12 overflow-hidden">
       <div>
         <div className="flex items-start justify-between">
           <div>

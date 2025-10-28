@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 // import logo from '../assets/logo.png';
 import arrow from '../assets/arrow.svg';
 import arrowUp from '../assets/arrow-up.svg';
@@ -19,9 +20,9 @@ const Navbar = () => {
                 <div className="hidden md:flex items-center justify-between">
                     {/* Tighter gaps for tabs on smaller breakpoints */}
                     <ul className="flex items-center gap-8 lt-1440:gap-6 lt-1024:gap-4 cursor-pointer">
-                        <li>Home</li>
+                        <li><Link to="/">Home</Link></li>
                         <li>About</li>
-                        <li>Blog</li>
+                        <li><Link to="/blog">Blog</Link></li>
                         <div className="flex gap-2">
                             <li>Events</li>
                             {/* Shrink arrow icon on smaller screens */}
@@ -79,9 +80,9 @@ const Navbar = () => {
                 </div>
                 {/* Reduce nav item spacing and font size as screens shrink */}
                 <ul className="flex flex-col gap-8 lt-768:gap-6 lt-480:gap-5 px-8 lt-768:px-6 lt-480:px-5 text-xl lt-768:text-lg lt-480:text-base cursor-pointer">
-                    <li onClick={() => setSidebarOpen(false)}>Home</li>
+                    <li onClick={() => setSidebarOpen(false)}><Link to="/">Home</Link></li>
                     <li onClick={() => setSidebarOpen(false)}>About</li>
-                    <li onClick={() => setSidebarOpen(false)}>Blog</li>
+                    <li onClick={() => setSidebarOpen(false)}><Link to="/blog">Blog</Link></li>
                     <li onClick={() => setSidebarOpen(false)}>Events</li>
                     <li onClick={() => setSidebarOpen(false)}>Games</li>
                     <li onClick={() => setSidebarOpen(false)}>Community</li>
