@@ -16,16 +16,24 @@ function App() {
 
   return (
     <>
-      <div className="px-2 md:px-8">
-        <Navbar />
-        <Spinner />
-        <Stats />
-        <AboutUs />
-        <Partners />
-        <Build />
-        <Gallery />
-        <div className="mt-16 lt-1024:mt-48">
-          <TestimonialSlider />
+      {/* Centered content wrapper for ultrawide screens */}
+      <div className="mx-auto w-full max-w-site-lg">
+        <div className="px-2 md:px-8">
+          <Navbar />
+          <Spinner />
+          <Stats />
+          <AboutUs />
+          <Partners />
+        </div>
+      </div>
+      {/* Full-width sections remain outside the centered wrapper */}
+      <Build />
+      <div className="mx-auto w-full max-w-site-lg">
+        <div className="px-2 md:px-8">
+          <Gallery />
+          <div className="mt-16 lt-1024:mt-48">
+            <TestimonialSlider />
+          </div>
         </div>
       </div>
       <Events />

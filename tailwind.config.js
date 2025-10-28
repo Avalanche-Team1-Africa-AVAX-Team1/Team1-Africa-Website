@@ -13,6 +13,11 @@ export default {
         'lt-1024': { 'max': '1023px' }, // Tablet and below
         'lt-768': { 'max': '767px' },   // Large phone and below
         'lt-480': { 'max': '479px' },   // Small phone
+        'ultrawide': '1600px',          // Ultrawide monitors
+      },
+      // Max width constraint for centered content on ultrawide screens
+      maxWidth: {
+        'site-lg': '1400px',
       },
     },
   },
