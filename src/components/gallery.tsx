@@ -25,7 +25,7 @@ const Gallery = () => {
             </div>
 
             {/* Make collage image fluid on smaller screens while preserving 4K width */}
-            <img src={collage} alt="collage" width={1800} height={1000} className='mt-16 lt-1440:mt-14 lt-1024:mt-12 lt-768:mt-10 lt-480:mt-8 cursor-pointer lt-1440:w-full lt-1440:h-auto' />
+            <img src={collage} alt="collage" loading="lazy" width={1800} height={1000} className='mt-16 lt-1440:mt-14 lt-1024:mt-12 lt-768:mt-10 lt-480:mt-8 cursor-pointer lt-1440:w-full lt-1440:h-auto' />
         </div>
     );
 }
