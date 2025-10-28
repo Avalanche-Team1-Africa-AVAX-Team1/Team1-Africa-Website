@@ -16,7 +16,7 @@ export default function Blog() {
   const mobileVisible = expanded ? articles : articles.slice(0, 3)
   const hasMore = articles.length > 3
   return (
-    <section className="px-2 md:px-8 py-12">
+    <section className="px-2 md:px-8 py-12 overflow-hidden">
       <div>
         <div className="flex items-start justify-between">
           <div>
@@ -70,12 +70,12 @@ export default function Blog() {
         </div>
 
         {/* Desktop/tablet: horizontal scroller */}
-        <div ref={(el) => { scroller = el }} className="hidden md:flex mt-6 gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory md:scroll-pl-2">
+        <div ref={(el) => { scroller = el }} className="hidden md:flex mt-6 gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory md:scroll-pl-2 -mx-8 px-8 py-4">
           {articles.map((a, idx) => {
             const imgSrc = idx === 0 ? (event1Img || a.featuredImage.url) : (a.featuredImage.url || event1Img)
             return (
               <Link key={a.slug} to={`/blog/${a.slug}`} className="group w-[420px] md:w-[480px] lg:w-[520px] shrink-0 snap-start">
-                <div data-card className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:scale-105 flex flex-col min-h-[520px] md:min-h-[560px] lg:min-h-[600px]">
+                <div data-card className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:scale-[1.02] flex flex-col min-h-[520px] md:min-h-[560px] lg:min-h-[600px]">
                   <img src={imgSrc} alt={a.featuredImage.alt} className="h-64 md:h-72 lg:h-80 w-full object-cover" />
                   <div className="p-4 flex-1 flex flex-col">
                     <span className="rounded-2xl px-4 py-2 text-xs font-medium text-white w-fit" style={{ backgroundColor: a.category.color }}>{a.category.name}</span>
