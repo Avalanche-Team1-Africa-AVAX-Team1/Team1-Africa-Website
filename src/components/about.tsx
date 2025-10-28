@@ -7,7 +7,7 @@ const AboutUs = () => {
     <div>
       <div>
         {/* Reduce padding on smaller screens; maintain 4K baseline */}
-        <div className='relative md:px-4 py-16 lt-1440:py-14 lt-1024:py-12 lt-768:py-10 lt-480:py-8 lt-1024:px-4 lt-768:px-3 lt-480:px-2'>
+        <div className='relative py-16 lt-1440:py-14 lt-1024:py-12 lt-768:py-10 lt-480:py-8'>
           {/* Main Content */}
           <div className=''>
 

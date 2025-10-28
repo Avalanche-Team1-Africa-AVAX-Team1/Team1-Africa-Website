@@ -18,6 +18,7 @@ export default {
       // Max width constraint for centered content on ultrawide screens
       maxWidth: {
         'site-lg': '1400px',
+        'site-nav': '1800px', // Slightly wider for navbar
       },
     },
   },
