@@ -32,7 +32,7 @@ const FeaturedGames: React.FC = () => {
     {
       id: 1,
       title: "PROVIDENCE",
-      description: "Providence is a sci-fi survival extraction game built on Avalanche. Players become Trailblazers who venture from their Homesteads into unstable Slipworlds to scavenge resources, alien tech, and blueprints before the Singularity consumes the world. Each run is a tense mix of PvE and PvP as players race against collapsing timelines, hostile creatures, and rival explorers. With Unreal Engine 5 visuals and optional blockchain ownership of items, blueprints, and resources, Providence blends AAA survival gameplay with a player-driven economy.",
+      description: "A sci-fi survival extraction game on Avalanche. Players venture into unstable Slipworlds to scavenge resources and alien tech before the Singularity arrives. Race against collapsing timelines and rival explorers in tense PvE/PvP gameplay. Built with Unreal Engine 5, featuring blockchain ownership and a player-driven economy.",
       genre: "Survival / Extraction",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Nintendo Switch"],
       image: providenceImg
@@ -40,7 +40,7 @@ const FeaturedGames: React.FC = () => {
     {
       id: 2,
       title: "Off The Grid",
-      description: "Off The Grid is a cyberpunk third-person extraction royale developed by Gunzilla Games. The game drops squads into massive battlegrounds where survival means looting powerful cybernetic upgrades, fighting rival players, and extracting valuable gear. Unique mechanics include harvesting enemy cyber-limbs and customizing your character with over 30 augmentations. Alongside the PvP chaos, a 60+ hour campaign story unfolds, weaving narrative missions into the same living world. Powered by the Avalanche-based GUNZ subnet, future updates bring blockchain-enabled trading and ownership of in-game assets.",
+      description: "A cyberpunk third-person extraction royale by Gunzilla Games. Drop into massive battlegrounds, loot cybernetic upgrades, and extract valuable gear. Harvest enemy cyber-limbs and customize with 30+ augmentations. Features a 60+ hour campaign and blockchain-enabled trading on Avalanche's GUNZ subnet.",
       genre: "Action-RPG / Extraction Royale",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam"],
       image: offTheGridImg
@@ -48,7 +48,7 @@ const FeaturedGames: React.FC = () => {
     {
       id: 3,
       title: "DOMI Online",
-      description: "DOMI Online is a hardcore fantasy MMORPG that rejects the hand-holding of modern MMOs. There are no level or skill caps, and death carries real consequences. Players must physically explore the vast world, travel to remote regions without shortcuts, and survive its dangers. Guilds can rise in power, claim towers, and build personal houses that grant strategic advantages. Seasonal leaderboards reward top adventurers, while blockchain layers add true ownership of items, token-based governance, and a sustainable play-to-own economy.",
+      description: "A hardcore fantasy MMORPG with no level caps and real death consequences. Explore vast worlds, claim towers, and build strategic houses. Features seasonal leaderboards and blockchain-powered true ownership of items with token-based governance in a sustainable play-to-own economy.",
       genre: "MMORPG / Fantasy Sandbox",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Epic"],
       image: domiImg
@@ -56,7 +56,7 @@ const FeaturedGames: React.FC = () => {
     {
       id: 4,
       title: "Shrapnel",
-      description: "Shrapnel is a next-generation extraction shooter powered by Avalanche. Set in the aftermath of asteroid 38 Sigma’s impact with the moon, players enter The Sacrifice Zone as Operators tasked with recovering the rare resource Sigma. The risk is high—death means losing your gear. Beyond its tense FPS gameplay, Shrapnel empowers the community with creation tools: players can build maps, skins, and mods, mint them as NFTs, and trade within the ecosystem. Combining AAA visuals, blockchain ownership, and user-generated content, Shrapnel pushes the boundaries of Web3 shooters.",
+      description: "A next-gen extraction shooter on Avalanche. Enter The Sacrifice Zone to recover rare Sigma resources—death means losing gear. Beyond intense FPS gameplay, create maps, skins, and mods, mint them as NFTs, and trade freely. AAA visuals meet blockchain ownership and community creation tools.",
       genre: "Extraction Shooter / FPS",
       platforms: ["Windows", "PlayStation", "Xbox", "Nintendo Switch"],
       image: shrapnelImg
@@ -64,7 +64,7 @@ const FeaturedGames: React.FC = () => {
     {
       id: 5,
       title: "DeFi Kingdoms",
-      description: "DeFi Kingdoms blends pixel-art fantasy RPG mechanics with decentralized finance. Players summon and collect NFT Heroes, send them on quests, and battle in PvE and PvP while also engaging in staking, liquidity mining, and crafting. The world is presented as a charming RPG realm with banks, gardens, and taverns, each tied to DeFi systems. With its Crystalvale expansion on Avalanche, the game introduced the $CRYSTAL token alongside $JEWEL, powering summoning, upgrades, and in-game transactions. It’s both a game and a living DeFi ecosystem disguised as a fantasy adventure.",
+      description: "Pixel-art fantasy RPG meets decentralized finance. Summon NFT Heroes, quest in PvE/PvP, and engage in staking and liquidity mining. The Crystalvale expansion on Avalanche introduced $CRYSTAL token for summoning and upgrades. A living DeFi ecosystem disguised as a fantasy adventure.",
       genre: "Fantasy RPG / GameFi",
       platforms: ["Windows", "PlayStation", "Steam", "Epic"],
       image: defiKingdomImg
@@ -72,7 +72,7 @@ const FeaturedGames: React.FC = () => {
     {
       id: 6,
       title: "MapleStory",
-      description: "MapleStory Universe brings Nexon’s legendary MMORPG into Web3 with MapleStory N on Avalanche. Players return to the beloved 2D side-scrolling world with new layers of blockchain-powered ownership and interoperability. Items, characters, and creations can be tokenized, giving players true control over their digital assets. A major innovation is user-generated content: players can design and share experiences, earning rewards for their creations. MapleStory N combines nostalgia, community-driven content, and modern Web3 functionality to redefine one of gaming’s most iconic franchises.",
+      description: "Nexon's legendary MMORPG reimagined for Web3 on Avalanche. Return to the beloved 2D side-scrolling world with blockchain-powered ownership. Tokenize items and characters, design user-generated content, and earn rewards. Nostalgia meets modern Web3 functionality in this iconic franchise reborn.",
       genre: "MMORPG / UGC",
       platforms: ["Windows", "Xbox", "Steam"],
       image: maplestoryImg
@@ -216,59 +216,59 @@ const FeaturedGames: React.FC = () => {
         </div>
       </div>
 
-      <div className="relative w-[120vw] lt-1024:w-full h-[900px] lt-1920:h-[760px] lt-1440:h-[640px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
+      <div className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
         {/* Fixed Details Card - Left Side (Desktop Only) */}
-        <div className="relative w-[30%] lt-1024:hidden h-full bg-black rounded-l-2xl p-12 flex flex-col justify-between z-10">
+        <div className="relative w-[30%] lt-1024:hidden h-full bg-black rounded-l-2xl p-4 lg:p-8 xl:p-10 2xl:p-12 flex flex-col justify-between z-10 overflow-hidden">
           <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-            <h2 className="text-white text-5xl font-bold mb-6 leading-tight">
+            <h2 className="text-white text-2xl lg:text-4xl xl:text-5xl font-bold mb-3 lg:mb-5 xl:mb-6 leading-tight">
               {games[currentGameIndex].title}
             </h2>
 
-            <p className="text-gray-300 text-xl mb-8 leading-relaxed">
+            <p className="text-gray-300 text-xs lg:text-base xl:text-lg 2xl:text-xl mb-3 lg:mb-6 xl:mb-8 leading-relaxed">
               {games[currentGameIndex].description}
             </p>
 
-            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-6 rounded-full flex items-center gap-3 transition-all duration-300 hover:scale-105 border border-white/20">
+            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-3 lg:px-7 lg:py-5 xl:px-8 xl:py-6 rounded-full flex items-center justify-center gap-2 lg:gap-3 transition-all duration-300 hover:scale-105 border border-white/20 text-xs lg:text-base">
               WEBSITE
-              <ExternalLink size={20} />
+              <ExternalLink size={14} className="lg:w-5 lg:h-5" />
             </button>
           </div>
 
           <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-            <div className="mb-6">
-              <h3 className="text-gray-400 text-sm font-semibold mb-3">Platforms</h3>
-              <div className="flex gap-3 flex-wrap">
+            <div className="mb-3 lg:mb-5 xl:mb-6">
+              <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-2 lg:mb-3">Platforms</h3>
+              <div className="flex gap-1.5 lg:gap-3 flex-wrap">
                 {games[currentGameIndex].platforms.map((platform, index) => (
                   <div
                     key={index}
-                    className="w-12 h-12 backdrop-blur-sm rounded-lg flex items-center justify-center text-xl"
+                    className="w-7 h-7 lg:w-11 lg:h-11 xl:w-12 xl:h-12 backdrop-blur-sm rounded-lg flex items-center justify-center"
                     title={platform}
                   >
                     <img
                       src={platformIcons[platform as keyof typeof platformIcons] as string}
                       alt={platform}
-                      className="w-12 h-12 object-contain filter"
+                      className="w-full h-full object-contain filter"
                     />
                   </div>
                 ))}
               </div>
             </div>
 
-            <div>
-              <h3 className="text-gray-400 text-sm font-semibold mb-2">Genre</h3>
-              <p className="text-white font-medium text-lg">{games[currentGameIndex].genre}</p>
+            <div className="mb-3 lg:mb-5">
+              <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-1 lg:mb-2">Genre</h3>
+              <p className="text-white font-medium text-sm lg:text-lg">{games[currentGameIndex].genre}</p>
             </div>
 
-            <div className="flex justify-center mt-10 items-center z-20">
+            <div className="flex justify-center mt-3 lg:mt-6 xl:mt-10 items-center">
               <button
                 onClick={prevGame}
                 disabled={isTransitioning}
-                className="w-24 h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
+                className="w-12 h-12 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 hover:bg-gray-900"
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={16} className="lg:w-5 lg:h-5" />
               </button>
 
-              <div className="flex gap-2">
+              <div className="flex gap-1 lg:gap-2 mx-2 lg:mx-4">
                 {games.map((_, index) => (
                   <button
                     key={index}
@@ -286,7 +286,7 @@ const FeaturedGames: React.FC = () => {
                         }
                       }
                     }}
-                    className={`w-3 h-3 mx-4 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-white scale-125' : 'bg-gray-400 hover:bg-gray-300'}`}
+                    className={`w-2 h-2 lg:w-3 lg:h-3 mx-1 lg:mx-2 xl:mx-4 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-white scale-125' : 'bg-gray-400 hover:bg-gray-300'}`}
                   />
                 ))}
               </div>
@@ -294,9 +294,9 @@ const FeaturedGames: React.FC = () => {
               <button
                 onClick={nextGame}
                 disabled={isTransitioning}
-                className="w-24 h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
+                className="w-12 h-12 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 hover:bg-gray-900"
               >
-                <ChevronRight size={20} />
+                <ChevronRight size={16} className="lg:w-5 lg:h-5" />
               </button>
             </div>
           </div>
