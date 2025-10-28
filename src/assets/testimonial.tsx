@@ -85,14 +85,30 @@ const TestimonialSlider = () => {
 
             cards.forEach((card, i) => {
                 if (card) {
-                    gsap.set(card, {
-                        top: offset * (i + 1),
-                        zIndex: i + 1
-                    });
+                    if (i === 0) {
+                        // First card visible with slight rotation
+                        gsap.set(card, {
+                            top: offset,
+                            zIndex: 1,
+                            y: 0,
+                            opacity: 1,
+                            rotation: -2
+                        });
+                    } else {
+                        // All other cards hidden below with stacked rotation effect
+                        gsap.set(card, {
+                            top: offset * (i + 1),
+                            zIndex: i + 1,
+                            y: cardHeight + 200,
+                            opacity: 0,
+                            rotation: i * 1.5
+                        });
+                    }
                 }
             });
 
-            const endTime = 500 * cards.length;
+            // Minimal scroll distance to prevent excessive height
+            const endTime = 200 * cards.length;
             
             const tl = gsap.timeline({
                 scrollTrigger: {
@@ -100,10 +116,11 @@ const TestimonialSlider = () => {
                     pin: true,
                     start: "center center",
                     end: `+=${endTime}px`,
-                    scrub: 0.2,
-                    pinSpacing: true,
+                    scrub: 0.4,
+                    pinSpacing: "margin",
                     markers: false,
-                    invalidateOnRefresh: true
+                    invalidateOnRefresh: true,
+                    anticipatePin: 1
                 }
             });
 
@@ -114,74 +131,92 @@ const TestimonialSlider = () => {
             }, "b");
 
             if (cards[1]) {
-                tl.from(cards[1], { 
-                    y: () => window.innerHeight
-                });
+                tl.to(cards[1], { 
+                    y: 0,
+                    opacity: 1,
+                    rotation: 1.5,
+                    ease: "power2.out",
+                    duration: 0.4
+                }, "+=0.2");
                 
                 tl.to(cards[1], {
                     scale: 0.95,
-                    duration: 0.3,
-                    transformOrigin: "top"
+                    duration: 0.2,
+                    transformOrigin: "center"
                 }, "c");
                 
                 tl.to(cards[0], {
                     scale: 0.9,
-                    duration: 0.3,
-                    transformOrigin: "top"
+                    rotation: -3,
+                    duration: 0.2,
+                    transformOrigin: "center"
                 }, "c");
             }
 
             if (cards[2]) {
-                tl.from(cards[2], { 
-                    y: () => window.innerHeight
-                });
+                tl.to(cards[2], { 
+                    y: 0,
+                    opacity: 1,
+                    rotation: 3,
+                    ease: "power2.out",
+                    duration: 0.4
+                }, "+=0.2");
                 
                 tl.to(cards[0], {
                     scale: 0.85,
-                    duration: 0.3,
-                    transformOrigin: "top"
+                    rotation: -4,
+                    duration: 0.2,
+                    transformOrigin: "center"
                 }, "d");
                 
                 tl.to(cards[1], {
                     scale: 0.9,
-                    duration: 0.3,
-                    transformOrigin: "top"
+                    rotation: 0.5,
+                    duration: 0.2,
+                    transformOrigin: "center"
                 }, "d");
                 
                 tl.to(cards[2], {
                     scale: 0.95,
-                    duration: 0.3,
-                    transformOrigin: "top"
+                    duration: 0.2,
+                    transformOrigin: "center"
                 }, "d");
             }
 
             if (cards[3]) {
-                tl.from(cards[3], { 
-                    y: () => window.innerHeight
-                });
+                tl.to(cards[3], { 
+                    y: 0,
+                    opacity: 1,
+                    rotation: -1.5,
+                    ease: "power2.out",
+                    duration: 0.4
+                }, "+=0.2");
                 
                 tl.to(cards[0], {
                     scale: 0.8,
-                    duration: 0.3,
-                    transformOrigin: "top"
+                    rotation: -5,
+                    duration: 0.2,
+                    transformOrigin: "center"
                 }, "e");
                 
                 tl.to(cards[1], {
                     scale: 0.85,
-                    duration: 0.3,
-                    transformOrigin: "top"
+                    rotation: -0.5,
+                    duration: 0.2,
+                    transformOrigin: "center"
                 }, "e");
                 
                 tl.to(cards[2], {
                     scale: 0.9,
-                    duration: 0.3,
-                    transformOrigin: "top"
+                    rotation: 2,
+                    duration: 0.2,
+                    transformOrigin: "center"
                 }, "e");
                 
                 tl.to(cards[3], {
                     scale: 0.95,
-                    duration: 0.3,
-                    transformOrigin: "top"
+                    duration: 0.2,
+                    transformOrigin: "center"
                 }, "e");
             }
 
@@ -322,19 +357,19 @@ const TestimonialSlider = () => {
             </div>
 
             {/* Desktop Animated View */}
-            <div className="lt-1024:hidden block bg-gray-50">
-            <section ref={panelRef} className="panel relative py-28">
-                <div className="container mx-auto w-full">
-                    {/* Background text */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
+            <div className="lt-1024:hidden block bg-gray-50 min-h-screen overflow-hidden">
+            <section ref={panelRef} className="panel relative pt-40 pb-28 bg-gray-50">
+                <div className="container mx-auto w-full max-w-[1400px] px-8">
+                    {/* Background text - positioned at top */}
+                    <div className="absolute top-0 left-0 right-0 flex items-start justify-center pointer-events-none z-0 overflow-hidden pt-20">
                         <div className="text-center px-4">
-                            <h1 className="text-[200px] lt-1920:text-[150px] lt-1440:text-[120px] tracking-[-1.5rem] lt-1920:tracking-[-1rem] lt-1440:tracking-[-0.8rem] leading-[0.95] text-black opacity-20 select-none whitespace-nowrap" 
+                            <h1 className="text-[180px] lt-1920:text-[140px] lt-1440:text-[110px] tracking-[-1.2rem] lt-1920:tracking-[-0.9rem] lt-1440:tracking-[-0.7rem] leading-[0.9] text-black opacity-40 select-none whitespace-nowrap" 
                                 style={{ fontFamily: "'Press Start 2P'" }}>
                                 WALL OF <span className="text-red-500">LOVE</span>
                             </h1>
                             
-                            <div className="flex justify-center items-center mt-8">
-                                <span className="bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold transform -rotate-12">
+                            <div className="flex justify-center items-center mt-4">
+                                <span className="bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold transform -rotate-6">
                                     Testimonies
                                 </span>
                             </div>
@@ -342,10 +377,10 @@ const TestimonialSlider = () => {
                     </div>
 
                     {/* Cards stack */}
-                    <div className="relative z-10 w-full flex items-center justify-center px-4">
+                    <div className="relative z-10 w-full flex items-center justify-center">
                         <div 
                             ref={stackRef}
-                            className="panel__stack relative w-full max-w-[900px] lt-1920:max-w-[800px] lt-1440:max-w-[700px]"
+                            className="panel__stack relative w-full max-w-[850px] lt-1920:max-w-[750px] lt-1440:max-w-[650px]"
                             style={{
                                 display: 'grid',
                                 gridTemplateColumns: '1fr',
