@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import type { Article } from '../types/blog'
 import { findArticleBySlug, getRelatedArticles } from '../data/articles'
 import { setPageSeo } from '../lib/seo'
+import Navbar from '../components/navbar'
+import Footer from '../components/footer'
 
 function formatDate(value: string | Date) {
   const d = new Date(value)
@@ -70,6 +72,7 @@ function Skeleton() {
 
 export default function BlogArticle() {
   const { slug = '' } = useParams()
+  const navigate = useNavigate()
   const [article, setArticle] = useState<Article | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -99,26 +102,56 @@ export default function BlogArticle() {
 
   if (loading) {
     return (
-      <main className="px-4 md:px-8 lg:px-16 py-8 md:py-12">
-        <Skeleton />
-      </main>
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+        <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+          <Navbar />
+        </div>
+        <main className="px-4 md:px-8 lg:px-16 py-8 md:py-12">
+          <Skeleton />
+        </main>
+      </div>
     )
   }
 
   if (error || !article) {
     return (
-      <main className="px-4 md:px-8 lg:px-16 py-16 text-center">
-        <p className="text-gray-600">{error ?? 'Something went wrong.'}</p>
-        <Link className="mt-6 inline-block rounded-full bg-gray-900 px-4 py-2 text-white" to="/blog">Back to blog</Link>
-      </main>
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+        <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+          <Navbar />
+        </div>
+        <main className="px-4 md:px-8 lg:px-16 py-16 text-center">
+          <p className="text-gray-600 text-xl mb-6">{error ?? 'Something went wrong.'}</p>
+          <Link className="inline-block rounded-full bg-gradient-to-r from-red-500 to-red-600 px-6 py-3 text-white font-bold hover:shadow-lg transition-all" to="/blog">← Back to Blog</Link>
+        </main>
+        <Footer />
+      </div>
     )
   }
 
   return (
-    <article className="px-4 md:px-8 lg:px-16 ">
-      <div className="mx-auto w-full max-w-6xl">
-        {/* Title + Meta */}
-        <div className="mt-6 max-w-4xl">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Navbar */}
+      <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+        <Navbar />
+      </div>
+
+      <article className="px-4 md:px-8 lg:px-16 py-8">
+        <div className="mx-auto w-full max-w-6xl">
+          {/* Back Button */}
+          <div className="mb-6">
+            <button 
+              onClick={() => navigate(-1)} 
+              className="group inline-flex items-center gap-2 text-gray-600 hover:text-red-500 transition-colors font-medium"
+            >
+              <svg className="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back
+            </button>
+          </div>
+
+          {/* Title + Meta */}
+          <div className="max-w-4xl">
           <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl">{article.title}</h1>
           <MetaRow article={article} />
         </div>
@@ -143,16 +176,21 @@ export default function BlogArticle() {
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
 
-          <div className="mt-10">
-          <Link to="/" className="text-sm font-medium text-red-600 hover:underline">← Back to home</Link>
+          <div className="mt-10 pt-8 border-t border-gray-200">
+            <Link to="/blog" className="inline-flex items-center gap-2 text-red-600 font-medium hover:gap-3 transition-all">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to All Articles
+            </Link>
           </div>
         </div>
 
         {/* Related */}
-        <section aria-label="Related articles" className="mt-16">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Related Articles</h2>
-            <Link to="/" className="text-sm text-red-600 hover:underline">View all</Link>
+        <section aria-label="Related articles" className="mt-16 pb-16">
+          <div className="mb-6 flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-gray-900">Related Articles</h2>
+            <Link to="/blog" className="text-sm text-red-600 font-medium hover:underline">View all →</Link>
           </div>
           <div className="no-scrollbar flex gap-6 overflow-x-auto pb-2">
             {related.map(a => (
@@ -162,6 +200,8 @@ export default function BlogArticle() {
         </section>
       </div>
     </article>
+    <Footer />
+  </div>
   )
 }
 

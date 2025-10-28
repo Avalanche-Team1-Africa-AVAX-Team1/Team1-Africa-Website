@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 // import logo from '../assets/logo.png';
 import arrow from '../assets/arrow.svg';
 import arrowUp from '../assets/arrow-up.svg';
@@ -11,16 +12,16 @@ const Navbar = () => {
         <nav className="w-full">
             {/* Reduced vertical padding on smaller screens; ≥1920px unchanged */}
             <div className="flex items-center justify-between py-4 lt-1024:py-3 lt-768:py-2">
-                <div className="flex items-center bg-black rounded-full">
+                <Link to="/" className="flex items-center bg-black rounded-full cursor-pointer hover:scale-105 transition-transform duration-200">
                     <img src={logo} alt="team1-logo" width={50} height={50} />
-                </div>
+                </Link>
 
                 {/* Desktop Tabs */}
                 <div className="hidden md:flex items-center justify-between">
                     {/* Tighter gaps for tabs on smaller breakpoints */}
                     <ul className="flex items-center gap-8 lt-1440:gap-6 lt-1024:gap-4 cursor-pointer">
-                        <li>Home</li>
                         <li>About</li>
+                        <li><Link to="/blog">Blog</Link></li>
                         <div className="flex gap-2">
                             <li>Events</li>
                             {/* Shrink arrow icon on smaller screens */}
@@ -78,8 +79,8 @@ const Navbar = () => {
                 </div>
                 {/* Reduce nav item spacing and font size as screens shrink */}
                 <ul className="flex flex-col gap-8 lt-768:gap-6 lt-480:gap-5 px-8 lt-768:px-6 lt-480:px-5 text-xl lt-768:text-lg lt-480:text-base cursor-pointer">
-                    <li onClick={() => setSidebarOpen(false)}>Home</li>
                     <li onClick={() => setSidebarOpen(false)}>About</li>
+                    <li onClick={() => setSidebarOpen(false)}><Link to="/blog">Blog</Link></li>
                     <li onClick={() => setSidebarOpen(false)}>Events</li>
                     <li onClick={() => setSidebarOpen(false)}>Games</li>
                     <li onClick={() => setSidebarOpen(false)}>Community</li>

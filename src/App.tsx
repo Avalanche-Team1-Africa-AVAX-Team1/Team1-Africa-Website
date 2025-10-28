@@ -1,4 +1,6 @@
 import './App.css'
+import { useState, useEffect } from 'react'
+import Preloader from './components/Preloader'
 import Navbar from './components/navbar'
 import Spinner from './components/spinner'
 import Stats from './components/stats'
@@ -12,27 +14,64 @@ import Footer from './components/footer'
 import Games from './components/games'
 import Blog from './components/blog'
 import Join from './components/join'
+
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
+  const [showContent, setShowContent] = useState(false)
+
+  // Check if user has already seen the preloader in this session
+  useEffect(() => {
+    const hasSeenPreloader = sessionStorage.getItem('hasSeenPreloader')
+    if (hasSeenPreloader) {
+      setIsLoading(false)
+      setShowContent(true)
+    }
+  }, [])
+
+  const handlePreloaderComplete = () => {
+    setIsLoading(false)
+    // Mark that user has seen the preloader
+    sessionStorage.setItem('hasSeenPreloader', 'true')
+    // Small delay before showing content for smooth transition
+    setTimeout(() => {
+      setShowContent(true)
+    }, 300)
+  }
 
   return (
     <>
-      <div className="px-2 md:px-8">
-        <Navbar />
-        <Spinner />
-        <Stats />
-        <AboutUs />
-        <Partners />
-        <Build />
-        <Gallery />
-        <div className="mt-16 lt-1024:mt-48">
-          <TestimonialSlider />
-        </div>
-      </div>
-      <Events />
-      <Games />
-      <Blog />
-      <Join />
-      <Footer />
+      {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
+      
+      {showContent && (
+        <>
+          {/* Centered content wrapper for ultrawide screens */}
+          <div className="mx-auto w-full max-w-site-lg">
+            <div className="px-2 md:px-8">
+              <Navbar />
+              <Spinner />
+              <Stats />
+              <AboutUs />
+              <Partners />
+            </div>
+          </div>
+          {/* Full-width sections remain outside the centered wrapper */}
+          <Build />
+          <div className="mx-auto w-full max-w-site-lg">
+            <div className="px-2 md:px-8">
+              <Gallery />
+            </div>
+          </div>
+          {/* Testimonial needs full-width background */}
+          <div className="mt-16 lt-1024:mt-48">
+            <TestimonialSlider />
+          </div>
+          <Events />
+          <Games />
+          <Blog />
+          <Join />
+          <Footer />
+        </>
+      )}
     </>
   )
 }
