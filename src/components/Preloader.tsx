@@ -3,6 +3,56 @@ import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import logo from '../assets/team1logo.png'
 
+// Import all critical images for preloading
+import event1 from '../assets/event1-img.png'
+import event2 from '../assets/event2-img.png'
+import event3 from '../assets/event3.png'
+import event4 from '../assets/event4.png'
+import event5 from '../assets/event5.png'
+import event6 from '../assets/event6.png'
+import event7 from '../assets/event7.png'
+import event8 from '../assets/event8.png'
+import builders from '../assets/builders.png'
+import communitybanner from '../assets/communitybanner.png'
+import pixelAvax from '../assets/pixel-avax.png'
+import collage from '../assets/collage.png'
+import communityImg from '../assets/community.png'
+// Partner logos
+import avax from '../assets/avax.png'
+import gitcoin from '../assets/gitcoin.png'
+import onlydust from '../assets/onlydust.png'
+import polygonio from '../assets/polygonio.png'
+import refi from '../assets/refi.png'
+import spherre from '../assets/spherre.png'
+import squads from '../assets/sqauds.png'
+import web3bridge from '../assets/web3bridge.png'
+
+// List of all images to preload
+const imagesToPreload = [
+  logo,
+  event1,
+  event2,
+  event3,
+  event4,
+  event5,
+  event6,
+  event7,
+  event8,
+  builders,
+  communitybanner,
+  pixelAvax,
+  collage,
+  communityImg,
+  avax,
+  gitcoin,
+  onlydust,
+  polygonio,
+  refi,
+  spherre,
+  squads,
+  web3bridge
+]
+
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0)
   const [stage, setStage] = useState<'loading' | 'morphing' | 'exploding' | 'complete'>('loading')
@@ -11,23 +61,49 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const particlesRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Simulate loading progress
-    const duration = 10000 // 4 seconds total loading time
-    const interval = 50
-    const increment = (interval / duration) * 100
+    // Actually preload all images
+    let loadedCount = 0
+    const totalImages = imagesToPreload.length
+    const minLoadTime = 2000 // Minimum 2 seconds to show animations
+    const startTime = Date.now()
 
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        const next = prev + increment
-        if (next >= 100) {
-          clearInterval(progressInterval)
-          return 100
+    const updateProgress = () => {
+      const newProgress = (loadedCount / totalImages) * 100
+      setProgress(newProgress)
+    }
+
+    // Preload images
+    const promises = imagesToPreload.map((src) => {
+      return new Promise<void>((resolve) => {
+        const img = new Image()
+        img.onload = () => {
+          loadedCount++
+          updateProgress()
+          resolve()
         }
-        return next
+        img.onerror = () => {
+          loadedCount++ // Count errors as loaded to prevent hanging
+          updateProgress()
+          console.warn(`Failed to load image: ${src}`)
+          resolve()
+        }
+        img.src = src
       })
-    }, interval)
+    })
 
-    return () => clearInterval(progressInterval)
+    // Wait for all images AND minimum time
+    Promise.all(promises).then(() => {
+      const elapsed = Date.now() - startTime
+      const remainingTime = Math.max(0, minLoadTime - elapsed)
+      
+      setTimeout(() => {
+        setProgress(100)
+      }, remainingTime)
+    })
+
+    return () => {
+      // Cleanup if needed
+    }
   }, [])
 
   useEffect(() => {
