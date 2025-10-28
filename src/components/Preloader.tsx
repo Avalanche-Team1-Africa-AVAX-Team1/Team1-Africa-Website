@@ -3,54 +3,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import logo from '../assets/team1logo.png'
 
-// Import all critical images for preloading
+// Import only CRITICAL above-the-fold images for preloading
 import event1 from '../assets/event1-img.png'
 import event2 from '../assets/event2-img.png'
-import event3 from '../assets/event3.png'
-import event4 from '../assets/event4.png'
-import event5 from '../assets/event5.png'
-import event6 from '../assets/event6.png'
-import event7 from '../assets/event7.png'
-import event8 from '../assets/event8.png'
-import builders from '../assets/builders.png'
-import communitybanner from '../assets/communitybanner.png'
-import pixelAvax from '../assets/pixel-avax.png'
-import collage from '../assets/collage.png'
 import communityImg from '../assets/community.png'
-// Partner logos
-import avax from '../assets/avax.png'
-import gitcoin from '../assets/gitcoin.png'
-import onlydust from '../assets/onlydust.png'
-import polygonio from '../assets/polygonio.png'
-import refi from '../assets/refi.png'
-import spherre from '../assets/spherre.png'
-import squads from '../assets/sqauds.png'
-import web3bridge from '../assets/web3bridge.png'
 
-// List of all images to preload
+// List of critical images to preload (only above-the-fold, immediately visible)
+// Browser will automatically cache all other images on first load
 const imagesToPreload = [
   logo,
-  event1,
-  event2,
-  event3,
-  event4,
-  event5,
-  event6,
-  event7,
-  event8,
-  builders,
-  communitybanner,
-  pixelAvax,
-  collage,
-  communityImg,
-  avax,
-  gitcoin,
-  onlydust,
-  polygonio,
-  refi,
-  spherre,
-  squads,
-  web3bridge
+  event1,  // Stats left image
+  event2,  // Stats right image
+  communityImg // About section hero
 ]
 
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
@@ -61,10 +25,10 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const particlesRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Actually preload all images
+    // Preload only critical above-the-fold images
     let loadedCount = 0
     const totalImages = imagesToPreload.length
-    const minLoadTime = 2000 // Minimum 2 seconds to show animations
+    const minLoadTime = 1500 // Minimum 1.5 seconds to show animations
     const startTime = Date.now()
 
     const updateProgress = () => {

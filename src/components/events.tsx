@@ -215,6 +215,7 @@ const Events = () => {
                                 <img
                                     src={image.src}
                                     alt={image.alt}
+                                    loading="lazy"
                                     className="w-full h-full object-cover rounded-xl"
                                     onLoad={() => console.log(`✅ Flowing Arch Image loaded`)}
                                     onError={(e) => {
