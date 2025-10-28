@@ -47,7 +47,7 @@ const Build = () => {
                 </div>
             </div>
 
-            <div className="-ml-8 lt-1024:ml-0 w-[calc(100%+4rem)] lt-1024:w-full">
+            <div className="-ml-8 lt-1024:ml-0 w-[calc(100%+4rem)] lt-1024:w-full px-8">
                 {/* Build Section */}
                 <div className="bg-[#F1E228] cursor-pointer px-5 py-6 lt-1024:px-4 lt-1024:py-5 flex items-center hover:pb-10 lt-1024:hover:pb-8 transition-all duration-500 ease-in-out">
                     <div className="flex flex-col lt-1024:flex-col md:flex-row justify-between items-start lt-1024:items-start md:items-center w-full gap-4 lt-1024:gap-3">
@@ -57,7 +57,7 @@ const Build = () => {
                         <div className="flex-1 flex lt-1024:flex-col md:justify-end w-full">
                             <div className="w-full md:w-[35%] lt-1440:w-[45%] lt-1024:w-full">
                                 <h2 className="text-4xl lt-1440:text-3xl lt-1024:text-2xl lt-768:text-xl font-semibold text-black">Build</h2>
-                                <p className="text-lg lt-1024:text-base lt-768:text-sm text-black py-2">
+                                <p className="text-lg lt-1024:text-base lt-768:text-sm text-black font-semibold py-2">
                                     We support developers and startups through grants, mentorship, and technical workshops to build impactful dApps on Avalanche.
                                 </p>
                             </div>
@@ -74,7 +74,7 @@ const Build = () => {
                         <div className="flex-1 flex lt-1024:flex-col md:justify-end w-full">
                             <div className="w-full md:w-[35%] lt-1440:w-[45%] lt-1024:w-full">
                                 <h2 className="text-4xl lt-1440:text-3xl lt-1024:text-2xl lt-768:text-xl font-semibold text-white">Create</h2>
-                                <p className="text-lg lt-1024:text-base lt-768:text-sm text-white py-2">We empower African artists, designers, and storytellers to express their creativity using Avalanche-powered NFTs and platforms.
+                                <p className="text-lg lt-1024:text-base lt-768:text-sm text-white font-semibold py-2">We empower African artists, designers, and storytellers to express their creativity using Avalanche-powered NFTs and platforms.
                                 </p>
                             </div>
                         </div>
@@ -90,9 +90,8 @@ const Build = () => {
                         <div className="flex-1 flex lt-1024:flex-col md:justify-end w-full">
                             <div className="w-full md:w-[35%] lt-1440:w-[45%] lt-1024:w-full">
                                 <h2 className="text-4xl lt-1440:text-3xl lt-1024:text-2xl lt-768:text-xl font-semibold text-white">Educate</h2>
-                                <p className="text-lg lt-1024:text-base lt-768:text-sm text-white py-2">
-                                Avalanche literacy to schools, hubs, and grassroots communities.
-                                Avalanche literacy to schools, hubs, and grassroots communities.
+                                <p className="text-lg lt-1024:text-md lt-768:text-sm text-black font-semibold py-2">
+                                Through training, university outreach, and online content, we bring Avalanche literacy to schools, hubs, and grassroots communities.
                                 </p>
                             </div>
                         </div>

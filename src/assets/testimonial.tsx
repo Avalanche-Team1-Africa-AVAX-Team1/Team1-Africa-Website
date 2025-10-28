@@ -107,8 +107,8 @@ const TestimonialSlider = () => {
                 }
             });
 
-            // Minimal scroll distance to prevent excessive height
-            const endTime = 200 * cards.length;
+            // Optimized scroll distance to match animation timeline
+            const endTime = 150 * cards.length;
             
             const tl = gsap.timeline({
                 scrollTrigger: {
