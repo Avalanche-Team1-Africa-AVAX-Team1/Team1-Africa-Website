@@ -72,7 +72,7 @@ const TestimonialSlider = () => {
     useEffect(() => {
         const mm = gsap.matchMedia();
         
-        mm.add("(min-width: 768px)", () => {
+        mm.add("(min-width: 1024px)", () => {
             const cards = cardsRef.current.filter(Boolean);
             if (!cards.length || !panelRef.current || !stackRef.current) return;
 
@@ -98,11 +98,12 @@ const TestimonialSlider = () => {
                 scrollTrigger: {
                     trigger: panelRef.current,
                     pin: true,
-                    start: "50% 50%",
+                    start: "center center",
                     end: `+=${endTime}px`,
                     scrub: 0.2,
                     pinSpacing: true,
-                    markers: false
+                    markers: false,
+                    invalidateOnRefresh: true
                 }
             });
 
@@ -114,7 +115,7 @@ const TestimonialSlider = () => {
 
             if (cards[1]) {
                 tl.from(cards[1], { 
-                    y: window.innerHeight
+                    y: () => window.innerHeight
                 });
                 
                 tl.to(cards[1], {
@@ -132,7 +133,7 @@ const TestimonialSlider = () => {
 
             if (cards[2]) {
                 tl.from(cards[2], { 
-                    y: window.innerHeight
+                    y: () => window.innerHeight
                 });
                 
                 tl.to(cards[0], {
@@ -156,7 +157,7 @@ const TestimonialSlider = () => {
 
             if (cards[3]) {
                 tl.from(cards[3], { 
-                    y: window.innerHeight
+                    y: () => window.innerHeight
                 });
                 
                 tl.to(cards[0], {
@@ -185,13 +186,19 @@ const TestimonialSlider = () => {
             }
 
             return () => {
-                tl.kill();
-                ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+                if (tl) tl.kill();
             };
         });
 
-        return () => mm.revert();
-    }, [testimonials.length]);
+        return () => {
+            mm.revert();
+            ScrollTrigger.getAll().forEach(trigger => {
+                if (trigger.vars.trigger === panelRef.current) {
+                    trigger.kill();
+                }
+            });
+        };
+    }, []);
 
     const handleLoadMore = () => {
         setVisibleCards(prev => Math.min(prev + 2, testimonials.length));
@@ -319,9 +326,9 @@ const TestimonialSlider = () => {
             <section ref={panelRef} className="panel relative py-28">
                 <div className="container mx-auto w-full">
                     {/* Background text */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-                        <div className="text-center">
-                            <h1 className="text-[320px] lt-1920:text-[128px] lt-1440:text-[90px] lt-1024:text-[60px] lt-768:text-[46px] lt-480:text-[28px] tracking-[-4rem] lt-1920:tracking-[-0.8rem] lt-1440:tracking-[-0.55rem] lt-1024:tracking-[-0.36rem] lt-768:tracking-[-0.2rem] lt-480:tracking-[-0.12rem] leading-[0.95] text-black select-none whitespace-nowrap" 
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
+                        <div className="text-center px-4">
+                            <h1 className="text-[200px] lt-1920:text-[150px] lt-1440:text-[120px] tracking-[-1.5rem] lt-1920:tracking-[-1rem] lt-1440:tracking-[-0.8rem] leading-[0.95] text-black opacity-20 select-none whitespace-nowrap" 
                                 style={{ fontFamily: "'Press Start 2P'" }}>
                                 WALL OF <span className="text-red-500">LOVE</span>
                             </h1>
@@ -335,10 +342,10 @@ const TestimonialSlider = () => {
                     </div>
 
                     {/* Cards stack */}
-                    <div className="relative z-10 w-full flex items-center justify-center">
+                    <div className="relative z-10 w-full flex items-center justify-center px-4">
                         <div 
                             ref={stackRef}
-                            className="panel__stack relative w-[1800px] lt-1920:w-[42%] lt-1440:w-[50%] lt-1024:w-[64%] lt-768:w-[86%] lt-480:w-[90%] max-w-[1280px]"
+                            className="panel__stack relative w-full max-w-[900px] lt-1920:max-w-[800px] lt-1440:max-w-[700px]"
                             style={{
                                 display: 'grid',
                                 gridTemplateColumns: '1fr',
@@ -351,21 +358,15 @@ const TestimonialSlider = () => {
                                 <div
                                     key={index}
                                     ref={(el) => { cardsRef.current[index] = el }}
-                                    className="panel__card bg-white rounded-2xl border-2 border-black shadow-lg p-8 lt-1024:p-6 lt-768:p-5 lt-480:p-4 w-full overflow-hidden"
+                                    className="panel__card bg-white rounded-2xl border-2 border-black shadow-lg p-8 lt-1024:p-6 w-full overflow-hidden"
                                     style={{
                                         gridArea: '1/1/2/2',
                                         position: 'absolute',
-                                        height: '30rem',
+                                        minHeight: '28rem',
+                                        maxHeight: '32rem',
                                         willChange: 'transform'
                                     }}
                                 >
-                                    {index === testimonials.length - 1 && (
-                                        <>
-                                            <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform rotate-1 translate-x-1 translate-y-1 -z-10 lt-1440:hidden"></div>
-                                            <div className="absolute inset-0 bg-white rounded-2xl border-2 border-black transform -rotate-1 translate-x-0.5 translate-y-0.5 -z-20 lt-1440:hidden"></div>
-                                        </>
-                                    )}
-
                                     {/* Twitter icon */}
                                     <div className="absolute top-6 right-6">
                                         <svg width="28" height="28" viewBox="0 0 24 24" fill="#1DA1F2">

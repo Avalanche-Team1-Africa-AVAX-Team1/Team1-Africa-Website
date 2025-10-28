@@ -31,10 +31,11 @@ function App() {
       <div className="mx-auto w-full max-w-site-lg">
         <div className="px-2 md:px-8">
           <Gallery />
-          <div className="mt-16 lt-1024:mt-48">
-            <TestimonialSlider />
-          </div>
         </div>
+      </div>
+      {/* Testimonial needs full-width background */}
+      <div className="mt-16 lt-1024:mt-48">
+        <TestimonialSlider />
       </div>
       <Events />
       <Games />
