@@ -12,6 +12,19 @@ import event6 from '../assets/event6.png';
 import event7 from '../assets/event7.png';
 import event8 from '../assets/event8.png';
 
+// Type for arch position return value
+type ArchPosition = 
+    | { visible: false }
+    | {
+        x: number;
+        y: number;
+        rotation: number;
+        scale: number;
+        opacity: number;
+        zIndex: number;
+        visible: true;
+    };
+
 const Events = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const animationIdRef = useRef<number | null>(null);
@@ -66,7 +79,7 @@ const Events = () => {
     }, []);
 
     // Calculate arch position for any image index with smooth continuous movement
-    const getArchPosition = (index: number, offset: number) => {
+    const getArchPosition = (index: number, offset: number): ArchPosition => {
         const totalImages = baseImages.length;
         const coreVisiblePositions = isFlatLayout ? 3 : 5; // Main visible items (fewer on small screens)
         const fadeZoneWidth = isFlatLayout ? 1.0 : 1.2; // Slightly wider fade on small screens to create space
@@ -77,7 +90,7 @@ const Events = () => {
 
         // Don't render if completely outside the extended range
         if (relativePosition >= totalVisibleRange) {
-            return { visible: false } as any;
+            return { visible: false };
         }
 
         // Calculate opacity for smooth edge transitions
@@ -100,7 +113,7 @@ const Events = () => {
 
         // If opacity is too low, don't render
         if (opacity < 0.05) {
-            return { visible: false } as any;
+            return { visible: false };
         }
 
         // Adjust positioning to account for the fade zones
@@ -158,7 +171,7 @@ const Events = () => {
             opacity,
             zIndex: Math.max(zIndex, 1),
             visible: true
-        } as any;
+        };
     };
 
     return (
@@ -197,7 +210,6 @@ const Events = () => {
                                     height: '530px',
                                     zIndex: position.zIndex,
                                     opacity: position.opacity,
-                                    margin: '0 14px', // base spacing
                                 }}
                             >
                                 <img
@@ -254,11 +266,16 @@ const Events = () => {
 
             {/* Responsive Styles - extend existing rules without touching 4K baseline */}
             <style>{`
-                @media (max-width: 1919px) {
+                /* 4K and ultra-wide baseline */
+                .arch-container > div {
+                    margin: 0 14px !important;
+                }
+                
+                @media (max-width: 1919px) and (min-width: 1441px) {
                     .arch-container > div {
                         width: 300px !important; /* Laptop large */
                         height: 400px !important;
-                        margin: 0 24px !important; /* More spacing on large laptop */
+                        margin: 0 40px !important; /* Increased spacing on large laptop */
                     }
                 }
                 @media (max-width: 1440px) {

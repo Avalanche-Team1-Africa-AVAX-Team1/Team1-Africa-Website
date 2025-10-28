@@ -11,7 +11,7 @@ const Navbar = () => {
     return (
         <nav className="w-full">
             {/* Reduced vertical padding on smaller screens; ≥1920px unchanged */}
-            <div className="flex items-center justify-between py-4 lt-1024:py-3 lt-768:py-2">
+            <div className="w-full flex items-center justify-between py-4 lt-1024:py-3 lt-768:py-2">
                 <Link to="/" className="flex items-center bg-black rounded-full cursor-pointer hover:scale-105 transition-transform duration-200">
                     <img src={logo} alt="team1-logo" width={50} height={50} />
                 </Link>

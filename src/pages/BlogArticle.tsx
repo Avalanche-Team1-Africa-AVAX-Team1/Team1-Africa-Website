@@ -103,7 +103,7 @@ export default function BlogArticle() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-        <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+        <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
           <Navbar />
         </div>
         <main className="px-4 md:px-8 lg:px-16 py-8 md:py-12">
@@ -116,7 +116,7 @@ export default function BlogArticle() {
   if (error || !article) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-        <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+        <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
           <Navbar />
         </div>
         <main className="px-4 md:px-8 lg:px-16 py-16 text-center">
@@ -131,7 +131,7 @@ export default function BlogArticle() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Navbar */}
-      <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+      <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
         <Navbar />
       </div>
 

@@ -41,33 +41,45 @@ function App() {
   return (
     <>
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
-      
+
       {showContent && (
         <>
-          {/* Centered content wrapper for ultrawide screens */}
-          <div className="mx-auto w-full max-w-site-lg">
-            <div className="px-2 md:px-8">
-              <Navbar />
-              <Spinner />
-              <Stats />
-              <AboutUs />
-              <Partners />
-            </div>
+          {/* Navbar with slightly wider max-width */}
+          <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
+            <Navbar />
           </div>
-          {/* Full-width sections remain outside the centered wrapper */}
+          
+          {/* Centered content wrapper with consistent max-width */}
+          <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+            <Spinner />
+            <Stats />
+            <AboutUs />
+            <Partners />
+          </div>
+
+          {/* Full-width sections */}
           <Build />
-          <div className="mx-auto w-full max-w-site-lg">
-            <div className="px-2 md:px-8">
-              <Gallery />
-            </div>
+
+          {/* Gallery - back to centered container */}
+          <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+            <Gallery />
           </div>
-          {/* Testimonial needs full-width background */}
+
+          {/* Testimonial - full-width background */}
           <div className="mt-16 lt-1024:mt-48">
             <TestimonialSlider />
           </div>
+
+          {/* Full-width sections */}
           <Events />
           <Games />
-          <Blog />
+
+          {/* Blog - centered container */}
+          <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+            <Blog />
+          </div>
+
+          {/* Join and Footer - full-width */}
           <Join />
           <Footer />
         </>
