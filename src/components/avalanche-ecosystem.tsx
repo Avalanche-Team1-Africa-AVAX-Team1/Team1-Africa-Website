@@ -8,13 +8,18 @@ import arenaLogo from '../assets/Arena.png'
 import avalancheBadge from '../assets/avva.png'
 import arenaBadge from '../assets/arenna.png'
 import dexalot from '../assets/dexalot.png'
-import audius  from '../assets/audius.png';
+import audius from '../assets/audius.png'
 import ava from '../assets/ava.png'
 
-// Import for trending tokens
-import pepeToken from '../assets/pepe-token.png'
-import svLogo from '../assets/SV-Logo-200x200.png'
-import chainlink from '../assets/chainlink-new-logo.png'
+// Assets for cards
+import yellowKet from '../assets/ket 2.png'
+import benqiToken from '../assets/Benqi_Token_Ticker_White 2.png'
+import enclaveMarkets from '../assets/gee.png'
+import offTheGridLogo from '../assets/off-the-grid.jpg'
+import coqInu from '../assets/gunz.png'
+import onlydust from '../assets/onlydust.png'
+import sqauds from '../assets/sqauds.png'
+import refi from '../assets/refi.png'
 
 // Images for the left container
 const FLOATING_IMAGES = [
@@ -73,40 +78,73 @@ const FLOATING_IMAGES = [
 const TRENDING_TOKENS = [
   {
     rank: 1,
-    name: 'Sooner Than You Think',
-    ticker: 'SOON',
-    icon: 'S', // Will render as text
-    bgColor: 'bg-black'
+    name: 'yellow ket',
+    description: 'Memecoin',
+    icon: yellowKet,
   },
   {
     rank: 2,
-    name: 'SuperVerse',
-    ticker: 'SUPER',
-    icon: svLogo,
-    bgColor: ''
+    name: 'BENQI',
+    description: 'DeFi, Lending',
+    icon: benqiToken,
   },
   {
     rank: 3,
-    name: 'Chainlink',
-    ticker: 'LINK',
-    icon: chainlink,
-    bgColor: ''
+    name: 'Enclave Markets',
+    description: 'FEX, Exchanges & On-Ramps',
+    icon: enclaveMarkets,
   },
   {
     rank: 4,
-    name: 'Pepe',
-    ticker: 'PEPE',
-    icon: pepeToken,
-    bgColor: ''
+    name: 'Off The Grid',
+    description: 'Gaming',
+    icon: offTheGridLogo,
   },
   {
     rank: 5,
-    name: 'WETH',
-    ticker: 'WETH',
-    icon: 'W', // Will render as text
-    bgColor: 'bg-black'
-  }
-]
+    name: 'Coq Inu',
+    description: '--------',
+    icon: coqInu,
+  },
+] as const
+
+const FEATURED_PROJECTS = [
+  {
+    rank: 1,
+    name: 'Dexalot',
+    description: 'Orderbook DEX for Avalanche',
+    category: 'Trading',
+    icon: dexalot,
+  },
+  {
+    rank: 2,
+    name: 'Audius',
+    description: 'Decentralized music streaming',
+    category: 'Creator Economy',
+    icon: audius,
+  },
+  {
+    rank: 3,
+    name: 'OnlyDust',
+    description: 'Open-source ecosystem grants',
+    category: 'Builder Tools',
+    icon: onlydust,
+  },
+  {
+    rank: 4,
+    name: 'Squauds',
+    description: 'Squad coordination for DAOs',
+    category: 'Collaboration',
+    icon: sqauds,
+  },
+  {
+    rank: 5,
+    name: 'ReFi DAO',
+    description: 'Climate & impact finance',
+    category: 'Impact',
+    icon: refi,
+  },
+] as const
 
 export default function AvalancheEcosystem() {
   const [activeCard, setActiveCard] = useState<'trending' | 'featured'>('trending')
@@ -205,6 +243,143 @@ export default function AvalancheEcosystem() {
     }
   }
 
+  const renderFeaturedCard = () => {
+    const isActive = activeCard === 'featured'
+
+    return (
+      <motion.div
+        key="featured"
+        initial={false}
+        animate={{
+          y: isActive ? 0 : 26,
+          opacity: isActive ? 1 : 0.6,
+          scale: isActive ? 1 : 0.95,
+          zIndex: isActive ? 40 : 12,
+          rotateX: isActive ? 0 : -4,
+        }}
+        transition={{
+          duration: 0.9,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        }}
+        style={{ transformStyle: 'preserve-3d', pointerEvents: isActive ? 'auto' : 'none' }}
+        className="absolute inset-0 w-full"
+      >
+        <div className="relative h-full w-full">
+          <svg
+            viewBox="0 0 663 633"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={`absolute inset-0 h-full w-full select-none ${isActive ? 'drop-shadow-[0_32px_60px_rgba(15,23,42,0.22)]' : 'opacity-80'}`}
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M20 633H643C654.046 633 663 624.046 663 613V65.472C663 54.4263 654.046 45.472 643 45.472H327.99C320.112 45.472 312.967 40.8467 309.743 33.6585L299.942 11.8135C296.718 4.62529 289.573 0 281.695 0H20C8.95428 0 0 8.95431 0 20V613C0 624.046 8.95428 633 20 633Z"
+              fill="black"
+            />
+            <rect x="0.5" y="119.5" width="662" height="513" rx="14.5" fill="white" stroke="#D9D9D9" />
+          </svg>
+
+          <div className="absolute inset-0">
+            {/* Header on the black tab */}
+            <header className="absolute top-0 left-0 right-0 px-12 pt-8 pb-6">
+              <h3 className="text-[28px] font-semibold text-white">Featured Projects</h3>
+              <p className="text-sm text-white/80 mt-1">
+                Gaming and DeFi projects on Avalanche
+              </p>
+            </header>
+
+            {/* Content area */}
+            <div className="absolute top-[119px] left-0 right-0 bottom-0 px-12 py-8">
+              <ul className="h-full overflow-y-auto pr-2 scrollbar-hide">
+                {FEATURED_PROJECTS.map((project) => (
+                  <li key={project.rank} className="flex items-center gap-6 py-4 border-b border-dashed border-slate-200 last:border-none">
+                    <span className="text-base font-medium text-slate-400 w-6">{project.rank}.</span>
+                    <div className="w-12 h-12 rounded-full overflow-hidden bg-white ring-1 ring-slate-200 flex-shrink-0">
+                      <img src={project.icon} alt={project.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-lg font-semibold text-slate-900">{project.name}</p>
+                      <p className="text-sm text-slate-500">{project.category}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
+
+  const renderTrendingCard = () => {
+    const isActive = activeCard === 'trending'
+
+    return (
+      <motion.div
+        key="trending"
+        initial={false}
+        animate={{
+          y: isActive ? 0 : -24,
+          opacity: isActive ? 1 : 0.6,
+          scale: isActive ? 1 : 0.95,
+          zIndex: isActive ? 50 : 18,
+          rotateX: isActive ? 0 : -3,
+        }}
+        transition={{
+          duration: 0.9,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        }}
+        style={{ transformStyle: 'preserve-3d', pointerEvents: isActive ? 'auto' : 'none' }}
+        className="absolute inset-0 w-full"
+      >
+        <div className="relative h-full w-full">
+          <svg
+            viewBox="0 0 663 633"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={`absolute inset-0 h-full w-full select-none ${isActive ? 'drop-shadow-[0_40px_70px_rgba(15,23,42,0.2)]' : 'opacity-80'}`}
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M20 633H643C654.046 633 663 624.046 663 613V65.472C663 54.4263 654.046 45.472 643 45.472H327.99C320.112 45.472 312.967 40.8467 309.743 33.6585L299.942 11.8135C296.718 4.62529 289.573 0 281.695 0H20C8.95428 0 0 8.95431 0 20V613C0 624.046 8.95428 633 20 633Z"
+              fill="#E53E3E"
+            />
+            <rect y="119" width="663" height="514" rx="15" fill="white" />
+          </svg>
+
+          <div className="absolute inset-0">
+            {/* Header on the red tab */}
+            <header className="absolute top-0 left-0 right-0 px-12 pt-8 pb-6">
+              <h3 className="text-[28px] font-semibold text-white">Trending Tokens</h3>
+              <p className="text-sm text-white/80 mt-1">What's hot right now in the world of Web3</p>
+            </header>
+
+            {/* Content area */}
+            <div className="absolute top-[119px] left-0 right-0 bottom-0 px-12 py-8">
+              <ul className="h-full overflow-y-auto pr-2 scrollbar-hide">
+                {TRENDING_TOKENS.map((token) => (
+                  <li
+                    key={token.rank}
+                    className="flex items-center gap-6 py-4 border-b border-dashed border-slate-200 last:border-none"
+                  >
+                    <span className="text-base font-medium text-slate-400 w-6">{token.rank}.</span>
+                    <div className="w-12 h-12 rounded-full overflow-hidden bg-white shadow-sm ring-1 ring-slate-200 flex-shrink-0">
+                      <img src={token.icon} alt={token.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-lg font-semibold text-slate-900">{token.name}</p>
+                      <p className="text-sm text-slate-500">{token.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
+
   return (
     <section
       ref={sectionRef}
@@ -266,96 +441,10 @@ export default function AvalancheEcosystem() {
           }}
           onWheel={handleWheel}
         >
-          <div className="relative w-full h-full" style={{ perspective: '1000px' }}>
-            <AnimatePresence mode="sync">
-              {/* Featured Projects Card (Back) */}
-              <motion.div
-                key="featured"
-                initial={false}
-                animate={{
-                  y: activeCard === 'featured' ? 0 : 30,
-                  opacity: activeCard === 'featured' ? 1 : 0.7,
-                  scale: activeCard === 'featured' ? 1 : 0.96,
-                  zIndex: activeCard === 'featured' ? 20 : 10,
-                  rotateX: activeCard === 'featured' ? 0 : 5,
-                }}
-                transition={{
-                  duration: 0.9,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
-                style={{ transformStyle: 'preserve-3d' }}
-                className="absolute inset-0 w-full"
-              >
-                <div className="w-full h-full bg-white rounded-[24px] shadow-2xl border border-gray-200 overflow-hidden flex flex-col">
-                  <div className="px-10 py-6 border-b border-gray-200">
-                    <h3 className="text-3xl font-bold text-black">Featured Projects</h3>
-                  </div>
-                  <div className="flex-1 p-6 overflow-hidden">
-                    <p className="text-gray-500 text-sm">Gaming and DeFi projects on Avalanche</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Trending Tokens Card (Front) */}
-              <motion.div
-                key="trending"
-                initial={false}
-                animate={{
-                  y: activeCard === 'trending' ? 0 : 30,
-                  opacity: activeCard === 'trending' ? 1 : 0.7,
-                  scale: activeCard === 'trending' ? 1 : 0.96,
-                  zIndex: activeCard === 'trending' ? 20 : 10,
-                  rotateX: activeCard === 'trending' ? 0 : 5,
-                }}
-                transition={{
-                  duration: 0.9,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
-                style={{ transformStyle: 'preserve-3d' }}
-                className="absolute inset-0 w-full"
-              >
-                <div className="w-full h-full bg-black rounded-[24px] shadow-2xl overflow-hidden flex flex-col">
-                  {/* Card Header */}
-                  <div className="px-10 py-6 border-b border-gray-800">
-                    <h3 className="text-3xl font-bold text-white">Trending Tokens</h3>
-                    <p className="text-gray-400 text-sm mt-1">What's hot right now in the world of Web3</p>
-                  </div>
-                  
-                  {/* Card Content */}
-                  <div className="flex-1 px-10 py-6 space-y-1 overflow-y-auto">
-                    {TRENDING_TOKENS.map((token, idx) => (
-                      <motion.div
-                        key={token.rank}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="flex items-center gap-6 py-4 border-b border-gray-800 last:border-0 hover:bg-gray-900/30 transition-colors cursor-pointer"
-                      >
-                        <div className="text-lg font-normal text-gray-500 w-8">
-                          {token.rank}.
-                        </div>
-                        <div className={`w-14 h-14 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center ${token.bgColor}`}>
-                          {typeof token.icon === 'string' && token.icon.length <= 2 ? (
-                            <span className="text-white text-2xl font-bold">{token.icon}</span>
-                          ) : (
-                            <img 
-                              src={token.icon} 
-                              alt={token.name}
-                              className="w-full h-full object-cover"
-                            />
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="text-white font-semibold text-lg">
-                            {token.name}
-                          </h4>
-                          <p className="text-gray-500 text-sm uppercase tracking-wide">{token.ticker}</p>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
+          <div className="relative w-full h-full" style={{ perspective: '1400px' }}>
+            <AnimatePresence initial={false} mode="sync">
+              {renderFeaturedCard()}
+              {renderTrendingCard()}
             </AnimatePresence>
           </div>
         </div>
