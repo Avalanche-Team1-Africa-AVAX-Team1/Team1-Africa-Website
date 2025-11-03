@@ -14,6 +14,7 @@ import Footer from './components/footer'
 import Games from './components/games'
 import Blog from './components/blog'
 import Join from './components/join'
+import AvalancheEcosystem from './components/avalanche-ecosystem'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -73,6 +74,7 @@ function App() {
           {/* Full-width sections */}
           <Events />
           <Games />
+          <AvalancheEcosystem />
 
           {/* Blog - centered container */}
           <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
