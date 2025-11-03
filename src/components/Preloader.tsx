@@ -3,6 +3,20 @@ import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import logo from '../assets/team1logo.png'
 
+// Import only CRITICAL above-the-fold images for preloading
+import event1 from '../assets/event1-img.png'
+import event2 from '../assets/event2-img.png'
+import communityImg from '../assets/community.png'
+
+// List of critical images to preload (only above-the-fold, immediately visible)
+// Browser will automatically cache all other images on first load
+const imagesToPreload = [
+  logo,
+  event1,  // Stats left image
+  event2,  // Stats right image
+  communityImg // About section hero
+]
+
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0)
   const [stage, setStage] = useState<'loading' | 'morphing' | 'exploding' | 'complete'>('loading')
@@ -11,23 +25,49 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
   const particlesRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Simulate loading progress
-    const duration = 10000 // 4 seconds total loading time
-    const interval = 50
-    const increment = (interval / duration) * 100
+    // Preload only critical above-the-fold images
+    let loadedCount = 0
+    const totalImages = imagesToPreload.length
+    const minLoadTime = 1500 // Minimum 1.5 seconds to show animations
+    const startTime = Date.now()
 
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        const next = prev + increment
-        if (next >= 100) {
-          clearInterval(progressInterval)
-          return 100
+    const updateProgress = () => {
+      const newProgress = (loadedCount / totalImages) * 100
+      setProgress(newProgress)
+    }
+
+    // Preload images
+    const promises = imagesToPreload.map((src) => {
+      return new Promise<void>((resolve) => {
+        const img = new Image()
+        img.onload = () => {
+          loadedCount++
+          updateProgress()
+          resolve()
         }
-        return next
+        img.onerror = () => {
+          loadedCount++ // Count errors as loaded to prevent hanging
+          updateProgress()
+          console.warn(`Failed to load image: ${src}`)
+          resolve()
+        }
+        img.src = src
       })
-    }, interval)
+    })
 
-    return () => clearInterval(progressInterval)
+    // Wait for all images AND minimum time
+    Promise.all(promises).then(() => {
+      const elapsed = Date.now() - startTime
+      const remainingTime = Math.max(0, minLoadTime - elapsed)
+      
+      setTimeout(() => {
+        setProgress(100)
+      }, remainingTime)
+    })
+
+    return () => {
+      // Cleanup if needed
+    }
   }, [])
 
   useEffect(() => {

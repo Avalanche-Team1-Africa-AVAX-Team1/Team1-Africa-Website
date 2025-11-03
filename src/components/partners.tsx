@@ -33,19 +33,19 @@ const Partners = () => {
                     {/* Row 1 */}
                     <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-red-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-red-50 md:hover:shadow-lg group'>
                         <p className='text-sm text-center transition-colors duration-300 text-red-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-red-600 md:group-hover:font-semibold'>Avalanche Foundation</p>
-                        <img src={avax} alt="avalanche" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                        <img src={avax} alt="avalanche" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                     </div>
                     <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-blue-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-blue-50 md:hover:shadow-lg group'>
                         <p className='text-sm text-center transition-colors duration-300 text-blue-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-blue-600 md:group-hover:font-semibold'>Gitcoin Africa</p>
-                        <img src={gitcoin} alt="gitcoin" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                        <img src={gitcoin} alt="gitcoin" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                     </div>
                     <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-green-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-green-50 md:hover:shadow-lg group'>
                         <p className='text-sm text-center transition-colors duration-300 text-green-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-green-600 md:group-hover:font-semibold'>Web3Bridge</p>
-                        <img src={web3bridge} alt="web3bridge" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                        <img src={web3bridge} alt="web3bridge" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                     </div>
                     <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 cursor-pointer transition-all duration-300 bg-purple-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-purple-50 md:hover:shadow-lg group'>
                         <p className='text-sm text-center transition-colors duration-300 text-purple-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-purple-600 md:group-hover:font-semibold'>ReFiDAO</p>
-                        <img src={refi} alt="refi" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                        <img src={refi} alt="refi" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                     </div>
 
                     {/* Horizontal dashed line between rows */}
@@ -54,19 +54,19 @@ const Partners = () => {
                     {/* Row 2 */}
                     <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-orange-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-orange-50 md:hover:shadow-lg group'>
                         <p className='text-sm text-center transition-colors duration-300 text-orange-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-orange-600 md:group-hover:font-semibold'>Polygon Guild Accra</p>
-                        <img src={polygonio} alt="polygonio" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                        <img src={polygonio} alt="polygonio" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                     </div>
                     <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-indigo-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-indigo-50 md:hover:shadow-lg group'>
                         <p className='text-sm text-center transition-colors duration-300 text-indigo-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-indigo-600 md:group-hover:font-semibold'>Only Dust</p>
-                        <img src={onlydust} alt="onlydust" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                        <img src={onlydust} alt="onlydust" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                     </div>
                     <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-pink-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-pink-50 md:hover:shadow-lg group'>
                         <p className='text-sm text-center transition-colors duration-300 text-pink-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-pink-600 md:group-hover:font-semibold'>Sqauds</p>
-                        <img src={squads} alt="squads" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                        <img src={squads} alt="squads" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                     </div>
                     <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 cursor-pointer transition-all duration-300 bg-teal-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-teal-50 md:hover:shadow-lg group'>
                         <p className='text-sm text-center transition-colors duration-300 text-teal-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-teal-600 md:group-hover:font-semibold'>Spherre</p>
-                        <img src={spherre} alt="spherre" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                        <img src={spherre} alt="spherre" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                     </div>
                 </div>
 

@@ -14,7 +14,7 @@ export default function BlogIndex() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Navbar */}
-      <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+      <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
         <Navbar />
       </div>
 
