@@ -353,7 +353,7 @@ export default function TestimonialSlider() {
         const imagePromises = testimonials.map((item) => {
           return new Promise<void>((resolve) => {
             const img = new Image();
-            
+
             img.onload = async () => {
               try {
                 // Decode the image to ensure it's ready for rendering
@@ -366,17 +366,17 @@ export default function TestimonialSlider() {
                 resolve(); // Still resolve to not block other images
               }
             };
-            
+
             img.onerror = () => {
               console.warn('Image load failed:', item.image);
               resolve(); // Resolve anyway to not block
             };
-            
+
             // Set explicit dimensions to prevent layout shift
             img.width = 800;
             img.height = 800;
             img.src = item.image;
-            
+
             // If already cached and complete, decode immediately
             if (img.complete) {
               if ('decode' in img) {
@@ -390,10 +390,10 @@ export default function TestimonialSlider() {
 
         // Wait for all images to load and decode
         await Promise.all(imagePromises);
-        
+
         // Add small delay to ensure GPU has processed everything
         await new Promise(resolve => setTimeout(resolve, 100));
-        
+
         if (isMounted) {
           setIsReady(true);
         }
@@ -414,25 +414,26 @@ export default function TestimonialSlider() {
 
   const handleCardClick = (renderIndex: number) => {
     if (isAnimating) return; // Prevent clicks during animation
-    
+
     setIsAnimating(true);
-    
+
     if (expandedKey === renderIndex) {
       setExpandedKey(null);
     } else {
       setExpandedKey(renderIndex);
     }
-    
+
     // Reset animation lock after transition completes
     setTimeout(() => {
       setIsAnimating(false);
     }, 900); // Match the longest animation duration
   };
 
-   return (
-     <section className="relative w-full overflow-hidden bg-[#f8f8f8] py-20">
+  return (
+    <section className="relative w-full overflow-hidden bg-[#f8f8f8] py-20">
       {/* Header */}
-      <div className="px-6 max-w-7xl mx-auto mb-16">
+
+      <div className="px-6 max-w-7xl mb-16">
         <div className="mb-4">
           <span className="text-xs uppercase tracking-widest text-gray-500 font-semibold">
             TESTIMONIALS
@@ -444,9 +445,58 @@ export default function TestimonialSlider() {
         </h2>
       </div>
 
-      {/* Scrolling row */}
+      {/* Mobile view - stacked cards */}
+      <div className="md:hidden relative transition-opacity duration-700 px-4">
+        <div className="flex flex-col gap-6">
+          {testimonials.map((item, index) => (
+            <div
+              key={`mobile-card-${index}`}
+              className="w-full bg-white rounded-[40px] shadow-xl overflow-hidden"
+            >
+              {/* Image on top */}
+              <div className="relative w-full h-[300px] overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  width={1600}
+                  height={800}
+                  decoding="sync"
+                  className="h-full w-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-black/20" />
+              </div>
+
+              {/* Text below image */}
+              <div className="p-6 text-gray-900">
+                <div className="mb-4">
+                  <p className="text-[10px] uppercase tracking-[0.28em] text-gray-500 font-medium mb-3">
+                    Overview
+                  </p>
+                  <h3 className="text-2xl font-bold mb-1">{item.name}</h3>
+                  <p className="text-sm text-gray-600 mb-4">{item.title}</p>
+                  <p className="text-base leading-relaxed text-gray-800 font-light">
+                    {item.text}
+                  </p>
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <div
+                    className="text-gray-900 text-2xl"
+                    style={{
+                      fontFamily: "'Bastliga One', 'Dancing Script', cursive",
+                    }}
+                  >
+                    {item.signature}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop view - Scrolling row */}
       <div
-        className={`relative transition-opacity duration-700 ${isReady ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`hidden md:block relative transition-opacity duration-700 ${isReady ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
@@ -454,13 +504,13 @@ export default function TestimonialSlider() {
         <div
           ref={containerRef}
           className="flex gap-6 px-8 items-stretch"
-          style={{ 
+          style={{
             willChange: "transform",
             transform: 'translateZ(0)',
             backfaceVisibility: 'hidden',
           }}
         >
-           {renderedCards.map((item, renderIndex) => {
+          {renderedCards.map((item, renderIndex) => {
             const isExpanded = expandedKey === renderIndex;
             const isDimmed = expandedKey !== null && !isExpanded;
 
@@ -480,7 +530,7 @@ export default function TestimonialSlider() {
                 }}
                 onClick={() => handleCardClick(renderIndex)}
                 className="flex-shrink-0 h-[800px] rounded-[40px] shadow-xl cursor-pointer overflow-hidden"
-                style={{ 
+                style={{
                   pointerEvents: isAnimating ? 'none' : 'auto',
                   willChange: 'width',
                   transform: 'translateZ(0)',
@@ -488,38 +538,38 @@ export default function TestimonialSlider() {
                   backgroundColor: 'transparent',
                 }}
               >
-                 <div className="relative h-full bg-white rounded-[40px] overflow-hidden">
-                   {/* Image that spans full width - fixed, no scaling */}
-                   <div className="absolute inset-0 h-full w-full overflow-hidden">
-                     <img
-                       src={item.image}
-                       alt={item.name}
-                       width={1600}
-                       height={800}
-                       decoding="sync"
-                       className="h-full w-full object-cover object-center"
-                       style={{ 
-                         transform: 'translateZ(0)',
-                         backfaceVisibility: 'hidden',
-                         minWidth: '100%',
-                         minHeight: '100%',
-                       }}
-                     />
-                   </div>
-                   
-                   {/* Light overlay on image side */}
-                   <motion.div 
-                     initial={{ opacity: 0.2 }}
-                     animate={{ opacity: isDimmed ? 0.6 : (isExpanded ? 0.3 : 0.2) }}
-                     transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
-                     className="absolute inset-0 bg-black"
-                   />
+                <div className="relative h-full bg-white rounded-[40px] overflow-hidden">
+                  {/* Image that spans full width - fixed, no scaling */}
+                  <div className="absolute inset-0 h-full w-full overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      width={1600}
+                      height={800}
+                      decoding="sync"
+                      className="h-full w-full object-cover object-center"
+                      style={{
+                        transform: 'translateZ(0)',
+                        backfaceVisibility: 'hidden',
+                        minWidth: '100%',
+                        minHeight: '100%',
+                      }}
+                    />
+                  </div>
+
+                  {/* Light overlay on image side */}
+                  <motion.div
+                    initial={{ opacity: 0.2 }}
+                    animate={{ opacity: isDimmed ? 0.6 : (isExpanded ? 0.3 : 0.2) }}
+                    transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="absolute inset-0 bg-black"
+                  />
 
                   {/* Content overlay on the right side when expanded - no transitions */}
                   {isExpanded && (
                     <div
                       className="absolute top-0 right-0 h-full text-white"
-                      style={{ 
+                      style={{
                         width: expandedContentWidth,
                         transform: 'translateZ(0)',
                         backfaceVisibility: 'hidden',
@@ -527,52 +577,52 @@ export default function TestimonialSlider() {
                     >
                       {/* Very dark overlay panel for text side - clearly distinguished */}
                       <div className="absolute inset-0 bg-black/60 m-4 rounded-[2em]" />
-                        
-                        <div className="relative flex h-full flex-col justify-between p-10">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (isAnimating) return;
-                              setIsAnimating(true);
-                              setExpandedKey(null);
-                              setTimeout(() => setIsAnimating(false), 900);
+
+                      <div className="relative flex h-full flex-col justify-between p-10">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (isAnimating) return;
+                            setIsAnimating(true);
+                            setExpandedKey(null);
+                            setTimeout(() => setIsAnimating(false), 900);
+                          }}
+                          className="absolute top-7 right-7 w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
+                        >
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                          </svg>
+                        </button>
+
+                        <div>
+                          <p className="text-[11px] uppercase tracking-[0.28em] text-white/60 font-medium mb-5 ">
+                            Overview
+                          </p>
+                          <h3 className="text-7xl font-bold mb-2">{item.name}</h3>
+                          <p className="text-base text-white/70 mb-6">{item.title}</p>
+                          <p className="text-5xl leading-relaxed text-white/90 leading-snug font-light">
+                            {item.text}
+                          </p>
+                        </div>
+
+                        <div className="mt-6">
+                          <div
+                            className="text-white text-6xl"
+                            style={{
+                              fontFamily: "'Bastliga One', 'Dancing Script', cursive",
                             }}
-                            className="absolute top-7 right-7 w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
                           >
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                              <line x1="18" y1="6" x2="6" y2="18" />
-                              <line x1="6" y1="6" x2="18" y2="18" />
-                            </svg>
-                          </button>
-
-                          <div>
-                            <p className="text-[11px] uppercase tracking-[0.28em] text-white/60 font-medium mb-5 ">
-                              Overview
-                            </p>
-                            <h3 className="text-7xl font-bold mb-2">{item.name}</h3>
-                            <p className="text-base text-white/70 mb-6">{item.title}</p>
-                            <p className="text-5xl leading-relaxed text-white/90 leading-snug font-light">
-                              {item.text}
-                            </p>
-                          </div>
-
-                          <div className="mt-6">
-                            <div
-                              className="text-white text-6xl"
-                              style={{
-                                fontFamily: "'Bastliga One', 'Dancing Script', cursive",
-                              }}
-                            >
-                              {item.signature}
-                            </div>
+                            {item.signature}
                           </div>
                         </div>
+                      </div>
                     </div>
                   )}
                 </div>
               </motion.div>
-             );
-           })}
+            );
+          })}
         </div>
 
       </div>
