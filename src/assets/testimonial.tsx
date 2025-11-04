@@ -36,7 +36,7 @@ const testimonials = [
     title: "Regional Lead - Nigeria",
     image: testimonial1,
     text:
-      "Team1 Africa gave me the structure to grow monthly meetups in Johannesburg into a thriving hub. The playbooks, funding, and mentorship helped our community scale faster than I imagined.",
+      "Attending my first Team1 summit in Lagos completely changed my perspective on what's possible with Avalanche. The energy, the connections, and the hands-on workshops showed me this ecosystem is truly built for Africa.",
     signature: "Techboy Feezy",
   },
   {
@@ -45,7 +45,7 @@ const testimonials = [
     title: "Developer Advocate - Accra",
     image: testimonial2,
     text:
-      "With Team1 resources, I now run bilingual developer workshops across Accra. Seeing builders ship their first Avalanche dApps in a weekend never gets old.",
+      "Team1's hackathon in Accra was incredible! I met developers from across West Africa and we built a cross-border payment dApp in 48 hours. The mentors from Avalanche really knew their stuff.",
     signature: "Kwame Mensah",
   },
   {
@@ -54,7 +54,7 @@ const testimonials = [
     title: "Product Designer - Cairo",
     image: testimonial3,
     text:
-      "Designing onboarding journeys for new builders is easier with the toolkits Team1 shares. Our Cairo team can prototype, test, and ship ideas in record time.",
+      "The Team1 design workshop in Cairo taught me so much about building user-friendly Web3 interfaces. Avalanche's subnet architecture opens up amazing possibilities for African use cases.",
     signature: "Fatima El-Sayed",
   },
   {
@@ -63,7 +63,7 @@ const testimonials = [
     title: "Campus Ambassador - Kigali",
     image: testimonial4,
     text:
-      "As a campus ambassador, I rely on Team1 to keep my peers inspired. The curriculum and speaker network transformed blockchain from theory into practice at our university.",
+      "Being part of Team1 on campus has been life-changing. The monthly meetups we host introduce students to Avalanche and blockchain development. Seeing my classmates deploy their first smart contracts is amazing!",
     signature: "Jean-Paul Umutoni",
   },
   {
@@ -72,7 +72,7 @@ const testimonials = [
     title: "Events Lead - Lagos",
     image: testimonial5,
     text:
-      "Planning Lagos community events became sustainable once Team1 stepped in with logistics support. Every gathering now feels like a mini summit.",
+      "Every Team1 event I've attended in Lagos leaves me inspired. The community is genuine, the Avalanche ecosystem keeps growing, and there's real support for builders creating solutions for African markets.",
     signature: "Linda Agyeman",
   },
   {
@@ -81,7 +81,7 @@ const testimonials = [
     title: "Education Partner - Nairobi",
     image: testimonial6,
     text:
-      "Team1 helped us create a consistent education program for Nairobi developers. The curriculum keeps evolving with feedback from our local builders.",
+      "Team1's developer bootcamp in Nairobi was phenomenal. Learning about Avalanche's consensus mechanism and building on subnets opened my eyes to scalable blockchain solutions Africa needs.",
     signature: "Samuel Ochieng",
   },
   {
@@ -90,7 +90,7 @@ const testimonials = [
     title: "Blockchain Strategist - Abuja",
     image: testimonial7,
     text:
-      "Strategizing adoption with government partners in Abuja needs credibility. Team1's global network gives us the backing to start those conversations.",
+      "Team1 connected me with policymakers and builders at their Abuja roundtable. Discussing how Avalanche can support government digital transformation was exactly the conversation Africa needs to have.",
     signature: "Amara Okeke",
   },
   {
@@ -99,7 +99,7 @@ const testimonials = [
     title: "Community Operations - Tunis",
     image: testimonial8,
     text:
-      "Coordinating operations across North Africa can be complex, but Team1's templates keep everyone aligned. Our Tunis chapter is more focused than ever.",
+      "The Team1 North Africa meetup in Tunis brought together brilliant minds from across the region. Avalanche's speed and low fees make it perfect for the financial inclusion projects we're building.",
     signature: "Rania Ben Ali",
   },
   {
@@ -108,7 +108,7 @@ const testimonials = [
     title: "Growth Marketer - Harare",
     image: testimonial9,
     text:
-      "Marketing a Web3 community in Harare is challenging without data. Team1 tools help us measure impact, grow smarter, and celebrate every milestone.",
+      "Team1 events in Harare always deliver value. The workshops on Avalanche marketing and community building gave me practical strategies I use daily to grow our local Web3 community.",
     signature: "Tatenda Chikomo",
   },
   {
@@ -117,7 +117,7 @@ const testimonials = [
     title: "Hackathon Mentor - Addis Ababa",
     image: testimonial10,
     text:
-      "Mentoring hackathon teams in Addis Ababa is my favourite part of the program. Team1 makes sure mentors and builders both have the resources they need.",
+      "Mentoring at Team1's Addis Ababa hackathon was incredible. Watching teams build innovative dApps on Avalanche in just one weekend showed me the untapped talent across Ethiopia.",
     signature: "Selam Tadesse",
   },
   {
@@ -126,7 +126,7 @@ const testimonials = [
     title: "Technical Writer - Ibadan",
     image: testimonial11,
     text:
-      "Writing technical explainers for Ibadan builders is now collaborative. Team1's review loops and knowledge base keep our content sharp.",
+      "Team1's content creation workshop in Ibadan helped me understand how to explain Avalanche's technology in ways that resonate with African developers. The feedback from other contributors was invaluable.",
     signature: "Oluwatobi Babalola",
   },
   {
@@ -135,7 +135,7 @@ const testimonials = [
     title: "Partnerships Lead - Casablanca",
     image: testimonial12,
     text:
-      "Partnership conversations in Casablanca accelerated once Team1 introduced us to ecosystem founders. We close more collaborations in less time.",
+      "At Team1's partnership summit in Casablanca, I connected with Avalanche ecosystem projects looking to expand into North Africa. Those relationships turned into real collaborations within weeks.",
     signature: "Yara El Ghazal",
   },
   {
@@ -144,7 +144,7 @@ const testimonials = [
     title: "Innovation Fellow - Mbabane",
     image: testimonial13,
     text:
-      "Innovation weeks in Mbabane used to feel isolated. With Team1 Africa we plug into a continental support system that cheers every prototype.",
+      "Team1's innovation week in Mbabane was exactly what our community needed. The hands-on Avalanche development sessions and the networking gave us momentum to keep building together.",
     signature: "Nkosi Dlamini",
   },
   {
@@ -153,7 +153,7 @@ const testimonials = [
     title: "Program Coordinator - Marrakech",
     image: testimonial14,
     text:
-      "Coordinating programs in Marrakech is smoother with the central dashboards Team1 provides. Our volunteers have clarity and momentum.",
+      "Coordinating Team1 events in Marrakech has been rewarding. Every session on Avalanche attracts curious builders, and watching the community grow from meetup to meetup is truly special.",
     signature: "Leila Faraji",
   },
   {
@@ -162,7 +162,7 @@ const testimonials = [
     title: "Startups Liaison - Enugu",
     image: testimonial15,
     text:
-      "Supporting founders in Enugu means connecting them to capital and mentors. Team1 makes both accessible with a single request.",
+      "Team1's founder meetup in Enugu connected me with investors who understand Avalanche and African markets. The pitch sessions and mentorship have been game-changing for local startups.",
     signature: "Chinedu Eze",
   },
   {
@@ -171,7 +171,7 @@ const testimonials = [
     title: "Community Trainer - Kano",
     image: testimonial16,
     text:
-      "Training cohorts in Kano showed me the power of repeatable playbooks. Team1 resources let us adapt content without starting from scratch.",
+      "Training new developers at Team1 workshops in Kano is my passion. Avalanche's developer-friendly tools make it easy to get beginners building real projects quickly.",
     signature: "Zainab Hassan",
   },
   {
@@ -180,7 +180,7 @@ const testimonials = [
     title: "Operations Lead - Kumasi",
     image: testimonial17,
     text:
-      "Kumasi builders needed structure to stay engaged. Team1's cadence, challenges, and recognition programs keep everyone shipping.",
+      "Team1's community building session in Kumasi taught me how to keep builders engaged. The challenges we run using Avalanche keep our members excited and shipping consistently.",
     signature: "Kofi Boateng",
   },
   {
@@ -189,7 +189,7 @@ const testimonials = [
     title: "Youth Advocate - Mombasa",
     image: testimonial18,
     text:
-      "Youth clubs in Mombasa respond to stories about impact. Team1 showcases success cases that convince students to commit.",
+      "Bringing Team1 to youth clubs in Mombasa has been amazing. Students get excited when they see Avalanche transactions happen in real-time and realize they can build the future of finance.",
     signature: "Maya Omondi",
   },
   {
@@ -198,7 +198,7 @@ const testimonials = [
     title: "Blockchain Lecturer - Pretoria",
     image: testimonial19,
     text:
-      "Lecturing in Pretoria is easier when I can demonstrate live Avalanche deployments. Team1 workshops give us up-to-date demos and tools.",
+      "Team1's academic workshop in Pretoria gave me updated curriculum materials on Avalanche. My students now get hands-on experience with subnets and understand why speed and scalability matter.",
     signature: "Sifiso Khumalo",
   },
   {
@@ -207,7 +207,7 @@ const testimonials = [
     title: "Women in Web3 Lead - Khartoum",
     image: testimonial20,
     text:
-      "Growing women-led circles in Khartoum felt lonely before Team1. Now we share learning paths and celebrate each other's wins weekly.",
+      "Team1's Women in Web3 gathering in Khartoum created a supportive space for us to learn about Avalanche together. The mentorship and friendships from that event continue to empower us daily.",
     signature: "Iman Suleiman",
   },
   {
@@ -216,7 +216,7 @@ const testimonials = [
     title: "Regional Connector - Durban",
     image: testimonial21,
     text:
-      "Regional events in Durban require reliable partners. Team1 introductions helped us build a tight-knit coalition across Southern Africa.",
+      "Team1's Southern Africa summit in Durban brought together leaders from five countries. The sessions on Avalanche's cross-chain capabilities sparked collaborations we're still building on today.",
     signature: "Bongani Mokoena",
   },
   {
@@ -225,7 +225,7 @@ const testimonials = [
     title: "Innovation Hub Lead - Dakar",
     image: testimonial22,
     text:
-      "The innovation hub in Dakar thrives on experimentation. Team1 micro-grants let teams validate ideas quickly and keep momentum.",
+      "Our innovation hub in Dakar hosted a Team1 demo day where teams showcased Avalanche projects. The micro-grants and feedback helped several teams move from prototype to launch.",
     signature: "Farida Diallo",
   },
   {
@@ -234,7 +234,7 @@ const testimonials = [
     title: "Technical PM - Algiers",
     image: testimonial23,
     text:
-      "Managing technical sprints in Algiers demands structure. Team1's sprint kits and mentorship roster keep our builders moving forward.",
+      "Team1's technical sprint in Algiers was intense but worth it. Building on Avalanche with experienced mentors guiding us through best practices elevated our entire team's capabilities.",
     signature: "Tasnim Bensalem",
   },
   {
@@ -243,7 +243,7 @@ const testimonials = [
     title: "Community Designer - Gaborone",
     image: testimonial24,
     text:
-      "Designing community experiences in Gaborone is my dream job. Team1 empowers me to test bold ideas with confidence.",
+      "Attending Team1's design thinking workshop in Gaborone helped me reimagine how African users can interact with Avalanche dApps. The collaborative environment encouraged bold, creative solutions.",
     signature: "Mpho Seabi",
   },
   {
@@ -252,7 +252,7 @@ const testimonials = [
     title: "Programs Analyst - Cape Coast",
     image: testimonial25,
     text:
-      "Analyzing programs in Cape Coast used to be manual. Team1 dashboards now show impact metrics in real time.",
+      "Team1's data workshop in Cape Coast taught me to measure community impact effectively. Tracking Avalanche adoption metrics helps us prove that African builders are driving real growth.",
     signature: "Abena Owusu",
   },
   {
@@ -261,7 +261,7 @@ const testimonials = [
     title: "Ecosystem Builder - Port Elizabeth",
     image: testimonial26,
     text:
-      "Port Elizabeth entrepreneurs are new to Avalanche, but Team1's guided challenges make the learning curve enjoyable.",
+      "Team1's onboarding event in Port Elizabeth made Avalanche accessible to local entrepreneurs. The guided challenges and supportive community make the learning journey genuinely enjoyable.",
     signature: "Lebo Molefe",
   },
 ];
