@@ -1,79 +1,268 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import gsap from "gsap";
+
+import testimonial1 from "./testimonial1.jpg";
+import testimonial2 from "./testimonial2.jpg";
+import testimonial3 from "./testimonial3.jpg";
+import testimonial4 from "./testimonial4.jpg";
+import testimonial5 from "./testimonial5.jpg";
+import testimonial6 from "./testimonial6.jpg";
+import testimonial7 from "./testimonial7.jpg";
+import testimonial8 from "./testimonial8.jpg";
+import testimonial9 from "./testimonial9.jpg";
+import testimonial10 from "./testimonial10.jpg";
+import testimonial11 from "./testimonial11.jpeg";
+import testimonial12 from "./testimonial12.jpeg";
+import testimonial13 from "./testimonial13.JPG";
+import testimonial14 from "./testimonial14.JPG";
+import testimonial15 from "./testimonial15.JPG";
+import testimonial16 from "./testimonial16.jpg";
+import testimonial17 from "./testimonial17.jpg";
+import testimonial18 from "./testimonial18.JPG";
+import testimonial19 from "./testimonial19.JPG";
+import testimonial20 from "./testimonial20.jpg";
+import testimonial21 from "./testimonial21.jpg";
+import testimonial22 from "./testimonial22.jpg";
+import testimonial23 from "./testimonial23.jpg";
+import testimonial24 from "./testimonial24.JPG";
+import testimonial25 from "./testimonial25.JPG";
+import testimonial26 from "./testimonial26.jpg";
 
 const testimonials = [
   {
     id: 1,
-    name: "Sarah Chen",
-    title: "Team1 Community Leader - Singapore",
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=600&fit=crop",
+    name: "Techboy Feezy",
+    title: "Regional Lead - Nigeria",
+    image: testimonial1,
     text:
-      "Joining Avalanche Team1 has been transformative for my blockchain journey. The support from the global community is incredible, and organizing local meetups in Singapore has connected me with amazing builders and developers. Team1 provides resources, mentorship, and opportunities that have helped me grow both personally and professionally in the Web3 space.",
+      "Team1 Africa gave me the structure to grow monthly meetups in Johannesburg into a thriving hub. The playbooks, funding, and mentorship helped our community scale faster than I imagined.",
+    signature: "Techboy Feezy",
   },
   {
     id: 2,
-    name: "Marcus Rodriguez",
-    title: "Developer Advocate - Mexico City",
-    image:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=600&fit=crop",
+    name: "Kwame Mensah",
+    title: "Developer Advocate - Accra",
+    image: testimonial2,
     text:
-      "Team1 gave me the platform to host hackathons and developer workshops across Latin America. The Spanish-language bootcamp we launched reached over 800 builders, and seeing developers create their first dApps on Avalanche is incredibly rewarding. The ecosystem's speed and scalability make it perfect for onboarding new talent to blockchain development.",
+      "With Team1 resources, I now run bilingual developer workshops across Accra. Seeing builders ship their first Avalanche dApps in a weekend never gets old.",
+    signature: "Kwame Mensah",
   },
   {
     id: 3,
-    name: "Aisha Patel",
-    title: "Content Creator & Team1 Member - Mumbai",
-    image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=600&fit=crop",
+    name: "Fatima El-Sayed",
+    title: "Product Designer - Cairo",
+    image: testimonial3,
     text:
-      "As a content creator in Team1, I've had the opportunity to tell the Avalanche story through videos, articles, and social media. The community is passionate about building real-world solutions, and being part of the India Hackathon Tour has been amazing. Team1 doesn't just support you—it amplifies your voice and helps you make a genuine impact in the ecosystem.",
+      "Designing onboarding journeys for new builders is easier with the toolkits Team1 shares. Our Cairo team can prototype, test, and ship ideas in record time.",
+    signature: "Fatima El-Sayed",
   },
   {
     id: 4,
-    name: "James Wilson",
-    title: "University Lead - London",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=600&fit=crop",
+    name: "Jean-Paul Umutoni",
+    title: "Campus Ambassador - Kigali",
+    image: testimonial4,
     text:
-      "Through Team1, I've integrated Avalanche into blockchain clubs at universities across the UK. The program provides everything you need to educate students about Web3—from technical resources to event funding. Watching students build their first smart contracts and seeing them get excited about the technology's potential is what drives me. Team1 is building the next generation of blockchain developers.",
+      "As a campus ambassador, I rely on Team1 to keep my peers inspired. The curriculum and speaker network transformed blockchain from theory into practice at our university.",
+    signature: "Jean-Paul Umutoni",
   },
   {
     id: 5,
-    name: "Elena Kowalski",
-    title: "Event Organizer - Warsaw",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&h=600&fit=crop",
+    name: "Linda Agyeman",
+    title: "Events Lead - Lagos",
+    image: testimonial5,
     text:
-      "Organizing IRL events for Team1 in Warsaw has been an incredible experience. From community dinners to networking meetups, every event brings together passionate people who believe in Avalanche's mission. The Team1 program gives us the autonomy to create meaningful experiences while providing the support and resources we need. The free Summit tickets and exclusive merch are just bonuses!",
+      "Planning Lagos community events became sustainable once Team1 stepped in with logistics support. Every gathering now feels like a mini summit.",
+    signature: "Linda Agyeman",
   },
   {
     id: 6,
-    name: "David Nguyen",
-    title: "Technical Workshop Lead - Vietnam",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=600&fit=crop",
+    name: "Samuel Ochieng",
+    title: "Education Partner - Nairobi",
+    image: testimonial6,
     text:
-      "Team1 empowered me to host technical workshops for developers in Vietnam. Teaching builders about Avalanche's custom L1s, interchain messaging, and the C-Chain has been fulfilling. The platform's near-instant finality and low fees make it easy to demonstrate real-world use cases. Being part of a global network of 700+ members across 55 countries is inspiring—we're all building the future together.",
+      "Team1 helped us create a consistent education program for Nairobi developers. The curriculum keeps evolving with feedback from our local builders.",
+    signature: "Samuel Ochieng",
   },
   {
     id: 7,
-    name: "Priya Sharma",
-    title: "DeFi Educator - Bangalore",
-    image:
-      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&h=600&fit=crop",
+    name: "Amara Okeke",
+    title: "Blockchain Strategist - Abuja",
+    image: testimonial7,
     text:
-      "As a DeFi educator in Team1, I help newcomers understand Avalanche's growing ecosystem—from DEXs like Blackhole Protocol to innovative stablecoin primitives. The community is welcoming, knowledgeable, and always willing to help. Team1 has given me networking opportunities with project leaders and access to educational resources that have deepened my understanding of blockchain technology exponentially.",
+      "Strategizing adoption with government partners in Abuja needs credibility. Team1's global network gives us the backing to start those conversations.",
+    signature: "Amara Okeke",
   },
   {
     id: 8,
-    name: "Carlos Mendoza",
-    title: "Gaming Community Builder - Buenos Aires",
-    image:
-      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=600&fit=crop",
+    name: "Rania Ben Ali",
+    title: "Community Operations - Tunis",
+    image: testimonial8,
     text:
-      "The gaming side of Avalanche is explosive, and Team1 lets me connect gamers with incredible projects like MapleStory and Pixelmon. Hosting game nights and tournaments in Buenos Aires has built a vibrant local community. Avalanche's high-performance network makes Web3 gaming seamless, and being part of Team1 means I get early access to new gaming launches and exclusive event invites. It's been a game-changer for my career.",
+      "Coordinating operations across North Africa can be complex, but Team1's templates keep everyone aligned. Our Tunis chapter is more focused than ever.",
+    signature: "Rania Ben Ali",
+  },
+  {
+    id: 9,
+    name: "Tatenda Chikomo",
+    title: "Growth Marketer - Harare",
+    image: testimonial9,
+    text:
+      "Marketing a Web3 community in Harare is challenging without data. Team1 tools help us measure impact, grow smarter, and celebrate every milestone.",
+    signature: "Tatenda Chikomo",
+  },
+  {
+    id: 10,
+    name: "Selam Tadesse",
+    title: "Hackathon Mentor - Addis Ababa",
+    image: testimonial10,
+    text:
+      "Mentoring hackathon teams in Addis Ababa is my favourite part of the program. Team1 makes sure mentors and builders both have the resources they need.",
+    signature: "Selam Tadesse",
+  },
+  {
+    id: 11,
+    name: "Oluwatobi Babalola",
+    title: "Technical Writer - Ibadan",
+    image: testimonial11,
+    text:
+      "Writing technical explainers for Ibadan builders is now collaborative. Team1's review loops and knowledge base keep our content sharp.",
+    signature: "Oluwatobi Babalola",
+  },
+  {
+    id: 12,
+    name: "Yara El Ghazal",
+    title: "Partnerships Lead - Casablanca",
+    image: testimonial12,
+    text:
+      "Partnership conversations in Casablanca accelerated once Team1 introduced us to ecosystem founders. We close more collaborations in less time.",
+    signature: "Yara El Ghazal",
+  },
+  {
+    id: 13,
+    name: "Nkosi Dlamini",
+    title: "Innovation Fellow - Mbabane",
+    image: testimonial13,
+    text:
+      "Innovation weeks in Mbabane used to feel isolated. With Team1 Africa we plug into a continental support system that cheers every prototype.",
+    signature: "Nkosi Dlamini",
+  },
+  {
+    id: 14,
+    name: "Leila Faraji",
+    title: "Program Coordinator - Marrakech",
+    image: testimonial14,
+    text:
+      "Coordinating programs in Marrakech is smoother with the central dashboards Team1 provides. Our volunteers have clarity and momentum.",
+    signature: "Leila Faraji",
+  },
+  {
+    id: 15,
+    name: "Chinedu Eze",
+    title: "Startups Liaison - Enugu",
+    image: testimonial15,
+    text:
+      "Supporting founders in Enugu means connecting them to capital and mentors. Team1 makes both accessible with a single request.",
+    signature: "Chinedu Eze",
+  },
+  {
+    id: 16,
+    name: "Zainab Hassan",
+    title: "Community Trainer - Kano",
+    image: testimonial16,
+    text:
+      "Training cohorts in Kano showed me the power of repeatable playbooks. Team1 resources let us adapt content without starting from scratch.",
+    signature: "Zainab Hassan",
+  },
+  {
+    id: 17,
+    name: "Kofi Boateng",
+    title: "Operations Lead - Kumasi",
+    image: testimonial17,
+    text:
+      "Kumasi builders needed structure to stay engaged. Team1's cadence, challenges, and recognition programs keep everyone shipping.",
+    signature: "Kofi Boateng",
+  },
+  {
+    id: 18,
+    name: "Maya Omondi",
+    title: "Youth Advocate - Mombasa",
+    image: testimonial18,
+    text:
+      "Youth clubs in Mombasa respond to stories about impact. Team1 showcases success cases that convince students to commit.",
+    signature: "Maya Omondi",
+  },
+  {
+    id: 19,
+    name: "Sifiso Khumalo",
+    title: "Blockchain Lecturer - Pretoria",
+    image: testimonial19,
+    text:
+      "Lecturing in Pretoria is easier when I can demonstrate live Avalanche deployments. Team1 workshops give us up-to-date demos and tools.",
+    signature: "Sifiso Khumalo",
+  },
+  {
+    id: 20,
+    name: "Iman Suleiman",
+    title: "Women in Web3 Lead - Khartoum",
+    image: testimonial20,
+    text:
+      "Growing women-led circles in Khartoum felt lonely before Team1. Now we share learning paths and celebrate each other's wins weekly.",
+    signature: "Iman Suleiman",
+  },
+  {
+    id: 21,
+    name: "Bongani Mokoena",
+    title: "Regional Connector - Durban",
+    image: testimonial21,
+    text:
+      "Regional events in Durban require reliable partners. Team1 introductions helped us build a tight-knit coalition across Southern Africa.",
+    signature: "Bongani Mokoena",
+  },
+  {
+    id: 22,
+    name: "Farida Diallo",
+    title: "Innovation Hub Lead - Dakar",
+    image: testimonial22,
+    text:
+      "The innovation hub in Dakar thrives on experimentation. Team1 micro-grants let teams validate ideas quickly and keep momentum.",
+    signature: "Farida Diallo",
+  },
+  {
+    id: 23,
+    name: "Tasnim Bensalem",
+    title: "Technical PM - Algiers",
+    image: testimonial23,
+    text:
+      "Managing technical sprints in Algiers demands structure. Team1's sprint kits and mentorship roster keep our builders moving forward.",
+    signature: "Tasnim Bensalem",
+  },
+  {
+    id: 24,
+    name: "Mpho Seabi",
+    title: "Community Designer - Gaborone",
+    image: testimonial24,
+    text:
+      "Designing community experiences in Gaborone is my dream job. Team1 empowers me to test bold ideas with confidence.",
+    signature: "Mpho Seabi",
+  },
+  {
+    id: 25,
+    name: "Abena Owusu",
+    title: "Programs Analyst - Cape Coast",
+    image: testimonial25,
+    text:
+      "Analyzing programs in Cape Coast used to be manual. Team1 dashboards now show impact metrics in real time.",
+    signature: "Abena Owusu",
+  },
+  {
+    id: 26,
+    name: "Lebo Molefe",
+    title: "Ecosystem Builder - Port Elizabeth",
+    image: testimonial26,
+    text:
+      "Port Elizabeth entrepreneurs are new to Avalanche, but Team1's guided challenges make the learning curve enjoyable.",
+    signature: "Lebo Molefe",
   },
 ];
 
@@ -82,14 +271,19 @@ export default function TestimonialSlider() {
   const tlRef = useRef<gsap.core.Tween | null>(null);
   const [isHovering, setIsHovering] = useState(false);
   const [expandedKey, setExpandedKey] = useState<number | null>(null);
+  const [isReady, setIsReady] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const GAP = 24;
+  const SCROLL_DURATION = 150;
 
   // Create the double list for seamless loop
   const renderedCards = [...testimonials, ...testimonials];
   const originalCount = testimonials.length;
 
-  // GSAP loop setup
+  // GSAP loop setup - FIXED: Only calculate based on COLLAPSED card width
   useEffect(() => {
+    if (!isReady) return;
+
     const container = containerRef.current;
     if (!container) return;
 
@@ -99,11 +293,9 @@ export default function TestimonialSlider() {
       tlRef.current = null;
     }
 
-    // measure total width of the first set of cards (originalCount items)
-    const nodes = Array.from(container.children).slice(0, originalCount) as HTMLElement[];
-    const totalWidth =
-      nodes.reduce((sum, n) => sum + (n.getBoundingClientRect().width || 0), 0) +
-      GAP * originalCount;
+    // FIXED: Use fixed collapsed width for calculations, not dynamic measurements
+    const collapsedWidth = 800;
+    const totalWidth = (collapsedWidth + GAP) * originalCount;
 
     // Ensure there's some width
     if (totalWidth <= 0) return;
@@ -112,7 +304,7 @@ export default function TestimonialSlider() {
     // Use modifiers + gsap.utils.wrap to keep it seamless.
     const t = gsap.to(container, {
       x: `-=${totalWidth}`,
-      duration: 30,
+      duration: SCROLL_DURATION,
       ease: "none",
       repeat: -1,
       modifiers: {
@@ -135,7 +327,7 @@ export default function TestimonialSlider() {
       t.kill();
       tlRef.current = null;
     };
-  }, [originalCount, GAP, expandedKey, isHovering]);
+  }, [originalCount, GAP, isHovering, isReady]); // FIXED: Removed expandedKey from dependencies
 
   // Pause/resume when hovering or when expanded
   useEffect(() => {
@@ -145,12 +337,96 @@ export default function TestimonialSlider() {
     else tl.resume();
   }, [isHovering, expandedKey]);
 
+  // Preload and decode ALL images before showing slider
+  useEffect(() => {
+    let isMounted = true;
+    if (testimonials.length === 0) {
+      setIsReady(true);
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    const preloadAndDecodeImages = async () => {
+      try {
+        // Create image elements for all testimonials
+        const imagePromises = testimonials.map((item) => {
+          return new Promise<void>((resolve) => {
+            const img = new Image();
+            
+            img.onload = async () => {
+              try {
+                // Decode the image to ensure it's ready for rendering
+                if ('decode' in img) {
+                  await img.decode();
+                }
+                resolve();
+              } catch (decodeError) {
+                console.warn('Image decode failed:', item.image, decodeError);
+                resolve(); // Still resolve to not block other images
+              }
+            };
+            
+            img.onerror = () => {
+              console.warn('Image load failed:', item.image);
+              resolve(); // Resolve anyway to not block
+            };
+            
+            // Set explicit dimensions to prevent layout shift
+            img.width = 800;
+            img.height = 800;
+            img.src = item.image;
+            
+            // If already cached and complete, decode immediately
+            if (img.complete) {
+              if ('decode' in img) {
+                img.decode().then(resolve).catch(() => resolve());
+              } else {
+                resolve();
+              }
+            }
+          });
+        });
+
+        // Wait for all images to load and decode
+        await Promise.all(imagePromises);
+        
+        // Add small delay to ensure GPU has processed everything
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        if (isMounted) {
+          setIsReady(true);
+        }
+      } catch (error) {
+        console.error('Image preloading error:', error);
+        if (isMounted) {
+          setIsReady(true); // Show anyway
+        }
+      }
+    };
+
+    preloadAndDecodeImages();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const handleCardClick = (renderIndex: number) => {
+    if (isAnimating) return; // Prevent clicks during animation
+    
+    setIsAnimating(true);
+    
     if (expandedKey === renderIndex) {
       setExpandedKey(null);
-      return;
+    } else {
+      setExpandedKey(renderIndex);
     }
-    setExpandedKey(renderIndex);
+    
+    // Reset animation lock after transition completes
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 900); // Match the longest animation duration
   };
 
    return (
@@ -170,7 +446,7 @@ export default function TestimonialSlider() {
 
       {/* Scrolling row */}
       <div
-        className="relative"
+        className={`relative transition-opacity duration-700 ${isReady ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
@@ -178,7 +454,11 @@ export default function TestimonialSlider() {
         <div
           ref={containerRef}
           className="flex gap-6 px-8 items-stretch"
-          style={{ willChange: "transform" }}
+          style={{ 
+            willChange: "transform",
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden',
+          }}
         >
            {renderedCards.map((item, renderIndex) => {
             const isExpanded = expandedKey === renderIndex;
@@ -186,68 +466,76 @@ export default function TestimonialSlider() {
 
             const accentWidth = 800;
             const collapsedWidth = accentWidth;
-            const expandedContentWidth = 1350;
+            const expandedContentWidth = 800; // Same as image width, so total doubles
 
             return (
               <motion.div
                 key={`card-${renderIndex}`}
+                initial={{ width: collapsedWidth }}
                 animate={{
                   width: isExpanded ? accentWidth + expandedContentWidth : collapsedWidth,
                 }}
-                transition={{ 
-                  width: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+                transition={{
+                  width: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] },
                 }}
                 onClick={() => handleCardClick(renderIndex)}
-                className="flex-shrink-0 h-[800px] rounded-[40px] bg-white shadow-xl cursor-pointer overflow-hidden"
+                className="flex-shrink-0 h-[800px] rounded-[40px] shadow-xl cursor-pointer overflow-hidden"
+                style={{ 
+                  pointerEvents: isAnimating ? 'none' : 'auto',
+                  willChange: 'width',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  backgroundColor: 'transparent',
+                }}
               >
-                <div className="relative h-full flex">
-                  <motion.div
-                    animate={{ width: accentWidth, opacity: isExpanded ? 1 : (isDimmed ? 0.6 : 1) }}
-                    transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    className="relative h-full flex-[0_0_auto] overflow-hidden"
-                    style={{ pointerEvents: isExpanded ? 'none' : 'auto' }}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/20" />
-                  </motion.div>
+                 <div className="relative h-full bg-white rounded-[40px] overflow-hidden">
+                   {/* Image that spans full width - fixed, no scaling */}
+                   <div className="absolute inset-0 h-full w-full overflow-hidden">
+                     <img
+                       src={item.image}
+                       alt={item.name}
+                       width={1600}
+                       height={800}
+                       decoding="sync"
+                       className="h-full w-full object-cover object-center"
+                       style={{ 
+                         transform: 'translateZ(0)',
+                         backfaceVisibility: 'hidden',
+                         minWidth: '100%',
+                         minHeight: '100%',
+                       }}
+                     />
+                   </div>
+                   
+                   {/* Light overlay on image side */}
+                   <motion.div 
+                     initial={{ opacity: 0.2 }}
+                     animate={{ opacity: isDimmed ? 0.6 : (isExpanded ? 0.3 : 0.2) }}
+                     transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+                     className="absolute inset-0 bg-black"
+                   />
 
-                  <AnimatePresence mode="wait">
-                    {isExpanded && (
-                      <motion.div
-                        key="expanded"
-                        initial={{ width: 0, opacity: 0 }}
-                        animate={{ width: expandedContentWidth, opacity: 1 }}
-                        exit={{ width: 0, opacity: 0 }}
-                        transition={{
-                          width: { duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] },
-                          opacity: { duration: 0.3 }
-                        }}
-                        className="relative h-full overflow-hidden text-white"
-                      >
-                        <img
-                          src={item.image}
-                          alt=""
-                          className="absolute inset-0 h-full w-full object-cover blur-[60px] scale-110"
-                        />
-                        <div className="absolute inset-0 bg-black/55" />
-                        <motion.div
-                          initial={{ x: 60, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          exit={{ x: 60, opacity: 0 }}
-                          transition={{
-                            x: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] },
-                            opacity: { duration: 0.35 }
-                          }}
-                          className="relative flex h-full flex-col justify-between p-10"
-                        >
+                  {/* Content overlay on the right side when expanded - no transitions */}
+                  {isExpanded && (
+                    <div
+                      className="absolute top-0 right-0 h-full text-white"
+                      style={{ 
+                        width: expandedContentWidth,
+                        transform: 'translateZ(0)',
+                        backfaceVisibility: 'hidden',
+                      }}
+                    >
+                      {/* Very dark overlay panel for text side - clearly distinguished */}
+                      <div className="absolute inset-0 bg-black/60 m-4 rounded-[2em]" />
+                        
+                        <div className="relative flex h-full flex-col justify-between p-10">
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
+                              if (isAnimating) return;
+                              setIsAnimating(true);
                               setExpandedKey(null);
+                              setTimeout(() => setIsAnimating(false), 900);
                             }}
                             className="absolute top-7 right-7 w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
                           >
@@ -258,43 +546,35 @@ export default function TestimonialSlider() {
                           </button>
 
                           <div>
-                            <p className="text-[11px] uppercase tracking-[0.28em] text-white/60 font-medium mb-5">
+                            <p className="text-[11px] uppercase tracking-[0.28em] text-white/60 font-medium mb-5 ">
                               Overview
                             </p>
-                            <h3 className="text-3xl font-bold mb-2">{item.name}</h3>
+                            <h3 className="text-7xl font-bold mb-2">{item.name}</h3>
                             <p className="text-base text-white/70 mb-6">{item.title}</p>
-                            <p className="text-base leading-relaxed text-white/90">
+                            <p className="text-5xl leading-relaxed text-white/90 leading-snug font-light">
                               {item.text}
                             </p>
                           </div>
 
                           <div className="mt-6">
-                            <a
-                              href="#"
-                              onClick={(e) => e.stopPropagation()}
-                              className="inline-flex items-center gap-2 text-white font-semibold text-base hover:gap-3 transition-all group"
+                            <div
+                              className="text-white text-6xl"
+                              style={{
+                                fontFamily: "'Bastliga One', 'Dancing Script', cursive",
+                              }}
                             >
-                              View Live Site
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="group-hover:translate-x-1 transition-transform">
-                                <path d="M5 12h14M12 5l7 7-7 7" />
-                              </svg>
-                            </a>
+                              {item.signature}
+                            </div>
                           </div>
-                        </motion.div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        </div>
+                    </div>
+                  )}
                 </div>
               </motion.div>
              );
            })}
         </div>
 
-      </div>
-
-      {/* hint */}
-      <div className="text-center text-sm text-gray-500 mt-8">
-        Click a card to expand inline. Hover to pause scrolling.
       </div>
     </section>
   );
