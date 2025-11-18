@@ -47,23 +47,21 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
     return getEventsForDate(selectedDate);
   }, [selectedDate]);
 
-  // Time slots (9:00 AM to 11:00 PM)
+  // Time slots (12:00 AM to 11:30 PM)
   const timeSlots = useMemo(() => {
     const slots: string[] = [];
-    for (let hour = 9; hour <= 23; hour++) {
+    for (let hour = 0; hour <= 23; hour++) {
       slots.push(`${hour.toString().padStart(2, '0')}:00`);
-      if (hour < 23) {
-        slots.push(`${hour.toString().padStart(2, '0')}:30`);
-      }
+      slots.push(`${hour.toString().padStart(2, '0')}:30`);
     }
     return slots;
   }, []);
 
-  // Convert time string (HH:MM) to minutes from 9:00 AM
+  // Convert time string (HH:MM) to minutes from 12:00 AM
   const timeToMinutes = useCallback((timeStr: string): number => {
     const [hours, minutes] = timeStr.split(':').map(Number);
     const totalMinutes = hours * 60 + minutes;
-    const startMinutes = 9 * 60; // 9:00 AM
+    const startMinutes = 0 * 60; // 12:00 AM
     return totalMinutes - startMinutes;
   }, []);
 
@@ -76,7 +74,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
     const hours = now.getHours();
     const minutes = now.getMinutes();
     const totalMinutes = hours * 60 + minutes;
-    const startMinutes = 9 * 60;
+    const startMinutes = 0 * 60; // 12:00 AM
     return totalMinutes - startMinutes;
   }, [currentTime]);
 
@@ -218,9 +216,27 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
 
         {/* Time Grid */}
         <div className="relative bg-white border border-gray-200 rounded-lg overflow-hidden">
-          <div ref={gridRef} className="relative" style={{ minHeight: '800px' }}>
+          <style>{`
+            [data-scroll-container]::-webkit-scrollbar {
+              display: none !important;
+              width: 0 !important;
+              height: 0 !important;
+              background: transparent !important;
+            }
+          `}</style>
+          <div 
+            ref={gridRef} 
+            className="relative overflow-y-auto" 
+            data-scroll-container
+            style={{ 
+              minHeight: '800px',
+              maxHeight: '800px',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
             {/* Time Labels */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 border-r border-gray-200 bg-gray-50">
+            <div className="absolute left-0 top-0 w-32 border-r border-gray-200 bg-gray-50 z-20" style={{ height: `${24 * pixelsPerHour}px` }}>
               {timeSlots.map((time, index) => {
                 const [hours, minutes] = time.split(':').map(Number);
                 const showLabel = minutes === 0; // Only show hour labels
@@ -230,57 +246,74 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 const position = timeToMinutes(time);
                 const topPixels = (position / 60) * pixelsPerHour;
 
+                // Convert to 12-hour format with AM/PM
+                const displayHour = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
+                const ampm = hours < 12 ? 'AM' : 'PM';
+
                 return (
                   <div
                     key={index}
-                    className="absolute text-sm text-gray-600 font-medium pr-4 pl-4 py-2 text-right"
+                    className="absolute text-sm text-gray-600 font-medium text-right"
                     style={{ 
-                      top: `${topPixels}px`, 
-                      transform: 'translateY(-50%)',
-                      lineHeight: '1.5'
+                      top: `${topPixels}px`,
+                      lineHeight: '1.5',
+                      right: '12px',
+                      left: '12px',
+                      width: 'calc(100% - 24px)',
+                      paddingTop: '8px'
                     }}
                   >
-                    {hours}:00
+                    {displayHour}:00 {ampm}
                   </div>
                 );
               })}
             </div>
 
-            {/* Current Time Indicator */}
-            {isCurrentDate && currentTimePosition >= 0 && currentTimePosition <= 15 * 60 && (
-              <div
-                className="absolute left-24 right-0 z-10"
-                style={{
-                  top: `${(currentTimePosition / 60) * pixelsPerHour}px`,
-                }}
-              >
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-red-500 rounded-full -ml-1.5"></div>
-                  <div className="flex-1 h-0.5 bg-red-500"></div>
-                </div>
+            {/* Grid Lines Container - positioned behind everything */}
+            <div className="absolute left-32 right-0 top-0 bottom-0 z-0" style={{ height: `${24 * pixelsPerHour}px`, pointerEvents: 'none' }}>
+              {timeSlots.map((time, index) => {
+                const position = timeToMinutes(time);
+                const topPixels = (position / 60) * pixelsPerHour;
+                const isHour = time.endsWith(':00');
+
+                return (
+                  <div
+                    key={index}
+                    className="absolute left-0 right-0 border-t"
+                    style={{
+                      top: `${topPixels}px`,
+                      borderColor: isHour ? '#e5e7eb' : '#f3f4f6',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                );
+              })}
+            </div>
+
+            {/* Event Cards Container */}
+            <div className="ml-32 relative z-10 overflow-x-auto" data-scroll-container style={{ minHeight: `${24 * pixelsPerHour}px`, scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              
+              {/* Grid Lines Overlay - inside event container */}
+              <div className="absolute left-0 right-0 top-0 z-10" style={{ height: `${24 * pixelsPerHour}px`, pointerEvents: 'none' }}>
+                {timeSlots.map((time, index) => {
+                  const position = timeToMinutes(time);
+                  const topPixels = (position / 60) * pixelsPerHour;
+                  const isHour = time.endsWith(':00');
+
+                  return (
+                    <div
+                      key={index}
+                      className="absolute left-0 right-0 border-t"
+                      style={{
+                        top: `${topPixels}px`,
+                        borderColor: isHour ? '#e5e7eb' : '#f3f4f6',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                  );
+                })}
               </div>
-            )}
 
-            {/* Grid Lines - Behind cards */}
-            {timeSlots.map((time, index) => {
-              const position = timeToMinutes(time);
-              const topPixels = (position / 60) * pixelsPerHour;
-              const isHour = time.endsWith(':00');
-
-              return (
-                <div
-                  key={index}
-                  className="absolute left-24 right-0 border-t z-0"
-                  style={{
-                    top: `${topPixels}px`,
-                    borderColor: isHour ? '#e5e7eb' : '#f3f4f6',
-                  }}
-                />
-              );
-            })}
-
-            {/* Event Cards */}
-            <div className="ml-24 relative z-10" style={{ minHeight: `${15 * pixelsPerHour}px` }}>
               {dayEvents.map((event, index) => {
                 const startMinutes = timeToMinutes(event.startTime);
                 const endMinutes = timeToMinutes(event.endTime);
@@ -318,7 +351,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 // Calculate width and position for fitted cards with spacing
                 const cardWidth = 360; // Fixed width for event cards in pixels
                 const spacing = 12; // Spacing between cards in pixels
-                const leftMargin = 24; // Time column width
+                const leftMargin = 32; // Time column width (w-32 = 128px)
                 
                 // Calculate left position - cards stack horizontally with spacing
                 const leftPosition = leftMargin + (positionInGroup * (cardWidth + spacing));
@@ -327,7 +360,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                   <div
                     key={index}
                     onClick={() => handleEventClick(event)}
-                    className="absolute rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all border-l-4"
+                    className="absolute rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all border-l-4 z-20"
                     style={{
                       top: `${topPosition}px`,
                       height: `${Math.max(height, 100)}px`, // Minimum 100px height
@@ -404,6 +437,21 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 );
               })}
             </div>
+
+            {/* Current Time Indicator */}
+            {isCurrentDate && currentTimePosition >= 0 && currentTimePosition <= 24 * 60 && (
+              <div
+                className="absolute left-32 right-0 z-60"
+                style={{
+                  top: `${(currentTimePosition / 60) * pixelsPerHour}px`,
+                }}
+              >
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-red-500 rounded-full -ml-1.5"></div>
+                  <div className="flex-1 h-0.5 bg-red-500"></div>
+                </div>
+              </div>
+            )}
 
           </div>
         </div>
