@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import arrow from '../assets/white-arrow.svg'
 import arrowup from '../assets/arrow-up.svg'
 
@@ -26,6 +27,7 @@ type ArchPosition =
     };
 
 const Events = () => {
+    const navigate = useNavigate();
     const [scrollPosition, setScrollPosition] = useState(0);
     const animationIdRef = useRef<number | null>(null);
     const [isFlatLayout, setIsFlatLayout] = useState(false); // Flatten curve on tablet/phone
@@ -241,7 +243,10 @@ const Events = () => {
                     </div>
 
                     {/* Call to Action */}
-                    <div className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'>
+                    <div 
+                        onClick={() => navigate('/calendar')}
+                        className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'
+                    >
                         See All Events
                         <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
                         <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
@@ -258,7 +263,10 @@ const Events = () => {
                         the action from the most recent Team1 Africa Avalanche events.
                     </p>
                 </div>
-                <div className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'>
+                <div 
+                    onClick={() => navigate('/calendar')}
+                    className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'
+                >
                     See All Events
                     <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
                     <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />

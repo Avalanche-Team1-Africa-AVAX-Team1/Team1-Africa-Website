@@ -23,7 +23,7 @@ const Navbar = () => {
                         <li>About</li>
                         <li><Link to="/blog">Blog</Link></li>
                         <div className="flex gap-2">
-                            <li>Events</li>
+                            <li><Link to="/calendar">Events</Link></li>
                             {/* Shrink arrow icon on smaller screens */}
                             <img src={arrow} alt="arrow" className="lt-1440:w-4 lt-1440:h-4 lt-1024:w-3.5 lt-1024:h-3.5" />
                         </div>
@@ -81,7 +81,7 @@ const Navbar = () => {
                 <ul className="flex flex-col gap-8 lt-768:gap-6 lt-480:gap-5 px-8 lt-768:px-6 lt-480:px-5 text-xl lt-768:text-lg lt-480:text-base cursor-pointer">
                     <li onClick={() => setSidebarOpen(false)}>About</li>
                     <li onClick={() => setSidebarOpen(false)}><Link to="/blog">Blog</Link></li>
-                    <li onClick={() => setSidebarOpen(false)}>Events</li>
+                    <li onClick={() => setSidebarOpen(false)}><Link to="/calendar">Events</Link></li>
                     <li onClick={() => setSidebarOpen(false)}>Games</li>
                     <li onClick={() => setSidebarOpen(false)}>Community</li>
                 </ul>
