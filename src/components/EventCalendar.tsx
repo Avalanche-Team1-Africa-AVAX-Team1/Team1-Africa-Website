@@ -124,47 +124,47 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
   return (
     <div className="w-full min-h-screen bg-white">
       {/* Navbar */}
-      <div className="mx-auto w-full max-w-site-nav px-2 md:px-8 py-4">
+      <div className="mx-auto w-full max-w-[2000px] px-2 md:px-8 py-4">
         <Navbar />
       </div>
 
-      <div className="w-full py-8 px-4 md:px-8">
+      <div className="w-full max-w-[2000px] mx-auto py-4 md:py-8 px-2 sm:px-4 md:px-8">
         {/* Header Bar */}
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
-          <div className="flex items-center gap-4">
-            <button className="relative px-4 py-2 bg-black text-white border border-black rounded-lg hover:bg-gray-900 transition-colors flex items-center gap-2 text-sm font-medium">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6 pb-4 border-b border-gray-200 gap-4">
+          <div className="flex flex-wrap items-center gap-2 md:gap-4 w-full sm:w-auto">
+            <button className="relative px-3 md:px-4 py-2 bg-black text-white border border-black rounded-lg hover:bg-gray-900 transition-colors flex items-center gap-2 text-xs md:text-sm font-medium">
               Request Approval
-              <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
+              <span className="absolute -top-2 -right-2 w-4 h-4 md:w-5 md:h-5 bg-red-500 text-white text-[10px] md:text-xs rounded-full flex items-center justify-center font-bold">
                 10
               </span>
             </button>
-            <div className="flex items-center gap-2">
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-1 md:gap-2">
+              <button className="p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <svg className="w-4 h-4 md:w-5 md:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
               </button>
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button className="p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <svg className="w-4 h-4 md:w-5 md:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                 </svg>
               </button>
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button className="p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <svg className="w-4 h-4 md:w-5 md:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                 </svg>
               </button>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-2 text-xs md:text-sm text-gray-600">
+              <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              Schedule settings
+              <span className="hidden sm:inline">Schedule settings</span>
             </div>
           </div>
-          <button className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2 text-sm font-medium">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button className="px-3 md:px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2 text-xs md:text-sm font-medium w-full sm:w-auto justify-center">
+            <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
             Create event
@@ -172,20 +172,25 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
         </div>
 
         {/* Date Navigation */}
-        <div className="mb-12">
-          <div className=" mb-4">
-            <h2 className="text-2xl font-bold text-gray-900">{monthName}</h2>
+        <div className="mb-8 md:mb-12">
+          <div className="mb-3 md:mb-4">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900">{monthName}</h2>
           </div>
-          <div className="flex items-center gap-2 w-full">
+          <div className="flex items-center gap-1 md:gap-2 w-full">
             <button
               onClick={() => navigateWeek('prev')}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
+              className="p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
             >
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-5 md:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <div className="flex gap-2 flex-1 items-start">
+            <div className="flex gap-1 md:gap-2 flex-1 overflow-x-auto items-start" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <style>{`
+                .date-cards-container::-webkit-scrollbar {
+                  display: none;
+                }
+              `}</style>
               {dateCards.map((date, index) => {
                 const isSelected = date.toDateString() === selectedDate.toDateString();
                 const dayName = date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
@@ -196,12 +201,15 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                   <button
                     key={index}
                     onClick={() => handleDateClick(date)}
-                    className="flex-1 px-4 rounded-lg"
+                    className="rounded-lg flex-shrink-0"
                     style={{
                       backgroundColor: isSelected ? '#ef4444' : '#000000',
                       color: '#ffffff',
                       paddingTop: isSelected ? '1.25rem' : '0.75rem',
                       paddingBottom: isSelected ? '1.25rem' : '0.75rem',
+                      paddingLeft: '0.75rem',
+                      paddingRight: '0.75rem',
+                      minWidth: 'clamp(60px, 7vw, 90px)',
                       transition: 'all 1.7s cubic-bezier(0.4, 0, 0.2, 1)',
                       boxShadow: isSelected ? '0 1px 2px 0 rgb(0 0 0 / 0.05)' : 'none'
                     }}
@@ -217,9 +225,9 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                     }}
                   >
                     <div className="text-center">
-                      <div className={`text-xs mb-1 ${isSelected ? 'text-white/80' : 'text-white/70'}`}>{dayName}</div>
+                      <div className={`text-[10px] md:text-xs mb-1 ${isSelected ? 'text-white/80' : 'text-white/70'}`}>{dayName}</div>
                       <div 
-                        className="text-lg font-black text-white"
+                        className="text-base md:text-lg font-black text-white"
                         style={{ fontFamily: '"Impact", "Anton", "Bebas Neue", sans-serif', letterSpacing: '0.05em' }}
                       >
                         {dayNumber}
@@ -236,9 +244,9 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
             </div>
             <button
               onClick={() => navigateWeek('next')}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
+              className="p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
             >
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-5 md:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -260,14 +268,14 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
             className="relative overflow-y-auto" 
             data-scroll-container
             style={{ 
-              minHeight: '800px',
-              maxHeight: '800px',
+              minHeight: 'clamp(600px, 70vh, 800px)',
+              maxHeight: 'clamp(600px, 70vh, 800px)',
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
             }}
           >
             {/* Time Labels */}
-            <div className="absolute left-0 top-0 w-32 border-r border-gray-200 bg-gray-50 z-20" style={{ height: `${24 * pixelsPerHour}px` }}>
+            <div className="absolute left-0 top-0 w-24 md:w-32 border-r border-gray-200 bg-gray-50 z-20" style={{ height: `${24 * pixelsPerHour}px` }}>
               {timeSlots.map((time, index) => {
                 const [hours, minutes] = time.split(':').map(Number);
                 const showLabel = minutes === 0; // Only show hour labels
@@ -284,14 +292,14 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 return (
                   <div
                     key={index}
-                    className="absolute text-sm text-gray-600 font-medium text-center flex items-center justify-center"
+                    className="absolute text-xs md:text-sm text-gray-600 font-medium text-center flex items-center justify-center"
                     style={{ 
                       top: `${topPixels}px`,
                       bottom: `${24 * pixelsPerHour - topPixels - pixelsPerHour}px`,
                       lineHeight: '1.5',
-                      right: '12px',
-                      left: '12px',
-                      width: 'calc(100% - 24px)',
+                      right: '8px',
+                      left: '8px',
+                      width: 'calc(100% - 16px)',
                       height: `${pixelsPerHour}px`
                     }}
                   >
@@ -302,7 +310,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
             </div>
 
             {/* Grid Lines Container - positioned behind everything */}
-            <div className="absolute left-32 right-0 top-0 bottom-0 z-0" style={{ height: `${24 * pixelsPerHour}px`, pointerEvents: 'none' }}>
+            <div className="absolute left-24 md:left-32 right-0 top-0 bottom-0 z-0" style={{ height: `${24 * pixelsPerHour}px`, pointerEvents: 'none' }}>
               {timeSlots.map((time, index) => {
                 const position = timeToMinutes(time);
                 const topPixels = (position / 60) * pixelsPerHour;
@@ -322,7 +330,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
             </div>
 
             {/* Event Cards Container */}
-            <div className="ml-32 relative z-10 overflow-x-auto" data-scroll-container style={{ minHeight: `${24 * pixelsPerHour}px`, scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div className="ml-24 md:ml-32 relative z-10 overflow-x-auto" data-scroll-container style={{ minHeight: `${24 * pixelsPerHour}px`, scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               
               {/* Grid Lines Overlay - inside event container */}
               <div className="absolute left-0 right-0 top-0 z-10" style={{ height: `${24 * pixelsPerHour}px`, pointerEvents: 'none' }}>
@@ -379,9 +387,9 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 const positionInGroup = allOverlappingEvents.findIndex(e => e === event);
 
                 // Calculate width and position for fitted cards with spacing
-                const cardWidth = 360; // Fixed width for event cards in pixels
-                const spacing = 12; // Spacing between cards in pixels
-                const leftMargin = 32; // Time column width (w-32 = 128px)
+                const cardWidth = window.innerWidth < 768 ? 280 : window.innerWidth < 1024 ? 320 : 360; // Responsive card width
+                const spacing = window.innerWidth < 768 ? 8 : 12; // Responsive spacing
+                const leftMargin = window.innerWidth < 768 ? 24 : 32; // Responsive margin
                 
                 // Calculate left position - cards stack horizontally with spacing
                 const leftPosition = leftMargin + (positionInGroup * (cardWidth + spacing));
@@ -471,13 +479,13 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
             {/* Current Time Indicator */}
             {isCurrentDate && currentTimePosition >= 0 && currentTimePosition <= 24 * 60 && (
               <div
-                className="absolute left-32 right-0 z-60"
+                className="absolute left-24 md:left-32 right-0 z-60"
                 style={{
                   top: `${(currentTimePosition / 60) * pixelsPerHour}px`,
                 }}
               >
                 <div className="flex items-center">
-                  <div className="w-3 h-3 bg-red-500 rounded-full -ml-1.5"></div>
+                  <div className="w-2 h-2 md:w-3 md:h-3 bg-red-500 rounded-full -ml-1"></div>
                   <div className="flex-1 h-0.5 bg-red-500"></div>
                 </div>
               </div>
