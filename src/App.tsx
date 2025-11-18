@@ -8,12 +8,13 @@ import AboutUs from './components/about'
 import Partners from './components/partners'
 import Build from './components/build'
 import Gallery from './components/gallery'
-import TestimonialSlider from './assets/testimonial'
+import TestimonialSlider from './components/testimonial'
 import Events from './components/events'
 import Footer from './components/footer'
 import Games from './components/games'
 import Blog from './components/blog'
 import Join from './components/join'
+import AvalancheEcosystem from './components/avalanche-ecosystem'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -73,6 +74,7 @@ function App() {
           {/* Full-width sections */}
           <Events />
           <Games />
+          <AvalancheEcosystem />
 
           {/* Blog - centered container */}
           <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
