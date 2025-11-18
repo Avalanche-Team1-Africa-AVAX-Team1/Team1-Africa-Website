@@ -159,7 +159,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
 
         {/* Date Navigation */}
         <div className="mb-6">
-          <div className="flex items-center justify-center mb-4">
+          <div className=" mb-4">
             <h2 className="text-2xl font-bold text-gray-900">{monthName}</h2>
           </div>
           <div className="flex items-center gap-2 w-full">
@@ -261,8 +261,26 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
               </div>
             )}
 
+            {/* Grid Lines - Behind cards */}
+            {timeSlots.map((time, index) => {
+              const position = timeToMinutes(time);
+              const topPixels = (position / 60) * pixelsPerHour;
+              const isHour = time.endsWith(':00');
+
+              return (
+                <div
+                  key={index}
+                  className="absolute left-24 right-0 border-t z-0"
+                  style={{
+                    top: `${topPixels}px`,
+                    borderColor: isHour ? '#e5e7eb' : '#f3f4f6',
+                  }}
+                />
+              );
+            })}
+
             {/* Event Cards */}
-            <div className="ml-24 relative" style={{ minHeight: `${15 * pixelsPerHour}px` }}>
+            <div className="ml-24 relative z-10" style={{ minHeight: `${15 * pixelsPerHour}px` }}>
               {dayEvents.map((event, index) => {
                 const startMinutes = timeToMinutes(event.startTime);
                 const endMinutes = timeToMinutes(event.endTime);
@@ -272,34 +290,30 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 const topPosition = (startMinutes / 60) * pixelsPerHour; // Convert minutes to pixels
                 const height = (duration / 60) * pixelsPerHour; // Convert duration to pixels
 
-                // Group events that start at the same time or overlap
-                // Events starting at the same time should be side-by-side
-                const sameStartTimeEvents = dayEvents.filter((e, idx) => {
-                  if (idx === index) return false;
-                  const eStart = timeToMinutes(e.startTime);
-                  return eStart === startMinutes; // Same start time
-                });
-
-                // Also check for overlapping events
+                // Find all events that overlap with this event (including same start time)
                 const overlappingEvents = dayEvents.filter((e, idx) => {
                   if (idx === index) return false;
                   const eStart = timeToMinutes(e.startTime);
                   const eEnd = timeToMinutes(e.endTime);
+                  // Check if events overlap in time
                   return (startMinutes < eEnd && endMinutes > eStart);
                 });
 
-                // Position in group: prioritize same start time, then overlapping
-                const sameStartIndex = sameStartTimeEvents.filter((e) => {
-                  const eIndex = dayEvents.indexOf(e);
-                  return eIndex < index;
-                }).length;
+                // Group overlapping events together and sort by start time, then by index
+                const allOverlappingEvents = [...overlappingEvents, event].sort((a, b) => {
+                  const aStart = timeToMinutes(a.startTime);
+                  const bStart = timeToMinutes(b.startTime);
+                  if (aStart !== bStart) {
+                    return aStart - bStart; // Sort by start time first
+                  }
+                  // If same start time, sort by index
+                  const aIdx = dayEvents.indexOf(a);
+                  const bIdx = dayEvents.indexOf(b);
+                  return aIdx - bIdx;
+                });
 
-                const overlappingIndex = overlappingEvents.filter((e) => {
-                  const eStart = timeToMinutes(e.startTime);
-                  return eStart < startMinutes && eStart !== startMinutes;
-                }).length;
-
-                const positionInGroup = sameStartTimeEvents.length > 0 ? sameStartIndex : overlappingIndex;
+                // Get position in the overlapping group
+                const positionInGroup = allOverlappingEvents.findIndex(e => e === event);
 
                 // Calculate width and position for fitted cards with spacing
                 const cardWidth = 360; // Fixed width for event cards in pixels
@@ -351,13 +365,16 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                         )}
                       </div>
                       
-                      {/* Event Banner Image */}
+                      {/* Event Banner Image - 60% of card height */}
                       {event.imageHeader && (
-                        <div className="w-full h-20 overflow-hidden mx-3 mb-2 rounded">
+                        <div 
+                          className="w-full overflow-hidden px-3 mb-2 rounded"
+                          style={{ height: `${Math.max(height * 0.6, 60)}px` }}
+                        >
                           <img 
                             src={event.imageHeader} 
                             alt={event.title}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover rounded-lg"
                           />
                         </div>
                       )}
@@ -378,7 +395,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            <p className="text-xs text-gray-500 font-medium truncate">{event.location}</p>
+                            <p className="text-xs text-gray-500 font-medium">{event.location}</p>
                           </div>
                         </div>
                       </div>
