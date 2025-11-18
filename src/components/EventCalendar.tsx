@@ -65,8 +65,8 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
     return totalMinutes - startMinutes;
   }, []);
 
-  // Height per hour in pixels (1 hour = 80px)
-  const pixelsPerHour = 80;
+  // Height per hour in pixels (1 hour = 120px for more spacing)
+  const pixelsPerHour = 120;
 
   // Get current time position
   const currentTimePosition = useMemo(() => {
@@ -97,6 +97,22 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
+    
+    // Scroll to first event of the selected date
+    const eventsForDate = getEventsForDate(date);
+    if (eventsForDate.length > 0 && gridRef.current) {
+      const firstEvent = eventsForDate[0];
+      const startMinutes = timeToMinutes(firstEvent.startTime);
+      const scrollPosition = (startMinutes / 60) * pixelsPerHour;
+      
+      // Smooth scroll to the event position with some offset
+      setTimeout(() => {
+        gridRef.current?.scrollTo({
+          top: scrollPosition - 100, // 100px offset from top
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
   };
 
   const handleEventClick = (event: Event) => {
@@ -156,7 +172,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
         </div>
 
         {/* Date Navigation */}
-        <div className="mb-6">
+        <div className="mb-12">
           <div className=" mb-4">
             <h2 className="text-2xl font-bold text-gray-900">{monthName}</h2>
           </div>
@@ -169,7 +185,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <div className="flex gap-2 flex-1">
+            <div className="flex gap-2 flex-1 items-start">
               {dateCards.map((date, index) => {
                 const isSelected = date.toDateString() === selectedDate.toDateString();
                 const dayName = date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
@@ -180,24 +196,39 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                   <button
                     key={index}
                     onClick={() => handleDateClick(date)}
-                    className={`
-                      flex-1 px-4 py-3 rounded-lg border-2 transition-all
-                      ${isSelected 
-                        ? 'bg-red-500 border-red-600 text-white shadow-sm' 
-                        : 'bg-red-50 border-red-400 text-gray-900 hover:bg-red-500 hover:text-white hover:border-red-600'
+                    className="flex-1 px-4 rounded-lg"
+                    style={{
+                      backgroundColor: isSelected ? '#ef4444' : '#000000',
+                      color: '#ffffff',
+                      paddingTop: isSelected ? '1.25rem' : '0.75rem',
+                      paddingBottom: isSelected ? '1.25rem' : '0.75rem',
+                      transition: 'all 1.7s cubic-bezier(0.4, 0, 0.2, 1)',
+                      boxShadow: isSelected ? '0 1px 2px 0 rgb(0 0 0 / 0.05)' : 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.backgroundColor = '#ef4444';
                       }
-                    `}
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.backgroundColor = '#000000';
+                      }
+                    }}
                   >
                     <div className="text-center">
-                      <div className={`text-xs mb-1 ${isSelected ? 'text-white/80' : 'text-gray-600'}`}>{dayName}</div>
-                      <div className={`text-lg font-semibold ${isSelected ? 'text-white' : 'text-gray-900'}`}>
+                      <div className={`text-xs mb-1 ${isSelected ? 'text-white/80' : 'text-white/70'}`}>{dayName}</div>
+                      <div 
+                        className="text-lg font-black text-white"
+                        style={{ fontFamily: '"Impact", "Anton", "Bebas Neue", sans-serif', letterSpacing: '0.05em' }}
+                      >
                         {dayNumber}
                       </div>
-                      {hasEvent && (
-                        <div className="mt-1 flex justify-center">
+                      <div className="mt-1 flex justify-center h-2">
+                        {hasEvent && (
                           <div className={`w-1 h-1 rounded-full ${isSelected ? 'bg-white' : 'bg-red-500'}`}></div>
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </div>
                   </button>
                 );
@@ -253,14 +284,15 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 return (
                   <div
                     key={index}
-                    className="absolute text-sm text-gray-600 font-medium text-right"
+                    className="absolute text-sm text-gray-600 font-medium text-center flex items-center justify-center"
                     style={{ 
                       top: `${topPixels}px`,
+                      bottom: `${24 * pixelsPerHour - topPixels - pixelsPerHour}px`,
                       lineHeight: '1.5',
                       right: '12px',
                       left: '12px',
                       width: 'calc(100% - 24px)',
-                      paddingTop: '8px'
+                      height: `${pixelsPerHour}px`
                     }}
                   >
                     {displayHour}:00 {ampm}
@@ -274,15 +306,14 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
               {timeSlots.map((time, index) => {
                 const position = timeToMinutes(time);
                 const topPixels = (position / 60) * pixelsPerHour;
-                const isHour = time.endsWith(':00');
 
                 return (
                   <div
                     key={index}
-                    className="absolute left-0 right-0 border-t"
+                    className="absolute left-0 right-0"
                     style={{
                       top: `${topPixels}px`,
-                      borderColor: isHour ? '#e5e7eb' : '#f3f4f6',
+                      borderTop: '1px solid rgba(239, 68, 68, 0.15)',
                       pointerEvents: 'none',
                     }}
                   />
@@ -298,15 +329,14 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 {timeSlots.map((time, index) => {
                   const position = timeToMinutes(time);
                   const topPixels = (position / 60) * pixelsPerHour;
-                  const isHour = time.endsWith(':00');
 
                   return (
                     <div
                       key={index}
-                      className="absolute left-0 right-0 border-t"
+                      className="absolute left-0 right-0"
                       style={{
                         top: `${topPixels}px`,
-                        borderColor: isHour ? '#e5e7eb' : '#f3f4f6',
+                        borderTop: '1px solid rgba(239, 68, 68, 0.15)',
                         pointerEvents: 'none',
                       }}
                     />
