@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import BlogIndex from './pages/BlogIndex'
 import BlogArticle from './pages/BlogArticle'
 import NotFound from './pages/NotFound'
+import EventCalendar from './components/EventCalendar'
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')!).render(
       <Route path="/" element={<App />} />
       <Route path="/blog" element={<BlogIndex />} />
       <Route path="/blog/:slug" element={<BlogArticle />} />
+      <Route path="/calendar" element={<EventCalendar />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
