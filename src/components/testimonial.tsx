@@ -14,19 +14,19 @@ import testimonial9 from "../assets/testimonial9.jpg";
 import testimonial10 from "../assets/testimonial10.jpg";
 import testimonial11 from "../assets/testimonial11.jpeg";
 import testimonial12 from "../assets/testimonial12.jpeg";
-import testimonial13 from "../assets/testimonial13.jpg";
-import testimonial14 from "../assets/testimonial14.jpg";
-import testimonial15 from "../assets/testimonial15.jpg";
+import testimonial13 from "../assets/testimonial13.JPG";
+import testimonial14 from "../assets/testimonial14.JPG";
+import testimonial15 from "../assets/testimonial15.JPG";
 import testimonial16 from "../assets/testimonial16.jpg";
 import testimonial17 from "../assets/testimonial17.jpg";
-import testimonial18 from "../assets/testimonial18.jpg";
-import testimonial19 from "../assets/testimonial19.jpg";
+import testimonial18 from "../assets/testimonial18.JPG";
+import testimonial19 from "../assets/testimonial19.JPG";
 import testimonial20 from "../assets/testimonial20.jpg";
 import testimonial21 from "../assets/testimonial21.jpg";
 import testimonial22 from "../assets/testimonial22.jpg";
 import testimonial23 from "../assets/testimonial23.jpg";
-import testimonial24 from "../assets/testimonial24.jpg";
-import testimonial25 from "../assets/testimonial25.jpg";
+import testimonial24 from "../assets/testimonial24.JPG";
+import testimonial25 from "../assets/testimonial25.JPG";
 import testimonial26 from "../assets/testimonial26.jpg";
 
 const testimonials = [
