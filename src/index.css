@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Bastliga One Font */
+@font-face {
+  font-family: 'Bastliga One';
+  src: url('./assets/fonts/Bastliga One.otf') format('opentype'),
+       url('./assets/fonts/Bastliga One.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Infinite Curved Carousel Animation */
 @keyframes infiniteScroll {
   0% {
