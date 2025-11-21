@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
       <Route path="/" element={<App />} />
       <Route path="/blog" element={<BlogIndex />} />
       <Route path="/blog/:slug" element={<BlogArticle />} />
-      <Route path="/calendar" element={<EventCalendar />} />
+      <Route path="/events" element={<EventCalendar />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
