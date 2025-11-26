@@ -2,6 +2,7 @@ import './App.css'
 import { useState, useEffect } from 'react'
 import Preloader from './components/Preloader'
 import Navbar from './components/navbar'
+import Hero from './components/hero'
 import Spinner from './components/spinner'
 import Stats from './components/stats'
 import AboutUs from './components/about'
@@ -49,7 +50,10 @@ function App() {
           <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
             <Navbar />
           </div>
-          
+
+          {/* Hero Section - Full Screen */}
+          <Hero />
+
           {/* Centered content wrapper with consistent max-width */}
           <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
             <Spinner />

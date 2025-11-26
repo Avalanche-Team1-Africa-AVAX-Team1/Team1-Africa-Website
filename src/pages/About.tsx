@@ -19,12 +19,8 @@ const About = () => {
         <div ref={containerRef} className="bg-black min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none">
             <CustomCursor />
 
-            {/* Navbar */}
-            <div className="fixed top-0 left-0 right-0 z-50 mix-blend-difference px-4 pt-4">
-                <div className="mx-auto max-w-site-nav">
-                    <Navbar />
-                </div>
-            </div>
+            {/* Navbar - now self-contained with sticky behavior */}
+            <Navbar />
 
             {/* Hero Section - Video Mask Logo */}
             <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">

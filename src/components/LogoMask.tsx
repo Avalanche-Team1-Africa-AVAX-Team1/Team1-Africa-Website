@@ -21,7 +21,7 @@ export const LogoMask: React.FC<LogoMaskProps> = ({
                 position: 'relative',
                 width: '100%',
                 height: '100%',
-                backgroundColor: 'black' // Black background for mix-blend-multiply
+                backgroundColor: 'black'
             }}
         >
             {/* White logo outline ONLY - using inline SVG with stroke, no fill */}
@@ -90,7 +90,7 @@ export const LogoOutline: React.FC<LogoMaskProps> = ({
                     transform: 'translate(-50%, -50%)',
                     width: '90%',
                     height: '90%',
-                    filter: 'drop-shadow(0 0 8px rgba(239, 68, 68, 0.8)) drop-shadow(0 0 16px rgba(239, 68, 68, 0.5))',
+                    filter: 'drop-shadow(0 0 4px rgba(239, 68, 68, 0.8)) drop-shadow(0 0 16px rgba(239, 68, 68, 0.5))',
                 }}
             >
                 {/* T1 Logo paths - stroke only, no fill for outline effect */}

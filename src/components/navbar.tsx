@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 // import logo from '../assets/logo.png';
 import arrow from '../assets/arrow.svg';
@@ -14,10 +14,41 @@ const Navbar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
     const [selectedPlatform, setSelectedPlatform] = useState<SocialPlatform>('whatsapp');
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
     const location = useLocation();
     const popupRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Scroll detection for auto-hide navbar
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            // Check if scrolled past threshold (50px)
+            setIsScrolled(currentScrollY > 50);
+
+            // Show navbar when scrolling up, hide when scrolling down
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                // Scrolling down & past 100px - hide navbar
+                setIsVisible(false);
+            } else {
+                // Scrolling up or at top - show navbar
+                setIsVisible(true);
+            }
+
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollY]);
 
     const handleMouseEnter = () => {
         if (hoverTimeoutRef.current) {
@@ -82,9 +113,17 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="w-full">
+        <nav
+            className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'
+                } ${isScrolled ? 'backdrop-blur-md bg-white/80' : 'bg-transparent'
+                }`}
+            style={{
+                boxShadow: isScrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none'
+            }}
+        >
             {/* Reduced vertical padding on smaller screens; ≥1920px unchanged */}
-            <div className="w-full flex items-center justify-between py-4 lt-1024:py-3 lt-768:py-2">
+            <div className="w-full flex items-center justify-between py-4 lt-1024:py-3 lt-768:py-2 px-4 md:px-6 lg:px-8 max-w-site-nav mx-auto"
+            >
                 <Link to="/" className="flex items-center bg-black rounded-full cursor-pointer hover:scale-105 transition-transform duration-200">
                     <img src={logo} alt="team1-logo" width={50} height={50} />
                 </Link>
@@ -150,8 +189,8 @@ const Navbar = () => {
                     <div
                         ref={popupRef}
                         className={`absolute top-full right-0 mt-4 flex flex-col items-end overflow-visible z-40 transition-all duration-1200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${showWhatsAppPopup
-                                ? 'w-[28rem] lt-1440:w-[26rem] lt-1024:w-[24rem] opacity-100 scale-100 translate-y-0'
-                                : 'w-fit opacity-0 scale-95 translate-y-[-20px] pointer-events-none'
+                            ? 'w-[28rem] lt-1440:w-[26rem] lt-1024:w-[24rem] opacity-100 scale-100 translate-y-0'
+                            : 'w-fit opacity-0 scale-95 translate-y-[-20px] pointer-events-none'
                             }`}
                         style={{
                             transformOrigin: 'top right'
@@ -162,8 +201,8 @@ const Navbar = () => {
                         {/* Community Popup Card - No Border */}
                         <div
                             className={`w-full ${getPlatformBackground(selectedPlatform)} rounded-3xl shadow-2xl p-8 lt-1440:p-7 lt-1024:p-6 relative transition-all duration-1200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${showWhatsAppPopup
-                                    ? 'opacity-100 max-h-[800px] pointer-events-auto'
-                                    : 'opacity-0 max-h-0 pointer-events-none overflow-hidden'
+                                ? 'opacity-100 max-h-[800px] pointer-events-auto'
+                                : 'opacity-0 max-h-0 pointer-events-none overflow-hidden'
                                 }`}
                         >
                             {/* Animated Background Pattern */}
@@ -174,8 +213,8 @@ const Navbar = () => {
                             {/* QR Code - Clean, No Border */}
                             <div
                                 className={`flex justify-center mb-6 lt-1024:mb-5 transition-all duration-1200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] z-10 ${showWhatsAppPopup
-                                        ? 'opacity-100 scale-100 translate-y-0'
-                                        : 'opacity-0 scale-75 translate-y-4'
+                                    ? 'opacity-100 scale-100 translate-y-0'
+                                    : 'opacity-0 scale-75 translate-y-4'
                                     }`}
                                 style={{ transitionDelay: showWhatsAppPopup ? '200ms' : '0ms' }}
                             >
@@ -193,8 +232,8 @@ const Navbar = () => {
                             {/* Platform Name - Cool Font */}
                             <div
                                 className={`text-center mb-3 transition-all duration-1200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] z-10 ${showWhatsAppPopup
-                                        ? 'opacity-100 translate-y-0'
-                                        : 'opacity-0 translate-y-4'
+                                    ? 'opacity-100 translate-y-0'
+                                    : 'opacity-0 translate-y-4'
                                     }`}
                                 style={{ transitionDelay: showWhatsAppPopup ? '300ms' : '0ms' }}
                             >
@@ -206,8 +245,8 @@ const Navbar = () => {
                             {/* Instructions - Modern Font */}
                             <div
                                 className={`text-center mb-6 lt-1024:mb-5 transition-all duration-1200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] z-10 ${showWhatsAppPopup
-                                        ? 'opacity-100 translate-y-0'
-                                        : 'opacity-0 translate-y-2'
+                                    ? 'opacity-100 translate-y-0'
+                                    : 'opacity-0 translate-y-2'
                                     }`}
                                 style={{ transitionDelay: showWhatsAppPopup ? '400ms' : '0ms' }}
                             >
@@ -222,8 +261,8 @@ const Navbar = () => {
                             {/* Chat via Desktop - Cool Font */}
                             <div
                                 className={`text-center mb-6 lt-1024:mb-5 transition-all duration-1200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] z-10 ${showWhatsAppPopup
-                                        ? 'opacity-100 translate-y-0'
-                                        : 'opacity-0 translate-y-4'
+                                    ? 'opacity-100 translate-y-0'
+                                    : 'opacity-0 translate-y-4'
                                     }`}
                                 style={{ transitionDelay: showWhatsAppPopup ? '500ms' : '0ms' }}
                             >
@@ -252,8 +291,8 @@ const Navbar = () => {
                             <button
                                 onClick={() => setSelectedPlatform('whatsapp')}
                                 className={`absolute p-3 rounded-full transition-all duration-1200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] shadow-lg hover:scale-110 ${selectedPlatform === 'whatsapp'
-                                        ? 'bg-[#25D366] scale-110'
-                                        : 'bg-white hover:bg-green-50'
+                                    ? 'bg-[#25D366] scale-110'
+                                    : 'bg-white hover:bg-green-50'
                                     } ${showWhatsAppPopup
                                         ? 'opacity-100 scale-100'
                                         : 'opacity-0 scale-0'
@@ -281,8 +320,8 @@ const Navbar = () => {
                             <button
                                 onClick={() => setSelectedPlatform('discord')}
                                 className={`absolute p-3 rounded-full transition-all duration-1200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] shadow-lg hover:scale-110 ${selectedPlatform === 'discord'
-                                        ? 'bg-[#5865F2] scale-110'
-                                        : 'bg-white hover:bg-purple-50'
+                                    ? 'bg-[#5865F2] scale-110'
+                                    : 'bg-white hover:bg-purple-50'
                                     } ${showWhatsAppPopup
                                         ? 'opacity-100 scale-100'
                                         : 'opacity-0 scale-0'
@@ -307,8 +346,8 @@ const Navbar = () => {
                             <button
                                 onClick={() => setSelectedPlatform('telegram')}
                                 className={`absolute p-3 rounded-full transition-all duration-1200 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] shadow-lg hover:scale-110 ${selectedPlatform === 'telegram'
-                                        ? 'bg-[#0088cc] scale-110'
-                                        : 'bg-white hover:bg-blue-50'
+                                    ? 'bg-[#0088cc] scale-110'
+                                    : 'bg-white hover:bg-blue-50'
                                     } ${showWhatsAppPopup
                                         ? 'opacity-100 scale-100'
                                         : 'opacity-0 scale-0'
