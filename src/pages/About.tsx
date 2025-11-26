@@ -5,6 +5,8 @@ import Footer from '../components/footer';
 import TeamGrid from '../components/TeamGrid';
 import { team1AfricaMembers } from '../data/team-members';
 import CustomCursor from '../components/CustomCursor';
+import videoSrc from '../assets/videos/video.mp4';
+import { LogoMask, LogoOutline } from '../components/LogoMask';
 
 const About = () => {
     const containerRef = useRef(null);
@@ -35,26 +37,19 @@ const About = () => {
                         playsInline
                         className="w-full h-full object-cover opacity-100"
                     >
-                        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-circuit-board-997-large.mp4" type="video/mp4" />
+                        <source src={videoSrc} type="video/mp4" />
                     </video>
                 </div>
 
-                {/* 2. The Mask Layer (Middle) - Multiplies with Video */}
-                {/* Black Background (hides video) + White Text (shows video) */}
+                {/* 2. The Mask Layer (Middle) - Shows video through logo outline using mix-blend-multiply */}
+                {/* Black Background (hides video) + White Logo Outline (shows video) */}
                 <div className="absolute inset-0 z-10 bg-black mix-blend-multiply flex items-center justify-center">
-                    <h1 className="text-[20vw] font-black leading-none tracking-tighter text-white select-none">
-                        TEAM1
-                    </h1>
+                    <LogoMask />
                 </div>
 
                 {/* 3. The Outline Layer (Top) - Adds the stroke */}
                 <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-                    <h1
-                        className="text-[20vw] font-black leading-none tracking-tighter text-transparent select-none"
-                        style={{ WebkitTextStroke: '2px rgba(255,255,255,0.8)' }}
-                    >
-                        TEAM1
-                    </h1>
+                    <LogoOutline />
                 </div>
 
                 {/* Scroll Indicator */}
