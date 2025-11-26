@@ -1,0 +1,148 @@
+import { useRef } from 'react';
+import { motion, useScroll } from 'framer-motion';
+import Navbar from '../components/navbar';
+import Footer from '../components/footer';
+import TeamGrid from '../components/TeamGrid';
+import { team1AfricaMembers } from '../data/team-members';
+import CustomCursor from '../components/CustomCursor';
+
+const About = () => {
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    });
+
+    return (
+        <div ref={containerRef} className="bg-black min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none">
+            <CustomCursor />
+
+            {/* Navbar */}
+            <div className="fixed top-0 left-0 right-0 z-50 mix-blend-difference px-4 pt-4">
+                <div className="mx-auto max-w-site-nav">
+                    <Navbar />
+                </div>
+            </div>
+
+            {/* Hero Section - Video Mask Logo */}
+            <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
+                {/* 1. The Video Layer (Bottom) */}
+                <div className="absolute inset-0 z-0">
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover opacity-100"
+                    >
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-circuit-board-997-large.mp4" type="video/mp4" />
+                    </video>
+                </div>
+
+                {/* 2. The Mask Layer (Middle) - Multiplies with Video */}
+                {/* Black Background (hides video) + White Text (shows video) */}
+                <div className="absolute inset-0 z-10 bg-black mix-blend-multiply flex items-center justify-center">
+                    <h1 className="text-[20vw] font-black leading-none tracking-tighter text-white select-none">
+                        TEAM1
+                    </h1>
+                </div>
+
+                {/* 3. The Outline Layer (Top) - Adds the stroke */}
+                <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                    <h1
+                        className="text-[20vw] font-black leading-none tracking-tighter text-transparent select-none"
+                        style={{ WebkitTextStroke: '2px rgba(255,255,255,0.8)' }}
+                    >
+                        TEAM1
+                    </h1>
+                </div>
+
+                {/* Scroll Indicator */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1, duration: 1 }}
+                    className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30"
+                >
+                    <p className="text-sm font-mono animate-bounce text-white/50">SCROLL TO EXPLORE</p>
+                </motion.div>
+            </section>
+
+            {/* Manifesto / Mission - Responsive & Dynamic */}
+            <section className="py-20 md:py-32 px-6 md:px-20 bg-white text-black relative z-10 rounded-t-[2rem] md:rounded-t-[3rem] -mt-10">
+                <div className="max-w-[90vw] mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+                        <div className="lg:sticky lg:top-32">
+                            <h2 className="text-[10vw] lg:text-[5vw] font-black tracking-tighter mb-8 leading-[0.9]" data-cursor="Our Mission">
+                                REDEFINING <br />
+                                <span className="text-red-600">AFRICAN</span> <br />
+                                INNOVATION
+                            </h2>
+                            <p className="text-lg md:text-xl font-medium text-gray-600 max-w-md">
+                                We are not just a team; we are a movement. Bridging the gap between potential and opportunity across the continent.
+                            </p>
+                        </div>
+                        <div className="space-y-16 md:space-y-24 text-xl md:text-2xl font-light leading-relaxed">
+                            {[
+                                { title: "Decentralization", desc: "We believe in the power of decentralization. It's not just technology; it's a tool for economic liberation and borderless collaboration." },
+                                { title: "Community", desc: "Our roots are deep in the soil of community. From Lagos to Nairobi, Accra to Cape Town, we are connecting the dots of the African Web3 ecosystem." },
+                                { title: "Education", desc: "We don't just build; we educate. Empowering the next generation of developers, creators, and entrepreneurs to take ownership of their digital future." }
+                            ].map((item, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.8 }}
+                                >
+                                    <span className="text-4xl md:text-5xl font-bold block mb-4 text-red-500">0{i + 1}.</span>
+                                    <h3 className="text-3xl md:text-4xl font-black mb-4 uppercase">{item.title}</h3>
+                                    <p>{item.desc}</p>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Values - Infinite Scroll */}
+            <section className="py-12 md:py-20 bg-red-600 text-white overflow-hidden">
+                <div className="flex whitespace-nowrap animate-infinite-scroll">
+                    {[...Array(4)].map((_, i) => (
+                        <div key={i} className="flex items-center gap-8 mx-8">
+                            <span className="text-6xl md:text-8xl font-black italic">COMMUNITY</span>
+                            <span className="text-2xl md:text-4xl">★</span>
+                            <span className="text-6xl md:text-8xl font-black italic text-black">INNOVATION</span>
+                            <span className="text-2xl md:text-4xl">★</span>
+                            <span className="text-6xl md:text-8xl font-black italic">IMPACT</span>
+                            <span className="text-2xl md:text-4xl">★</span>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* Team Section - Kinetic List */}
+            <TeamGrid members={team1AfricaMembers} />
+
+            {/* Footer CTA */}
+            <section className="h-[70vh] flex items-center justify-center bg-white text-black relative z-10">
+                <div className="text-center px-4">
+                    <h2 className="text-[12vw] font-black leading-none mb-8 hover:italic transition-all duration-300 cursor-pointer" data-cursor="Let's Talk">
+                        LET'S BUILD
+                    </h2>
+                    <a
+                        href="mailto:hi@team1africa.com"
+                        className="inline-block text-xl md:text-2xl font-bold border-b-4 border-black pb-1 hover:text-red-600 hover:border-red-600 transition-colors"
+                        data-cursor="Email Us"
+                    >
+                        hi@team1africa.com
+                    </a>
+                </div>
+            </section>
+
+            <Footer />
+        </div>
+    );
+};
+
+export default About;
