@@ -1,4 +1,5 @@
-import { useEffect, useRef, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
 import Lenis from 'lenis';
 
 interface SmoothScrollProviderProps {
@@ -42,7 +43,6 @@ const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) => {
             gestureOrientation: 'vertical',
             smoothWheel: true,
             wheelMultiplier: 1,
-            smoothTouch: false, // Disabled on touch for better mobile UX
             touchMultiplier: 2,
             infinite: false,
         });

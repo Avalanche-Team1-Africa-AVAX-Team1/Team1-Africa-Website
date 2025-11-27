@@ -49,7 +49,7 @@ export const LogoMask: React.FC<LogoMaskProps> = ({
                 />
                 <path
                     d="M859.844 19.4035V415.565C859.844 424.189 852.855 431.188 844.242 431.188H713.189C704.577 431.188 697.588 424.189 697.588 415.565V178.099C697.588 169.476 690.598 162.477 681.986 162.477H591.497C582.885 162.477 575.896 155.478 575.896 146.854V15.6228C575.896 6.999 582.885 0 591.497 0H840.467C851.17 0 859.844 8.68626 859.844 19.4035Z"
-                    fill="#FF394A"
+                    fill="white"
                     stroke="none"
                 />
                 <path
@@ -90,7 +90,6 @@ export const LogoOutline: React.FC<LogoMaskProps> = ({
                     transform: 'translate(-50%, -50%)',
                     width: '90%',
                     height: '90%',
-                    filter: 'drop-shadow(0 0 2px rgba(239, 68, 68, 0.6))',
                 }}
             >
                 {/* T1 Logo paths - stroke only, no fill for outline effect */}
