@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+ import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import type { Event } from '../types/event';
 import { getEventsForDate } from '../data/events';
 import EventDetailPanel from './EventDetailPanel';
@@ -103,15 +103,11 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
     if (eventsForDate.length > 0 && gridRef.current) {
       const firstEvent = eventsForDate[0];
       const startMinutes = timeToMinutes(firstEvent.startTime);
-      const scrollPosition = (startMinutes / 60) * pixelsPerHour;
-      
-      // Smooth scroll to the event position with some offset
-      setTimeout(() => {
-        gridRef.current?.scrollTo({
-          top: scrollPosition - 100, // 100px offset from top
-          behavior: 'smooth'
-        });
-      }, 100);
+      const topPosition = (startMinutes / 60) * pixelsPerHour;
+      gridRef.current.scrollTo({
+        top: topPosition - 100,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -119,36 +115,19 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
     setSelectedEvent(event);
   };
 
-  const monthName = selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }).toUpperCase();
+  // Get month name for display
+  const monthName = useMemo(() => {
+    return selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  }, [selectedDate]);
 
   return (
-    <div className="w-full min-h-screen bg-white">
-      {/* Navbar */}
-      <div className="mx-auto w-full max-w-[2000px] px-2 md:px-8 py-4">
-        <Navbar />
-      </div>
-
-      <div className="w-full max-w-[2000px] mx-auto py-4 md:py-8 px-2 sm:px-4 md:px-8">
-        {/* Header Bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6 pb-4 border-b border-gray-200 gap-4">
-          <div className="flex flex-wrap items-center gap-2 md:gap-4 w-full sm:w-auto">
-            <button className="relative px-3 md:px-4 py-2 bg-black text-white border border-black rounded-lg hover:bg-gray-900 transition-colors flex items-center gap-2 text-xs md:text-sm font-medium">
-              Request Approval
-              <span className="absolute -top-2 -right-2 w-4 h-4 md:w-5 md:h-5 bg-red-500 text-white text-[10px] md:text-xs rounded-full flex items-center justify-center font-bold">
-                10
-              </span>
-            </button>
-            <div className="flex items-center gap-1 md:gap-2">
-              <button className="p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <svg className="w-4 h-4 md:w-5 md:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-              </button>
-              <button className="p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <svg className="w-4 h-4 md:w-5 md:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>
-              </button>
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12">
+        {/* Header Controls */}
+        <div className="mb-6 md:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <button className="p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors">
                 <svg className="w-4 h-4 md:w-5 md:h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />

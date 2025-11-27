@@ -23,7 +23,7 @@ const About = () => {
             <Navbar />
 
             {/* Hero Section - Video Mask Logo */}
-            <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
+            <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-yellow-500">
                 {/* 1. The Video Layer (Bottom) */}
                 <div className="absolute inset-0 z-0">
                     <video

@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 // import logo from '../assets/logo.png';
 import arrow from '../assets/arrow.svg';
 import arrowUp from '../assets/arrow-up.svg';
-import logo from '../assets/team1logo.png';
+import logo from '../assets/avaxteam.svg';
 import discordIcon from '../assets/Discord.svg';
 import telegramIcon from '../assets/telegram.svg';
 import { QRCodeSVG } from 'qrcode.react';
@@ -114,38 +114,37 @@ const Navbar = () => {
 
     return (
         <nav
-            className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'
-                } ${isScrolled ? 'backdrop-blur-md bg-white/80' : 'bg-transparent'
+            className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out bg-white text-black ${isVisible ? 'translate-y-0' : '-translate-y-full'
                 }`}
             style={{
-                boxShadow: isScrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none'
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
             }}
         >
             {/* Reduced vertical padding on smaller screens; ≥1920px unchanged */}
             <div className="w-full flex items-center justify-between py-4 lt-1024:py-3 lt-768:py-2 px-4 md:px-6 lg:px-8 max-w-site-nav mx-auto"
             >
-                <Link to="/" className="flex items-center bg-black rounded-full cursor-pointer hover:scale-105 transition-transform duration-200">
-                    <img src={logo} alt="team1-logo" width={50} height={50} />
+                <Link to="/" className="flex items-center bg-black p-4 rounded-full cursor-pointer hover:scale-105 transition-transform duration-200">
+                    <img src={logo} alt="team1-logo" width={20} height={20} />
                 </Link>
 
                 {/* Desktop Tabs */}
                 <div className="hidden md:flex items-center justify-between">
                     {/* Tighter gaps for tabs on smaller breakpoints */}
-                    <ul className="flex items-center gap-8 lt-1440:gap-6 lt-1024:gap-4 cursor-pointer">
-                        <li><Link to="/about" className={location.pathname === '/about' ? 'font-semibold text-red-400' : ''}>About</Link></li>
-                        <li><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : ''}>Blog</Link></li>
+                    <ul className="flex items-center gap-8 lt-1440:gap-6 lt-1024:gap-4 cursor-pointer text-black">
+                        <li><Link to="/about" className={location.pathname === '/about' ? 'font-semibold text-red-400' : 'text-black'}>About</Link></li>
+                        <li><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : 'text-black'}>Blog</Link></li>
                         <div className="flex gap-2">
-                            <li><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : ''}>Events</Link></li>
+                            <li><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
                             {/* Shrink arrow icon on smaller screens */}
                             <img src={arrow} alt="arrow" className="lt-1440:w-4 lt-1440:h-4 lt-1024:w-3.5 lt-1024:h-3.5" />
                         </div>
                         <div className="flex gap-2">
-                            <li>Games</li>
+                            <li className="text-black">Games</li>
                             {/* Shrink arrow icon on smaller screens */}
                             <img src={arrow} alt="arrow" className="lt-1440:w-4 lt-1440:h-4 lt-1024:w-3.5 lt-1024:h-3.5" />
                         </div>
                         <div className="flex gap-2">
-                            <li>Community</li>
+                            <li className="text-black">Community</li>
                             {/* Shrink arrow icon on smaller screens */}
                             <img src={arrow} alt="arrow" className="lt-1440:w-4 lt-1440:h-4 lt-1024:w-3.5 lt-1024:h-3.5" />
                         </div>
@@ -446,16 +445,16 @@ const Navbar = () => {
             >
                 <div className="flex justify-end p-6">
                     <button onClick={() => setSidebarOpen(false)} aria-label="Close sidebar">
-                        <span className='text-[3rem] lt-768:text-[2.5rem] lt-480:text-[2rem]'>&times;</span> {/* Smaller close icon on small screens */}
+                        <span className='text-[3rem] lt-768:text-[2.5rem] lt-480:text-[2rem] text-black'>&times;</span> {/* Smaller close icon on small screens */}
                     </button>
                 </div>
                 {/* Reduce nav item spacing and font size as screens shrink */}
-                <ul className="flex flex-col gap-8 lt-768:gap-6 lt-480:gap-5 px-8 lt-768:px-6 lt-480:px-5 text-xl lt-768:text-lg lt-480:text-base cursor-pointer">
-                    <li onClick={() => setSidebarOpen(false)}><Link to="/about" className={location.pathname === '/about' ? 'font-semibold text-red-400' : ''}>About</Link></li>
-                    <li onClick={() => setSidebarOpen(false)}><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : ''}>Blog</Link></li>
-                    <li onClick={() => setSidebarOpen(false)}><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : ''}>Events</Link></li>
-                    <li onClick={() => setSidebarOpen(false)}>Games</li>
-                    <li onClick={() => setSidebarOpen(false)}>Community</li>
+                <ul className="flex flex-col gap-8 lt-768:gap-6 lt-480:gap-5 px-8 lt-768:px-6 lt-480:px-5 text-xl lt-768:text-lg lt-480:text-base cursor-pointer text-black">
+                    <li onClick={() => setSidebarOpen(false)}><Link to="/about" className={location.pathname === '/about' ? 'font-semibold text-red-400' : 'text-black'}>About</Link></li>
+                    <li onClick={() => setSidebarOpen(false)}><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : 'text-black'}>Blog</Link></li>
+                    <li onClick={() => setSidebarOpen(false)}><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
+                    <li onClick={() => setSidebarOpen(false)} className="text-black">Games</li>
+                    <li onClick={() => setSidebarOpen(false)} className="text-black">Community</li>
                 </ul>
                 <div className="mt-12 px-8 lt-768:px-6 lt-480:px-5">{/* Match drawer inner padding on small screens */}
                     <button className="flex items-center gap-4 text-2xl lt-768:text-xl lt-480:text-lg bg-black text-white px-4 py-3 rounded-full w-full justify-center">{/* Scale CTA text on smaller screens */}
