@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { TeamMember } from '../data/team-members';
 import { FaTwitter, FaLinkedin, FaGithub, FaTelegram } from 'react-icons/fa';
@@ -15,13 +15,11 @@ const TeamGrid = ({ members }: TeamGridProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const handleMouseMove = (e: React.MouseEvent) => {
-        if (containerRef.current) {
-            const rect = containerRef.current.getBoundingClientRect();
-            setMousePosition({
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top,
-            });
-        }
+        // Since the floating image uses fixed positioning, we need viewport coordinates
+        setMousePosition({
+            x: e.clientX,
+            y: e.clientY,
+        });
     };
 
     return (
