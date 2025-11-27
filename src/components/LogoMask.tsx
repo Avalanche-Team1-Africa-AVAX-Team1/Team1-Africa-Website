@@ -90,7 +90,7 @@ export const LogoOutline: React.FC<LogoMaskProps> = ({
                     transform: 'translate(-50%, -50%)',
                     width: '90%',
                     height: '90%',
-                    filter: 'drop-shadow(0 0 4px rgba(239, 68, 68, 0.8)) drop-shadow(0 0 16px rgba(239, 68, 68, 0.5))',
+                    filter: 'drop-shadow(0 0 2px rgba(239, 68, 68, 0.6))',
                 }}
             >
                 {/* T1 Logo paths - stroke only, no fill for outline effect */}

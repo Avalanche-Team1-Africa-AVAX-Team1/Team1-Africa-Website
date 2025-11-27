@@ -50,6 +50,45 @@ const Navbar = () => {
         };
     }, [lastScrollY]);
 
+    // Body scroll lock for mobile sidebar
+    useEffect(() => {
+        const isMobile = window.innerWidth < 768; // md breakpoint
+        
+        if (sidebarOpen && isMobile) {
+            // Lock scroll on mobile when sidebar is open
+            const originalOverflow = document.body.style.overflow;
+            const originalPosition = document.body.style.position;
+            const originalWidth = document.body.style.width;
+            
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            
+            return () => {
+                // Restore scroll when sidebar closes
+                document.body.style.overflow = originalOverflow;
+                document.body.style.position = originalPosition;
+                document.body.style.width = originalWidth;
+            };
+        }
+    }, [sidebarOpen]);
+
+    // Auto-close sidebar and restore scroll on resize to desktop
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 768 && sidebarOpen) {
+                setSidebarOpen(false);
+                // Restore scroll
+                document.body.style.overflow = '';
+                document.body.style.position = '';
+                document.body.style.width = '';
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [sidebarOpen]);
+
     const handleMouseEnter = () => {
         if (hoverTimeoutRef.current) {
             clearTimeout(hoverTimeoutRef.current);
@@ -113,6 +152,7 @@ const Navbar = () => {
     };
 
     return (
+        <>
         <nav
             className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out bg-white text-black ${isVisible ? 'translate-y-0' : '-translate-y-full'
                 }`}
@@ -431,39 +471,39 @@ const Navbar = () => {
                     <span className="block w-7 h-1 lt-480:w-6 bg-black rounded"></span>
                 </button>
             </div>
-
-            {/* Sidebar Overlay */}
-            <div
-                className={`fixed inset-0 z-40 bg-black bg-opacity-60 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-                onClick={() => setSidebarOpen(false)}
-            ></div>
-
-            {/* Sidebar */}
-            {/* Narrower drawer on smaller screens */}
-            <aside
-                className={`fixed top-0 right-0 h-full w-80 lt-768:w-72 lt-480:w-64 max-w-full bg-white z-50 shadow-lg transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}
-            >
-                <div className="flex justify-end p-6">
-                    <button onClick={() => setSidebarOpen(false)} aria-label="Close sidebar">
-                        <span className='text-[3rem] lt-768:text-[2.5rem] lt-480:text-[2rem] text-black'>&times;</span> {/* Smaller close icon on small screens */}
-                    </button>
-                </div>
-                {/* Reduce nav item spacing and font size as screens shrink */}
-                <ul className="flex flex-col gap-8 lt-768:gap-6 lt-480:gap-5 px-8 lt-768:px-6 lt-480:px-5 text-xl lt-768:text-lg lt-480:text-base cursor-pointer text-black">
-                    <li onClick={() => setSidebarOpen(false)}><Link to="/about" className={location.pathname === '/about' ? 'font-semibold text-red-400' : 'text-black'}>About</Link></li>
-                    <li onClick={() => setSidebarOpen(false)}><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : 'text-black'}>Blog</Link></li>
-                    <li onClick={() => setSidebarOpen(false)}><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
-                    <li onClick={() => setSidebarOpen(false)} className="text-black">Games</li>
-                    <li onClick={() => setSidebarOpen(false)} className="text-black">Community</li>
-                </ul>
-                <div className="mt-12 px-8 lt-768:px-6 lt-480:px-5">{/* Match drawer inner padding on small screens */}
-                    <button className="flex items-center gap-4 text-2xl lt-768:text-xl lt-480:text-lg bg-black text-white px-4 py-3 rounded-full w-full justify-center">{/* Scale CTA text on smaller screens */}
-                        <span className="text-lg lt-768:text-base lt-480:text-sm">Join the community</span>
-                        <img src={arrowUp} alt="arrow" width={30} height={30} className="lt-1440:w-[26px] lt-1440:h-[26px] lt-1024:w-6 lt-1024:h-6" />{/* Shrink icon on small screens */}
-                    </button>
-                </div>
-            </aside>
         </nav>
+
+        {/* Sidebar Overlay - Mobile Only */}
+        <div
+            className={`md:hidden fixed inset-0 z-[9998] bg-black bg-opacity-60 transition-opacity duration-300 ${sidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+            onClick={() => setSidebarOpen(false)}
+        ></div>
+
+        {/* Sidebar - Mobile Only, Full Width Overlay */}
+        <aside
+            className={`md:hidden fixed inset-0 h-full w-full bg-white z-[9999] shadow-lg transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+            <div className="flex justify-end p-6">
+                <button onClick={() => setSidebarOpen(false)} aria-label="Close sidebar">
+                    <span className='text-[3rem] lt-768:text-[2.5rem] lt-480:text-[2rem] text-black'>&times;</span>
+                </button>
+            </div>
+            {/* Reduce nav item spacing and font size as screens shrink */}
+            <ul className="flex flex-col gap-8 lt-768:gap-6 lt-480:gap-5 px-8 lt-768:px-6 lt-480:px-5 text-xl lt-768:text-lg lt-480:text-base cursor-pointer text-black">
+                <li onClick={() => setSidebarOpen(false)}><Link to="/about" className={location.pathname === '/about' ? 'font-semibold text-red-400' : 'text-black'}>About</Link></li>
+                <li onClick={() => setSidebarOpen(false)}><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : 'text-black'}>Blog</Link></li>
+                <li onClick={() => setSidebarOpen(false)}><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
+                <li onClick={() => setSidebarOpen(false)} className="text-black">Games</li>
+                <li onClick={() => setSidebarOpen(false)} className="text-black">Community</li>
+            </ul>
+            <div className="mt-12 px-8 lt-768:px-6 lt-480:px-5">
+                <button className="flex items-center gap-4 text-2xl lt-768:text-xl lt-480:text-lg bg-black text-white px-4 py-3 rounded-full w-full justify-center">
+                    <span className="text-lg lt-768:text-base lt-480:text-sm">Join the community</span>
+                    <img src={arrowUp} alt="arrow" width={30} height={30} className="lt-1440:w-[26px] lt-1440:h-[26px] lt-1024:w-6 lt-1024:h-6" />
+                </button>
+            </div>
+        </aside>
+        </>
     );
 };
 
