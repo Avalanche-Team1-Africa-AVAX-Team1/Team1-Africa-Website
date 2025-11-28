@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { motion, useScroll } from 'framer-motion';
+
+import { motion } from 'framer-motion';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import TeamGrid from '../components/TeamGrid';
@@ -9,14 +9,10 @@ import videoSrc from '../assets/videos/video.mp4';
 import { LogoMask, LogoOutline } from '../components/LogoMask';
 
 const About = () => {
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end end"]
-    });
+
 
     return (
-        <div ref={containerRef} className="bg-black min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none">
+        <div className="bg-black min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none">
             <CustomCursor />
 
             {/* Navbar - now self-contained with sticky behavior */}
