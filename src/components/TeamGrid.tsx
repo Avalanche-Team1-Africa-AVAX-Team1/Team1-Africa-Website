@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { TeamMember } from '../data/team-members';
 import { FaTwitter, FaLinkedin, FaGithub, FaTelegram } from 'react-icons/fa';
@@ -13,19 +13,53 @@ const TeamGrid = ({ members }: TeamGridProps) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const containerRef = useRef<HTMLDivElement>(null);
+    const lastMousePos = useRef({ x: 0, y: 0 });
 
-    const handleMouseMove = (e: React.MouseEvent) => {
-        // Since the floating image uses fixed positioning, we need viewport coordinates
-        setMousePosition({
-            x: e.clientX,
-            y: e.clientY,
-        });
-    };
+    useEffect(() => {
+        const handleUpdate = () => {
+            const { x, y } = lastMousePos.current;
+
+            // Check what's under the cursor
+            const element = document.elementFromPoint(x, y);
+            const memberRow = element?.closest('[data-member-index]');
+
+            if (memberRow) {
+                const index = parseInt(memberRow.getAttribute('data-member-index') || '-1');
+                setActiveIndex(index);
+                setMousePosition({ x, y });
+            } else {
+                setActiveIndex(null);
+                // Still update position if inside container to avoid jumps when entering items
+                if (containerRef.current) {
+                    const rect = containerRef.current.getBoundingClientRect();
+                    if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+                        setMousePosition({ x, y });
+                    }
+                }
+            }
+        };
+
+        const onMouseMove = (e: MouseEvent) => {
+            lastMousePos.current = { x: e.clientX, y: e.clientY };
+            handleUpdate();
+        };
+
+        const onScroll = () => {
+            handleUpdate();
+        };
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('scroll', onScroll);
+        };
+    }, []);
 
     return (
         <section
             ref={containerRef}
-            onMouseMove={handleMouseMove}
             className="relative min-h-screen bg-black py-20 overflow-hidden"
         >
             {/* Background Image Reveal */}
@@ -87,12 +121,11 @@ const TeamGrid = ({ members }: TeamGridProps) => {
                     {members.map((member, index) => (
                         <motion.div
                             key={member.id}
+                            data-member-index={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.05 }}
-                            onMouseEnter={() => setActiveIndex(index)}
-                            onMouseLeave={() => setActiveIndex(null)}
                             className="group relative border-b border-white/10 py-8 md:py-12 transition-colors duration-300 hover:bg-white/5"
                             data-cursor="View Profile"
                         >
