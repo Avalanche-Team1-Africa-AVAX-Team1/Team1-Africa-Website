@@ -273,12 +273,24 @@ export default function TestimonialSlider() {
   const [expandedKey, setExpandedKey] = useState<number | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [cardWidth, setCardWidth] = useState(800);
   const GAP = 24;
   const SCROLL_DURATION = 150;
 
   // Create the double list for seamless loop
   const renderedCards = [...testimonials, ...testimonials];
   const originalCount = testimonials.length;
+
+  // Update card width based on screen size
+  useEffect(() => {
+    const updateCardWidth = () => {
+      setCardWidth(window.innerWidth < 1440 ? 600 : 800);
+    };
+    
+    updateCardWidth();
+    window.addEventListener('resize', updateCardWidth);
+    return () => window.removeEventListener('resize', updateCardWidth);
+  }, []);
 
   // GSAP loop setup - FIXED: Only calculate based on COLLAPSED card width
   useEffect(() => {
@@ -293,8 +305,8 @@ export default function TestimonialSlider() {
       tlRef.current = null;
     }
 
-    // FIXED: Use fixed collapsed width for calculations, not dynamic measurements
-    const collapsedWidth = 800;
+    // FIXED: Use responsive collapsed width for calculations
+    const collapsedWidth = cardWidth;
     const totalWidth = (collapsedWidth + GAP) * originalCount;
 
     // Ensure there's some width
@@ -327,7 +339,7 @@ export default function TestimonialSlider() {
       t.kill();
       tlRef.current = null;
     };
-  }, [originalCount, GAP, isHovering, isReady]); // FIXED: Removed expandedKey from dependencies
+  }, [originalCount, GAP, isHovering, isReady, cardWidth]); // Added cardWidth to dependencies
 
   // Pause/resume when hovering or when expanded
   useEffect(() => {
@@ -514,9 +526,10 @@ export default function TestimonialSlider() {
             const isExpanded = expandedKey === renderIndex;
             const isDimmed = expandedKey !== null && !isExpanded;
 
-            const accentWidth = 800;
+            // Responsive widths for different screen sizes
+            const accentWidth = cardWidth;
             const collapsedWidth = accentWidth;
-            const expandedContentWidth = 800; // Same as image width, so total doubles
+            const expandedContentWidth = cardWidth; // Same as image width, so total doubles
 
             return (
               <motion.div
@@ -529,7 +542,7 @@ export default function TestimonialSlider() {
                   width: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] },
                 }}
                 onClick={() => handleCardClick(renderIndex)}
-                className="flex-shrink-0 h-[800px] rounded-[40px] shadow-xl cursor-pointer overflow-hidden"
+                className="flex-shrink-0 h-[600px] lt-1440:h-[500px] rounded-[40px] shadow-xl cursor-pointer overflow-hidden"
                 style={{
                   pointerEvents: isAnimating ? 'none' : 'auto',
                   willChange: 'width',
@@ -599,16 +612,16 @@ export default function TestimonialSlider() {
                           <p className="text-[11px] uppercase tracking-[0.28em] text-white/60 font-medium mb-5 ">
                             Overview
                           </p>
-                          <h3 className="text-7xl font-bold mb-2">{item.name}</h3>
+                          <h3 className="text-5xl lt-1440:text-4xl font-bold mb-2">{item.name}</h3>
                           <p className="text-base text-white/70 mb-6">{item.title}</p>
-                          <p className="text-5xl leading-relaxed text-white/90 leading-snug font-light">
+                          <p className="text-3xl lt-1440:text-2xl leading-relaxed text-white/90 leading-snug font-light">
                             {item.text}
                           </p>
                         </div>
 
                         <div className="mt-6">
                           <div
-                            className="text-white text-6xl"
+                            className="text-white text-5xl lt-1440:text-4xl"
                             style={{
                               fontFamily: "'Bastliga One', 'Dancing Script', cursive",
                             }}

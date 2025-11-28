@@ -244,7 +244,7 @@ const Events = () => {
 
                     {/* Call to Action */}
                     <div 
-                        onClick={() => navigate('/calendar')}
+                        onClick={() => navigate('/events')}
                         className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'
                     >
                         See All Events
@@ -264,7 +264,7 @@ const Events = () => {
                     </p>
                 </div>
                 <div 
-                    onClick={() => navigate('/calendar')}
+                    onClick={() => navigate('/events')}
                     className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'
                 >
                     See All Events

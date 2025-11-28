@@ -19,7 +19,7 @@ export default function BlogIndex() {
       </div>
 
       {/* Hero Section with Pixel Art Style */}
-      <div className="relative overflow-hidden bg-black py-20 lt-1024:py-16 lt-768:py-12">
+      <div className="relative overflow-hidden bg-black pt-24 pb-20 lt-1024:pt-20 lt-1024:pb-16 lt-768:pt-16 lt-768:pb-12">
         <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 via-black to-black"></div>
         
         {/* Pixel Text Background */}
@@ -30,7 +30,7 @@ export default function BlogIndex() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 lt-1024:px-4 text-center">
-          <span className="inline-block bg-red-500 px-4 py-2 rounded-lg text-sm font-bold text-white mb-6 transform -rotate-3 animate-pulse">
+          <span className="inline-block bg-red-500 px-4 py-2 rounded-lg text-sm font-bold text-white my-6 transform -rotate-3 animate-pulse">
             Latest Updates
           </span>
           <h1 className="text-6xl lt-1440:text-5xl lt-1024:text-4xl lt-768:text-3xl font-bold text-white mb-6 leading-tight">

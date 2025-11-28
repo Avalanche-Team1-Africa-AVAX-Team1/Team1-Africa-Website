@@ -1,0 +1,145 @@
+{
+    "hero": {
+        "headline": "Team1 Africa — Regional Strength, Continental Reach",
+        "subhead": "Uniting Nigeria, Ghana, South Africa, Tanzania, Kenya, and Uganda to build Africa's Web3 future on Avalanche.",
+        "microCTA": {
+            "primary": "Explore Regional Teams",
+            "secondary": "Join the Movement"
+        }
+    },
+    "intro": {
+        "title": "About Team1 Africa",
+        "content": "Team1 Africa represents the collective power of six regional teams working together to advance blockchain adoption across the continent. We combine local expertise with continental vision, creating opportunities for developers, entrepreneurs, and communities to thrive in the Avalanche ecosystem."
+    },
+    "regions": [
+        {
+            "name": "Nigeria",
+            "focus": "Content creation, strategic partnerships, and ecosystem development",
+            "description": "Leading Africa's largest tech ecosystem with comprehensive developer programs and content initiatives."
+        },
+        {
+            "name": "Ghana",
+            "focus": "Education, community building, and grassroots adoption",
+            "description": "Driving Web3 education through workshops, hackathons, and university partnerships."
+        },
+        {
+            "name": "South Africa",
+            "focus": "Enterprise adoption, regulatory engagement, and innovation hubs",
+            "description": "Bridging traditional finance with DeFi through strategic enterprise partnerships."
+        },
+        {
+            "name": "Tanzania",
+            "focus": "Financial inclusion and mobile-first solutions",
+            "description": "Building blockchain solutions for unbanked populations through mobile technology."
+        },
+        {
+            "name": "Kenya",
+            "focus": "Community growth, product development, and fintech innovation",
+            "description": "Leveraging Kenya's mobile money leadership to advance blockchain payments."
+        },
+        {
+            "name": "Uganda",
+            "focus": "Youth empowerment, developer training, and social impact",
+            "description": "Empowering the next generation of African developers through comprehensive training programs."
+        }
+    ],
+    "collaboration": {
+        "title": "How We Work Together",
+        "methods": [
+            "Shared playbooks and best practices across all regional teams",
+            "Monthly cross-regional syncs to align strategy and share learnings",
+            "Collaborative projects that leverage strengths from multiple regions"
+        ]
+    },
+    "regionalLeadRole": {
+        "title": "Regional Lead Responsibilities",
+        "description": "Regional Leads serve as the primary connection between their local ecosystems and the global Team1 network. They are responsible for executing regional strategy, building local communities, and representing their region's voice in continental planning.",
+        "keyResponsibilities": [
+            "Execute localized go-to-market strategies aligned with continental goals",
+            "Build, manage, and grow regional contributor teams",
+            "Track and report key performance indicators (events, developers, projects)",
+            "Identify opportunities for cross-regional collaboration",
+            "Maintain strong relationships with local ecosystem partners"
+        ],
+        "deliverables": [
+            "Monthly community events and developer workshops",
+            "Quarterly hackathons or major activations",
+            "Regular content creation (blogs, videos, social media)",
+            "Partnership agreements with local organizations",
+            "Monthly progress reports and performance metrics"
+        ]
+    },
+    "contributorTemplate": {
+        "title": "Core Team & Contributor Structure",
+        "description": "Contributors are the engine of each regional team, bringing specialized skills to execute programs and engage communities.",
+        "roles": [
+            {
+                "title": "Developer Advocate",
+                "specialization": "Technical content, workshops, code examples",
+                "bio": "Empowers developers through hands-on training and technical resources."
+            },
+            {
+                "title": "Community Manager",
+                "specialization": "Community engagement, event coordination, social media",
+                "bio": "Builds and nurtures vibrant Web3 communities across the region."
+            },
+            {
+                "title": "Content Creator",
+                "specialization": "Video, articles, social content, storytelling",
+                "bio": "Crafts compelling narratives that make Web3 accessible and exciting."
+            },
+            {
+                "title": "Partnership Lead",
+                "specialization": "Business development, ecosystem partnerships, sponsorships",
+                "bio": "Forges strategic relationships to expand ecosystem reach and impact."
+            },
+            {
+                "title": "Designer",
+                "specialization": "Brand design, UI/UX, marketing materials",
+                "bio": "Creates visual experiences that bring the Avalanche brand to life."
+            }
+        ]
+    },
+    "teamDataSchema": {
+        "description": "JSON schema for team member data consumed by front-end components",
+        "example": {
+            "id": "tm-africa-ng-001",
+            "name": "Adewale Ogunlesi",
+            "role": "Regional Lead",
+            "region": "Nigeria",
+            "headshotUrl": "/assets/team/adewale-ogunlesi.jpg",
+            "headshotAlt": "Adewale Ogunlesi, Team1 Africa Nigeria Regional Lead",
+            "bio": "Blockchain advocate with 5 years of experience building developer communities across West Africa.",
+            "location": "Lagos, Nigeria",
+            "socials": [
+                {
+                    "platform": "twitter",
+                    "url": "https://twitter.com/adewale_avax",
+                    "handle": "@adewale_avax"
+                },
+                {
+                    "platform": "linkedin",
+                    "url": "https://linkedin.com/in/adewale-ogunlesi",
+                    "handle": "adewale-ogunlesi"
+                }
+            ],
+            "specialties": [
+                "Developer Relations",
+                "Community Building",
+                "Content Strategy"
+            ]
+        },
+        "fields": {
+            "id": "Unique identifier (string)",
+            "name": "Full name (string)",
+            "role": "Job title or role (string)",
+            "region": "Regional team (Nigeria, Ghana, South Africa, Tanzania, Kenya, Uganda)",
+            "headshotUrl": "Path to profile photo (string)",
+            "headshotAlt": "Descriptive alt text for accessibility (string)",
+            "bio": "One-line bio (80-120 characters, string)",
+            "location": "City, Country (string)",
+            "socials": "Array of social links with platform, url, and handle",
+            "specialties": "Array of expertise areas (max 3)"
+        }
+    }
+}
