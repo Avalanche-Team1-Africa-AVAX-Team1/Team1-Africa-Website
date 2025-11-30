@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 // import logo from '../assets/logo.png';
 import arrow from '../assets/arrow.svg';
@@ -6,21 +6,13 @@ import arrowUp from '../assets/arrow-up.svg';
 import logo from '../assets/avaxteam.svg';
 import discordIcon from '../assets/Discord.svg';
 import telegramIcon from '../assets/telegram.svg';
-import { QRCodeSVG } from 'qrcode.react';
-
-type SocialPlatform = 'whatsapp' | 'discord' | 'telegram';
 
 const Navbar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
-    const [selectedPlatform, setSelectedPlatform] = useState<SocialPlatform>('whatsapp');
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
 
     const location = useLocation();
-    const popupRef = useRef<HTMLDivElement>(null);
-    const buttonRef = useRef<HTMLButtonElement>(null);
-    const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // Scroll detection for auto-hide navbar
     useEffect(() => {
@@ -85,67 +77,11 @@ const Navbar = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, [sidebarOpen]);
 
-    const handleMouseEnter = () => {
-        if (hoverTimeoutRef.current) {
-            clearTimeout(hoverTimeoutRef.current);
-            hoverTimeoutRef.current = null;
-        }
-        setShowWhatsAppPopup(true);
-    };
-
-    const handleMouseLeave = () => {
-        // Add a small delay before closing to allow mouse to move to popup
-        hoverTimeoutRef.current = setTimeout(() => {
-            setShowWhatsAppPopup(false);
-        }, 300); // 300ms delay
-    };
-
-
     // Replace with your actual social media links
     const whatsappNumber = "1234567890"; // Update this with your WhatsApp number
     const whatsappUrl = `https://wa.me/${whatsappNumber}`;
     const discordUrl = "https://discord.gg/your-invite-code"; // Update with your Discord invite
     const telegramUrl = "https://t.me/your-telegram-username"; // Update with your Telegram username
-
-    const getPlatformUrl = (platform: SocialPlatform): string => {
-        switch (platform) {
-            case 'whatsapp':
-                return whatsappUrl;
-            case 'discord':
-                return discordUrl;
-            case 'telegram':
-                return telegramUrl;
-            default:
-                return whatsappUrl;
-        }
-    };
-
-    const getPlatformName = (platform: SocialPlatform): string => {
-        switch (platform) {
-            case 'whatsapp':
-                return 'whatsapp us';
-            case 'discord':
-                return 'join discord';
-            case 'telegram':
-                return 'join telegram';
-            default:
-                return 'whatsapp us';
-        }
-    };
-
-
-    const getPlatformBackground = (platform: SocialPlatform): string => {
-        switch (platform) {
-            case 'whatsapp':
-                return 'bg-green-50'; // Light green
-            case 'discord':
-                return 'bg-purple-50'; // Light purple
-            case 'telegram':
-                return 'bg-blue-50'; // Light blue
-            default:
-                return 'bg-green-50';
-        }
-    };
 
     return (
         <>
