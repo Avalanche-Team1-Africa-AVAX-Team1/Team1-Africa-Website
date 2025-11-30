@@ -3,7 +3,6 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import type { Article } from '../types/blog'
 import { findArticleBySlug, getRelatedArticles } from '../data/articles'
 import { setPageSeo } from '../lib/seo'
-import Navbar from '../components/navbar'
 import Footer from '../components/footer'
 
 function formatDate(value: string | Date) {
@@ -103,9 +102,6 @@ export default function BlogArticle() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-        <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
-          <Navbar />
-        </div>
         <main className="px-4 md:px-8 lg:px-16 py-8 md:py-12">
           <Skeleton />
         </main>
@@ -116,9 +112,6 @@ export default function BlogArticle() {
   if (error || !article) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-        <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
-          <Navbar />
-        </div>
         <main className="px-4 md:px-8 lg:px-16 py-16 text-center">
           <p className="text-gray-600 text-xl mb-6">{error ?? 'Something went wrong.'}</p>
           <Link className="inline-block rounded-full bg-gradient-to-r from-red-500 to-red-600 px-6 py-3 text-white font-bold hover:shadow-lg transition-all" to="/blog">← Back to Blog</Link>
@@ -130,11 +123,6 @@ export default function BlogArticle() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Navbar */}
-      <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
-        <Navbar />
-      </div>
-
       <article className="px-4 md:px-8 lg:px-16 py-8">
         <div className="mx-auto w-full max-w-6xl">
           {/* Back Button */}

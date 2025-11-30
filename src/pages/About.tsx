@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import TeamGrid from '../components/TeamGrid';
 import LetsBuildSection from '../components/LetsBuildSection';
@@ -13,9 +12,6 @@ const About = () => {
     return (
         <div className="bg-black min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none">
             <CustomCursor />
-
-            {/* Navbar - now self-contained with sticky behavior */}
-            <Navbar />
 
             {/* Hero Section - Video Mask Logo */}
             <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">

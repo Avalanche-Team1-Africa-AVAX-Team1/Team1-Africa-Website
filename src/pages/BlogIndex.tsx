@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { articles } from '../data/articles'
 import event1Img from '../assets/event1-img.png'
-import Navbar from '../components/navbar'
 import Footer from '../components/footer'
 
 export default function BlogIndex() {
@@ -13,10 +12,6 @@ export default function BlogIndex() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Navbar */}
-      <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
-        <Navbar />
-      </div>
 
       {/* Hero Section with Pixel Art Style */}
       <div className="relative overflow-hidden bg-black pt-24 pb-20 lt-1024:pt-20 lt-1024:pb-16 lt-768:pt-16 lt-768:pb-12">

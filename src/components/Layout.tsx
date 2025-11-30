@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './navbar';
-import Footer from './footer';
 import { useState, useEffect } from 'react';
 import Preloader from './Preloader';
 
@@ -33,17 +32,14 @@ const Layout = () => {
 
             {showContent && (
                 <>
-                    <main className="relative z-10 bg-white shadow-2xl pb-20 min-h-screen">
-                        {/* Navbar with slightly wider max-width */}
-                        <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
-                            <Navbar />
-                        </div>
+                    {/* Navbar with slightly wider max-width */}
+                    <div className="mx-auto w-full max-w-site-nav px-2 md:px-8 relative z-50">
+                        <Navbar />
+                    </div>
 
+                    <main className="relative z-10 min-h-screen">
                         <Outlet />
                     </main>
-
-                    {/* Footer - Fixed at bottom for parallax reveal */}
-                    <Footer />
                 </>
             )}
         </>
