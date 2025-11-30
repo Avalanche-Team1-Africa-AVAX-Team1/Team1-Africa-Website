@@ -236,7 +236,7 @@ const FeaturedGames: React.FC = () => {
         <div className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
           {/* Fixed Details Card - Left Side (Desktop Only) */}
           <div className="relative w-[30%] lt-1024:hidden h-full bg-black rounded-l-2xl p-4 lg:p-8 xl:p-10 2xl:p-12 flex flex-col justify-between z-10 overflow-hidden">
-            <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+            <div className={`transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
               <h2 className="text-white text-2xl lg:text-4xl xl:text-5xl font-bold mb-3 lg:mb-5 xl:mb-6 leading-tight">
                 {games[currentGameIndex].title}
               </h2>
@@ -251,7 +251,7 @@ const FeaturedGames: React.FC = () => {
               </button>
             </div>
 
-            <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+            <div className={`transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
               <div className="mb-3 lg:mb-5 xl:mb-6">
                 <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-2 lg:mb-3">Platforms</h3>
                 <div className="flex gap-1.5 lg:gap-3 flex-wrap">
@@ -330,8 +330,8 @@ const FeaturedGames: React.FC = () => {
                 zIndex: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 10 : 1,
                 width: '60%',
                 left: '0',
-                opacity: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 1 : 0,
-                transition: 'transform 500ms, opacity 500ms'
+                opacity: 1,
+                transition: 'transform 500ms'
               }}
             >
               <img
@@ -356,7 +356,7 @@ const FeaturedGames: React.FC = () => {
               if (cardPosition === -1) {
                 translateX = 'translateX(-100%)';
                 zIndex = 0;
-                opacity = 0;
+                opacity = 1;
                 width = '60%';
               } else if (cardPosition === 0) {
                 translateX = 'translateX(0%)';
@@ -373,7 +373,7 @@ const FeaturedGames: React.FC = () => {
               } else if (cardPosition === 2) {
                 translateX = 'translateX(200%)';
                 zIndex = 0;
-                opacity = 0;
+                opacity = 1;
                 width = '60%';
               }
 
@@ -387,7 +387,7 @@ const FeaturedGames: React.FC = () => {
                     width: width,
                     left: left,
                     opacity: opacity,
-                    transition: (cardPosition === 0 || cardPosition === 1) ? 'transform 500ms' : 'transform 500ms, opacity 500ms'
+                    transition: 'transform 500ms'
                   }}
                 >
                   <img
