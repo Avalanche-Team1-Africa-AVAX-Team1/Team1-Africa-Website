@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import type { TeamMember } from '../data/team-members';
 import { FaTwitter, FaLinkedin, FaGithub, FaTelegram } from 'react-icons/fa';
 
@@ -11,18 +11,25 @@ interface TeamGridProps {
 
 const TeamGrid = ({ members }: TeamGridProps) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const containerRef = useRef<HTMLDivElement>(null);
+
+    // Use motion values for smooth cursor tracking
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    // Apply spring physics for smooth following
+    const smoothMouseX = useSpring(mouseX, { stiffness: 200, damping: 20 });
+    const smoothMouseY = useSpring(mouseY, { stiffness: 200, damping: 20 });
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (containerRef.current) {
             const rect = containerRef.current.getBoundingClientRect();
-            setMousePosition({
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top,
-            });
+            mouseX.set(e.clientX - rect.left);
+            mouseY.set(e.clientY - rect.top);
         }
     };
+
+
 
     return (
         <section
@@ -55,27 +62,41 @@ const TeamGrid = ({ members }: TeamGridProps) => {
 
             {/* Floating Cursor Image (The "Sticker" Effect for Team) */}
             <motion.div
-                className="fixed top-0 left-0 w-64 h-80 pointer-events-none z-20 hidden md:block rounded-xl overflow-hidden border-2 border-white/20"
+                className="absolute top-0 left-0 w-48 h-64 pointer-events-none z-50 hidden md:block rounded-xl overflow-hidden shadow-2xl"
                 style={{
-                    x: mousePosition.x,
-                    y: mousePosition.y,
-                    translateX: "-50%",
-                    translateY: "-50%",
+                    x: smoothMouseX,
+                    y: smoothMouseY,
+                    translateX: "20px",
+                    translateY: "20px",
                 }}
                 animate={{
                     opacity: activeIndex !== null ? 1 : 0,
-                    scale: activeIndex !== null ? 1 : 0.5,
-                    rotate: activeIndex !== null ? Math.random() * 10 - 5 : 0,
+                    scale: activeIndex !== null ? 1 : 0.8,
                 }}
-                transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+                transition={{
+                    opacity: { duration: 0.15 },
+                    scale: { duration: 0.2, ease: "easeOut" }
+                }}
             >
-                {activeIndex !== null && (
-                    <img
-                        src={members[activeIndex].headshotUrl}
-                        alt=""
-                        className="w-full h-full object-cover"
-                    />
-                )}
+                <AnimatePresence mode="wait">
+                    {activeIndex !== null && (
+                        <motion.div
+                            key={members[activeIndex].id}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.15 }}
+                            className="relative w-full h-full"
+                        >
+                            <img
+                                src={members[activeIndex].headshotUrl}
+                                alt=""
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 border-4 border-white/30 rounded-xl pointer-events-none" />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </motion.div>
 
             <div className="relative z-10 max-w-[90vw] mx-auto">

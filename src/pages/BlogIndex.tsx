@@ -10,7 +10,7 @@ export default function BlogIndex() {
   const visible = expanded ? articles : articles.slice(0, 6)
   const hasMore = articles.length > 6
   const featuredArticle = articles[0]
-  
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Navbar */}
@@ -21,7 +21,7 @@ export default function BlogIndex() {
       {/* Hero Section with Pixel Art Style */}
       <div className="relative overflow-hidden bg-black pt-24 pb-20 lt-1024:pt-20 lt-1024:pb-16 lt-768:pt-16 lt-768:pb-12">
         <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 via-black to-black"></div>
-        
+
         {/* Pixel Text Background */}
         <div className="absolute inset-0 flex items-center justify-center opacity-10 select-none pointer-events-none">
           <h1 className="text-[200px] lt-1920:text-[150px] lt-1440:text-[120px] lt-1024:text-[80px] font-bold tracking-tight" style={{ fontFamily: "'Press Start 2P'" }}>
@@ -49,14 +49,14 @@ export default function BlogIndex() {
             <div className="h-1 w-12 bg-red-500"></div>
             <h2 className="text-2xl lt-1024:text-xl font-bold text-gray-900">Featured Story</h2>
           </div>
-          
+
           <Link to={`/blog/${featuredArticle.slug}`} className="group block">
             <div className="relative overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-black/5 transition-all duration-300 group-hover:shadow-3xl group-hover:-translate-y-2">
               <div className="grid lg:grid-cols-2 gap-0">
                 <div className="relative h-[400px] lt-1024:h-[300px] overflow-hidden">
-                  <img 
-                    src={event1Img || featuredArticle.featuredImage.url} 
-                    alt={featuredArticle.featuredImage.alt} 
+                  <img
+                    src={event1Img || featuredArticle.featuredImage.url}
+                    alt={featuredArticle.featuredImage.alt}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -107,10 +107,10 @@ export default function BlogIndex() {
                 <Link key={article.slug} to={`/blog/${article.slug}`} className="group">
                   <article className="h-full overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2 group-hover:ring-red-500/20">
                     <div className="relative h-56 overflow-hidden">
-                      <img 
-                        src={imgSrc} 
-                        alt={article.featuredImage.alt} 
-                        loading="lazy" 
+                      <img
+                        src={imgSrc}
+                        alt={article.featuredImage.alt}
+                        loading="lazy"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
@@ -141,8 +141,8 @@ export default function BlogIndex() {
         {/* View More Button */}
         {hasMore && (
           <div className="flex justify-center">
-            <button 
-              onClick={() => setExpanded(v => !v)} 
+            <button
+              onClick={() => setExpanded(v => !v)}
               className="group relative px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 text-white font-bold rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
             >
               <span className="relative z-10">{expanded ? '← View Less' : 'View More →'}</span>

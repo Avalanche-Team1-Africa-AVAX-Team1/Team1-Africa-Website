@@ -139,8 +139,8 @@ export default function BlogArticle() {
         <div className="mx-auto w-full max-w-6xl">
           {/* Back Button */}
           <div className="mb-6">
-            <button 
-              onClick={() => navigate(-1)} 
+            <button
+              onClick={() => navigate(-1)}
               className="group inline-flex items-center gap-2 text-gray-600 hover:text-red-500 transition-colors font-medium"
             >
               <svg className="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,56 +152,56 @@ export default function BlogArticle() {
 
           {/* Title + Meta */}
           <div className="max-w-4xl">
-          <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl">{article.title}</h1>
-          <MetaRow article={article} />
-        </div>
-        
-        {/* Hero */}
-        <div className="relative overflow-hidden rounded-2xl bg-gray-100 mt-3">
-          <img
-            src={article.featuredImage.url}
-            alt={article.featuredImage.alt}
-            loading="eager"
-            className="h-[320px] w-full object-cover md:h-[420px]"
-          />
-          <div className="absolute left-4 top-4">
-            <CategoryBadge label={article.category.name} color={article.category.color} />
+            <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl">{article.title}</h1>
+            <MetaRow article={article} />
           </div>
-        </div>
 
-        {/* Content */}
-        <div className="mt-8 max-w-3xl text-gray-800">
-          <div
-            className="prose prose-neutral max-w-none prose-headings:font-semibold prose-a:text-red-600"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
-
-          <div className="mt-10 pt-8 border-t border-gray-200">
-            <Link to="/blog" className="inline-flex items-center gap-2 text-red-600 font-medium hover:gap-3 transition-all">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to All Articles
-            </Link>
+          {/* Hero */}
+          <div className="relative overflow-hidden rounded-2xl bg-gray-100 mt-3">
+            <img
+              src={article.featuredImage.url}
+              alt={article.featuredImage.alt}
+              loading="eager"
+              className="h-[320px] w-full object-cover md:h-[420px]"
+            />
+            <div className="absolute left-4 top-4">
+              <CategoryBadge label={article.category.name} color={article.category.color} />
+            </div>
           </div>
+
+          {/* Content */}
+          <div className="mt-8 max-w-3xl text-gray-800">
+            <div
+              className="prose prose-neutral max-w-none prose-headings:font-semibold prose-a:text-red-600"
+              dangerouslySetInnerHTML={{ __html: article.content }}
+            />
+
+            <div className="mt-10 pt-8 border-t border-gray-200">
+              <Link to="/blog" className="inline-flex items-center gap-2 text-red-600 font-medium hover:gap-3 transition-all">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to All Articles
+              </Link>
+            </div>
+          </div>
+
+          {/* Related */}
+          <section aria-label="Related articles" className="mt-16 pb-16">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-900">Related Articles</h2>
+              <Link to="/blog" className="text-sm text-red-600 font-medium hover:underline">View all →</Link>
+            </div>
+            <div className="no-scrollbar flex gap-6 overflow-x-auto pb-2">
+              {related.map(a => (
+                <RelatedCard key={a.slug} a={a} />
+              ))}
+            </div>
+          </section>
         </div>
-
-        {/* Related */}
-        <section aria-label="Related articles" className="mt-16 pb-16">
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-900">Related Articles</h2>
-            <Link to="/blog" className="text-sm text-red-600 font-medium hover:underline">View all →</Link>
-          </div>
-          <div className="no-scrollbar flex gap-6 overflow-x-auto pb-2">
-            {related.map(a => (
-              <RelatedCard key={a.slug} a={a} />
-            ))}
-          </div>
-        </section>
-      </div>
-    </article>
-    <Footer />
-  </div>
+      </article>
+      <Footer />
+    </div>
   )
 }
 
