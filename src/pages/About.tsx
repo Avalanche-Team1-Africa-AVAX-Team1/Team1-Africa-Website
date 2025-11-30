@@ -13,7 +13,7 @@ const About = () => {
     const containerRef = useRef(null);
 
     return (
-        <div ref={containerRef} className="bg-black min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none">
+        <div className="bg-black min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none">
             <CustomCursor />
 
             {/* Navbar - now self-contained with sticky behavior */}
