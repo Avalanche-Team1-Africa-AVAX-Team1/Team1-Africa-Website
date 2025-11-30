@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import type { TeamMember } from '../data/team-members';
 import { FaTwitter, FaLinkedin, FaGithub, FaTelegram } from 'react-icons/fa';
 
@@ -11,30 +11,32 @@ interface TeamGridProps {
 
 const TeamGrid = ({ members }: TeamGridProps) => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const containerRef = useRef<HTMLDivElement>(null);
     const lastMousePos = useRef({ x: 0, y: 0 });
+
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const smoothMouseX = useSpring(mouseX, { stiffness: 150, damping: 15, mass: 0.1 });
+    const smoothMouseY = useSpring(mouseY, { stiffness: 150, damping: 15, mass: 0.1 });
 
     useEffect(() => {
         const handleUpdate = () => {
             const { x, y } = lastMousePos.current;
 
-            // Check what's under the cursor
-            const element = document.elementFromPoint(x, y);
-            const memberRow = element?.closest('[data-member-index]');
+            if (containerRef.current) {
+                const rect = containerRef.current.getBoundingClientRect();
+                mouseX.set(x - rect.left);
+                mouseY.set(y - rect.top);
 
-            if (memberRow) {
-                const index = parseInt(memberRow.getAttribute('data-member-index') || '-1');
-                setActiveIndex(index);
-                setMousePosition({ x, y });
-            } else {
-                setActiveIndex(null);
-                // Still update position if inside container to avoid jumps when entering items
-                if (containerRef.current) {
-                    const rect = containerRef.current.getBoundingClientRect();
-                    if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-                        setMousePosition({ x, y });
-                    }
+                const element = document.elementFromPoint(x, y);
+                const memberRow = element?.closest('[data-member-index]');
+
+                if (memberRow) {
+                    const index = parseInt(memberRow.getAttribute('data-member-index') || '-1');
+                    setActiveIndex(index);
+                } else {
+                    setActiveIndex(null);
                 }
             }
         };
@@ -55,7 +57,7 @@ const TeamGrid = ({ members }: TeamGridProps) => {
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('scroll', onScroll);
         };
-    }, []);
+    }, [mouseX, mouseY]);
 
     return (
         <section
@@ -87,27 +89,41 @@ const TeamGrid = ({ members }: TeamGridProps) => {
 
             {/* Floating Cursor Image (The "Sticker" Effect for Team) */}
             <motion.div
-                className="fixed top-0 left-0 w-64 h-80 pointer-events-none z-20 hidden md:block rounded-xl overflow-hidden border-2 border-white/20"
+                className="absolute top-0 left-0 w-48 h-64 pointer-events-none z-50 hidden md:block rounded-xl overflow-hidden shadow-2xl"
                 style={{
-                    x: mousePosition.x,
-                    y: mousePosition.y,
-                    translateX: "-50%",
-                    translateY: "-50%",
+                    x: smoothMouseX,
+                    y: smoothMouseY,
+                    translateX: "20px",
+                    translateY: "20px",
                 }}
                 animate={{
                     opacity: activeIndex !== null ? 1 : 0,
-                    scale: activeIndex !== null ? 1 : 0.5,
-                    rotate: activeIndex !== null ? Math.random() * 10 - 5 : 0,
+                    scale: activeIndex !== null ? 1 : 0.8,
                 }}
-                transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+                transition={{
+                    opacity: { duration: 0.15 },
+                    scale: { duration: 0.2, ease: "easeOut" }
+                }}
             >
-                {activeIndex !== null && (
-                    <img
-                        src={members[activeIndex].headshotUrl}
-                        alt=""
-                        className="w-full h-full object-cover"
-                    />
-                )}
+                <AnimatePresence mode="wait">
+                    {activeIndex !== null && (
+                        <motion.div
+                            key={members[activeIndex].id}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.15 }}
+                            className="relative w-full h-full"
+                        >
+                            <img
+                                src={members[activeIndex].headshotUrl}
+                                alt=""
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 border-4 border-white/30 rounded-xl pointer-events-none" />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </motion.div>
 
             <div className="relative z-10 max-w-[90vw] mx-auto">

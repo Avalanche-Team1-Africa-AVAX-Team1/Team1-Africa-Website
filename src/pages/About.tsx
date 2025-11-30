@@ -1,8 +1,7 @@
-
 import { motion } from 'framer-motion';
-import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import TeamGrid from '../components/TeamGrid';
+import LetsBuildSection from '../components/LetsBuildSection';
 import { team1AfricaMembers } from '../data/team-members';
 import CustomCursor from '../components/CustomCursor';
 import videoSrc from '../assets/videos/video.mp4';
@@ -10,16 +9,12 @@ import { LogoMask, LogoOutline } from '../components/LogoMask';
 
 const About = () => {
 
-
     return (
         <div className="bg-black min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none">
             <CustomCursor />
 
-            {/* Navbar - now self-contained with sticky behavior */}
-            <Navbar />
-
             {/* Hero Section - Video Mask Logo */}
-            <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-yellow-500">
+            <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
                 {/* 1. The Video Layer (Bottom) */}
                 <div className="absolute inset-0 z-0">
                     <video
@@ -111,21 +106,8 @@ const About = () => {
             {/* Team Section - Kinetic List */}
             <TeamGrid members={team1AfricaMembers} />
 
-            {/* Footer CTA */}
-            <section className="h-[70vh] flex items-center justify-center bg-white text-black relative z-10">
-                <div className="text-center px-4">
-                    <h2 className="text-[12vw] font-black leading-none mb-8 hover:italic transition-all duration-300 cursor-pointer" data-cursor="Let's Talk">
-                        LET'S BUILD
-                    </h2>
-                    <a
-                        href="mailto:hi@team1africa.com"
-                        className="inline-block text-xl md:text-2xl font-bold border-b-4 border-black pb-1 hover:text-red-600 hover:border-red-600 transition-colors"
-                        data-cursor="Email Us"
-                    >
-                        hi@team1africa.com
-                    </a>
-                </div>
-            </section>
+            {/* Let's Build - Sophisticated Section with Polaroids and Advanced Animations */}
+            <LetsBuildSection />
 
             <Footer />
         </div>

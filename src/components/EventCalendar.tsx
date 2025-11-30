@@ -1,8 +1,7 @@
- import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import type { Event } from '../types/event';
 import { getEventsForDate } from '../data/events';
 import EventDetailPanel from './EventDetailPanel';
-import Navbar from './navbar';
 
 interface EventCalendarProps {
   initialDate?: Date;
@@ -126,12 +125,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
-      {/* Navbar */}
-      <div className="mx-auto w-full max-w-[2000px] px-2 md:px-8 py-6 md:py-8">
-        <Navbar />
-      </div>
-
-      <div className="w-full max-w-[2000px] mx-auto pt-8 md:pt-12 pb-8 md:pb-12 px-2 sm:px-4 md:px-8">
+      <div className="w-full max-w-[2000px] mx-auto pt-24 md:pt-32 pb-8 md:pb-12 px-2 sm:px-4 md:px-8">
         {/* Page Title */}
         <div className="mb-6">
           <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-2" style={{ fontFamily: '"Impact", "Anton", "Bebas Neue", sans-serif', letterSpacing: '0.02em' }}>
