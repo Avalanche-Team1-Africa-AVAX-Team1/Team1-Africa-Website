@@ -27,6 +27,7 @@ const FeaturedGames: React.FC = () => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
   const [cardPositions, setCardPositions] = useState<number[]>([0, 1, 2]);
   const [visibleGames, setVisibleGames] = useState(2);
+  const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set());
 
   const games: Game[] = React.useMemo(() => [
     {
@@ -79,6 +80,17 @@ const FeaturedGames: React.FC = () => {
     }
     
   ], []);
+
+  // Preload all images
+  React.useEffect(() => {
+    games.forEach((game, index) => {
+      const img = new Image();
+      img.onload = () => {
+        setImagesLoaded(prev => new Set(prev).add(index));
+      };
+      img.src = game.image;
+    });
+  }, [games]);
 
   const platformIcons = {
     "Windows": windowsIcon,
@@ -303,7 +315,7 @@ const FeaturedGames: React.FC = () => {
         </div>
 
         {/* Sliding Image Cards Container */}
-        <div className="relative flex-1 h-full overflow-hidden lt-1024:rounded-2xl">
+        <div className="relative flex-1 h-full overflow-hidden lt-1024:rounded-2xl bg-black">
           {[0, 1, 2].map((positionIndex) => {
             const gameIndex = getGameAtPosition(positionIndex);
             const game = games[gameIndex];
@@ -342,7 +354,7 @@ const FeaturedGames: React.FC = () => {
             return (
               <div
                 key={`card-${gameIndex}-${positionIndex}`}
-                className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
+                className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden bg-black"
                 style={{
                   transform: translateX,
                   zIndex: zIndex,
@@ -356,6 +368,7 @@ const FeaturedGames: React.FC = () => {
                   src={game.image} 
                   alt={game.title} 
                   className="w-full h-full object-cover" 
+                  style={{ backgroundColor: 'black' }}
                 />
                 
                 {cardPosition === 1 && (
@@ -366,11 +379,12 @@ const FeaturedGames: React.FC = () => {
           })}
 
           {/* Mobile: Show current card */}
-          <div className="hidden lt-1024:block w-full h-full relative">
+          <div className="hidden lt-1024:block w-full h-full relative bg-black">
             <img 
               src={games[currentGameIndex].image} 
               alt={games[currentGameIndex].title} 
               className="w-full h-full object-cover" 
+              style={{ backgroundColor: 'black' }}
             />
             
             {!showDetails && (
