@@ -62,21 +62,24 @@ const activities = [
         description: "We organize intense, collaborative coding events where developers solve real-world problems and showcase their skills.",
         icon: FaCode,
         color: "text-blue-500",
-        bg: "bg-blue-950"
+        mainImage: community1,
+        polaroids: [ghana1, south1]
     },
     {
         title: "Gaming Events",
         description: "Connecting gamers through tournaments and community events, bridging the gap between Web2 and Web3 gaming.",
         icon: FaGamepad,
         color: "text-purple-500",
-        bg: "bg-purple-950"
+        mainImage: south1,
+        polaroids: [south2, community1]
     },
     {
         title: "Campus Outreaches",
         description: "Empowering the next generation of tech talent directly at universities and campuses across the continent.",
         icon: FaUniversity,
         color: "text-yellow-500",
-        bg: "bg-yellow-950"
+        mainImage: ghana1,
+        polaroids: [community1, south2]
     }
 ];
 
@@ -280,16 +283,43 @@ const LetsBuildSection = () => {
 
                     <div ref={horizontalWrapperRef} className="flex h-full w-[300vw]">
                         {activities.map((activity, index) => (
-                            <div key={index} className={`w-screen h-full flex items-center justify-center horizontal-item relative overflow-hidden ${activity.bg}`}>
-                                <div className="absolute inset-0 bg-black/40" /> {/* Overlay */}
-                                <div className="relative z-10 max-w-4xl px-8 text-center">
-                                    <div className={`text-9xl mb-12 ${activity.color} flex justify-center`}>
-                                        <activity.icon />
+                            <div key={index} className="w-screen h-full flex horizontal-item relative overflow-hidden bg-black">
+                                {/* LEFT: Full Image */}
+                                <div className="w-1/2 h-full relative">
+                                    <img
+                                        src={activity.mainImage}
+                                        alt={activity.title}
+                                        className="w-full h-full object-cover opacity-60"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black" />
+                                </div>
+
+                                {/* RIGHT: Content */}
+                                <div className="w-1/2 h-full flex flex-col justify-center px-24 relative z-10">
+
+                                    {/* Top: Mini Polaroids */}
+                                    <div className="flex gap-6 mb-16">
+                                        {activity.polaroids.map((img, i) => (
+                                            <div
+                                                key={i}
+                                                className={`relative w-40 aspect-[4/5] bg-white p-2 shadow-lg transform ${i % 2 === 0 ? '-rotate-6' : 'rotate-6'} hover:rotate-0 transition-transform duration-300`}
+                                            >
+                                                <img src={img} alt="Activity" className="w-full h-[85%] object-cover" />
+                                                <div className="h-[15%] bg-white" />
+                                            </div>
+                                        ))}
                                     </div>
-                                    <h3 className="text-7xl font-bold mb-8">{activity.title}</h3>
-                                    <p className="text-3xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-                                        {activity.description}
-                                    </p>
+
+                                    {/* Bottom: Text Content */}
+                                    <div>
+                                        <div className={`text-7xl mb-8 ${activity.color}`}>
+                                            <activity.icon />
+                                        </div>
+                                        <h3 className="text-6xl font-bold mb-6">{activity.title}</h3>
+                                        <p className="text-2xl text-gray-400 leading-relaxed max-w-2xl">
+                                            {activity.description}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         ))}
