@@ -61,32 +61,39 @@ const activities = [
         title: "Hackathons",
         description: "We organize intense, collaborative coding events where developers solve real-world problems and showcase their skills.",
         icon: FaCode,
-        color: "text-blue-500"
+        color: "text-blue-500",
+        bg: "bg-blue-950"
     },
     {
         title: "Gaming Events",
         description: "Connecting gamers through tournaments and community events, bridging the gap between Web2 and Web3 gaming.",
         icon: FaGamepad,
-        color: "text-purple-500"
+        color: "text-purple-500",
+        bg: "bg-purple-950"
     },
     {
         title: "Campus Outreaches",
         description: "Empowering the next generation of tech talent directly at universities and campuses across the continent.",
         icon: FaUniversity,
-        color: "text-yellow-500"
+        color: "text-yellow-500",
+        bg: "bg-yellow-950"
     }
 ];
 
 const LetsBuildSection = () => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const containerRef = useRef<HTMLDivElement>(null);
+    const mainRef = useRef<HTMLDivElement>(null);
+    const pinnedRef = useRef<HTMLDivElement>(null);
+    const horizontalContainerRef = useRef<HTMLDivElement>(null);
+    const horizontalWrapperRef = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
+            // 1. Pinned Slideshow (Who We Are)
             ScrollTrigger.create({
-                trigger: containerRef.current,
+                trigger: pinnedRef.current,
                 start: "top top",
-                end: "+=3000", // Scroll distance to scrub through
+                end: "+=3000",
                 pin: true,
                 scrub: 0.5,
                 onUpdate: (self) => {
@@ -99,18 +106,40 @@ const LetsBuildSection = () => {
                     setActiveIndex(index);
                 }
             });
-        }, containerRef);
+
+            // 2. Horizontal Scroll (What We Do)
+            // Only apply on desktop (lg breakpoint is 1024px)
+            if (window.innerWidth >= 1024) {
+                const sections = gsap.utils.toArray(".horizontal-item");
+                gsap.to(sections, {
+                    xPercent: -100 * (sections.length - 1),
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: horizontalContainerRef.current,
+                        pin: true,
+                        scrub: 1,
+                        end: "+=3000", // Adjust scroll length for speed
+                    }
+                });
+            }
+        }, mainRef);
         return () => ctx.revert();
     }, []);
 
     return (
-        <>
+        <div ref={mainRef}>
             {/* DESKTOP: Pinned Slideshow (Hidden on Mobile) */}
             <div className="hidden lg:block">
-                <section ref={containerRef} className="h-screen bg-white text-black overflow-hidden flex items-center relative">
-                    <div className="max-w-[95vw] mx-auto w-full grid grid-cols-2 gap-16 items-center">
+                <section ref={pinnedRef} className="h-screen bg-white text-black overflow-hidden flex flex-col justify-center relative">
+                    {/* Header for the Section */}
+                    <div className="absolute top-12 left-0 w-full text-center z-20">
+                        <h2 className="text-6xl font-black tracking-tight">Who We Are</h2>
+                        <div className="w-20 h-1 bg-black mx-auto mt-4" />
+                    </div>
 
-                        {/* LEFT: Polaroid Stack - BIGGER */}
+                    <div className="max-w-[95vw] mx-auto w-full grid grid-cols-2 gap-16 items-center mt-20">
+
+                        {/* LEFT: Polaroid Stack */}
                         <div className="flex items-center justify-center h-full">
                             <div className="relative w-full max-w-lg h-[600px]">
                                 <AnimatePresence mode="sync">
@@ -148,7 +177,7 @@ const LetsBuildSection = () => {
                                                 </div>
                                             </div>
 
-                                            {/* Tape Effect - Only show on active */}
+                                            {/* Tape Effect */}
                                             {activeIndex === index && (
                                                 <motion.div
                                                     initial={{ opacity: 0 }}
@@ -162,7 +191,7 @@ const LetsBuildSection = () => {
                             </div>
                         </div>
 
-                        {/* RIGHT: Content Slideshow - BIGGER */}
+                        {/* RIGHT: Content Slideshow */}
                         <div className="relative h-[500px] flex items-center">
                             <AnimatePresence mode="wait">
                                 <motion.div
@@ -215,6 +244,10 @@ const LetsBuildSection = () => {
 
             {/* MOBILE: Vertical Stack (Shown on Mobile) */}
             <div className="lg:hidden bg-white text-black py-20 px-6 space-y-32">
+                <div className="text-center mb-12">
+                    <h2 className="text-5xl font-black">Who We Are</h2>
+                    <div className="w-20 h-1 bg-black mx-auto mt-4" />
+                </div>
                 {profiles.map((profile) => (
                     <div key={profile.id} className="flex flex-col gap-10">
                         {/* Polaroid */}
@@ -237,85 +270,53 @@ const LetsBuildSection = () => {
                 ))}
             </div>
 
-            {/* WHAT WE DO SECTION */}
-            <section className="py-32 bg-black text-white relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-900 via-black to-black" />
+            {/* WHAT WE DO SECTION - HORIZONTAL SCROLL (Desktop) */}
+            <div className="hidden lg:block">
+                <section ref={horizontalContainerRef} className="h-screen overflow-hidden bg-black text-white relative">
+                    <div className="absolute top-12 left-12 z-20">
+                        <h2 className="text-6xl font-black">What We Do</h2>
+                        <div className="w-20 h-1 bg-red-600 mt-4" />
+                    </div>
 
-                <div className="max-w-7xl mx-auto px-6 relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-24"
-                    >
-                        <h2 className="text-5xl md:text-7xl font-black mb-6">What We Do</h2>
-                        <div className="w-24 h-1 bg-red-600 mx-auto mb-8" />
-                        <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                            We are building the infrastructure and community to power Africa's Web3 future through impactful initiatives.
-                        </p>
-                    </motion.div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+                    <div ref={horizontalWrapperRef} className="flex h-full w-[300vw]">
                         {activities.map((activity, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.2 }}
-                                className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors duration-300 group"
-                            >
-                                <div className={`text-5xl mb-6 ${activity.color} group-hover:scale-110 transition-transform duration-300`}>
-                                    <activity.icon />
+                            <div key={index} className={`w-screen h-full flex items-center justify-center horizontal-item relative overflow-hidden ${activity.bg}`}>
+                                <div className="absolute inset-0 bg-black/40" /> {/* Overlay */}
+                                <div className="relative z-10 max-w-4xl px-8 text-center">
+                                    <div className={`text-9xl mb-12 ${activity.color} flex justify-center`}>
+                                        <activity.icon />
+                                    </div>
+                                    <h3 className="text-7xl font-bold mb-8">{activity.title}</h3>
+                                    <p className="text-3xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
+                                        {activity.description}
+                                    </p>
                                 </div>
-                                <h3 className="text-2xl font-bold mb-4">{activity.title}</h3>
-                                <p className="text-gray-400 leading-relaxed">
-                                    {activity.description}
-                                </p>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
+                </section>
+            </div>
+
+            {/* WHAT WE DO SECTION - VERTICAL STACK (Mobile) */}
+            <div className="lg:hidden bg-black text-white py-24 px-6">
+                <div className="text-center mb-16">
+                    <h2 className="text-5xl font-black">What We Do</h2>
+                    <div className="w-20 h-1 bg-red-600 mx-auto mt-4" />
                 </div>
-            </section>
-
-            {/* CTA SECTION */}
-            <section className="py-32 bg-white text-center border-t border-black/5">
-                <div className="max-w-4xl mx-auto px-4">
-                    <motion.h3
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="text-4xl md:text-5xl font-black mb-6"
-                    >
-                        Join the <span className="text-red-600">Movement</span>
-                    </motion.h3>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 15 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.15 }}
-                        className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto"
-                    >
-                        Whether you're a developer, gamer, content creator, or designer—<br />
-                        there's a place for you in Team1 Africa.
-                    </motion.p>
-
-                    <motion.a
-                        href="mailto:hi@team1africa.com"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="inline-block px-12 py-5 bg-black text-white text-xl font-bold rounded-full hover:bg-red-600 transition-colors duration-300"
-                    >
-                        hi@team1africa.com
-                    </motion.a>
+                <div className="space-y-16">
+                    {activities.map((activity, index) => (
+                        <div key={index} className="bg-white/5 border border-white/10 p-8 rounded-2xl">
+                            <div className={`text-6xl mb-6 ${activity.color}`}>
+                                <activity.icon />
+                            </div>
+                            <h3 className="text-3xl font-bold mb-4">{activity.title}</h3>
+                            <p className="text-gray-400 text-lg leading-relaxed">
+                                {activity.description}
+                            </p>
+                        </div>
+                    ))}
                 </div>
-            </section>
+            </div>
 
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
@@ -324,7 +325,7 @@ const LetsBuildSection = () => {
                     font-family: 'Shadows Into Light', cursive;
                 }
             `}</style>
-        </>
+        </div>
     );
 };
 
