@@ -2,13 +2,17 @@ import { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FaGamepad, FaUniversity, FaCode } from 'react-icons/fa';
+import { FaGamepad, FaUniversity, FaCode, FaPlay } from 'react-icons/fa';
+import { IoClose } from 'react-icons/io5';
 
-// Import community images for polaroids
+// Import community images
 import community1 from '../assets/community.png';
 import ghana1 from '../assets/ghana1.JPG';
 import south1 from '../assets/south1.jpg';
 import south2 from '../assets/south2.jpg';
+
+// Import Video
+import mainVideo from '../assets/videos/video.mp4';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,32 +63,50 @@ const profiles: WhoWeNeed[] = [
 const activities = [
     {
         title: "Hackathons",
-        description: "We organize intense, collaborative coding events where developers solve real-world problems and showcase their skills.",
+        description: "Experience the adrenaline of our 48-hour coding marathons. We bring together the brightest minds across the continent to solve critical challenges using blockchain technology. Whether you're a seasoned pro or a first-time hacker, our events provide the perfect platform to launch your ideas, win prizes, and get scouted by top global protocols.",
         icon: FaCode,
         color: "text-blue-500",
         mainImage: community1,
-        polaroids: [ghana1, south1]
+        thumbnail: ghana1,
+        cta: "Join Next Hackathon"
     },
     {
         title: "Gaming Events",
-        description: "Connecting gamers through tournaments and community events, bridging the gap between Web2 and Web3 gaming.",
+        description: "Step into the arena of the future. We bridge the gap between traditional gaming and Web3, hosting high-energy esports tournaments and community game nights. Our events are more than just competition; they are a celebration of African gaming culture, offering players new ways to earn, compete, and connect with the global gaming economy.",
         icon: FaGamepad,
         color: "text-purple-500",
         mainImage: south1,
-        polaroids: [south2, community1]
+        thumbnail: south2,
+        cta: "View Tournaments"
     },
     {
         title: "Campus Outreaches",
-        description: "Empowering the next generation of tech talent directly at universities and campuses across the continent.",
+        description: "We are planting the seeds of the future directly on campuses. Our university outreach programs are designed to demystify Web3 and empower the next generation of tech leaders. Through hands-on workshops, seminars, and mentorship sessions, we provide students with the tools and knowledge they need to build a career in the digital economy.",
         icon: FaUniversity,
         color: "text-yellow-500",
         mainImage: ghana1,
-        polaroids: [community1, south2]
+        thumbnail: community1,
+        cta: "Partner With Us"
     }
 ];
 
+const VideoModal = ({ isOpen, onClose, videoSrc }: { isOpen: boolean; onClose: () => void; videoSrc: string }) => {
+    if (!isOpen) return null;
+    return (
+        <div className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm">
+            <button onClick={onClose} className="absolute top-8 right-8 text-white text-5xl hover:text-red-500 transition-colors">
+                <IoClose />
+            </button>
+            <div className="w-full max-w-6xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                <video src={videoSrc} controls autoPlay className="w-full h-full object-contain" />
+            </div>
+        </div>
+    );
+};
+
 const LetsBuildSection = () => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const [videoOpen, setVideoOpen] = useState(false);
     const mainRef = useRef<HTMLDivElement>(null);
     const pinnedRef = useRef<HTMLDivElement>(null);
     const horizontalContainerRef = useRef<HTMLDivElement>(null);
@@ -92,7 +114,7 @@ const LetsBuildSection = () => {
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            // 1. Pinned Slideshow (Who We Are)
+            // 1. Pinned Slideshow
             ScrollTrigger.create({
                 trigger: pinnedRef.current,
                 start: "top top",
@@ -102,16 +124,12 @@ const LetsBuildSection = () => {
                 onUpdate: (self) => {
                     const length = profiles.length;
                     const progress = self.progress;
-                    const index = Math.min(
-                        Math.floor(progress * length),
-                        length - 1
-                    );
+                    const index = Math.min(Math.floor(progress * length), length - 1);
                     setActiveIndex(index);
                 }
             });
 
-            // 2. Horizontal Scroll (What We Do)
-            // Only apply on desktop (lg breakpoint is 1024px)
+            // 2. Horizontal Scroll
             if (window.innerWidth >= 1024) {
                 const sections = gsap.utils.toArray(".horizontal-item");
                 gsap.to(sections, {
@@ -121,7 +139,7 @@ const LetsBuildSection = () => {
                         trigger: horizontalContainerRef.current,
                         pin: true,
                         scrub: 1,
-                        end: "+=3000", // Adjust scroll length for speed
+                        end: "+=3000",
                     }
                 });
             }
@@ -131,17 +149,17 @@ const LetsBuildSection = () => {
 
     return (
         <div ref={mainRef}>
-            {/* DESKTOP: Pinned Slideshow (Hidden on Mobile) */}
+            <VideoModal isOpen={videoOpen} onClose={() => setVideoOpen(false)} videoSrc={mainVideo} />
+
+            {/* DESKTOP: Pinned Slideshow */}
             <div className="hidden lg:block">
                 <section ref={pinnedRef} className="h-screen bg-white text-black overflow-hidden flex flex-col justify-center relative">
-                    {/* Header for the Section */}
                     <div className="absolute top-12 left-0 w-full text-center z-20">
                         <h2 className="text-6xl font-black tracking-tight">Who We Are</h2>
                         <div className="w-20 h-1 bg-black mx-auto mt-4" />
                     </div>
 
                     <div className="max-w-[95vw] mx-auto w-full grid grid-cols-2 gap-16 items-center mt-20">
-
                         {/* LEFT: Polaroid Stack */}
                         <div className="flex items-center justify-center h-full">
                             <div className="relative w-full max-w-lg h-[600px]">
@@ -158,29 +176,16 @@ const LetsBuildSection = () => {
                                                 zIndex: activeIndex === index ? 10 : profile.zIndex,
                                                 opacity: activeIndex === index ? 1 : 0.6,
                                             }}
-                                            transition={{
-                                                duration: 0.5,
-                                                ease: [0.43, 0.13, 0.23, 0.96]
-                                            }}
+                                            transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
                                         >
-                                            {/* Polaroid Frame */}
                                             <div className="bg-white p-6 shadow-2xl h-full transform transition-transform">
                                                 <div className="relative h-[480px] overflow-hidden">
-                                                    <img
-                                                        src={profile.image}
-                                                        alt={profile.title}
-                                                        className="w-full h-full object-cover"
-                                                    />
+                                                    <img src={profile.image} alt={profile.title} className="w-full h-full object-cover" />
                                                 </div>
-                                                {/* Polaroid Caption */}
                                                 <div className="pt-6 text-center">
-                                                    <p className="font-handwriting text-3xl text-gray-700">
-                                                        {profile.title.toLowerCase()}
-                                                    </p>
+                                                    <p className="font-handwriting text-3xl text-gray-700">{profile.title.toLowerCase()}</p>
                                                 </div>
                                             </div>
-
-                                            {/* Tape Effect */}
                                             {activeIndex === index && (
                                                 <motion.div
                                                     initial={{ opacity: 0 }}
@@ -205,26 +210,15 @@ const LetsBuildSection = () => {
                                     transition={{ duration: 0.5, ease: "easeOut" }}
                                     className="absolute inset-0 flex flex-col justify-center"
                                 >
-                                    <h3 className="text-7xl xl:text-8xl font-black mb-8 tracking-tight">
-                                        {profiles[activeIndex].title}
-                                    </h3>
-
-                                    <p className="text-xl md:text-2xl leading-relaxed text-gray-700 max-w-2xl mb-10">
-                                        {profiles[activeIndex].description}
-                                    </p>
-
+                                    <h3 className="text-7xl xl:text-8xl font-black mb-8 tracking-tight">{profiles[activeIndex].title}</h3>
+                                    <p className="text-xl md:text-2xl leading-relaxed text-gray-700 max-w-2xl mb-10">{profiles[activeIndex].description}</p>
                                     <motion.button
                                         whileHover={{ scale: 1.05, x: 10 }}
                                         whileTap={{ scale: 0.95 }}
                                         className="inline-flex items-center gap-3 text-black font-bold text-xl group w-fit"
                                     >
                                         Learn More
-                                        <svg
-                                            className="w-8 h-8 group-hover:translate-x-2 transition-transform"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
+                                        <svg className="w-8 h-8 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                         </svg>
                                     </motion.button>
@@ -233,19 +227,15 @@ const LetsBuildSection = () => {
                         </div>
                     </div>
 
-                    {/* Progress Indicators */}
                     <div className="absolute right-12 top-1/2 -translate-y-1/2 flex flex-col gap-6">
                         {profiles.map((_, i) => (
-                            <div
-                                key={i}
-                                className={`w-3 h-3 rounded-full transition-all duration-300 ${i === activeIndex ? 'bg-black h-12' : 'bg-gray-300'}`}
-                            />
+                            <div key={i} className={`w-3 h-3 rounded-full transition-all duration-300 ${i === activeIndex ? 'bg-black h-12' : 'bg-gray-300'}`} />
                         ))}
                     </div>
                 </section>
             </div>
 
-            {/* MOBILE: Vertical Stack (Shown on Mobile) */}
+            {/* MOBILE: Vertical Stack */}
             <div className="lg:hidden bg-white text-black py-20 px-6 space-y-32">
                 <div className="text-center mb-12">
                     <h2 className="text-5xl font-black">Who We Are</h2>
@@ -253,7 +243,6 @@ const LetsBuildSection = () => {
                 </div>
                 {profiles.map((profile) => (
                     <div key={profile.id} className="flex flex-col gap-10">
-                        {/* Polaroid */}
                         <div className="relative w-full max-w-sm mx-auto aspect-[4/5] rotate-2">
                             <div className="bg-white p-4 shadow-xl h-full">
                                 <img src={profile.image} alt={profile.title} className="w-full h-[85%] object-cover" />
@@ -263,8 +252,6 @@ const LetsBuildSection = () => {
                             </div>
                             <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-yellow-100/70 rotate-2 shadow-sm" />
                         </div>
-
-                        {/* Text */}
                         <div className="text-center">
                             <h3 className="text-5xl font-black mb-6">{profile.title}</h3>
                             <p className="text-lg text-gray-700 leading-relaxed">{profile.description}</p>
@@ -289,37 +276,45 @@ const LetsBuildSection = () => {
                                     <img
                                         src={activity.mainImage}
                                         alt={activity.title}
-                                        className="w-full h-full object-cover opacity-60"
+                                        className="w-full h-full object-cover opacity-50"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black" />
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/50 to-black" />
                                 </div>
 
                                 {/* RIGHT: Content */}
                                 <div className="w-1/2 h-full flex flex-col justify-center px-24 relative z-10">
 
-                                    {/* Top: Mini Polaroids */}
-                                    <div className="flex gap-6 mb-16">
-                                        {activity.polaroids.map((img, i) => (
-                                            <div
-                                                key={i}
-                                                className={`relative w-40 aspect-[4/5] bg-white p-2 shadow-lg transform ${i % 2 === 0 ? '-rotate-6' : 'rotate-6'} hover:rotate-0 transition-transform duration-300`}
-                                            >
-                                                <img src={img} alt="Activity" className="w-full h-[85%] object-cover" />
-                                                <div className="h-[15%] bg-white" />
+                                    {/* Title */}
+                                    <h3 className="text-6xl font-bold mb-6">{activity.title}</h3>
+
+                                    {/* Description */}
+                                    <p className="text-xl text-gray-400 leading-relaxed max-w-2xl mb-10">
+                                        {activity.description}
+                                    </p>
+
+                                    {/* Video Preview (Large) */}
+                                    <div
+                                        className="w-full max-w-2xl aspect-video rounded-xl overflow-hidden cursor-pointer group border border-white/20 hover:border-red-600 transition-colors duration-300 mb-10 relative"
+                                        onClick={() => setVideoOpen(true)}
+                                    >
+                                        <img src={activity.thumbnail} alt="Video Thumbnail" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                            <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center pl-1 group-hover:scale-110 transition-transform shadow-lg">
+                                                <FaPlay className="text-white text-3xl" />
                                             </div>
-                                        ))}
+                                        </div>
+                                        <div className="absolute bottom-4 left-4">
+                                            <p className="text-white font-bold text-lg uppercase tracking-wider">Watch Highlights</p>
+                                        </div>
                                     </div>
 
-                                    {/* Bottom: Text Content */}
-                                    <div>
-                                        <div className={`text-7xl mb-8 ${activity.color}`}>
-                                            <activity.icon />
-                                        </div>
-                                        <h3 className="text-6xl font-bold mb-6">{activity.title}</h3>
-                                        <p className="text-2xl text-gray-400 leading-relaxed max-w-2xl">
-                                            {activity.description}
-                                        </p>
-                                    </div>
+                                    {/* CTA */}
+                                    <button className="px-8 py-4 bg-white text-black font-bold text-lg rounded-full hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center gap-3 group w-fit">
+                                        {activity.cta}
+                                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
                         ))}
@@ -333,16 +328,34 @@ const LetsBuildSection = () => {
                     <h2 className="text-5xl font-black">What We Do</h2>
                     <div className="w-20 h-1 bg-red-600 mx-auto mt-4" />
                 </div>
-                <div className="space-y-16">
+                <div className="space-y-24">
                     {activities.map((activity, index) => (
-                        <div key={index} className="bg-white/5 border border-white/10 p-8 rounded-2xl">
-                            <div className={`text-6xl mb-6 ${activity.color}`}>
-                                <activity.icon />
-                            </div>
+                        <div key={index} className="bg-white/5 border border-white/10 p-6 rounded-2xl">
+                            {/* Title */}
                             <h3 className="text-3xl font-bold mb-4">{activity.title}</h3>
-                            <p className="text-gray-400 text-lg leading-relaxed">
+
+                            {/* Description */}
+                            <p className="text-gray-400 text-lg leading-relaxed mb-8">
                                 {activity.description}
                             </p>
+
+                            {/* Video Preview Mobile */}
+                            <div
+                                className="relative aspect-video rounded-xl overflow-hidden mb-8 cursor-pointer"
+                                onClick={() => setVideoOpen(true)}
+                            >
+                                <img src={activity.thumbnail} alt="Video" className="w-full h-full object-cover" />
+                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                    <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center pl-1">
+                                        <FaPlay className="text-white text-xl" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* CTA */}
+                            <button className="w-full px-6 py-4 bg-white text-black font-bold rounded-xl hover:bg-red-600 hover:text-white transition-colors">
+                                {activity.cta}
+                            </button>
                         </div>
                     ))}
                 </div>
