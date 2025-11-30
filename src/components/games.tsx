@@ -27,7 +27,7 @@ const FeaturedGames: React.FC = () => {
   const [showDetails, setShowDetails] = useState<boolean>(false);
   const [cardPositions, setCardPositions] = useState<number[]>([0, 1, 2]);
   const [visibleGames, setVisibleGames] = useState(2);
-  const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set());
+  const [isGoingBackward, setIsGoingBackward] = useState(false);
 
   const games: Game[] = React.useMemo(() => [
     {
@@ -81,17 +81,6 @@ const FeaturedGames: React.FC = () => {
     
   ], []);
 
-  // Preload all images
-  React.useEffect(() => {
-    games.forEach((game, index) => {
-      const img = new Image();
-      img.onload = () => {
-        setImagesLoaded(prev => new Set(prev).add(index));
-      };
-      img.src = game.image;
-    });
-  }, [games]);
-
   const platformIcons = {
     "Windows": windowsIcon,
     "PlayStation": playstationIcon,
@@ -103,23 +92,28 @@ const FeaturedGames: React.FC = () => {
   const nextGame = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
+    setIsGoingBackward(true);
     setShowDetails(false);
     
-    setCardPositions(prev => prev.map(pos => pos - 1));
+    // Backward: previous image slides in from left, current moves right
+    setCardPositions(prev => prev.map(pos => pos + 1));
     
     setTimeout(() => {
       setCurrentGameIndex((prev) => (prev + 1) % games.length);
       setCardPositions([0, 1, 2]);
       setIsTransitioning(false);
+      setIsGoingBackward(false);
     }, 500);
   };
 
   const prevGame = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
+    setIsGoingBackward(false);
     setShowDetails(false);
     
-    setCardPositions(prev => prev.map(pos => pos + 1));
+    // Forward: next image slides in from right, current moves left
+    setCardPositions(prev => prev.map(pos => pos - 1));
     
     setTimeout(() => {
       setCurrentGameIndex((prev) => (prev - 1 + games.length) % games.length);
@@ -129,10 +123,19 @@ const FeaturedGames: React.FC = () => {
   };
 
   const getGameAtPosition = (position: number) => {
+    if (position === -1) return (currentGameIndex - 1 + games.length) % games.length;
     if (position === 0) return currentGameIndex;
     if (position === 1) return (currentGameIndex + 1) % games.length;
     return (currentGameIndex + 2) % games.length;
   };
+
+  // Preload all images on mount
+  React.useEffect(() => {
+    games.forEach((game) => {
+      const img = new Image();
+      img.src = game.image;
+    });
+  }, [games]);
 
   const handleLoadMore = () => {
     setVisibleGames(prev => Math.min(prev + 2, games.length));
@@ -315,7 +318,28 @@ const FeaturedGames: React.FC = () => {
         </div>
 
         {/* Sliding Image Cards Container */}
-        <div className="relative flex-1 h-full overflow-hidden lt-1024:rounded-2xl bg-black">
+        <div className="relative flex-1 h-full overflow-hidden lt-1024:rounded-2xl">
+          {/* Previous game - always rendered off-screen left, ready to slide in when going backward */}
+          <div
+            key={`prev-card-${getGameAtPosition(-1)}`}
+            className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
+            style={{
+              transform: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 'translateX(0%)' : 'translateX(-100%)',
+              zIndex: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 10 : 1,
+              width: '60%',
+              left: '0',
+              opacity: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 1 : 0,
+              transition: 'transform 500ms ease-out, opacity 500ms ease-out'
+            }}
+          >
+            <img 
+              src={games[getGameAtPosition(-1)].image} 
+              alt={games[getGameAtPosition(-1)].title} 
+              className="w-full h-full object-cover" 
+            />
+          </div>
+          
+          {/* Original 3 positions - restore original logic */}
           {[0, 1, 2].map((positionIndex) => {
             const gameIndex = getGameAtPosition(positionIndex);
             const game = games[gameIndex];
@@ -354,7 +378,7 @@ const FeaturedGames: React.FC = () => {
             return (
               <div
                 key={`card-${gameIndex}-${positionIndex}`}
-                className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden bg-black"
+                className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
                 style={{
                   transform: translateX,
                   zIndex: zIndex,
@@ -368,7 +392,6 @@ const FeaturedGames: React.FC = () => {
                   src={game.image} 
                   alt={game.title} 
                   className="w-full h-full object-cover" 
-                  style={{ backgroundColor: 'black' }}
                 />
                 
                 {cardPosition === 1 && (
@@ -379,12 +402,11 @@ const FeaturedGames: React.FC = () => {
           })}
 
           {/* Mobile: Show current card */}
-          <div className="hidden lt-1024:block w-full h-full relative bg-black">
+          <div className="hidden lt-1024:block w-full h-full relative">
             <img 
               src={games[currentGameIndex].image} 
               alt={games[currentGameIndex].title} 
               className="w-full h-full object-cover" 
-              style={{ backgroundColor: 'black' }}
             />
             
             {!showDetails && (
