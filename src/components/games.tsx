@@ -78,7 +78,7 @@ const FeaturedGames: React.FC = () => {
       platforms: ["Windows", "Xbox", "Steam"],
       image: maplestoryImg
     }
-    
+
   ], []);
 
   const platformIcons = {
@@ -94,12 +94,13 @@ const FeaturedGames: React.FC = () => {
     setIsTransitioning(true);
     setIsGoingBackward(true);
     setShowDetails(false);
-    
-    // Backward: previous image slides in from left, current moves right
+
+    // Forward Button (Right Arrow) -> Slide Right -> Show Previous Game
     setCardPositions(prev => prev.map(pos => pos + 1));
-    
+
     setTimeout(() => {
-      setCurrentGameIndex((prev) => (prev + 1) % games.length);
+      // Update to Previous Game (i-1) to match the slide-in of the left card
+      setCurrentGameIndex((prev) => (prev - 1 + games.length) % games.length);
       setCardPositions([0, 1, 2]);
       setIsTransitioning(false);
       setIsGoingBackward(false);
@@ -111,12 +112,13 @@ const FeaturedGames: React.FC = () => {
     setIsTransitioning(true);
     setIsGoingBackward(false);
     setShowDetails(false);
-    
-    // Forward: next image slides in from right, current moves left
+
+    // Backward Button (Left Arrow) -> Slide Left -> Show Next Game
     setCardPositions(prev => prev.map(pos => pos - 1));
-    
+
     setTimeout(() => {
-      setCurrentGameIndex((prev) => (prev - 1 + games.length) % games.length);
+      // Update to Next Game (i+1) to match the slide-in of the right card
+      setCurrentGameIndex((prev) => (prev + 1) % games.length);
       setCardPositions([0, 1, 2]);
       setIsTransitioning(false);
     }, 500);
@@ -160,11 +162,11 @@ const FeaturedGames: React.FC = () => {
           {games.slice(0, visibleGames).map((game) => (
             <div key={game.id} className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100">
               <img src={game.image} alt={game.title} className="w-full h-48 object-cover" />
-              
+
               <div className="p-5">
                 <h2 className="text-2xl font-bold text-gray-900 mb-3">{game.title}</h2>
                 <p className="text-gray-600 mb-4 leading-relaxed">{game.description}</p>
-                
+
                 <div className="mb-4">
                   <h3 className="text-gray-500 text-sm font-semibold mb-2">Platforms</h3>
                   <div className="flex gap-3 flex-wrap">
@@ -216,271 +218,271 @@ const FeaturedGames: React.FC = () => {
 
       {/* Desktop Carousel View - Keep exactly as is */}
       <div className="lt-1024:hidden block bg-gray-100 py-16">
-      <div className="w-full px-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-12">
-              Games
-            </div>
-            <h1 className="text-4xl font-bold text-gray-900">Featured Games</h1>
-          </div>
-          <div className="text-gray-600 lt-1024:hidden">
-            <p className="text-lg">Showcase gaming on Avalanche and engage game</p>
-            <p className="text-lg">developers/creators</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
-        {/* Fixed Details Card - Left Side (Desktop Only) */}
-        <div className="relative w-[30%] lt-1024:hidden h-full bg-black rounded-l-2xl p-4 lg:p-8 xl:p-10 2xl:p-12 flex flex-col justify-between z-10 overflow-hidden">
-          <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-            <h2 className="text-white text-2xl lg:text-4xl xl:text-5xl font-bold mb-3 lg:mb-5 xl:mb-6 leading-tight">
-              {games[currentGameIndex].title}
-            </h2>
-
-            <p className="text-gray-300 text-xs lg:text-base xl:text-lg 2xl:text-xl mb-3 lg:mb-6 xl:mb-8 leading-relaxed">
-              {games[currentGameIndex].description}
-            </p>
-
-            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-3 lg:px-7 lg:py-5 xl:px-8 xl:py-6 rounded-full flex items-center justify-center gap-2 lg:gap-3 transition-all duration-300 hover:scale-105 border border-white/20 text-xs lg:text-base">
-              WEBSITE
-              <ExternalLink size={14} className="lg:w-5 lg:h-5" />
-            </button>
-          </div>
-
-          <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-            <div className="mb-3 lg:mb-5 xl:mb-6">
-              <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-2 lg:mb-3">Platforms</h3>
-              <div className="flex gap-1.5 lg:gap-3 flex-wrap">
-                {games[currentGameIndex].platforms.map((platform, index) => (
-                  <div
-                    key={index}
-                    className="w-7 h-7 lg:w-11 lg:h-11 xl:w-12 xl:h-12 backdrop-blur-sm rounded-lg flex items-center justify-center"
-                    title={platform}
-                  >
-                    <img
-                      src={platformIcons[platform as keyof typeof platformIcons] as string}
-                      alt={platform}
-                      className="w-full h-full object-contain filter"
-                    />
-                  </div>
-                ))}
+        <div className="w-full px-8">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-12">
+                Games
               </div>
+              <h1 className="text-4xl font-bold text-gray-900">Featured Games</h1>
             </div>
-
-            <div className="mb-3 lg:mb-5">
-              <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-1 lg:mb-2">Genre</h3>
-              <p className="text-white font-medium text-sm lg:text-lg">{games[currentGameIndex].genre}</p>
-            </div>
-
-            <div className="flex justify-center mt-3 lg:mt-6 xl:mt-10 items-center">
-              <button
-                onClick={prevGame}
-                disabled={isTransitioning}
-                className="w-12 h-12 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 hover:bg-gray-900"
-              >
-                <ChevronLeft size={16} className="lg:w-5 lg:h-5" />
-              </button>
-
-              <div className="flex gap-1 lg:gap-2 mx-2 lg:mx-4">
-                {games.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      if (isTransitioning || index === currentGameIndex) return;
-                      const diff = (index - currentGameIndex + games.length) % games.length;
-                      if (diff <= games.length / 2) {
-                        for (let i = 0; i < diff; i++) {
-                          setTimeout(() => nextGame(), i * 500);
-                        }
-                      } else {
-                        const backSteps = games.length - diff;
-                        for (let i = 0; i < backSteps; i++) {
-                          setTimeout(() => prevGame(), i * 500);
-                        }
-                      }
-                    }}
-                    className={`w-2 h-2 lg:w-3 lg:h-3 mx-1 lg:mx-2 xl:mx-4 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-white scale-125' : 'bg-gray-400 hover:bg-gray-300'}`}
-                  />
-                ))}
-              </div>
-
-              <button
-                onClick={nextGame}
-                disabled={isTransitioning}
-                className="w-12 h-12 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 hover:bg-gray-900"
-              >
-                <ChevronRight size={16} className="lg:w-5 lg:h-5" />
-              </button>
+            <div className="text-gray-600 lt-1024:hidden">
+              <p className="text-lg">Showcase gaming on Avalanche and engage game</p>
+              <p className="text-lg">developers/creators</p>
             </div>
           </div>
         </div>
 
-        {/* Sliding Image Cards Container */}
-        <div className="relative flex-1 h-full overflow-hidden lt-1024:rounded-2xl">
-          {/* Previous game - always rendered off-screen left, ready to slide in when going backward */}
-          <div
-            key={`prev-card-${getGameAtPosition(-1)}`}
-            className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
-            style={{
-              transform: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 'translateX(0%)' : 'translateX(-100%)',
-              zIndex: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 10 : 1,
-              width: '60%',
-              left: '0',
-              opacity: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 1 : 0,
-              transition: 'transform 500ms ease-out, opacity 500ms ease-out'
-            }}
-          >
-            <img 
-              src={games[getGameAtPosition(-1)].image} 
-              alt={games[getGameAtPosition(-1)].title} 
-              className="w-full h-full object-cover" 
-            />
-          </div>
-          
-          {/* Original 3 positions - restore original logic */}
-          {[0, 1, 2].map((positionIndex) => {
-            const gameIndex = getGameAtPosition(positionIndex);
-            const game = games[gameIndex];
-            const cardPosition = cardPositions[positionIndex];
-            
-            let translateX = 'translateX(200%)';
-            let zIndex = 0;
-            let width = '60%';
-            let opacity = 0;
-            let left = 'auto';
-            
-            if (cardPosition === -1) {
-              translateX = 'translateX(-100%)';
-              zIndex = 0;
-              opacity = 0;
-              width = '60%';
-            } else if (cardPosition === 0) {
-              translateX = 'translateX(0%)';
-              zIndex = 10;
-              width = '60%';
-              opacity = 1;
-              left = '0';
-            } else if (cardPosition === 1) {
-              translateX = 'translateX(calc(100% + 2rem))';
-              zIndex = 5;
-              width = '60%';
-              opacity = 1;
-              left = 'auto';
-            } else if (cardPosition === 2) {
-              translateX = 'translateX(200%)';
-              zIndex = 0;
-              opacity = 0;
-              width = '60%';
-            }
+        <div className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
+          {/* Fixed Details Card - Left Side (Desktop Only) */}
+          <div className="relative w-[30%] lt-1024:hidden h-full bg-black rounded-l-2xl p-4 lg:p-8 xl:p-10 2xl:p-12 flex flex-col justify-between z-10 overflow-hidden">
+            <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+              <h2 className="text-white text-2xl lg:text-4xl xl:text-5xl font-bold mb-3 lg:mb-5 xl:mb-6 leading-tight">
+                {games[currentGameIndex].title}
+              </h2>
 
-            return (
-              <div
-                key={`card-${gameIndex}-${positionIndex}`}
-                className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
-                style={{
-                  transform: translateX,
-                  zIndex: zIndex,
-                  width: width,
-                  left: left,
-                  opacity: opacity,
-                  transition: 'transform 500ms ease-out, opacity 500ms ease-out'
-                }}
-              >
-                <img 
-                  src={game.image} 
-                  alt={game.title} 
-                  className="w-full h-full object-cover" 
-                />
-                
-                {cardPosition === 1 && (
-                  <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
-                )}
-              </div>
-            );
-          })}
+              <p className="text-gray-300 text-xs lg:text-base xl:text-lg 2xl:text-xl mb-3 lg:mb-6 xl:mb-8 leading-relaxed">
+                {games[currentGameIndex].description}
+              </p>
 
-          {/* Mobile: Show current card */}
-          <div className="hidden lt-1024:block w-full h-full relative">
-            <img 
-              src={games[currentGameIndex].image} 
-              alt={games[currentGameIndex].title} 
-              className="w-full h-full object-cover" 
-            />
-            
-            {!showDetails && (
-              <button
-                onClick={() => setShowDetails(true)}
-                className="absolute top-3 right-3 z-20 px-4 py-2 rounded-full bg-gray-900/80 text-white text-sm"
-              >
-                Details
+              <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-3 lg:px-7 lg:py-5 xl:px-8 xl:py-6 rounded-full flex items-center justify-center gap-2 lg:gap-3 transition-all duration-300 hover:scale-105 border border-white/20 text-xs lg:text-base">
+                WEBSITE
+                <ExternalLink size={14} className="lg:w-5 lg:h-5" />
               </button>
-            )}
+            </div>
 
-            <div className={`absolute inset-0 bg-black/90 text-white px-6 py-6 transform transition-all duration-500 ease-out pointer-events-none z-20 ${showDetails ? 'translate-x-0 opacity-100 pointer-events-auto' : '-translate-x-full opacity-0'}`}>
-              <button
-                onClick={() => setShowDetails(false)}
-                aria-label="Close details"
-                className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
-              >
-                <X size={18} />
-              </button>
-              <h2 className="text-2xl font-bold mb-3">{games[currentGameIndex].title}</h2>
-              <p className="text-sm text-gray-300 mb-4">{games[currentGameIndex].description}</p>
-              <div className="mb-3">
-                <h3 className="text-gray-400 text-xs font-semibold mb-2">Platforms</h3>
-                <div className="flex gap-2 flex-wrap">
+            <div className={`transition-all duration-300 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+              <div className="mb-3 lg:mb-5 xl:mb-6">
+                <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-2 lg:mb-3">Platforms</h3>
+                <div className="flex gap-1.5 lg:gap-3 flex-wrap">
                   {games[currentGameIndex].platforms.map((platform, index) => (
-                    <img key={index} src={platformIcons[platform as keyof typeof platformIcons] as string} alt={platform} className="w-8 h-8 object-contain" />
+                    <div
+                      key={index}
+                      className="w-7 h-7 lg:w-11 lg:h-11 xl:w-12 xl:h-12 backdrop-blur-sm rounded-lg flex items-center justify-center"
+                      title={platform}
+                    >
+                      <img
+                        src={platformIcons[platform as keyof typeof platformIcons] as string}
+                        alt={platform}
+                        className="w-full h-full object-contain filter"
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
-              <p className="text-sm"><span className="text-gray-400">Genre:</span> {games[currentGameIndex].genre}</p>
+
+              <div className="mb-3 lg:mb-5">
+                <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-1 lg:mb-2">Genre</h3>
+                <p className="text-white font-medium text-sm lg:text-lg">{games[currentGameIndex].genre}</p>
+              </div>
+
+              <div className="flex justify-center mt-3 lg:mt-6 xl:mt-10 items-center">
+                <button
+                  onClick={prevGame}
+                  disabled={isTransitioning}
+                  className="w-12 h-12 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 hover:bg-gray-900"
+                >
+                  <ChevronLeft size={16} className="lg:w-5 lg:h-5" />
+                </button>
+
+                <div className="flex gap-1 lg:gap-2 mx-2 lg:mx-4">
+                  {games.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        if (isTransitioning || index === currentGameIndex) return;
+                        const diff = (index - currentGameIndex + games.length) % games.length;
+                        if (diff <= games.length / 2) {
+                          for (let i = 0; i < diff; i++) {
+                            setTimeout(() => nextGame(), i * 500);
+                          }
+                        } else {
+                          const backSteps = games.length - diff;
+                          for (let i = 0; i < backSteps; i++) {
+                            setTimeout(() => prevGame(), i * 500);
+                          }
+                        }
+                      }}
+                      className={`w-2 h-2 lg:w-3 lg:h-3 mx-1 lg:mx-2 xl:mx-4 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-white scale-125' : 'bg-gray-400 hover:bg-gray-300'}`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={nextGame}
+                  disabled={isTransitioning}
+                  className="w-12 h-12 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 hover:bg-gray-900"
+                >
+                  <ChevronRight size={16} className="lg:w-5 lg:h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Sliding Image Cards Container */}
+          <div className="relative flex-1 h-full overflow-hidden lt-1024:rounded-2xl bg-gray-100">
+            {/* Previous game - always rendered off-screen left, ready to slide in when going backward */}
+            <div
+              key={`prev-card-${getGameAtPosition(-1)}`}
+              className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
+              style={{
+                transform: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 'translateX(0%)' : 'translateX(-100%)',
+                zIndex: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 10 : 1,
+                width: '60%',
+                left: '0',
+                opacity: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 1 : 0,
+                transition: 'transform 500ms, opacity 500ms'
+              }}
+            >
+              <img
+                src={games[getGameAtPosition(-1)].image}
+                alt={games[getGameAtPosition(-1)].title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Original 3 positions - restore original logic */}
+            {[0, 1, 2].map((positionIndex) => {
+              const gameIndex = getGameAtPosition(positionIndex);
+              const game = games[gameIndex];
+              const cardPosition = cardPositions[positionIndex];
+
+              let translateX = 'translateX(200%)';
+              let zIndex = 0;
+              let width = '60%';
+              let opacity = 0;
+              let left = 'auto';
+
+              if (cardPosition === -1) {
+                translateX = 'translateX(-100%)';
+                zIndex = 0;
+                opacity = 0;
+                width = '60%';
+              } else if (cardPosition === 0) {
+                translateX = 'translateX(0%)';
+                zIndex = 10;
+                width = '60%';
+                opacity = 1;
+                left = '0';
+              } else if (cardPosition === 1) {
+                translateX = 'translateX(calc(100% + 2rem))';
+                zIndex = 5;
+                width = '60%';
+                opacity = 1;
+                left = 'auto';
+              } else if (cardPosition === 2) {
+                translateX = 'translateX(200%)';
+                zIndex = 0;
+                opacity = 0;
+                width = '60%';
+              }
+
+              return (
+                <div
+                  key={gameIndex}
+                  className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
+                  style={{
+                    transform: translateX,
+                    zIndex: zIndex,
+                    width: width,
+                    left: left,
+                    opacity: opacity,
+                    transition: (cardPosition === 0 || cardPosition === 1) ? 'transform 500ms' : 'transform 500ms, opacity 500ms'
+                  }}
+                >
+                  <img
+                    src={game.image}
+                    alt={game.title}
+                    className="w-full h-full object-cover"
+                  />
+
+                  {cardPosition === 1 && (
+                    <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
+                  )}
+                </div>
+              );
+            })}
+
+            {/* Mobile: Show current card */}
+            <div className="hidden lt-1024:block w-full h-full relative">
+              <img
+                src={games[currentGameIndex].image}
+                alt={games[currentGameIndex].title}
+                className="w-full h-full object-cover"
+              />
+
+              {!showDetails && (
+                <button
+                  onClick={() => setShowDetails(true)}
+                  className="absolute top-3 right-3 z-20 px-4 py-2 rounded-full bg-gray-900/80 text-white text-sm"
+                >
+                  Details
+                </button>
+              )}
+
+              <div className={`absolute inset-0 bg-black/90 text-white px-6 py-6 transform transition-all duration-500 ease-out pointer-events-none z-20 ${showDetails ? 'translate-x-0 opacity-100 pointer-events-auto' : '-translate-x-full opacity-0'}`}>
+                <button
+                  onClick={() => setShowDetails(false)}
+                  aria-label="Close details"
+                  className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
+                >
+                  <X size={18} />
+                </button>
+                <h2 className="text-2xl font-bold mb-3">{games[currentGameIndex].title}</h2>
+                <p className="text-sm text-gray-300 mb-4">{games[currentGameIndex].description}</p>
+                <div className="mb-3">
+                  <h3 className="text-gray-400 text-xs font-semibold mb-2">Platforms</h3>
+                  <div className="flex gap-2 flex-wrap">
+                    {games[currentGameIndex].platforms.map((platform, index) => (
+                      <img key={index} src={platformIcons[platform as keyof typeof platformIcons] as string} alt={platform} className="w-8 h-8 object-contain" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm"><span className="text-gray-400">Genre:</span> {games[currentGameIndex].genre}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Mobile/Tablet Navigation */}
-      <div className="hidden lt-1024:flex justify-center items-center gap-6 mt-6 px-4">
-        <button 
-          onClick={prevGame} 
-          disabled={isTransitioning}
-          className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center disabled:opacity-50"
-        >
-          <ChevronLeft size={18} />
-        </button>
-        <div className="flex gap-2">
-          {games.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                if (isTransitioning || index === currentGameIndex) return;
-                const diff = (index - currentGameIndex + games.length) % games.length;
-                if (diff <= games.length / 2) {
-                  for (let i = 0; i < diff; i++) {
-                    setTimeout(() => nextGame(), i * 500);
+        {/* Mobile/Tablet Navigation */}
+        <div className="hidden lt-1024:flex justify-center items-center gap-6 mt-6 px-4">
+          <button
+            onClick={prevGame}
+            disabled={isTransitioning}
+            className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center disabled:opacity-50"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <div className="flex gap-2">
+            {games.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  if (isTransitioning || index === currentGameIndex) return;
+                  const diff = (index - currentGameIndex + games.length) % games.length;
+                  if (diff <= games.length / 2) {
+                    for (let i = 0; i < diff; i++) {
+                      setTimeout(() => nextGame(), i * 500);
+                    }
+                  } else {
+                    const backSteps = games.length - diff;
+                    for (let i = 0; i < backSteps; i++) {
+                      setTimeout(() => prevGame(), i * 500);
+                    }
                   }
-                } else {
-                  const backSteps = games.length - diff;
-                  for (let i = 0; i < backSteps; i++) {
-                    setTimeout(() => prevGame(), i * 500);
-                  }
-                }
-              }}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-gray-900 scale-125' : 'bg-gray-400'}`}
-            />
-          ))}
+                }}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-gray-900 scale-125' : 'bg-gray-400'}`}
+              />
+            ))}
+          </div>
+          <button
+            onClick={nextGame}
+            disabled={isTransitioning}
+            className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center disabled:opacity-50"
+          >
+            <ChevronRight size={18} />
+          </button>
         </div>
-        <button 
-          onClick={nextGame} 
-          disabled={isTransitioning}
-          className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center disabled:opacity-50"
-        >
-          <ChevronRight size={18} />
-        </button>
-      </div>
       </div>
     </div>
   );
