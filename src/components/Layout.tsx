@@ -2,6 +2,8 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './navbar';
 import { useState, useEffect } from 'react';
 import Preloader from './Preloader';
+import ScrollProgress from './ScrollProgress';
+import CustomCursor from './CustomCursor';
 
 const Layout = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +33,13 @@ const Layout = () => {
             {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 
             {showContent && (
-                <>
+                <div className="cursor-none">
+                    {/* Custom Cursor - Site Wide */}
+                    <CustomCursor />
+
+                    {/* Scroll Progress Indicator */}
+                    <ScrollProgress />
+
                     {/* Navbar with slightly wider max-width */}
                     <div className="mx-auto w-full max-w-site-nav px-2 md:px-8 relative z-50">
                         <Navbar />
@@ -40,7 +48,7 @@ const Layout = () => {
                     <main className="relative z-10 min-h-screen">
                         <Outlet />
                     </main>
-                </>
+                </div>
             )}
         </>
     );

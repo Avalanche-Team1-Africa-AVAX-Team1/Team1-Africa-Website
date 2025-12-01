@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import AnimatedText from './AnimatedText';
 import event1 from '../assets/event1-img.png'
 import event2 from '../assets/event2-img.png'
 
@@ -73,7 +74,9 @@ const Stats = () => {
         <div ref={statsRef} className='w-full mt-10 relative flex h-screen xl:py-10 lt-1920:h-auto lt-1440:py-20 lt-1024:py-16 pb-12 md:pb-16 flex-col justify-around md:justify-center items-center overflow-visible'> {/* Changed to overflow-visible to prevent image clipping */}
             <div className='flex justify-center items-center'>
                 {/* Scale intro paragraph on non-4K screens; constrain width */}
-                <p className='text-[1.4rem] md:text-[50px] lt-1920:text-[40px] lt-1440:text-[34px] lt-1024:text-[25px] lt-768:text-[22px] lt-480:text-[1rem] font-semibold text-center md:w-[65%] w-full lt-1440:max-w-[820px] lt-1024:max-w-[680px]'>Team1 Africa <span className='text-[#6D6D6D]'>is a vibrant grassroots movement committed to equipping</span> African builders, creators, and educators with the tools, resources, and opportunities to thrive in the Avalanche blockchain ecosystem.</p>
+                <AnimatedText variant="slideUp" delay={0.2} className='text-[1.4rem] md:text-[50px] lt-1920:text-[40px] lt-1440:text-[34px] lt-1024:text-[25px] lt-768:text-[22px] lt-480:text-[1rem] font-semibold text-center md:w-[65%] w-full lt-1440:max-w-[820px] lt-1024:max-w-[680px]'>
+                    <p>Team1 Africa <span className='text-[#6D6D6D]'>is a vibrant grassroots movement committed to equipping</span> African builders, creators, and educators with the tools, resources, and opportunities to thrive in the Avalanche blockchain ecosystem.</p>
+                </AnimatedText>
             </div>
 
             {/* positioned images */}
