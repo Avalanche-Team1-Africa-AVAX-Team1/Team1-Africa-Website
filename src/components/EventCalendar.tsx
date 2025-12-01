@@ -2,14 +2,13 @@ import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import type { Event } from '../types/event';
 import { getEventsForDate } from '../data/events';
 import EventDetailPanel from './EventDetailPanel';
-import Navbar from './navbar';
 
 interface EventCalendarProps {
   initialDate?: Date;
 }
 
-const EventCalendar: React.FC<EventCalendarProps> = ({ 
-  initialDate = new Date(2024, 10, 5) // November 5, 2024 (month is 0-indexed)
+const EventCalendar: React.FC<EventCalendarProps> = ({
+  initialDate = new Date(2024, 10, 5) // November 5, 2024 (month is 0-indexed) - where events exist
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(initialDate);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
@@ -32,7 +31,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
     const dayOfWeek = startDate.getDay();
     const diff = startDate.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust to Monday
     startDate.setDate(diff);
-    
+
     // Generate 14 days (2 weeks)
     for (let i = 0; i < 14; i++) {
       const date = new Date(startDate);
@@ -97,14 +96,14 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
-    
+
     // Scroll to first event of the selected date
     const eventsForDate = getEventsForDate(date);
     if (eventsForDate.length > 0 && gridRef.current) {
       const firstEvent = eventsForDate[0];
       const startMinutes = timeToMinutes(firstEvent.startTime);
       const scrollPosition = (startMinutes / 60) * pixelsPerHour;
-      
+
       // Smooth scroll to the event position with some offset
       setTimeout(() => {
         gridRef.current?.scrollTo({
@@ -119,18 +118,26 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
     setSelectedEvent(event);
   };
 
-  const monthName = selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }).toUpperCase();
+  // Get month name for display
+  const monthName = useMemo(() => {
+    return selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  }, [selectedDate]);
 
   return (
-    <div className="w-full min-h-screen bg-white">
-      {/* Navbar */}
-      <div className="mx-auto w-full max-w-[2000px] px-2 md:px-8 py-4">
-        <Navbar />
-      </div>
+    <div className="w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
+      <div className="w-full max-w-[2000px] mx-auto pt-24 md:pt-32 pb-8 md:pb-12 px-2 sm:px-4 md:px-8">
+        {/* Page Title */}
+        <div className="mb-6">
+          <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-2" style={{ fontFamily: '"Impact", "Anton", "Bebas Neue", sans-serif', letterSpacing: '0.02em' }}>
+            EVENTS CALENDAR
+          </h1>
+          <p className="text-gray-600 text-sm md:text-base">
+            Discover and join Team1 Africa events across the continent
+          </p>
+        </div>
 
-      <div className="w-full max-w-[2000px] mx-auto py-4 md:py-8 px-2 sm:px-4 md:px-8">
         {/* Header Bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6 pb-4 border-b border-gray-200 gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6 pb-4 border-b-2 border-gray-200 gap-4">
           <div className="flex flex-wrap items-center gap-2 md:gap-4 w-full sm:w-auto">
             <button className="relative px-3 md:px-4 py-2 bg-black text-white border border-black rounded-lg hover:bg-gray-900 transition-colors flex items-center gap-2 text-xs md:text-sm font-medium">
               Request Approval
@@ -173,8 +180,10 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
 
         {/* Date Navigation */}
         <div className="mb-8 md:mb-12">
-          <div className="mb-3 md:mb-4">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-900">{monthName}</h2>
+          <div className="mb-4 md:mb-6">
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900" style={{ fontFamily: '"Impact", "Anton", "Bebas Neue", sans-serif', letterSpacing: '0.05em' }}>
+              {monthName}
+            </h2>
           </div>
           <div className="flex items-center gap-1 md:gap-2 w-full">
             <button
@@ -201,7 +210,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                   <button
                     key={index}
                     onClick={() => handleDateClick(date)}
-                    className="rounded-lg flex-shrink-0"
+                    className="rounded-xl flex-shrink-0 transform hover:scale-105"
                     style={{
                       backgroundColor: isSelected ? '#ef4444' : '#000000',
                       color: '#ffffff',
@@ -210,23 +219,25 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                       paddingLeft: '0.75rem',
                       paddingRight: '0.75rem',
                       minWidth: 'clamp(60px, 7vw, 90px)',
-                      transition: 'all 1.7s cubic-bezier(0.4, 0, 0.2, 1)',
-                      boxShadow: isSelected ? '0 1px 2px 0 rgb(0 0 0 / 0.05)' : 'none'
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      boxShadow: isSelected ? '0 10px 25px -5px rgba(239, 68, 68, 0.4), 0 8px 10px -6px rgba(239, 68, 68, 0.3)' : '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                     }}
                     onMouseEnter={(e) => {
                       if (!isSelected) {
                         e.currentTarget.style.backgroundColor = '#ef4444';
+                        e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(239, 68, 68, 0.4), 0 8px 10px -6px rgba(239, 68, 68, 0.3)';
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (!isSelected) {
                         e.currentTarget.style.backgroundColor = '#000000';
+                        e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
                       }
                     }}
                   >
                     <div className="text-center">
                       <div className={`text-[10px] md:text-xs mb-1 ${isSelected ? 'text-white/80' : 'text-white/70'}`}>{dayName}</div>
-                      <div 
+                      <div
                         className="text-base md:text-lg font-black text-white"
                         style={{ fontFamily: '"Impact", "Anton", "Bebas Neue", sans-serif', letterSpacing: '0.05em' }}
                       >
@@ -254,7 +265,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
         </div>
 
         {/* Time Grid */}
-        <div className="relative bg-white border border-gray-200 rounded-lg overflow-hidden">
+        <div className="relative bg-white border-2 border-gray-200 rounded-xl overflow-hidden shadow-lg">
           <style>{`
             [data-scroll-container]::-webkit-scrollbar {
               display: none !important;
@@ -263,11 +274,11 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
               background: transparent !important;
             }
           `}</style>
-          <div 
-            ref={gridRef} 
-            className="relative overflow-y-auto" 
+          <div
+            ref={gridRef}
+            className="relative overflow-y-auto"
             data-scroll-container
-            style={{ 
+            style={{
               minHeight: 'clamp(600px, 70vh, 800px)',
               maxHeight: 'clamp(600px, 70vh, 800px)',
               scrollbarWidth: 'none',
@@ -279,7 +290,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
               {timeSlots.map((time, index) => {
                 const [hours, minutes] = time.split(':').map(Number);
                 const showLabel = minutes === 0; // Only show hour labels
-                
+
                 if (!showLabel) return null;
 
                 const position = timeToMinutes(time);
@@ -293,7 +304,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                   <div
                     key={index}
                     className="absolute text-xs md:text-sm text-gray-600 font-medium text-center flex items-center justify-center"
-                    style={{ 
+                    style={{
                       top: `${topPixels}px`,
                       bottom: `${24 * pixelsPerHour - topPixels - pixelsPerHour}px`,
                       lineHeight: '1.5',
@@ -331,7 +342,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
 
             {/* Event Cards Container */}
             <div className="ml-24 md:ml-32 relative z-10 overflow-x-auto" data-scroll-container style={{ minHeight: `${24 * pixelsPerHour}px`, scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-              
+
               {/* Grid Lines Overlay - inside event container */}
               <div className="absolute left-0 right-0 top-0 z-10" style={{ height: `${24 * pixelsPerHour}px`, pointerEvents: 'none' }}>
                 {timeSlots.map((time, index) => {
@@ -352,11 +363,44 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 })}
               </div>
 
+              {/* Empty State */}
+              {dayEvents.length === 0 && (
+                <div className="absolute inset-0 flex items-center justify-center z-20">
+                  <div className="text-center px-4 py-8 max-w-md">
+                    <svg
+                      className="w-16 h-16 mx-auto mb-4 text-gray-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <h3 className="text-xl font-bold text-gray-700 mb-2">No Events Scheduled</h3>
+                    <p className="text-gray-500 text-sm">
+                      There are no events scheduled for {selectedDate.toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}.
+                    </p>
+                    <p className="text-gray-400 text-xs mt-2">
+                      Try selecting a different date or create a new event.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {dayEvents.map((event, index) => {
                 const startMinutes = timeToMinutes(event.startTime);
                 const endMinutes = timeToMinutes(event.endTime);
                 const duration = endMinutes - startMinutes;
-                
+
                 // Use pixel-based positioning instead of percentage
                 const topPosition = (startMinutes / 60) * pixelsPerHour; // Convert minutes to pixels
                 const height = (duration / 60) * pixelsPerHour; // Convert duration to pixels
@@ -390,7 +434,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                 const cardWidth = window.innerWidth < 768 ? 280 : window.innerWidth < 1024 ? 320 : 360; // Responsive card width
                 const spacing = window.innerWidth < 768 ? 8 : 12; // Responsive spacing
                 const leftMargin = window.innerWidth < 768 ? 24 : 32; // Responsive margin
-                
+
                 // Calculate left position - cards stack horizontally with spacing
                 const leftPosition = leftMargin + (positionInGroup * (cardWidth + spacing));
 
@@ -398,28 +442,28 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                   <div
                     key={index}
                     onClick={() => handleEventClick(event)}
-                    className="absolute rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all border-l-4 z-20"
+                    className="absolute rounded-xl overflow-hidden cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 border-l-4 z-20"
                     style={{
                       top: `${topPosition}px`,
                       height: `${Math.max(height, 100)}px`, // Minimum 100px height
                       left: `${leftPosition}px`,
                       width: `${cardWidth}px`,
                       backgroundColor: event.color || '#f3f4f6',
-                      borderLeftColor: event.color 
+                      borderLeftColor: event.color
                         ? (event.color === '#fef3c7' ? '#f59e0b' : // yellow -> amber
-                           event.color === '#fef9c3' ? '#eab308' : // lighter yellow -> yellow
-                           event.color === '#fce7f3' ? '#ec4899' : // pink -> pink
-                           event.color === '#dbeafe' ? '#2563eb' : // blue -> blue
-                           event.color === '#e0e7ff' ? '#6366f1' : // indigo -> indigo
-                           event.color === '#ccfbf1' ? '#14b8a6' : // teal -> teal
-                           event.color === '#f3e8ff' ? '#a855f7' : // violet -> purple
-                           event.color === '#fed7aa' ? '#ea580c' : // orange -> orange
-                           event.color === '#cffafe' ? '#06b6d4' : // cyan -> cyan
-                           event.color === '#fef2f2' ? '#f87171' : // rose -> red
-                           event.color === '#e0f2fe' ? '#0ea5e9' : // sky -> sky
-                           event.color === '#dcfce7' ? '#16a34a' : // green -> green
-                           event.color === '#f5d0fe' ? '#d946ef' : // fuchsia -> fuchsia
-                           '#9333ea')
+                          event.color === '#fef9c3' ? '#eab308' : // lighter yellow -> yellow
+                            event.color === '#fce7f3' ? '#ec4899' : // pink -> pink
+                              event.color === '#dbeafe' ? '#2563eb' : // blue -> blue
+                                event.color === '#e0e7ff' ? '#6366f1' : // indigo -> indigo
+                                  event.color === '#ccfbf1' ? '#14b8a6' : // teal -> teal
+                                    event.color === '#f3e8ff' ? '#a855f7' : // violet -> purple
+                                      event.color === '#fed7aa' ? '#ea580c' : // orange -> orange
+                                        event.color === '#cffafe' ? '#06b6d4' : // cyan -> cyan
+                                          event.color === '#fef2f2' ? '#f87171' : // rose -> red
+                                            event.color === '#e0f2fe' ? '#0ea5e9' : // sky -> sky
+                                              event.color === '#dcfce7' ? '#16a34a' : // green -> green
+                                                event.color === '#f5d0fe' ? '#d946ef' : // fuchsia -> fuchsia
+                                                  '#9333ea')
                         : '#6b7280',
                     }}
                   >
@@ -428,38 +472,38 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                       <div className="flex items-center justify-between p-3 pb-2">
                         <h3 className="font-bold text-sm text-gray-900 leading-tight line-clamp-1 flex-1 pr-2">{event.title}</h3>
                         {event.organizer?.avatar && (
-                          <img 
-                            src={event.organizer.avatar} 
+                          <img
+                            src={event.organizer.avatar}
                             alt={event.organizer.name}
                             className="w-6 h-6 rounded-full flex-shrink-0 border-2 border-white shadow-sm"
                           />
                         )}
                       </div>
-                      
+
                       {/* Event Banner Image - 60% of card height */}
                       {event.imageHeader && (
-                        <div 
+                        <div
                           className="w-full overflow-hidden px-3 mb-2 rounded"
                           style={{ height: `${Math.max(height * 0.6, 60)}px` }}
                         >
-                          <img 
-                            src={event.imageHeader} 
+                          <img
+                            src={event.imageHeader}
                             alt={event.title}
                             className="w-full h-full object-cover rounded-lg"
                           />
                         </div>
                       )}
-                      
+
                       {/* Content */}
                       <div className="flex-1 flex flex-col justify-between px-3 pb-3">
                         <div className="flex-1">
                           {/* Description with truncation */}
                           <p className="text-xs text-gray-600 mb-2 line-clamp-2 leading-snug">
-                            {event.description.length > 80 
-                              ? `${event.description.substring(0, 80)}...` 
+                            {event.description.length > 80
+                              ? `${event.description.substring(0, 80)}...`
                               : event.description}
                           </p>
-                          
+
                           {/* Location */}
                           <div className="flex items-center gap-1">
                             <svg className="w-3 h-3 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

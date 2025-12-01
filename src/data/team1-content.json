@@ -1,0 +1,116 @@
+{
+    "hero": {
+        "headline": "Avalanche Team1 — Unified Leadership, Global Impact",
+        "subhead": "A central operational unit providing strategy, standards, and governance across regional teams worldwide.",
+        "microCTA": {
+            "primary": "Meet the Regional Teams",
+            "secondary": "Join Team1 Africa"
+        }
+    },
+    "whoWeAre": {
+        "title": "Who We Are",
+        "content": "Team1 serves as the central operational hub that coordinates and empowers regional teams across the Avalanche ecosystem. We provide strategic direction, establish governance frameworks, and deliver the tools and standards that enable regional teams to thrive. Through our unified leadership model, we ensure consistency, quality, and alignment across all Team1 initiatives globally."
+    },
+    "leadershipModel": {
+        "title": "Our Leadership Structure",
+        "roles": [
+            {
+                "title": "Global Lead",
+                "description": "Sets strategic vision and coordinates cross-regional alignment.",
+                "responsibilities": [
+                    "Define global strategy and priorities",
+                    "Ensure alignment across all regional teams",
+                    "Manage stakeholder relationships with Avalanche Foundation"
+                ]
+            },
+            {
+                "title": "Regional Leads",
+                "description": "Execute localized strategies while maintaining global standards.",
+                "responsibilities": [
+                    "Lead regional operations and team development",
+                    "Adapt global strategy to local market needs",
+                    "Report progress and insights to Global Lead"
+                ]
+            },
+            {
+                "title": "Contributors & Core Teams",
+                "description": "Drive day-to-day execution and community engagement.",
+                "responsibilities": [
+                    "Execute programs and initiatives on the ground",
+                    "Build and nurture local communities",
+                    "Provide feedback to inform strategy"
+                ]
+            }
+        ]
+    },
+    "capabilities": {
+        "title": "Core Responsibilities & Capabilities",
+        "items": [
+            "Establish governance frameworks and operational standards",
+            "Develop and distribute tooling, templates, and resources",
+            "Provide training and enablement for regional teams",
+            "Coordinate cross-regional projects and knowledge sharing",
+            "Monitor performance metrics and drive continuous improvement",
+            "Foster alignment between regional initiatives and global goals"
+        ]
+    },
+    "values": {
+        "title": "Our Values",
+        "items": [
+            {
+                "name": "Alignment",
+                "description": "We ensure all teams move in the same direction toward shared goals."
+            },
+            {
+                "name": "Accountability",
+                "description": "We take ownership of our commitments and deliver results."
+            },
+            {
+                "name": "Respect",
+                "description": "We value diverse perspectives and foster inclusive collaboration."
+            },
+            {
+                "name": "Craft",
+                "description": "We pursue excellence in everything we build and deliver."
+            },
+            {
+                "name": "Transparency",
+                "description": "We communicate openly and share knowledge freely."
+            }
+        ]
+    },
+    "timeline": {
+        "title": "Our Journey",
+        "milestones": [
+            {
+                "year": "2021",
+                "event": "Team1 Inception",
+                "description": "Avalanche Team1 established as the central coordination body for global ecosystem growth."
+            },
+            {
+                "year": "2022",
+                "event": "Regional Expansion",
+                "description": "Launched regional teams in Africa, Asia, and Latin America with standardized frameworks."
+            },
+            {
+                "year": "2023",
+                "event": "Governance Framework",
+                "description": "Implemented comprehensive governance model and performance tracking systems."
+            },
+            {
+                "year": "2024",
+                "event": "Global Scale",
+                "description": "Coordinated 500+ events across 30+ countries, onboarding 10,000+ developers."
+            },
+            {
+                "year": "2025",
+                "event": "Future Vision",
+                "description": "Expanding tooling, training, and cross-regional collaboration initiatives."
+            }
+        ]
+    },
+    "teamSnapshot": {
+        "title": "Meet the Team",
+        "intro": "Our team is organized by region, with each member bringing unique expertise to advance the Avalanche ecosystem. Each card displays team members' roles, regions, and areas of focus, making it easy to connect with the right people for collaboration."
+    }
+}
