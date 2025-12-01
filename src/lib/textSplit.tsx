@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 /**
  * Text Splitting Utilities
  * 
@@ -38,40 +40,40 @@ export const splitIntoLines = (text: string): string[] => {
 /**
  * Wrap each character in a span for animation
  */
-export const wrapCharacters = (text: string, className?: string): JSX.Element[] => {
+export const wrapCharacters = (text: string, className?: string): ReactNode[] => {
     return splitIntoCharacters(text).map((char, index) => (
         <span
-      key= {`char-${index}`}
-className = { className }
-style = {{ display: 'inline-block' }}
-    >
-    { char === ' ' ? '\u00A0' : char}
-</span>
-  ));
+            key={`char-${index}`}
+            className={className}
+            style={{ display: 'inline-block' }}
+        >
+            {char === ' ' ? '\u00A0' : char}
+        </span>
+    ));
 };
 
 /**
  * Wrap each word in a span for animation
  */
-export const wrapWords = (text: string, className?: string): JSX.Element[] => {
+export const wrapWords = (text: string, className?: string): ReactNode[] => {
     return splitIntoWords(text).map((word, index) => (
         <span
-      key= {`word-${index}`}
-className = { className }
-style = {{ display: 'inline-block', marginRight: '0.25em' }}
-    >
-    { word }
-    </span>
-  ));
+            key={`word-${index}`}
+            className={className}
+            style={{ display: 'inline-block', marginRight: '0.25em' }}
+        >
+            {word}
+        </span>
+    ));
 };
 
 /**
  * Wrap each line in a div for animation
  */
-export const wrapLines = (text: string, className?: string): JSX.Element[] => {
+export const wrapLines = (text: string, className?: string): ReactNode[] => {
     return splitIntoLines(text).map((line, index) => (
-        <div key= {`line-${index}`} className = { className } >
-            { line }
-            </div>
-  ));
+        <div key={`line-${index}`} className={className}>
+            {line}
+        </div>
+    ));
 };

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
+import AnimatedText from './AnimatedText';
+import AnimatedSection, { AnimatedItem } from './AnimatedSection';
+
 import providenceImg from '../assets/providence.jpg';
 import offTheGridImg from '../assets/off-the-grid.jpg';
 import domiImg from '../assets/domi.png';
@@ -152,15 +155,19 @@ const FeaturedGames: React.FC = () => {
       {/* Mobile Static View - Simple card grid with View More */}
       <div className="lt-1024:block hidden px-6 py-12">
         <div className="mb-8">
-          <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-6">
-            Games
-          </div>
-          <h1 className="text-3xl lt-768:text-2xl font-bold text-gray-900 mb-2">Featured Games</h1>
+          <AnimatedText variant="scale" delay={0.1}>
+            <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-6">
+              Games
+            </div>
+          </AnimatedText>
+          <AnimatedText variant="slideUp" delay={0.2}>
+            <h1 className="text-3xl lt-768:text-2xl font-bold text-gray-900 mb-2">Featured Games</h1>
+          </AnimatedText>
         </div>
 
-        <div className="space-y-6">
+        <AnimatedSection staggerChildren={0.15} className="space-y-6">
           {games.slice(0, visibleGames).map((game) => (
-            <div key={game.id} className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100">
+            <AnimatedItem key={game.id} className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100">
               <img src={game.image} alt={game.title} className="w-full h-48 object-cover" />
 
               <div className="p-5">
@@ -192,9 +199,9 @@ const FeaturedGames: React.FC = () => {
                   <ExternalLink size={18} />
                 </button>
               </div>
-            </div>
+            </AnimatedItem>
           ))}
-        </div>
+        </AnimatedSection>
 
         <div className="flex justify-center gap-4 mt-8">
           {visibleGames < games.length && (
@@ -221,19 +228,25 @@ const FeaturedGames: React.FC = () => {
         <div className="w-full px-8">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-12">
-                Games
-              </div>
-              <h1 className="text-4xl font-bold text-gray-900">Featured Games</h1>
+              <AnimatedText variant="scale" delay={0.1}>
+                <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-12">
+                  Games
+                </div>
+              </AnimatedText>
+              <AnimatedText variant="slideUp" delay={0.2}>
+                <h1 className="text-4xl font-bold text-gray-900">Featured Games</h1>
+              </AnimatedText>
             </div>
             <div className="text-gray-600 lt-1024:hidden">
-              <p className="text-lg">Showcase gaming on Avalanche and engage game</p>
-              <p className="text-lg">developers/creators</p>
+              <AnimatedText variant="slideUp" delay={0.3}>
+                <p className="text-lg">Showcase gaming on Avalanche and engage game</p>
+                <p className="text-lg">developers/creators</p>
+              </AnimatedText>
             </div>
           </div>
         </div>
 
-        <div className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
+        <AnimatedText variant="fadeIn" delay={0.4} className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
           {/* Fixed Details Card - Left Side (Desktop Only) */}
           <div className="relative w-[30%] lt-1024:hidden h-full bg-black rounded-l-2xl p-4 lg:p-8 xl:p-10 2xl:p-12 flex flex-col justify-between z-10 overflow-hidden">
             <div className={`transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
@@ -442,7 +455,7 @@ const FeaturedGames: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </AnimatedText>
 
         {/* Mobile/Tablet Navigation */}
         <div className="hidden lt-1024:flex justify-center items-center gap-6 mt-6 px-4">

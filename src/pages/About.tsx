@@ -6,6 +6,8 @@ import { team1AfricaMembers } from '../data/team-members';
 import CustomCursor from '../components/CustomCursor';
 import videoSrc from '../assets/videos/video.mp4';
 import { LogoMask, LogoOutline } from '../components/LogoMask';
+import AnimatedText from '../components/AnimatedText';
+import AnimatedSection, { AnimatedItem } from '../components/AnimatedSection';
 
 const About = () => {
 
@@ -55,34 +57,34 @@ const About = () => {
                 <div className="max-w-[90vw] mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
                         <div className="lg:sticky lg:top-32">
-                            <h2 className="text-[10vw] lg:text-[5vw] font-black tracking-tighter mb-8 leading-[0.9]" data-cursor="Our Mission">
-                                REDEFINING <br />
-                                <span className="text-red-600">AFRICAN</span> <br />
-                                INNOVATION
-                            </h2>
-                            <p className="text-lg md:text-xl font-medium text-gray-600 max-w-md">
-                                We are not just a team; we are a movement. Bridging the gap between potential and opportunity across the continent.
-                            </p>
+                            <AnimatedText variant="slideUp" delay={0.2}>
+                                <h2 className="text-[10vw] lg:text-[5vw] font-black tracking-tighter mb-8 leading-[0.9]" data-cursor="Our Mission">
+                                    REDEFINING <br />
+                                    <span className="text-red-600">AFRICAN</span> <br />
+                                    INNOVATION
+                                </h2>
+                            </AnimatedText>
+                            <AnimatedText variant="slideUp" delay={0.3}>
+                                <p className="text-lg md:text-xl font-medium text-gray-600 max-w-md">
+                                    We are not just a team; we are a movement. Bridging the gap between potential and opportunity across the continent.
+                                </p>
+                            </AnimatedText>
                         </div>
-                        <div className="space-y-16 md:space-y-24 text-xl md:text-2xl font-light leading-relaxed">
+                        <AnimatedSection staggerChildren={0.2} className="space-y-16 md:space-y-24 text-xl md:text-2xl font-light leading-relaxed">
                             {[
                                 { title: "Decentralization", desc: "We believe in the power of decentralization. It's not just technology; it's a tool for economic liberation and borderless collaboration." },
                                 { title: "Community", desc: "Our roots are deep in the soil of community. From Lagos to Nairobi, Accra to Cape Town, we are connecting the dots of the African Web3 ecosystem." },
                                 { title: "Education", desc: "We don't just build; we educate. Empowering the next generation of developers, creators, and entrepreneurs to take ownership of their digital future." }
                             ].map((item, i) => (
-                                <motion.div
+                                <AnimatedItem
                                     key={i}
-                                    initial={{ opacity: 0, y: 50 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.8 }}
                                 >
                                     <span className="text-4xl md:text-5xl font-bold block mb-4 text-red-500">0{i + 1}.</span>
                                     <h3 className="text-3xl md:text-4xl font-black mb-4 uppercase">{item.title}</h3>
                                     <p>{item.desc}</p>
-                                </motion.div>
+                                </AnimatedItem>
                             ))}
-                        </div>
+                        </AnimatedSection>
                     </div>
                 </div>
             </section>

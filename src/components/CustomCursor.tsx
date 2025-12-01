@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motio
 const CustomCursor = () => {
     const [cursorText, setCursorText] = useState('');
     const [cursorVariant, setCursorVariant] = useState('default');
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
     const cursorRef = useRef<HTMLDivElement>(null);
 
     const mouseX = useMotionValue(0);
@@ -14,6 +15,17 @@ const CustomCursor = () => {
     const cursorY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
+        const checkTouch = () => {
+            setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches);
+        };
+        checkTouch();
+        window.addEventListener('resize', checkTouch);
+        return () => window.removeEventListener('resize', checkTouch);
+    }, []);
+
+    useEffect(() => {
+        if (isTouchDevice) return;
+
         const moveCursor = (e: MouseEvent) => {
             mouseX.set(e.clientX - 16);
             mouseY.set(e.clientY - 16);
@@ -48,7 +60,7 @@ const CustomCursor = () => {
             window.removeEventListener('mousemove', moveCursor);
             window.removeEventListener('mouseover', handleMouseOver);
         };
-    }, [mouseX, mouseY]);
+    }, [mouseX, mouseY, isTouchDevice]);
 
     const variants = {
         default: {
@@ -72,6 +84,8 @@ const CustomCursor = () => {
             color: "#fff",
         }
     };
+
+    if (isTouchDevice) return null;
 
     return (
         <motion.div

@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaGamepad, FaUniversity, FaCode, FaPlay } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
+import AnimatedSection, { AnimatedItem } from './AnimatedSection';
 
 // Import community images
 import community1 from '../assets/community.png';
@@ -241,23 +242,25 @@ const LetsBuildSection = () => {
                     <h2 className="text-5xl font-black">Who We Are</h2>
                     <div className="w-20 h-1 bg-black mx-auto mt-4" />
                 </div>
-                {profiles.map((profile) => (
-                    <div key={profile.id} className="flex flex-col gap-10">
-                        <div className="relative w-full max-w-sm mx-auto aspect-[4/5] rotate-2">
-                            <div className="bg-white p-4 shadow-xl h-full">
-                                <img src={profile.image} alt={profile.title} className="w-full h-[85%] object-cover" />
-                                <div className="h-[15%] flex items-center justify-center">
-                                    <p className="font-handwriting text-2xl text-gray-700">{profile.title.toLowerCase()}</p>
+                <AnimatedSection staggerChildren={0.2} className="space-y-32">
+                    {profiles.map((profile) => (
+                        <AnimatedItem key={profile.id} className="flex flex-col gap-10">
+                            <div className="relative w-full max-w-sm mx-auto aspect-[4/5] rotate-2">
+                                <div className="bg-white p-4 shadow-xl h-full">
+                                    <img src={profile.image} alt={profile.title} className="w-full h-[85%] object-cover" />
+                                    <div className="h-[15%] flex items-center justify-center">
+                                        <p className="font-handwriting text-2xl text-gray-700">{profile.title.toLowerCase()}</p>
+                                    </div>
                                 </div>
+                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-yellow-100/70 rotate-2 shadow-sm" />
                             </div>
-                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-yellow-100/70 rotate-2 shadow-sm" />
-                        </div>
-                        <div className="text-center">
-                            <h3 className="text-5xl font-black mb-6">{profile.title}</h3>
-                            <p className="text-lg text-gray-700 leading-relaxed">{profile.description}</p>
-                        </div>
-                    </div>
-                ))}
+                            <div className="text-center">
+                                <h3 className="text-5xl font-black mb-6">{profile.title}</h3>
+                                <p className="text-lg text-gray-700 leading-relaxed">{profile.description}</p>
+                            </div>
+                        </AnimatedItem>
+                    ))}
+                </AnimatedSection>
             </div>
 
             {/* WHAT WE DO SECTION - HORIZONTAL SCROLL (Desktop) */}
@@ -328,9 +331,9 @@ const LetsBuildSection = () => {
                     <h2 className="text-5xl font-black">What We Do</h2>
                     <div className="w-20 h-1 bg-red-600 mx-auto mt-4" />
                 </div>
-                <div className="space-y-24">
+                <AnimatedSection staggerChildren={0.2} className="space-y-24">
                     {activities.map((activity, index) => (
-                        <div key={index} className="bg-white/5 border border-white/10 p-6 rounded-2xl">
+                        <AnimatedItem key={index} className="bg-white/5 border border-white/10 p-6 rounded-2xl">
                             {/* Title */}
                             <h3 className="text-3xl font-bold mb-4">{activity.title}</h3>
 
@@ -356,9 +359,9 @@ const LetsBuildSection = () => {
                             <button className="w-full px-6 py-4 bg-white text-black font-bold rounded-xl hover:bg-red-600 hover:text-white transition-colors">
                                 {activity.cta}
                             </button>
-                        </div>
+                        </AnimatedItem>
                     ))}
-                </div>
+                </AnimatedSection>
             </div>
 
             <style>{`

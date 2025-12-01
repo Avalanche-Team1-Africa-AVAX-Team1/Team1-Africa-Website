@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 /**
  * Animated Section Component
@@ -34,18 +34,6 @@ const AnimatedSection = ({
         }
     };
 
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.6,
-                ease: [0.25, 0.46, 0.45, 0.94]
-            }
-        }
-    };
-
     return (
         <motion.div
             initial="hidden"
@@ -68,7 +56,7 @@ export const AnimatedItem = ({ children, className = '' }: { children: ReactNode
             y: 0,
             transition: {
                 duration: 0.6,
-                ease: [0.25, 0.46, 0.45, 0.94]
+                ease: [0.25, 0.46, 0.45, 0.94] as const
             }
         }
     };

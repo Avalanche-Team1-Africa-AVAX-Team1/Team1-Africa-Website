@@ -3,19 +3,22 @@ import dexalot from '../assets/dexalot.png'
 import arena from '../assets/Arena.png'
 import points from '../assets/Points.png'
 import { useMediaQuery } from '../hooks/useMediaQuery'
+import AnimatedText from './AnimatedText'
 
 export default function join() {
     const isTouch = useMediaQuery('(hover: none), (pointer: coarse)')
     return (
-        <div className={`relative py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 2xl:py-40 hover:cursor-pointer group px-4 sm:px-6 md:px-8 lg:px-12 ${isTouch ? 'touch-active' : ''}` }>
+        <div className={`relative py-8 sm:py-12 md:py-16 lg:py-24 xl:py-32 2xl:py-40 hover:cursor-pointer group px-4 sm:px-6 md:px-8 lg:px-12 ${isTouch ? 'touch-active' : ''}`}>
             {/* Main heading + decorative images - centered container */}
             <div className="relative w-fit mx-auto">
-                <p
-                    className="text-[32px] sm:text-[48px] md:text-[64px] lg:text-[96px] xl:text-[128px] 2xl:text-[160px] text-center text-muted leading-[1.2] max-w-[1400px]"
-                    style={{ fontFamily: "'Press Start 2P'" }}
-                >
-                    JOIN OUR COMMUNITY
-                </p>
+                <AnimatedText variant="scale" delay={0.2}>
+                    <p
+                        className="text-[32px] sm:text-[48px] md:text-[64px] lg:text-[96px] xl:text-[128px] 2xl:text-[160px] text-center text-muted leading-[1.2] max-w-[1400px]"
+                        style={{ fontFamily: "'Press Start 2P'" }}
+                    >
+                        JOIN OUR COMMUNITY
+                    </p>
+                </AnimatedText>
 
                 {/* Center Union Image (anchored to heading) */}
                 <img

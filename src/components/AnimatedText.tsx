@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 /**
  * Animated Text Component
@@ -16,7 +16,6 @@ interface AnimatedTextProps {
     delay?: number;
     duration?: number;
     className?: string;
-    stagger?: number;
     once?: boolean;
 }
 
@@ -26,7 +25,6 @@ const AnimatedText = ({
     delay = 0,
     duration = 0.6,
     className = '',
-    stagger = 0,
     once = true
 }: AnimatedTextProps) => {
     // Animation variants
@@ -61,7 +59,7 @@ const AnimatedText = ({
             transition={{
                 duration,
                 delay,
-                ease: [0.25, 0.46, 0.45, 0.94]
+                ease: [0.25, 0.46, 0.45, 0.94] as const
             }}
             variants={variants[variant]}
             className={className}

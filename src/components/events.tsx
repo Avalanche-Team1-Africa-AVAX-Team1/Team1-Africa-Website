@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import arrow from '../assets/white-arrow.svg'
 import arrowup from '../assets/arrow-up.svg'
+import AnimatedText from './AnimatedText'
+import MagneticButton from './MagneticButton'
 
 // Import images properly
 import event1 from '../assets/event1-img.png';
@@ -14,7 +16,7 @@ import event7 from '../assets/event7.png';
 import event8 from '../assets/event8.png';
 
 // Type for arch position return value
-type ArchPosition = 
+type ArchPosition =
     | { visible: false }
     | {
         x: number;
@@ -43,7 +45,7 @@ const Events = () => {
         { src: event5, alt: "Team1 Africa Event 5" },
         { src: event6, alt: "Team1 Africa Event 6" },
         { src: event7, alt: "Team1 Africa Event 7" },
-        { src: event8, alt: "Team1 Africa Event 8" },   
+        { src: event8, alt: "Team1 Africa Event 8" },
     ];
 
     // Continuous smooth scrolling using requestAnimationFrame
@@ -180,15 +182,23 @@ const Events = () => {
         <div className='w-full py-20 bg-white relative overflow-hidden'>
             {/* Header */}
             <div className="text-center mb-16 relative z-10">
-                <span className='bg-red-500 px-4 py-2 rounded-lg text-sm inline-block transform font-bold text-white mb-6'>
-                    Events
-                </span>
-                <h2 className='text-5xl font-bold text-black mb-8'>See Our Past Events</h2>
+                <AnimatedText variant="scale" delay={0.1}>
+                    <div className='mb-6'>
+                        <span className='bg-red-500 px-4 py-2 rounded-lg text-sm inline-block transform font-bold text-white'>
+                            Events
+                        </span>
+                    </div>
+                </AnimatedText>
+                <AnimatedText variant="slideUp" delay={0.2}>
+                    <h2 className='text-5xl font-bold text-black mb-8'>See Our Past Events</h2>
+                </AnimatedText>
             </div>
 
             {/* Events Arch - CONTINUOUS INFINITE SCROLL */}
             {/* Reduce container height across screens; keep 4K baseline */}
-            <div
+            <AnimatedText
+                variant="fadeIn"
+                delay={0.3}
                 className="relative w-full h-[900px] lt-1920:h-[680px] lt-1440:h-[560px] lt-1024:h-[420px] lt-768:h-[360px] lt-480:h-[320px] flex items-center justify-center overflow-hidden"
             >
                 <div className="arch-container relative w-full h-full">
@@ -234,43 +244,51 @@ const Events = () => {
                 <div className='absolute bottom-0 left-0 right-0 z-10 lt-1024:hidden'> {/* Keep overlay text on desktop; hide on tablet/mobile */}
                     {/* Description */}
                     <div className="text-center mb-4">
-                        <p className='text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed'>
-                            Events organized and built by Africans, for Africans, amplifying voices and
-                            empowering builders within the Avalanche ecosystem. Explore photos capturing all
-                            the action from the most recent Team1 Africa Avalanche events.
-                        </p>
+                        <AnimatedText variant="slideUp" delay={0.4}>
+                            <p className='text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed'>
+                                Events organized and built by Africans, for Africans, amplifying voices and
+                                empowering builders within the Avalanche ecosystem. Explore photos capturing all
+                                the action from the most recent Team1 Africa Avalanche events.
+                            </p>
+                        </AnimatedText>
 
                     </div>
 
                     {/* Call to Action */}
-                    <div 
+                    <AnimatedText variant="fadeIn" delay={0.5}>
+                        <MagneticButton
+                            onClick={() => navigate('/events')}
+                            className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'
+                        >
+                            See All Events
+                            <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
+                            <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
+                        </MagneticButton>
+                    </AnimatedText>
+                </div>
+            </AnimatedText>
+
+            {/* Mobile/Tablet description below images (image above text) */}
+            <div className='hidden lt-1024:block mt-6 px-4'> {/* Show static text below on tablet/mobile */}
+                <div className="text-center mb-4">
+                    <AnimatedText variant="slideUp" delay={0.4}>
+                        <p className='text-base lt-768:text-[0.95rem] text-gray-600 max-w-2xl mx-auto leading-relaxed'>
+                            Events organized and built by Africans, for Africans, amplifying voices and
+                            empowering builders within the Avalanche ecosystem. Explore photos capturing all
+                            the action from the most recent Team1 Africa Avalanche events.
+                        </p>
+                    </AnimatedText>
+                </div>
+                <AnimatedText variant="fadeIn" delay={0.5}>
+                    <MagneticButton
                         onClick={() => navigate('/events')}
                         className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'
                     >
                         See All Events
                         <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
                         <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
-                    </div>
-                </div>
-            </div>
-
-            {/* Mobile/Tablet description below images (image above text) */}
-            <div className='hidden lt-1024:block mt-6 px-4'> {/* Show static text below on tablet/mobile */}
-                <div className="text-center mb-4">
-                    <p className='text-base lt-768:text-[0.95rem] text-gray-600 max-w-2xl mx-auto leading-relaxed'>
-                        Events organized and built by Africans, for Africans, amplifying voices and
-                        empowering builders within the Avalanche ecosystem. Explore photos capturing all
-                        the action from the most recent Team1 Africa Avalanche events.
-                    </p>
-                </div>
-                <div 
-                    onClick={() => navigate('/events')}
-                    className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'
-                >
-                    See All Events
-                    <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
-                    <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
-                </div>
+                    </MagneticButton>
+                </AnimatedText>
             </div>
 
             {/* Responsive Styles - extend existing rules without touching 4K baseline */}

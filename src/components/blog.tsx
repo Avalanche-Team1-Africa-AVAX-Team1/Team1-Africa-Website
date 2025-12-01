@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { articles } from '../data/articles'
 import event1Img from '../assets/event1-img.png'
+import AnimatedText from './AnimatedText'
+import AnimatedSection, { AnimatedItem } from './AnimatedSection'
 
 const scrollByCards = (container: HTMLDivElement | null, dir: 1 | -1) => {
   if (!container) return
@@ -20,29 +22,35 @@ export default function Blog() {
       <div>
         <div className="flex items-start justify-between">
           <div>
-            <span className="mb-3 inline-block rounded-full bg-red-500 px-2.5 py-1 text-xs font-semibold text-white">Blog</span>
-            <h2 className="text-3xl font-bold text-gray-900">News To Keep You Updated Always</h2>
-            <p className="mt-2 max-w-3xl text-gray-600">Join our community and stay informed about the latest campaigns, success stories, and blockchain innovations in fundraising.</p>
+            <AnimatedText variant="scale" delay={0.1}>
+              <span className="mb-3 inline-block rounded-full bg-red-500 px-2.5 py-1 text-xs font-semibold text-white">Blog</span>
+            </AnimatedText>
+            <AnimatedText variant="slideUp" delay={0.2}>
+              <h2 className="text-3xl font-bold text-gray-900">News To Keep You Updated Always</h2>
+            </AnimatedText>
+            <AnimatedText variant="slideUp" delay={0.3}>
+              <p className="mt-2 max-w-3xl text-gray-600">Join our community and stay informed about the latest campaigns, success stories, and blockchain innovations in fundraising.</p>
+            </AnimatedText>
           </div>
           <div className="hidden md:flex gap-3">
             <button aria-label="Previous" className="size-10 rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm" onClick={() => scrollByCards(scroller, -1)}>
               <span className="sr-only">Previous</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6" /></svg>
             </button>
             <button aria-label="Next" className="size-10 rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm" onClick={() => scrollByCards(scroller, 1)}>
               <span className="sr-only">Next</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg>
             </button>
           </div>
         </div>
 
         {/* Mobile: stack cards vertically with show more/less */}
         <div className="mt-6 md:hidden">
-          <ul className="space-y-6">
+          <AnimatedSection staggerChildren={0.1} className="space-y-6">
             {mobileVisible.map((a, idx) => {
               const imgSrc = idx === 0 ? (event1Img || a.featuredImage.url) : (a.featuredImage.url || event1Img)
               return (
-                <li key={a.slug}>
+                <AnimatedItem key={a.slug}>
                   <Link to={`/blog/${a.slug}`} className="group block">
                     <div className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:-translate-y-1">
                       <img src={imgSrc} alt={a.featuredImage.alt} className="h-48 w-full object-cover" />
@@ -53,10 +61,10 @@ export default function Blog() {
                       </div>
                     </div>
                   </Link>
-                </li>
+                </AnimatedItem>
               )
             })}
-          </ul>
+          </AnimatedSection>
           {hasMore && (
             <div className="mt-6 flex justify-center">
               <button
@@ -70,28 +78,29 @@ export default function Blog() {
         </div>
 
         {/* Desktop/tablet: horizontal scroller */}
-        <div ref={(el) => { scroller = el }} className="hidden md:flex mt-6 gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory py-4">
-          {articles.map((a, idx) => {
-            const imgSrc = idx === 0 ? (event1Img || a.featuredImage.url) : (a.featuredImage.url || event1Img)
-            return (
-              <Link key={a.slug} to={`/blog/${a.slug}`} className="group w-[420px] md:w-[480px] lg:w-[520px] shrink-0 snap-start">
-                <div data-card className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:scale-[1.02] flex flex-col min-h-[520px] md:min-h-[560px] lg:min-h-[600px]">
-                  <img src={imgSrc} alt={a.featuredImage.alt} className="h-64 md:h-72 lg:h-80 w-full object-cover" />
-                  <div className="p-4 flex-1 flex flex-col">
-                    <span className="rounded-2xl px-4 py-2 text-xs font-medium text-white w-fit" style={{ backgroundColor: a.category.color }}>{a.category.name}</span>
-                    <h3 className="mt-3 clamp-2 text-2xl font-semibold text-gray-900">{a.title}</h3>
-                    <div className="mt-2 text-sm text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">
-                      20th August, 2025 • {a.readTime} min read • {a.author.name}
+        <AnimatedText variant="fadeIn" delay={0.4}>
+          <div ref={(el) => { scroller = el }} className="hidden md:flex mt-6 gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory py-4">
+            {articles.map((a, idx) => {
+              const imgSrc = idx === 0 ? (event1Img || a.featuredImage.url) : (a.featuredImage.url || event1Img)
+              return (
+                <Link key={a.slug} to={`/blog/${a.slug}`} className="group w-[420px] md:w-[480px] lg:w-[520px] shrink-0 snap-start">
+                  <div data-card className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:scale-[1.02] flex flex-col min-h-[520px] md:min-h-[560px] lg:min-h-[600px]">
+                    <img src={imgSrc} alt={a.featuredImage.alt} className="h-64 md:h-72 lg:h-80 w-full object-cover" />
+                    <div className="p-4 flex-1 flex flex-col">
+                      <span className="rounded-2xl px-4 py-2 text-xs font-medium text-white w-fit" style={{ backgroundColor: a.category.color }}>{a.category.name}</span>
+                      <h3 className="mt-3 clamp-2 text-2xl font-semibold text-gray-900">{a.title}</h3>
+                      <div className="mt-2 text-sm text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis">
+                        20th August, 2025 • {a.readTime} min read • {a.author.name}
+                      </div>
+                      <p className="mt-2 clamp-3 text-base text-gray-600">{a.excerpt}</p>
                     </div>
-                    <p className="mt-2 clamp-3 text-base text-gray-600">{a.excerpt}</p>
                   </div>
-                </div>
-              </Link>
-            )
-          })}
-        </div>
+                </Link>
+              )
+            })}
+          </div>
+        </AnimatedText>
       </div>
     </section>
   )
 }
-
