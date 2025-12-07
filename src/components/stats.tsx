@@ -88,16 +88,12 @@ const Stats = () => {
                 src={event1}
                 srcWebp={event1Webp}
                 alt="event1"
-                width={300}
-                height={150}
-                className='hidden xl:top-0 md:block absolute md:bottom-24 md:left-0 md:w-28 lg:bottom-24 lg:left-0 lg:w-48 xl:top-2 xl:left-0 xl:w-52 2xl:bottom-96 2xl:left-[-15%] 2xl:ml-0 2xl:w-[350px] rounded-xl pointer-events-none z-0' /> {/* Smaller and pushed out on tablets; scales up on larger screens */}
+                className='hidden xl:top-0 md:block absolute md:bottom-24 md:left-0 md:w-28 lg:bottom-24 lg:left-0 lg:w-48 xl:top-2 xl:left-0 xl:w-52 2xl:bottom-96 2xl:left-[-15%] 2xl:ml-0 2xl:w-[350px] aspect-[3/4] rounded-xl pointer-events-none z-0' /> {/* Smaller and pushed out on tablets; scales up on larger screens */}
             <AppImage
                 src={event2}
                 srcWebp={event2Webp}
                 alt="event2"
-                width={300}
-                height={150}
-                className='hidden md:block absolute md:top-10 md:right-0 md:w-28 lg:top-24 lg:right-0 lg:w-48 xl:top-56 xl:right-0 xl:w-52 2xl:top-96 2xl:right-[-15%] 2xl:mr-0 2xl:w-[350px] rounded-xl pointer-events-none z-0' /> {/* Smaller and pushed out on tablets; scales up on larger screens */}
+                className='hidden md:block absolute md:top-10 md:right-0 md:w-28 lg:top-24 lg:right-0 lg:w-48 xl:top-56 xl:right-0 xl:w-52 2xl:top-96 2xl:right-[-15%] 2xl:mr-0 2xl:w-[350px] aspect-[3/4] rounded-xl pointer-events-none z-0' /> {/* Smaller and pushed out on tablets; scales up on larger screens */}
 
             <div className='flex flex-col md:flex-row justify-center items-center gap-8 lg:gap-40 lt-1920:gap-16 lt-1024:gap-10 lt-768:gap-8 text-center z-10 md:mt-6 md:ml-12'> {/* Ensure counters render above decorative images and add spacing on tablets */}
                 <div className='leading-tight'>
