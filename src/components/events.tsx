@@ -4,16 +4,25 @@ import arrow from '../assets/white-arrow.svg'
 import arrowup from '../assets/arrow-up.svg'
 import AnimatedText from './AnimatedText'
 import MagneticButton from './MagneticButton'
+import AppImage from './ui/AppImage';
 
 // Import images properly
 import event1 from '../assets/event1-img.png';
+import event1Webp from '../assets/event1-img.webp';
 import event2 from '../assets/event2-img.png';
+import event2Webp from '../assets/event2-img.webp';
 import event3 from '../assets/event3.png';
+import event3Webp from '../assets/event3.webp';
 import event4 from '../assets/event4.png';
+import event4Webp from '../assets/event4.webp';
 import event5 from '../assets/event5.png';
+import event5Webp from '../assets/event5.webp';
 import event6 from '../assets/event6.png';
+import event6Webp from '../assets/event6.webp';
 import event7 from '../assets/event7.png';
+import event7Webp from '../assets/event7.webp';
 import event8 from '../assets/event8.png';
+import event8Webp from '../assets/event8.webp';
 
 // Type for arch position return value
 type ArchPosition =
@@ -38,14 +47,14 @@ const Events = () => {
 
     // 8 event images using the same pattern as original
     const baseImages = [
-        { src: event1, alt: "Team1 Africa Event 1" },
-        { src: event2, alt: "Team1 Africa Event 2" },
-        { src: event3, alt: "Team1 Africa Event 3" },
-        { src: event4, alt: "Team1 Africa Event 4" },
-        { src: event5, alt: "Team1 Africa Event 5" },
-        { src: event6, alt: "Team1 Africa Event 6" },
-        { src: event7, alt: "Team1 Africa Event 7" },
-        { src: event8, alt: "Team1 Africa Event 8" },
+        { src: event1, srcWebp: event1Webp, alt: "Team1 Africa Event 1" },
+        { src: event2, srcWebp: event2Webp, alt: "Team1 Africa Event 2" },
+        { src: event3, srcWebp: event3Webp, alt: "Team1 Africa Event 3" },
+        { src: event4, srcWebp: event4Webp, alt: "Team1 Africa Event 4" },
+        { src: event5, srcWebp: event5Webp, alt: "Team1 Africa Event 5" },
+        { src: event6, srcWebp: event6Webp, alt: "Team1 Africa Event 6" },
+        { src: event7, srcWebp: event7Webp, alt: "Team1 Africa Event 7" },
+        { src: event8, srcWebp: event8Webp, alt: "Team1 Africa Event 8" },
     ];
 
     // Continuous smooth scrolling using requestAnimationFrame
@@ -224,17 +233,12 @@ const Events = () => {
                                     opacity: position.opacity,
                                 }}
                             >
-                                <img
+                                <AppImage
                                     src={image.src}
+                                    srcWebp={image.srcWebp}
                                     alt={image.alt}
-                                    loading="lazy"
                                     className="w-full h-full object-cover rounded-xl"
-                                    onLoad={() => console.log(`✅ Flowing Arch Image loaded`)}
-                                    onError={(e) => {
-                                        console.error(`❌ Flowing Arch Image failed`);
-                                        const target = (e.target as HTMLImageElement);
-                                        target.style.backgroundColor = '#ff9999';
-                                    }}
+                                    placeholderColor="#f0f0f0"
                                 />
                             </div>
                         );

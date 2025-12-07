@@ -1,4 +1,5 @@
-import { useRef, useState, MouseEvent, ReactNode } from 'react';
+import { useRef, useState } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
 /**

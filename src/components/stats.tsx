@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import AnimatedText from './AnimatedText';
+import AppImage from './ui/AppImage';
 import event1 from '../assets/event1-img.png'
+import event1Webp from '../assets/event1-img.webp'
 import event2 from '../assets/event2-img.png'
+import event2Webp from '../assets/event2-img.webp'
 
 const Stats = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -81,14 +84,16 @@ const Stats = () => {
 
             {/* positioned images */}
             {/* Show decorative images from tablet (md) upward; size/offset adapt to avoid text overlap */}
-            <img
+            <AppImage
                 src={event1}
+                srcWebp={event1Webp}
                 alt="event1"
                 width={300}
                 height={150}
                 className='hidden xl:top-0 md:block absolute md:bottom-24 md:left-0 md:w-28 lg:bottom-24 lg:left-0 lg:w-48 xl:top-2 xl:left-0 xl:w-52 2xl:bottom-96 2xl:left-[-15%] 2xl:ml-0 2xl:w-[350px] rounded-xl pointer-events-none z-0' /> {/* Smaller and pushed out on tablets; scales up on larger screens */}
-            <img
+            <AppImage
                 src={event2}
+                srcWebp={event2Webp}
                 alt="event2"
                 width={300}
                 height={150}

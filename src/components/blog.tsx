@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { articles } from '../data/articles'
 import event1Img from '../assets/event1-img.png'
+import event1ImgWebp from '../assets/event1-img.webp'
 import AnimatedText from './AnimatedText'
 import AnimatedSection, { AnimatedItem } from './AnimatedSection'
+import AppImage from './ui/AppImage'
 
 const scrollByCards = (container: HTMLDivElement | null, dir: 1 | -1) => {
   if (!container) return
@@ -29,7 +31,7 @@ export default function Blog() {
               <h2 className="text-3xl font-bold text-gray-900">News To Keep You Updated Always</h2>
             </AnimatedText>
             <AnimatedText variant="slideUp" delay={0.3}>
-              <p className="mt-2 max-w-3xl text-gray-600">Join our community and stay informed about the latest campaigns, success stories, and blockchain innovations in fundraising.</p>
+              <p className="mt-2 text-gray-600 max-w-3xl leading-relaxed">Join our community and stay informed about the latest campaigns, success stories, and blockchain innovations in fundraising.</p>
             </AnimatedText>
           </div>
           <div className="hidden md:flex gap-3">
@@ -49,11 +51,18 @@ export default function Blog() {
           <AnimatedSection staggerChildren={0.1} className="space-y-6">
             {mobileVisible.map((a, idx) => {
               const imgSrc = idx === 0 ? (event1Img || a.featuredImage.url) : (a.featuredImage.url || event1Img)
+              const imgWebp = idx === 0 ? (event1ImgWebp || a.featuredImage.urlWebp) : (a.featuredImage.urlWebp || event1ImgWebp)
+
               return (
                 <AnimatedItem key={a.slug}>
                   <Link to={`/blog/${a.slug}`} className="group block">
                     <div className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:-translate-y-1">
-                      <img src={imgSrc} alt={a.featuredImage.alt} className="h-48 w-full object-cover" />
+                      <AppImage
+                        src={imgSrc}
+                        srcWebp={imgWebp}
+                        alt={a.featuredImage.alt}
+                        className="h-48 w-full object-cover"
+                      />
                       <div className="p-4">
                         <span className="rounded-full px-2.5 py-1 text-xs font-medium text-white" style={{ backgroundColor: a.category.color }}>{a.category.name}</span>
                         <h3 className="mt-3 line-clamp-2 text-lg font-semibold text-gray-900">{a.title}</h3>
@@ -82,10 +91,17 @@ export default function Blog() {
           <div ref={(el) => { scroller = el }} className="hidden md:flex mt-6 gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory py-4">
             {articles.map((a, idx) => {
               const imgSrc = idx === 0 ? (event1Img || a.featuredImage.url) : (a.featuredImage.url || event1Img)
+              const imgWebp = idx === 0 ? (event1ImgWebp || a.featuredImage.urlWebp) : (a.featuredImage.urlWebp || event1ImgWebp)
+
               return (
                 <Link key={a.slug} to={`/blog/${a.slug}`} className="group w-[420px] md:w-[480px] lg:w-[520px] shrink-0 snap-start">
                   <div data-card className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:scale-[1.02] flex flex-col min-h-[520px] md:min-h-[560px] lg:min-h-[600px]">
-                    <img src={imgSrc} alt={a.featuredImage.alt} className="h-64 md:h-72 lg:h-80 w-full object-cover" />
+                    <AppImage
+                      src={imgSrc}
+                      srcWebp={imgWebp}
+                      alt={a.featuredImage.alt}
+                      className="h-64 md:h-72 lg:h-80 w-full object-cover"
+                    />
                     <div className="p-4 flex-1 flex flex-col">
                       <span className="rounded-2xl px-4 py-2 text-xs font-medium text-white w-fit" style={{ backgroundColor: a.category.color }}>{a.category.name}</span>
                       <h3 className="mt-3 clamp-2 text-2xl font-semibold text-gray-900">{a.title}</h3>

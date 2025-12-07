@@ -2,13 +2,21 @@ import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
 import AnimatedText from './AnimatedText';
 import AnimatedSection, { AnimatedItem } from './AnimatedSection';
+import AppImage from './ui/AppImage';
 
 import providenceImg from '../assets/providence.jpg';
+import providenceWebp from '../assets/providence.webp';
 import offTheGridImg from '../assets/off-the-grid.jpg';
+import offTheGridWebp from '../assets/off-the-grid.webp';
 import domiImg from '../assets/domi.png';
+import domiWebp from '../assets/domi.webp';
 import shrapnelImg from '../assets/shrapnel.png';
+import shrapnelWebp from '../assets/shrapnel.webp';
 import defiKingdomImg from '../assets/kingdom.png';
+import defiKingdomWebp from '../assets/kingdom.webp';
 import maplestoryImg from '../assets/maple.png';
+import maplestoryWebp from '../assets/maple.webp';
+
 import steamIcon from '../assets/steam.svg';
 import windowsIcon from '../assets/windows.svg';
 import xboxIcon from '../assets/xbox.svg';
@@ -22,6 +30,7 @@ interface Game {
   genre: string;
   platforms: string[];
   image: string;
+  imageWebp: string;
 }
 
 const FeaturedGames: React.FC = () => {
@@ -39,7 +48,8 @@ const FeaturedGames: React.FC = () => {
       description: "A sci-fi survival extraction game on Avalanche. Players venture into unstable Slipworlds to scavenge resources and alien tech before the Singularity arrives. Race against collapsing timelines and rival explorers in tense PvE/PvP gameplay. Built with Unreal Engine 5, featuring blockchain ownership and a player-driven economy.",
       genre: "Survival / Extraction",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Nintendo Switch"],
-      image: providenceImg
+      image: providenceImg,
+      imageWebp: providenceWebp
     },
     {
       id: 2,
@@ -47,7 +57,8 @@ const FeaturedGames: React.FC = () => {
       description: "A cyberpunk third-person extraction royale by Gunzilla Games. Drop into massive battlegrounds, loot cybernetic upgrades, and extract valuable gear. Harvest enemy cyber-limbs and customize with 30+ augmentations. Features a 60+ hour campaign and blockchain-enabled trading on Avalanche's GUNZ subnet.",
       genre: "Action-RPG / Extraction Royale",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam"],
-      image: offTheGridImg
+      image: offTheGridImg,
+      imageWebp: offTheGridWebp
     },
     {
       id: 3,
@@ -55,7 +66,8 @@ const FeaturedGames: React.FC = () => {
       description: "A hardcore fantasy MMORPG with no level caps and real death consequences. Explore vast worlds, claim towers, and build strategic houses. Features seasonal leaderboards and blockchain-powered true ownership of items with token-based governance in a sustainable play-to-own economy.",
       genre: "MMORPG / Fantasy Sandbox",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Epic"],
-      image: domiImg
+      image: domiImg,
+      imageWebp: domiWebp
     },
     {
       id: 4,
@@ -63,7 +75,8 @@ const FeaturedGames: React.FC = () => {
       description: "A next-gen extraction shooter on Avalanche. Enter The Sacrifice Zone to recover rare Sigma resources—death means losing gear. Beyond intense FPS gameplay, create maps, skins, and mods, mint them as NFTs, and trade freely. AAA visuals meet blockchain ownership and community creation tools.",
       genre: "Extraction Shooter / FPS",
       platforms: ["Windows", "PlayStation", "Xbox", "Nintendo Switch"],
-      image: shrapnelImg
+      image: shrapnelImg,
+      imageWebp: shrapnelWebp
     },
     {
       id: 5,
@@ -71,7 +84,8 @@ const FeaturedGames: React.FC = () => {
       description: "Pixel-art fantasy RPG meets decentralized finance. Summon NFT Heroes, quest in PvE/PvP, and engage in staking and liquidity mining. The Crystalvale expansion on Avalanche introduced $CRYSTAL token for summoning and upgrades. A living DeFi ecosystem disguised as a fantasy adventure.",
       genre: "Fantasy RPG / GameFi",
       platforms: ["Windows", "PlayStation", "Steam", "Epic"],
-      image: defiKingdomImg
+      image: defiKingdomImg,
+      imageWebp: defiKingdomWebp
     },
     {
       id: 6,
@@ -79,7 +93,8 @@ const FeaturedGames: React.FC = () => {
       description: "Nexon's legendary MMORPG reimagined for Web3 on Avalanche. Return to the beloved 2D side-scrolling world with blockchain-powered ownership. Tokenize items and characters, design user-generated content, and earn rewards. Nostalgia meets modern Web3 functionality in this iconic franchise reborn.",
       genre: "MMORPG / UGC",
       platforms: ["Windows", "Xbox", "Steam"],
-      image: maplestoryImg
+      image: maplestoryImg,
+      imageWebp: maplestoryWebp
     }
 
   ], []);
@@ -168,7 +183,7 @@ const FeaturedGames: React.FC = () => {
         <AnimatedSection staggerChildren={0.15} className="space-y-6">
           {games.slice(0, visibleGames).map((game) => (
             <AnimatedItem key={game.id} className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100">
-              <img src={game.image} alt={game.title} className="w-full h-48 object-cover" />
+              <AppImage src={game.image} srcWebp={game.imageWebp} alt={game.title} className="w-full h-48 object-cover" />
 
               <div className="p-5">
                 <h2 className="text-2xl font-bold text-gray-900 mb-3">{game.title}</h2>
@@ -347,8 +362,9 @@ const FeaturedGames: React.FC = () => {
                 transition: 'transform 500ms'
               }}
             >
-              <img
+              <AppImage
                 src={games[getGameAtPosition(-1)].image}
+                srcWebp={games[getGameAtPosition(-1)].imageWebp}
                 alt={games[getGameAtPosition(-1)].title}
                 className="w-full h-full object-cover"
               />
@@ -403,10 +419,12 @@ const FeaturedGames: React.FC = () => {
                     transition: 'transform 500ms'
                   }}
                 >
-                  <img
+                  <AppImage
                     src={game.image}
+                    srcWebp={game.imageWebp}
                     alt={game.title}
                     className="w-full h-full object-cover"
+                    priority={gameIndex === currentGameIndex || cardPosition === 0 || cardPosition === 1} // Prioritize visible cards
                   />
 
                   {cardPosition === 1 && (
@@ -418,10 +436,12 @@ const FeaturedGames: React.FC = () => {
 
             {/* Mobile: Show current card */}
             <div className="hidden lt-1024:block w-full h-full relative">
-              <img
+              <AppImage
                 src={games[currentGameIndex].image}
+                srcWebp={games[currentGameIndex].imageWebp}
                 alt={games[currentGameIndex].title}
                 className="w-full h-full object-cover"
+                priority={true}
               />
 
               {!showDetails && (

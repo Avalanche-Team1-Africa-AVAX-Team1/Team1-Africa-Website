@@ -11,6 +11,7 @@ export type ArticleAuthor = {
 
 export type ArticleImage = {
   url: string
+  urlWebp?: string
   alt: string
 }
 
