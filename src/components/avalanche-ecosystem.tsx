@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { gsap } from 'gsap'
+import AnimatedText from './AnimatedText'
 
 // Import the exact images from chat - for left side falling images
 import poiint from '../assets/poiint.png'
@@ -387,69 +388,78 @@ export default function AvalancheEcosystem() {
     >
       {/* Header */}
       <div className="relative z-10 max-w-7xl mx-auto mb-20">
-        <div className="inline-block mb-6">
-          <span className="bg-[#FF3B5C] text-white text-sm font-bold px-5 py-2 rounded-full">
-            Token & Trends
-          </span>
-        </div>
-        <h2 className="text-5xl md:text-6xl font-bold text-black mb-6 max-w-3xl">
-          Discover Avalanche's Ecosystem
-        </h2>
-        <p className="text-gray-600 text-base md:text-lg max-w-2xl leading-relaxed">
-          Discover a wide variety of apps, blockchains, wallets and explorers, 
-          built on the Avalanche ecosystem by developers and contributors from across the globe
-        </p>
+        <AnimatedText variant="scale" delay={0.1}>
+          <div className="inline-block mb-6">
+            <span className="bg-[#FF3B5C] text-white text-sm font-bold px-5 py-2 rounded-full">
+              Token & Trends
+            </span>
+          </div>
+        </AnimatedText>
+        <AnimatedText variant="slideUp" delay={0.2}>
+          <h2 className="text-5xl md:text-6xl font-bold text-black mb-6 max-w-3xl">
+            Discover Avalanche's Ecosystem
+          </h2>
+        </AnimatedText>
+        <AnimatedText variant="slideUp" delay={0.3}>
+          <p className="text-gray-600 text-base md:text-lg max-w-2xl leading-relaxed">
+            Discover a wide variety of apps, blockchains, wallets and explorers,
+            built on the Avalanche ecosystem by developers and contributors from across the globe
+          </p>
+        </AnimatedText>
       </div>
 
       {/* Main Content Grid */}
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-        
+
         {/* Left Column - Falling Images Container */}
-        <div
-          ref={logoContainerRef}
-          className="relative w-full h-[600px] bg-gray-100 rounded-[32px] hidden lg:block overflow-hidden"
-        >
-          {FLOATING_IMAGES.map((image, index) => {
-            return (
-              <div
-                key={index}
-                ref={(el) => {
-                  imageRefs.current[index] = el
-                }}
-                className="absolute pointer-events-none"
-                style={{
-                  width: image.width,
-                  height: image.height,
-                  top: 0,
-                  left: 0,
-                  opacity: 0,
-                }}
-              >
-                <img src={image.src} alt={image.alt} className="w-full h-full object-contain" />
-              </div>
-            )
-          })}
-        </div>
+        <AnimatedText variant="fadeIn" delay={0.4}>
+          <div
+            ref={logoContainerRef}
+            className="relative w-full h-[600px] bg-gray-100 rounded-[32px] hidden lg:block overflow-hidden"
+          >
+            {FLOATING_IMAGES.map((image, index) => {
+              return (
+                <div
+                  key={index}
+                  ref={(el) => {
+                    imageRefs.current[index] = el
+                  }}
+                  className="absolute pointer-events-none"
+                  style={{
+                    width: image.width,
+                    height: image.height,
+                    top: 0,
+                    left: 0,
+                    opacity: 0,
+                  }}
+                >
+                  <img src={image.src} alt={image.alt} className="w-full h-full object-contain" />
+                </div>
+              )
+            })}
+          </div>
+        </AnimatedText>
 
         {/* Right Column - Stacked Cards */}
-        <div
-          className="relative w-full h-[600px]"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => {
-            setIsHovering(false)
-            accumulatedScroll.current = 0
-          }}
-          onWheel={handleWheel}
-        >
-          <div className="relative w-full h-full" style={{ perspective: '1400px' }}>
-            <AnimatePresence initial={false} mode="sync">
-              {renderFeaturedCard()}
-              {renderTrendingCard()}
-            </AnimatePresence>
+        <AnimatedText variant="fadeIn" delay={0.5}>
+          <div
+            className="relative w-full h-[600px]"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => {
+              setIsHovering(false)
+              accumulatedScroll.current = 0
+            }}
+            onWheel={handleWheel}
+          >
+            <div className="relative w-full h-full" style={{ perspective: '1400px' }}>
+              <AnimatePresence initial={false} mode="sync">
+                {renderFeaturedCard()}
+                {renderTrendingCard()}
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
+        </AnimatedText>
       </div>
     </section>
   )
 }
-

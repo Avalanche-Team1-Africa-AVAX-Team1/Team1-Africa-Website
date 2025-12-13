@@ -55,14 +55,19 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
       })
     })
 
-    // Wait for all images AND minimum time
-    Promise.all(promises).then(() => {
+    // Wait for all images AND minimum time, but timeout after maxLoadTime
+    const maxLoadTime = 10000
+
+    const loadWithMinTime = Promise.all(promises).then(() => {
       const elapsed = Date.now() - startTime
       const remainingTime = Math.max(0, minLoadTime - elapsed)
-      
-      setTimeout(() => {
-        setProgress(100)
-      }, remainingTime)
+      return new Promise<void>(resolve => setTimeout(resolve, remainingTime))
+    })
+
+    const timeout = new Promise<void>(resolve => setTimeout(resolve, maxLoadTime))
+
+    Promise.race([loadWithMinTime, timeout]).then(() => {
+      setProgress(100)
     })
 
     return () => {
@@ -74,11 +79,11 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
     if (progress >= 100) {
       // Stage 1: Morphing animation
       setStage('morphing')
-      
+
       const tl = gsap.timeline({
         onComplete: () => {
           setStage('exploding')
-          
+
           // Stage 2: Explosion and exit
           setTimeout(() => {
             if (logoRef.current && particlesRef.current) {
@@ -97,7 +102,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                 const distance = 800
                 const x = Math.cos(angle) * distance
                 const y = Math.sin(angle) * distance
-                
+
                 gsap.to(particle, {
                   x,
                   y,
@@ -127,11 +132,11 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
           duration: 0.6,
           ease: 'back.inOut'
         })
-        .to(logoRef.current, {
-          scale: 1,
-          duration: 0.4,
-          ease: 'elastic.out(1, 0.5)'
-        })
+          .to(logoRef.current, {
+            scale: 1,
+            duration: 0.4,
+            ease: 'elastic.out(1, 0.5)'
+          })
       }
     }
   }, [progress, onComplete])
@@ -205,7 +210,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
               const size = Math.random() * 4 + 2
               const initialX = (Math.random() - 0.5) * 100
               const initialY = (Math.random() - 0.5) * 100
-              
+
               return (
                 <motion.div
                   key={i}
