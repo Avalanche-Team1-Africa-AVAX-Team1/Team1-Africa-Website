@@ -1,10 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
+
 import AnimatedText from './AnimatedText';
 import AppImage from './ui/AppImage';
 import event1 from '../assets/event1-img.png'
 import event1Webp from '../assets/event1-img.webp'
 import event2 from '../assets/event2-img.png'
 import event2Webp from '../assets/event2-img.webp'
+import avaxlogo from '../assets/logo.png'
+import otgVideo from '../assets/videos/otg.mp4'
+import bloodloopVideo from '../assets/videos/bloodloop-use.mp4'
 
 const Stats = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -78,7 +82,7 @@ const Stats = () => {
             <div className='flex justify-center items-center'>
                 {/* Scale intro paragraph on non-4K screens; constrain width */}
                 <AnimatedText variant="slideUp" delay={0.2} className='text-[1.4rem] md:text-[50px] lt-1920:text-[40px] lt-1440:text-[34px] lt-1024:text-[25px] lt-768:text-[22px] lt-480:text-[1rem] w-full md:w-[calc(100%-8rem)] lg:w-[calc(100%-12rem)] xl:w-[calc(100%-14rem)] 2xl:w-[calc(100%-24rem)] md:px-3 lg:px-5 xl:px-7 font-inter tracking-tight mx-auto'>
-                    <p className='font-normal text-[50px] flex flex-wrap items-center gap-x-3 leading-none' style={{ lineHeight: '0.7', rowGap: '0' }}>
+                    <p className='font-normal text-[50px] flex flex-wrap items-center justify-center gap-x-2 gap-y-2 md:gap-x-3 md:gap-y-4 leading-normal'>
                         Team1 <span className='text-[#ef4444]'>Africa</span>
                         <span className='inline-block w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-28 xl:h-28 relative flex-shrink-0'>
                             <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHBxaXg0bTFmOGZnYjN3YWJ6dGJxNWJxenBoZjV0OXl5enJ5dHZ6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6MbtUNOSRhgVPTFK/giphy.gif" alt="" className='w-full h-full object-contain' />
@@ -87,13 +91,11 @@ const Stats = () => {
                         <span className='inline-block w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-28 xl:h-28 relative flex-shrink-0'>
                             <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXQ3ZTh5YmpoNWRnbWIzcmg5Nnp3eXI3Mjk0OHR4eHZ5bDBydzVpaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlQXlQ3nHyLMvte/giphy.gif" alt="" className='w-full h-full object-contain' />
                         </span>
-                        African network empowering Builders
-                        <span className='inline-block w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-28 xl:h-28 relative flex-shrink-0'>
-                            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHBxaXg0bTFmOGZnYjN3YWJ6dGJxNWJxenBoZjV0OXl5enJ5dHZ6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6MbtUNOSRhgVPTFK/giphy.gif" alt="" className='w-full h-full object-contain' />
-                        </span>
-                        and Creators with resources <span className='inline-block w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-28 xl:h-28 relative flex-shrink-0'>
-                            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnIyMXBnbnVkYnN1ZTlheHB3MWEzOHVkNW50YWxyMGFhY3U3aWZ1ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Qz5ITuBg5uvLy0yiRY/giphy.gif" alt="" className='w-full h-full object-contain' />
-                        </span>to thrive on Avalanche.
+                        African <div className='inline-block w-16 h-8 md:w-24 md:h-14 lg:w-32 lg:h-16 xl:w-40 xl:h-20 relative flex-shrink-0 mx-2 md:mx-4'><video key="bloodloop-video" src={bloodloopVideo} autoPlay loop muted playsInline className='w-full h-full object-cover rounded-full border-2 border-white' /></div> network empowering <span className='text-[#ef4444]'>Builders</span>
+
+                        and Creators <div className='inline-block w-16 h-8 md:w-24 md:h-14 lg:w-32 lg:h-16 xl:w-40 xl:h-20 relative flex-shrink-0 mx-2 md:mx-4'><video key="otg-video" src={otgVideo} autoPlay loop muted playsInline className='w-full h-full object-cover rounded-full border-2 border-white' /></div> with
+                        <span className="block w-full h-0"></span>
+                        resources to thrive on <img src={avaxlogo} alt="logo" className='w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-10 xl:h-10 relative flex-shrink-0' /><span className='-ml-2'>valanche.</span>
                     </p>
                 </AnimatedText>
             </div>
