@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
+import AnimatedText from './AnimatedText';
 
 import testimonial1 from "../assets/testimonial1.jpg";
 import testimonial2 from "../assets/testimonial2.jpg";
@@ -286,7 +287,7 @@ export default function TestimonialSlider() {
     const updateCardWidth = () => {
       setCardWidth(window.innerWidth < 1440 ? 600 : 800);
     };
-    
+
     updateCardWidth();
     window.addEventListener('resize', updateCardWidth);
     return () => window.removeEventListener('resize', updateCardWidth);
@@ -446,199 +447,205 @@ export default function TestimonialSlider() {
       {/* Header */}
 
       <div className="px-6 max-w-7xl mb-16">
-        <div className="mb-4">
-          <span className="text-xs uppercase tracking-widest text-gray-500 font-semibold">
-            TESTIMONIALS
-          </span>
-        </div>
-        <h2 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-          Don't take our word for it!<br />
-          <span className="text-gray-700">Hear it from our partners.</span>
-        </h2>
+        <AnimatedText variant="scale" delay={0.1}>
+          <div className="mb-4">
+            <span className="text-xs uppercase tracking-widest text-gray-500 font-semibold">
+              TESTIMONIALS
+            </span>
+          </div>
+        </AnimatedText>
+        <AnimatedText variant="slideUp" delay={0.2}>
+          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+            Don't take our word for it!<br />
+            <span className="text-gray-700">Hear it from our partners.</span>
+          </h2>
+        </AnimatedText>
       </div>
 
       {/* Mobile view - stacked cards */}
       <div className="md:hidden relative transition-opacity duration-700 px-4">
         <div className="flex flex-col gap-6">
           {testimonials.map((item, index) => (
-            <div
-              key={`mobile-card-${index}`}
-              className="w-full bg-white rounded-[40px] shadow-xl overflow-hidden"
-            >
-              {/* Image on top */}
-              <div className="relative w-full h-[300px] overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  width={1600}
-                  height={800}
-                  decoding="sync"
-                  className="h-full w-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-black/20" />
-              </div>
-
-              {/* Text below image */}
-              <div className="p-6 text-gray-900">
-                <div className="mb-4">
-                  <p className="text-[10px] uppercase tracking-[0.28em] text-gray-500 font-medium mb-3">
-                    Overview
-                  </p>
-                  <h3 className="text-2xl font-bold mb-1">{item.name}</h3>
-                  <p className="text-sm text-gray-600 mb-4">{item.title}</p>
-                  <p className="text-base leading-relaxed text-gray-800 font-light">
-                    {item.text}
-                  </p>
+            <AnimatedText key={`mobile-card-${index}`} variant="slideUp" delay={0.1 * index}>
+              <div
+                className="w-full bg-white rounded-[40px] shadow-xl overflow-hidden"
+              >
+                {/* Image on top */}
+                <div className="relative w-full h-[300px] overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    width={1600}
+                    height={800}
+                    decoding="sync"
+                    className="h-full w-full object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-black/20" />
                 </div>
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                  <div
-                    className="text-gray-900 text-2xl"
-                    style={{
-                      fontFamily: "'Bastliga One', 'Dancing Script', cursive",
-                    }}
-                  >
-                    {item.signature}
+
+                {/* Text below image */}
+                <div className="p-6 text-gray-900">
+                  <div className="mb-4">
+                    <p className="text-[10px] uppercase tracking-[0.28em] text-gray-500 font-medium mb-3">
+                      Overview
+                    </p>
+                    <h3 className="text-2xl font-bold mb-1">{item.name}</h3>
+                    <p className="text-sm text-gray-600 mb-4">{item.title}</p>
+                    <p className="text-base leading-relaxed text-gray-800 font-light">
+                      {item.text}
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div
+                      className="text-gray-900 text-2xl"
+                      style={{
+                        fontFamily: "'Bastliga One', 'Dancing Script', cursive",
+                      }}
+                    >
+                      {item.signature}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </AnimatedText>
           ))}
         </div>
       </div>
 
       {/* Desktop view - Scrolling row */}
-      <div
-        className={`hidden md:block relative transition-opacity duration-700 ${isReady ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
-        {/* containerRef will move horizontally */}
+      <AnimatedText variant="fadeIn" delay={0.3} className={`hidden md:block relative transition-opacity duration-700 ${isReady ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         <div
-          ref={containerRef}
-          className="flex gap-6 px-8 items-stretch"
-          style={{
-            willChange: "transform",
-            transform: 'translateZ(0)',
-            backfaceVisibility: 'hidden',
-          }}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
         >
-          {renderedCards.map((item, renderIndex) => {
-            const isExpanded = expandedKey === renderIndex;
-            const isDimmed = expandedKey !== null && !isExpanded;
+          {/* containerRef will move horizontally */}
+          <div
+            ref={containerRef}
+            className="flex gap-6 px-8 items-stretch"
+            style={{
+              willChange: "transform",
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden',
+            }}
+          >
+            {renderedCards.map((item, renderIndex) => {
+              const isExpanded = expandedKey === renderIndex;
+              const isDimmed = expandedKey !== null && !isExpanded;
 
-            // Responsive widths for different screen sizes
-            const accentWidth = cardWidth;
-            const collapsedWidth = accentWidth;
-            const expandedContentWidth = cardWidth; // Same as image width, so total doubles
+              // Responsive widths for different screen sizes
+              const accentWidth = cardWidth;
+              const collapsedWidth = accentWidth;
+              const expandedContentWidth = cardWidth; // Same as image width, so total doubles
 
-            return (
-              <motion.div
-                key={`card-${renderIndex}`}
-                initial={{ width: collapsedWidth }}
-                animate={{
-                  width: isExpanded ? accentWidth + expandedContentWidth : collapsedWidth,
-                }}
-                transition={{
-                  width: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] },
-                }}
-                onClick={() => handleCardClick(renderIndex)}
-                className="flex-shrink-0 h-[600px] lt-1440:h-[500px] rounded-[40px] shadow-xl cursor-pointer overflow-hidden"
-                style={{
-                  pointerEvents: isAnimating ? 'none' : 'auto',
-                  willChange: 'width',
-                  transform: 'translateZ(0)',
-                  backfaceVisibility: 'hidden',
-                  backgroundColor: 'transparent',
-                }}
-              >
-                <div className="relative h-full bg-white rounded-[40px] overflow-hidden">
-                  {/* Image that spans full width - fixed, no scaling */}
-                  <div className="absolute inset-0 h-full w-full overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      width={1600}
-                      height={800}
-                      decoding="sync"
-                      className="h-full w-full object-cover object-center"
-                      style={{
-                        transform: 'translateZ(0)',
-                        backfaceVisibility: 'hidden',
-                        minWidth: '100%',
-                        minHeight: '100%',
-                      }}
+              return (
+                <motion.div
+                  key={`card-${renderIndex}`}
+                  initial={{ width: collapsedWidth }}
+                  animate={{
+                    width: isExpanded ? accentWidth + expandedContentWidth : collapsedWidth,
+                  }}
+                  transition={{
+                    width: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] },
+                  }}
+                  onClick={() => handleCardClick(renderIndex)}
+                  className="flex-shrink-0 h-[600px] lt-1440:h-[500px] rounded-[40px] shadow-xl cursor-pointer overflow-hidden"
+                  style={{
+                    pointerEvents: isAnimating ? 'none' : 'auto',
+                    willChange: 'width',
+                    transform: 'translateZ(0)',
+                    backfaceVisibility: 'hidden',
+                    backgroundColor: 'transparent',
+                  }}
+                >
+                  <div className="relative h-full bg-white rounded-[40px] overflow-hidden">
+                    {/* Image that spans full width - fixed, no scaling */}
+                    <div className="absolute inset-0 h-full w-full overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        width={1600}
+                        height={800}
+                        decoding="sync"
+                        className="h-full w-full object-cover object-center"
+                        style={{
+                          transform: 'translateZ(0)',
+                          backfaceVisibility: 'hidden',
+                          minWidth: '100%',
+                          minHeight: '100%',
+                        }}
+                      />
+                    </div>
+
+                    {/* Light overlay on image side */}
+                    <motion.div
+                      initial={{ opacity: 0.2 }}
+                      animate={{ opacity: isDimmed ? 0.6 : (isExpanded ? 0.3 : 0.2) }}
+                      transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      className="absolute inset-0 bg-black"
                     />
-                  </div>
 
-                  {/* Light overlay on image side */}
-                  <motion.div
-                    initial={{ opacity: 0.2 }}
-                    animate={{ opacity: isDimmed ? 0.6 : (isExpanded ? 0.3 : 0.2) }}
-                    transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    className="absolute inset-0 bg-black"
-                  />
+                    {/* Content overlay on the right side when expanded - no transitions */}
+                    {isExpanded && (
+                      <div
+                        className="absolute top-0 right-0 h-full text-white"
+                        style={{
+                          width: expandedContentWidth,
+                          transform: 'translateZ(0)',
+                          backfaceVisibility: 'hidden',
+                        }}
+                      >
+                        {/* Very dark overlay panel for text side - clearly distinguished */}
+                        <div className="absolute inset-0 bg-black/60 m-4 rounded-[2em]" />
 
-                  {/* Content overlay on the right side when expanded - no transitions */}
-                  {isExpanded && (
-                    <div
-                      className="absolute top-0 right-0 h-full text-white"
-                      style={{
-                        width: expandedContentWidth,
-                        transform: 'translateZ(0)',
-                        backfaceVisibility: 'hidden',
-                      }}
-                    >
-                      {/* Very dark overlay panel for text side - clearly distinguished */}
-                      <div className="absolute inset-0 bg-black/60 m-4 rounded-[2em]" />
-
-                      <div className="relative flex h-full flex-col justify-between p-10">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (isAnimating) return;
-                            setIsAnimating(true);
-                            setExpandedKey(null);
-                            setTimeout(() => setIsAnimating(false), 900);
-                          }}
-                          className="absolute top-7 right-7 w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
-                        >
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                            <line x1="18" y1="6" x2="6" y2="18" />
-                            <line x1="6" y1="6" x2="18" y2="18" />
-                          </svg>
-                        </button>
-
-                        <div>
-                          <p className="text-[11px] uppercase tracking-[0.28em] text-white/60 font-medium mb-5 ">
-                            Overview
-                          </p>
-                          <h3 className="text-5xl lt-1440:text-4xl font-bold mb-2">{item.name}</h3>
-                          <p className="text-base text-white/70 mb-6">{item.title}</p>
-                          <p className="text-3xl lt-1440:text-2xl leading-relaxed text-white/90 leading-snug font-light">
-                            {item.text}
-                          </p>
-                        </div>
-
-                        <div className="mt-6">
-                          <div
-                            className="text-white text-5xl lt-1440:text-4xl"
-                            style={{
-                              fontFamily: "'Bastliga One', 'Dancing Script', cursive",
+                        <div className="relative flex h-full flex-col justify-between p-10">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (isAnimating) return;
+                              setIsAnimating(true);
+                              setExpandedKey(null);
+                              setTimeout(() => setIsAnimating(false), 900);
                             }}
+                            className="absolute top-7 right-7 w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
                           >
-                            {item.signature}
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <line x1="18" y1="6" x2="6" y2="18" />
+                              <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                          </button>
+
+                          <div>
+                            <p className="text-[11px] uppercase tracking-[0.28em] text-white/60 font-medium mb-5 ">
+                              Overview
+                            </p>
+                            <h3 className="text-5xl lt-1440:text-4xl font-bold mb-2">{item.name}</h3>
+                            <p className="text-base text-white/70 mb-6">{item.title}</p>
+                            <p className="text-3xl lt-1440:text-2xl leading-relaxed text-white/90 leading-snug font-light">
+                              {item.text}
+                            </p>
+                          </div>
+
+                          <div className="mt-6">
+                            <div
+                              className="text-white text-5xl lt-1440:text-4xl"
+                              style={{
+                                fontFamily: "'Bastliga One', 'Dancing Script', cursive",
+                              }}
+                            >
+                              {item.signature}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
 
-      </div>
+        </div>
+      </AnimatedText>
     </section>
   );
 }
