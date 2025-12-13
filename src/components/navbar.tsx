@@ -123,7 +123,7 @@ const Navbar = () => {
                             <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
 
-                            <div className="relative z-10 text-lg lt-1440:text-base lt-1024:text-sm" style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.7rem', letterSpacing: '0.05em' }}>Join the community</div>
+                            <div className="relative z-10 text-lg lt-1440:text-base lt-1024:text-sm font-semibold">Join the community</div>
                             <img
                                 src={arrowUp}
                                 alt="arrow"

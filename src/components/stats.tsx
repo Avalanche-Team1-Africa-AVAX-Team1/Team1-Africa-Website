@@ -77,8 +77,24 @@ const Stats = () => {
         <div ref={statsRef} className='w-full mt-10 relative flex h-screen xl:py-10 lt-1920:h-auto lt-1440:py-20 lt-1024:py-16 pb-12 md:pb-16 flex-col justify-around md:justify-center items-center overflow-visible'> {/* Changed to overflow-visible to prevent image clipping */}
             <div className='flex justify-center items-center'>
                 {/* Scale intro paragraph on non-4K screens; constrain width */}
-                <AnimatedText variant="slideUp" delay={0.2} className='text-[1.4rem] md:text-[50px] lt-1920:text-[40px] lt-1440:text-[34px] lt-1024:text-[25px] lt-768:text-[22px] lt-480:text-[1rem] font-semibold text-center md:w-[65%] w-full lt-1440:max-w-[820px] lt-1024:max-w-[680px]'>
-                    <p>Team1 Africa <span className='text-[#6D6D6D]'>is a vibrant grassroots movement committed to equipping</span> African builders, creators, and educators with the tools, resources, and opportunities to thrive in the Avalanche blockchain ecosystem.</p>
+                <AnimatedText variant="slideUp" delay={0.2} className='text-[1.4rem] md:text-[50px] lt-1920:text-[40px] lt-1440:text-[34px] lt-1024:text-[25px] lt-768:text-[22px] lt-480:text-[1rem] w-full md:w-[calc(100%-8rem)] lg:w-[calc(100%-12rem)] xl:w-[calc(100%-14rem)] 2xl:w-[calc(100%-24rem)] md:px-3 lg:px-5 xl:px-7 font-inter tracking-tight mx-auto'>
+                    <p className='font-normal text-[50px] flex flex-wrap items-center gap-x-3 leading-none' style={{ lineHeight: '0.7', rowGap: '0' }}>
+                        Team1 <span className='text-[#ef4444]'>Africa</span>
+                        <span className='inline-block w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-28 xl:h-28 relative flex-shrink-0'>
+                            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHBxaXg0bTFmOGZnYjN3YWJ6dGJxNWJxenBoZjV0OXl5enJ5dHZ6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6MbtUNOSRhgVPTFK/giphy.gif" alt="" className='w-full h-full object-contain' />
+                        </span>
+                        is Avalanche's
+                        <span className='inline-block w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-28 xl:h-28 relative flex-shrink-0'>
+                            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXQ3ZTh5YmpoNWRnbWIzcmg5Nnp3eXI3Mjk0OHR4eHZ5bDBydzVpaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlQXlQ3nHyLMvte/giphy.gif" alt="" className='w-full h-full object-contain' />
+                        </span>
+                        African network empowering Builders
+                        <span className='inline-block w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-28 xl:h-28 relative flex-shrink-0'>
+                            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHBxaXg0bTFmOGZnYjN3YWJ6dGJxNWJxenBoZjV0OXl5enJ5dHZ6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6MbtUNOSRhgVPTFK/giphy.gif" alt="" className='w-full h-full object-contain' />
+                        </span>
+                        and Creators with resources <span className='inline-block w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-28 xl:h-28 relative flex-shrink-0'>
+                            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnIyMXBnbnVkYnN1ZTlheHB3MWEzOHVkNW50YWxyMGFhY3U3aWZ1ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Qz5ITuBg5uvLy0yiRY/giphy.gif" alt="" className='w-full h-full object-contain' />
+                        </span>to thrive on Avalanche.
+                    </p>
                 </AnimatedText>
             </div>
 

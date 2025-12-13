@@ -35,6 +35,31 @@ html.lenis body {
   font-display: swap;
 }
 
+/* SansBeam Font - Multiple variants for better compatibility */
+@font-face {
+  font-family: 'beamSansFont';
+  src: url('./assets/fonts/stawix-sansbeambody-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'beamSansFont';
+  src: url('./assets/fonts/stawix-sansbeambody-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'beamSansFont';
+  src: url('./assets/fonts/stawix-sansbeambody-semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Infinite Curved Carousel Animation */
 @keyframes infiniteScroll {
   0% {

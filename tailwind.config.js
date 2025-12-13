@@ -20,6 +20,9 @@ export default {
         'site-lg': '1400px',
         'site-nav': '1800px', // Slightly wider for navbar
       },
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif'],
+      },
     },
   },
   plugins: [],
