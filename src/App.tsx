@@ -11,7 +11,7 @@ import TestimonialSlider from './components/testimonial'
 import Footer from './components/footer'
 import Games from './components/games'
 import Blog from './components/blog'
-import Join from './components/join'
+// import Join from './components/join'
 import AvalancheEcosystem from './components/avalanche-ecosystem'
 
 function App() {
@@ -52,7 +52,7 @@ function App() {
       </div>
 
       {/* Join and Footer - full-width */}
-      <Join />
+      {/* <Join /> */}
       <Footer />
     </>
   )
