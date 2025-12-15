@@ -182,8 +182,8 @@ const Build = () => {
             {/* MOBILE: Vertical Stack */}
             <div className="lg:hidden py-20 px-6">
                 <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-16">
-                        <div className="inline-block bg-red-600 px-5 py-2.5 rounded-lg text-sm font-bold mb-6 -rotate-6">
+                    <div className="md:text-center mb-16">
+                        <div className="inline-block bg-red-600 text-white px-5 py-2.5 rounded-lg text-sm font-bold mb-6 -rotate-6">
                             What we do
                         </div>
                         <h2 className="text-5xl lt-768:text-4xl font-black mb-4 tracking-tighter uppercase leading-none">
@@ -196,7 +196,7 @@ const Build = () => {
                             Africa isn't adopting blockchain—we're building it. Team1 Africa connects the continent's boldest innovators with workshops, developer grants, and global partnerships to lead the Web3 revolution.
                         </p>
 
-                        <MagneticButton className="group bg-black text-white px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-gray-800 transition-colors cursor-pointer mx-auto w-fit">
+                        <MagneticButton className="group bg-black text-white px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-gray-800 transition-colors cursor-pointer md:mx-auto w-fit">
                             <span>Start Building</span>
                             <img src={arrowup} width={20} height={20} />
                         </MagneticButton>

@@ -23,8 +23,20 @@ const CustomCursor = () => {
         return () => window.removeEventListener('resize', checkTouch);
     }, []);
 
+    // Check if screen is large enough (1024px+)
+    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
+
     useEffect(() => {
-        if (isTouchDevice) return;
+        const checkScreenSize = () => {
+            setIsLargeScreen(window.innerWidth >= 1024);
+        };
+
+        window.addEventListener('resize', checkScreenSize);
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
+
+    useEffect(() => {
+        if (isTouchDevice || !isLargeScreen) return;
 
         const moveCursor = (e: MouseEvent) => {
             mouseX.set(e.clientX - 16);
@@ -85,7 +97,7 @@ const CustomCursor = () => {
         }
     };
 
-    if (isTouchDevice) return null;
+    if (isTouchDevice || !isLargeScreen) return null;
 
     return (
         <motion.div

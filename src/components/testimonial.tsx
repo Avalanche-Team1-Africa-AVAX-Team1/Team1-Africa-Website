@@ -275,6 +275,7 @@ export default function TestimonialSlider() {
   const [isReady, setIsReady] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [cardWidth, setCardWidth] = useState(800);
+  const [visibleMobileTestimonials, setVisibleMobileTestimonials] = useState(4);
   const GAP = 24;
   const SCROLL_DURATION = 150;
 
@@ -451,7 +452,7 @@ export default function TestimonialSlider() {
           <div className="mb-4">
             <motion.div
               initial={{ rotate: -12 }}
-              className="inline-block bg-red-600 px-6 py-3 rounded-xl text-base font-bold mb-6 shadow-lg"
+              className="inline-block text-white bg-red-600 px-6 py-3 rounded-xl text-base font-bold mb-6 shadow-lg"
             >
               Testimonials
             </motion.div>
@@ -460,7 +461,7 @@ export default function TestimonialSlider() {
         <AnimatedText variant="slideUp" delay={0.2}>
           <h2 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
             Straight from the source!!<br />
-            <span className=""><span className="text-red-600">Avalanche</span> has impacted the <br /> world greastest <span   className="text-red-600">innovators</span><br /> through <span className="text-red-600">Team1</span></span>
+            <span className=""><span className="text-red-600">Avalanche</span> has impacted the <br /> world greastest <span className="text-red-600">innovators</span><br /> through <span className="text-red-600">Team1</span></span>
           </h2>
         </AnimatedText>
       </div>
@@ -468,7 +469,7 @@ export default function TestimonialSlider() {
       {/* Mobile view - stacked cards */}
       <div className="md:hidden relative transition-opacity duration-700 px-4">
         <div className="flex flex-col gap-6">
-          {testimonials.map((item, index) => (
+          {testimonials.slice(0, visibleMobileTestimonials).map((item, index) => (
             <AnimatedText key={`mobile-card-${index}`} variant="slideUp" delay={0.1 * index}>
               <div
                 className="w-full bg-white rounded-[40px] shadow-xl overflow-hidden"
@@ -513,6 +514,26 @@ export default function TestimonialSlider() {
             </AnimatedText>
           ))}
         </div>
+
+        {/* See More / See Less Button */}
+        <div className="flex justify-center mt-8">
+          {visibleMobileTestimonials < testimonials.length && (
+            <button
+              onClick={() => setVisibleMobileTestimonials(testimonials.length)}
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200"
+            >
+              See More
+            </button>
+          )}
+          {visibleMobileTestimonials >= testimonials.length && (
+            <button
+              onClick={() => setVisibleMobileTestimonials(4)}
+              className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200"
+            >
+              See Less
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Desktop view - Scrolling row */}
@@ -538,7 +559,7 @@ export default function TestimonialSlider() {
               // Responsive widths for different screen sizes
               const accentWidth = cardWidth;
               const collapsedWidth = accentWidth;
-              const expandedContentWidth = cardWidth; // Same as image width, so total doubles
+              const expandedContentWidth = cardWidth * 0.75; // Increased to give text more width
 
               return (
                 <motion.div
@@ -598,7 +619,7 @@ export default function TestimonialSlider() {
                         }}
                       >
                         {/* Very dark overlay panel for text side - clearly distinguished */}
-                        <div className="absolute inset-0 bg-black/60 m-4 rounded-[2em]" />
+                        <div className="absolute inset-0 bg-black/60 m-2 rounded-[2em]" />
 
                         <div className="relative flex h-full flex-col justify-between p-10">
                           <button

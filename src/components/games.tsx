@@ -99,12 +99,65 @@ const FeaturedGames: React.FC = () => {
 
   ], []);
 
-  const platformIcons = {
+  const platformIcons: Record<string, string> = {
     "Windows": windowsIcon,
     "PlayStation": playstationIcon,
     "Xbox": xboxIcon,
     "Steam": steamIcon,
     "Nintendo Switch": nintendoSwitchIcon
+  };
+
+  // Reusable Platform Icons Component
+  const PlatformIcons = ({ platforms, variant = 'mobile' }: { platforms: string[], variant?: 'mobile' | 'desktop' | 'overlay' }) => {
+    if (variant === 'overlay') {
+      return (
+        <div className="flex gap-2 flex-wrap">
+          {platforms.map((platform, index) => (
+            <img
+              key={index}
+              src={platformIcons[platform]}
+              alt={platform}
+              className="w-8 h-8 object-contain"
+            />
+          ))}
+        </div>
+      );
+    }
+
+    if (variant === 'desktop') {
+      return (
+        <div className="flex gap-1.5 lg:gap-3 flex-wrap">
+          {platforms.map((platform, index) => (
+            <div
+              key={index}
+              className="w-7 h-7 lg:w-11 lg:h-11 xl:w-12 xl:h-12 backdrop-blur-sm rounded-lg flex items-center justify-center"
+              title={platform}
+            >
+              <img
+                src={platformIcons[platform]}
+                alt={platform}
+                className="w-full h-full object-contain filter"
+              />
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    // mobile variant (default)
+    return (
+      <div className="flex gap-3 flex-wrap">
+        {platforms.map((platform, index) => (
+          <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+            <img
+              src={platformIcons[platform]}
+              alt={platform}
+              className="w-8 h-8 object-contain"
+            />
+          </div>
+        ))}
+      </div>
+    );
   };
 
   const nextGame = () => {
@@ -113,11 +166,9 @@ const FeaturedGames: React.FC = () => {
     setIsGoingBackward(true);
     setShowDetails(false);
 
-    // Forward Button (Right Arrow) -> Slide Right -> Show Previous Game
     setCardPositions(prev => prev.map(pos => pos + 1));
 
     setTimeout(() => {
-      // Update to Previous Game (i-1) to match the slide-in of the left card
       setCurrentGameIndex((prev) => (prev - 1 + games.length) % games.length);
       setCardPositions([0, 1, 2]);
       setIsTransitioning(false);
@@ -131,11 +182,9 @@ const FeaturedGames: React.FC = () => {
     setIsGoingBackward(false);
     setShowDetails(false);
 
-    // Backward Button (Left Arrow) -> Slide Left -> Show Next Game
     setCardPositions(prev => prev.map(pos => pos - 1));
 
     setTimeout(() => {
-      // Update to Next Game (i+1) to match the slide-in of the right card
       setCurrentGameIndex((prev) => (prev + 1) % games.length);
       setCardPositions([0, 1, 2]);
       setIsTransitioning(false);
@@ -147,6 +196,49 @@ const FeaturedGames: React.FC = () => {
     if (position === 0) return currentGameIndex;
     if (position === 1) return (currentGameIndex + 1) % games.length;
     return (currentGameIndex + 2) % games.length;
+  };
+
+  // Shared navigation function for carousel dots
+  const navigateToGame = (targetIndex: number) => {
+    if (isTransitioning || targetIndex === currentGameIndex) return;
+    const diff = (targetIndex - currentGameIndex + games.length) % games.length;
+    if (diff <= games.length / 2) {
+      for (let i = 0; i < diff; i++) {
+        setTimeout(() => nextGame(), i * 500);
+      }
+    } else {
+      const backSteps = games.length - diff;
+      for (let i = 0; i < backSteps; i++) {
+        setTimeout(() => prevGame(), i * 500);
+      }
+    }
+  };
+
+  // Carousel Dots Component
+  const CarouselDots = ({ variant = 'desktop' }: { variant?: 'desktop' | 'mobile' }) => {
+    const dotClasses = variant === 'desktop'
+      ? 'w-2 h-2 lg:w-3 lg:h-3 mx-1 lg:mx-2 xl:mx-4 rounded-full transition-all duration-300'
+      : 'w-2.5 h-2.5 rounded-full transition-all duration-300';
+
+    const activeClasses = variant === 'desktop'
+      ? 'bg-white scale-125'
+      : 'bg-gray-900 scale-125';
+
+    const inactiveClasses = variant === 'desktop'
+      ? 'bg-gray-400 hover:bg-gray-300'
+      : 'bg-gray-400';
+
+    return (
+      <div className="flex gap-2">
+        {games.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => navigateToGame(index)}
+            className={`${dotClasses} ${index === currentGameIndex ? activeClasses : inactiveClasses}`}
+          />
+        ))}
+      </div>
+    );
   };
 
   // Preload all images on mount
@@ -171,7 +263,7 @@ const FeaturedGames: React.FC = () => {
       <div className="lt-1024:block hidden px-6 py-12">
         <div className="mb-8">
           <AnimatedText variant="scale" delay={0.1}>
-            <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-6">
+            <div className="inline-block text-white bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-6">
               Games
             </div>
           </AnimatedText>
@@ -191,17 +283,7 @@ const FeaturedGames: React.FC = () => {
 
                 <div className="mb-4">
                   <h3 className="text-gray-500 text-sm font-semibold mb-2">Platforms</h3>
-                  <div className="flex gap-3 flex-wrap">
-                    {game.platforms.map((platform, index) => (
-                      <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                        <img
-                          src={platformIcons[platform as keyof typeof platformIcons] as string}
-                          alt={platform}
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  <PlatformIcons platforms={game.platforms} variant="mobile" />
                 </div>
 
                 <div className="mb-4">
@@ -238,13 +320,13 @@ const FeaturedGames: React.FC = () => {
         </div>
       </div>
 
-      {/* Desktop Carousel View - Keep exactly as is */}
+      {/* Desktop Carousel View */}
       <div className="lt-1024:hidden block bg-gray-100 py-16">
         <div className="w-full px-8">
           <div className="flex items-center justify-between mb-8">
             <div>
               <AnimatedText variant="scale" delay={0.1}>
-                <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-12">
+                <div className="inline-block text-white bg-red-500 font-semibold px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-12">
                   Games
                 </div>
               </AnimatedText>
@@ -264,7 +346,7 @@ const FeaturedGames: React.FC = () => {
         <AnimatedText variant="fadeIn" delay={0.4} className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
           {/* Fixed Details Card - Left Side (Desktop Only) */}
           <div className="relative w-[30%] lt-1024:hidden h-full bg-black rounded-l-2xl p-4 lg:p-8 xl:p-10 2xl:p-12 flex flex-col justify-between z-10 overflow-hidden">
-            <div className={`transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+            <div className={`transition-all duration-300 border-2 border-blue-500 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
               <h2 className="text-white text-2xl lg:text-4xl xl:text-5xl font-bold mb-3 lg:mb-5 xl:mb-6 leading-tight">
                 {games[currentGameIndex].title}
               </h2>
@@ -273,30 +355,16 @@ const FeaturedGames: React.FC = () => {
                 {games[currentGameIndex].description}
               </p>
 
-              <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-3 lg:px-7 lg:py-5 xl:px-8 xl:py-6 rounded-full flex items-center justify-center gap-2 lg:gap-3 transition-all duration-300 hover:scale-105 border border-white/20 text-xs lg:text-base">
+              <button className="bg-red-500 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-3 lg:px-7 lg:py-5 xl:px-5 xl:py-3 rounded-lg flex items-center justify-center gap-2 lg:gap-3 transition-all duration-300 hover:scale-105 border border-white/20 text-xs lg:text-base">
                 WEBSITE
                 <ExternalLink size={14} className="lg:w-5 lg:h-5" />
               </button>
             </div>
 
-            <div className={`transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+            <div className={`border-2 border-red-500 transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
               <div className="mb-3 lg:mb-5 xl:mb-6">
                 <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-2 lg:mb-3">Platforms</h3>
-                <div className="flex gap-1.5 lg:gap-3 flex-wrap">
-                  {games[currentGameIndex].platforms.map((platform, index) => (
-                    <div
-                      key={index}
-                      className="w-7 h-7 lg:w-11 lg:h-11 xl:w-12 xl:h-12 backdrop-blur-sm rounded-lg flex items-center justify-center"
-                      title={platform}
-                    >
-                      <img
-                        src={platformIcons[platform as keyof typeof platformIcons] as string}
-                        alt={platform}
-                        className="w-full h-full object-contain filter"
-                      />
-                    </div>
-                  ))}
-                </div>
+                <PlatformIcons platforms={games[currentGameIndex].platforms} variant="desktop" />
               </div>
 
               <div className="mb-3 lg:mb-5">
@@ -314,26 +382,7 @@ const FeaturedGames: React.FC = () => {
                 </button>
 
                 <div className="flex gap-1 lg:gap-2 mx-2 lg:mx-4">
-                  {games.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        if (isTransitioning || index === currentGameIndex) return;
-                        const diff = (index - currentGameIndex + games.length) % games.length;
-                        if (diff <= games.length / 2) {
-                          for (let i = 0; i < diff; i++) {
-                            setTimeout(() => nextGame(), i * 500);
-                          }
-                        } else {
-                          const backSteps = games.length - diff;
-                          for (let i = 0; i < backSteps; i++) {
-                            setTimeout(() => prevGame(), i * 500);
-                          }
-                        }
-                      }}
-                      className={`w-2 h-2 lg:w-3 lg:h-3 mx-1 lg:mx-2 xl:mx-4 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-white scale-125' : 'bg-gray-400 hover:bg-gray-300'}`}
-                    />
-                  ))}
+                  <CarouselDots variant="desktop" />
                 </div>
 
                 <button
@@ -349,7 +398,7 @@ const FeaturedGames: React.FC = () => {
 
           {/* Sliding Image Cards Container */}
           <div className="relative flex-1 h-full overflow-hidden lt-1024:rounded-2xl bg-gray-100">
-            {/* Previous game - always rendered off-screen left, ready to slide in when going backward */}
+            {/* Previous game - always rendered off-screen left */}
             <div
               key={`prev-card-${getGameAtPosition(-1)}`}
               className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
@@ -370,7 +419,7 @@ const FeaturedGames: React.FC = () => {
               />
             </div>
 
-            {/* Original 3 positions - restore original logic */}
+            {/* Original 3 positions */}
             {[0, 1, 2].map((positionIndex) => {
               const gameIndex = getGameAtPosition(positionIndex);
               const game = games[gameIndex];
@@ -424,7 +473,7 @@ const FeaturedGames: React.FC = () => {
                     srcWebp={game.imageWebp}
                     alt={game.title}
                     className="w-full h-full object-cover"
-                    priority={gameIndex === currentGameIndex || cardPosition === 0 || cardPosition === 1} // Prioritize visible cards
+                    priority={gameIndex === currentGameIndex || cardPosition === 0 || cardPosition === 1}
                   />
 
                   {cardPosition === 1 && (
@@ -465,11 +514,7 @@ const FeaturedGames: React.FC = () => {
                 <p className="text-sm text-gray-300 mb-4">{games[currentGameIndex].description}</p>
                 <div className="mb-3">
                   <h3 className="text-gray-400 text-xs font-semibold mb-2">Platforms</h3>
-                  <div className="flex gap-2 flex-wrap">
-                    {games[currentGameIndex].platforms.map((platform, index) => (
-                      <img key={index} src={platformIcons[platform as keyof typeof platformIcons] as string} alt={platform} className="w-8 h-8 object-contain" />
-                    ))}
-                  </div>
+                  <PlatformIcons platforms={games[currentGameIndex].platforms} variant="overlay" />
                 </div>
                 <p className="text-sm"><span className="text-gray-400">Genre:</span> {games[currentGameIndex].genre}</p>
               </div>
@@ -486,28 +531,7 @@ const FeaturedGames: React.FC = () => {
           >
             <ChevronLeft size={18} />
           </button>
-          <div className="flex gap-2">
-            {games.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  if (isTransitioning || index === currentGameIndex) return;
-                  const diff = (index - currentGameIndex + games.length) % games.length;
-                  if (diff <= games.length / 2) {
-                    for (let i = 0; i < diff; i++) {
-                      setTimeout(() => nextGame(), i * 500);
-                    }
-                  } else {
-                    const backSteps = games.length - diff;
-                    for (let i = 0; i < backSteps; i++) {
-                      setTimeout(() => prevGame(), i * 500);
-                    }
-                  }
-                }}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-gray-900 scale-125' : 'bg-gray-400'}`}
-              />
-            ))}
-          </div>
+          <CarouselDots variant="mobile" />
           <button
             onClick={nextGame}
             disabled={isTransitioning}

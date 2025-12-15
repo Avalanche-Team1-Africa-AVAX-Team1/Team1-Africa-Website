@@ -30,6 +30,7 @@ const FLOATING_IMAGES = [
     width: 100,
     height: 100,
     delay: 0,
+    shape: 'circle' as const,
   },
   {
     src: arenaLogo,
@@ -37,6 +38,7 @@ const FLOATING_IMAGES = [
     width: 110,
     height: 60,
     delay: 0.15,
+    shape: 'rounded' as const,
   },
   {
     src: avalancheBadge,
@@ -44,6 +46,7 @@ const FLOATING_IMAGES = [
     width: 95,
     height: 95,
     delay: 0.3,
+    shape: 'circle' as const,
   },
   {
     src: arenaBadge,
@@ -51,6 +54,7 @@ const FLOATING_IMAGES = [
     width: 105,
     height: 105,
     delay: 0.45,
+    shape: 'circle' as const,
   },
   {
     src: dexalot,
@@ -58,6 +62,7 @@ const FLOATING_IMAGES = [
     width: 100,
     height: 100,
     delay: 0.6,
+    shape: 'rounded' as const,
   },
   {
     src: audius,
@@ -65,6 +70,7 @@ const FLOATING_IMAGES = [
     width: 110,
     height: 110,
     delay: 0.75,
+    shape: 'circle' as const,
   },
   {
     src: ava,
@@ -72,6 +78,47 @@ const FLOATING_IMAGES = [
     width: 90,
     height: 90,
     delay: 0.9,
+    shape: 'rounded' as const,
+  },
+  {
+    src: onlydust,
+    alt: 'OnlyDust',
+    width: 85,
+    height: 85,
+    delay: 1.05,
+    shape: 'circle' as const,
+  },
+  {
+    src: sqauds,
+    alt: 'Squads',
+    width: 95,
+    height: 95,
+    delay: 1.2,
+    shape: 'rounded' as const,
+  },
+  {
+    src: refi,
+    alt: 'ReFi',
+    width: 115,
+    height: 70,
+    delay: 1.35,
+    shape: 'rounded' as const,
+  },
+  {
+    src: yellowKet,
+    alt: 'Yellow Ket',
+    width: 80,
+    height: 80,
+    delay: 1.5,
+    shape: 'circle' as const,
+  },
+  {
+    src: benqiToken,
+    alt: 'BENQI',
+    width: 100,
+    height: 55,
+    delay: 1.65,
+    shape: 'rounded' as const,
   },
 ] as const
 
@@ -154,7 +201,30 @@ export default function AvalancheEcosystem() {
   const logoContainerRef = useRef<HTMLDivElement>(null)
   const hasAnimated = useRef(false)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const accumulatedScroll = useRef(0)
+  const slideshowInterval = useRef<number | null>(null)
+
+  // Auto-slideshow effect - switches every 3 seconds, pauses on hover
+  useEffect(() => {
+    const startSlideshow = () => {
+      if (slideshowInterval.current) {
+        clearInterval(slideshowInterval.current)
+      }
+
+      slideshowInterval.current = setInterval(() => {
+        if (!isHovering) {
+          setActiveCard(prev => prev === 'trending' ? 'featured' : 'trending')
+        }
+      }, 3000)
+    }
+
+    startSlideshow()
+
+    return () => {
+      if (slideshowInterval.current) {
+        clearInterval(slideshowInterval.current)
+      }
+    }
+  }, [isHovering])
 
   // Falling images animation with GSAP
   useEffect(() => {
@@ -222,27 +292,7 @@ export default function AvalancheEcosystem() {
     return () => observer.disconnect()
   }, [])
 
-  // Handle scroll/wheel events on card container
-  const handleWheel = (e: React.WheelEvent) => {
-    if (!isHovering) return
 
-    e.preventDefault()
-    accumulatedScroll.current += e.deltaY
-
-    // Threshold for switching cards (adjust for sensitivity)
-    const threshold = 100
-
-    if (Math.abs(accumulatedScroll.current) >= threshold) {
-      if (accumulatedScroll.current > 0) {
-        // Scrolling down - show featured projects
-        setActiveCard('featured')
-      } else {
-        // Scrolling up - show trending tokens
-        setActiveCard('trending')
-      }
-      accumulatedScroll.current = 0
-    }
-  }
 
   const renderFeaturedCard = () => {
     const isActive = activeCard === 'featured'
@@ -252,11 +302,11 @@ export default function AvalancheEcosystem() {
         key="featured"
         initial={false}
         animate={{
-          y: isActive ? 0 : 26,
-          opacity: isActive ? 1 : 0.6,
-          scale: isActive ? 1 : 0.95,
+          y: isActive ? 0 : -60,
+          opacity: 1,
+          scale: isActive ? 1 : 0.92,
           zIndex: isActive ? 40 : 12,
-          rotateX: isActive ? 0 : -4,
+          rotateX: isActive ? 0 : -6,
         }}
         transition={{
           duration: 0.9,
@@ -320,11 +370,11 @@ export default function AvalancheEcosystem() {
         key="trending"
         initial={false}
         animate={{
-          y: isActive ? 0 : -24,
-          opacity: isActive ? 1 : 0.6,
-          scale: isActive ? 1 : 0.95,
+          y: isActive ? 0 : -60,
+          opacity: 1,
+          scale: isActive ? 1 : 0.92,
           zIndex: isActive ? 50 : 18,
-          rotateX: isActive ? 0 : -3,
+          rotateX: isActive ? 0 : -6,
         }}
         transition={{
           duration: 0.9,
@@ -389,10 +439,13 @@ export default function AvalancheEcosystem() {
       {/* Header */}
       <div className="relative z-10 max-w-7xl mx-auto mb-20">
         <AnimatedText variant="scale" delay={0.1}>
-          <div className="inline-block mb-6">
-            <span className="bg-[#FF3B5C] text-white text-sm font-bold px-5 py-2 rounded-full">
-              Token & Trends
-            </span>
+          <div className="inline-block">
+            <motion.div
+              initial={{ rotate: -12 }}
+              className="inline-block bg-red-600 px-6 py-3 rounded-xl text-base text-white font-semibold mb-6 shadow-lg"
+            >
+              Tokens & Trends
+            </motion.div>
           </div>
         </AnimatedText>
         <AnimatedText variant="slideUp" delay={0.2}>
@@ -424,7 +477,8 @@ export default function AvalancheEcosystem() {
                   ref={(el) => {
                     imageRefs.current[index] = el
                   }}
-                  className="absolute pointer-events-none"
+                  className={`absolute pointer-events-none ${image.shape === 'circle' ? 'rounded-full' : 'rounded-md'
+                    }`}
                   style={{
                     width: image.width,
                     height: image.height,
@@ -445,11 +499,7 @@ export default function AvalancheEcosystem() {
           <div
             className="relative w-full h-[600px]"
             onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => {
-              setIsHovering(false)
-              accumulatedScroll.current = 0
-            }}
-            onWheel={handleWheel}
+            onMouseLeave={() => setIsHovering(false)}
           >
             <div className="relative w-full h-full" style={{ perspective: '1400px' }}>
               <AnimatePresence initial={false} mode="sync">
