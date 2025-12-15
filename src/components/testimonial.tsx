@@ -449,15 +449,18 @@ export default function TestimonialSlider() {
       <div className="px-6 max-w-7xl mb-16">
         <AnimatedText variant="scale" delay={0.1}>
           <div className="mb-4">
-            <span className="text-xs uppercase tracking-widest text-gray-500 font-semibold">
-              TESTIMONIALS
-            </span>
+            <motion.div
+              initial={{ rotate: -12 }}
+              className="inline-block bg-red-600 px-6 py-3 rounded-xl text-base font-bold mb-6 shadow-lg"
+            >
+              Testimonials
+            </motion.div>
           </div>
         </AnimatedText>
         <AnimatedText variant="slideUp" delay={0.2}>
           <h2 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-            Don't take our word for it!<br />
-            <span className="text-gray-700">Hear it from our partners.</span>
+            Straight from the source!!<br />
+            <span className=""><span className="text-red-600">Avalanche</span> has impacted the <br /> world greastest <span   className="text-red-600">innovators</span><br /> through <span className="text-red-600">Team1</span></span>
           </h2>
         </AnimatedText>
       </div>

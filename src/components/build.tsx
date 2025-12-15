@@ -67,9 +67,9 @@ const Build = () => {
         <div ref={mainRef}>
             {/* DESKTOP: Pinned Scroll-Lock Section */}
             <div className="hidden lg:block">
-                <section ref={pinnedRef} className="h-screen bg-gradient-to-br from-black via-red-950/20 to-black text-white overflow-hidden flex items-center relative">
+                <section ref={pinnedRef} className="h-screen bg-black text-white overflow-hidden flex items-center relative">
                     {/* Header - Top Left */}
-                    <div className="absolute bottom-[-10%] left-12 z-20 max-w-xl">
+                    <div className="absolute left-12 z-20 max-w-xl">
                         <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
                         <motion.div
                             initial={{ rotate: -12 }}

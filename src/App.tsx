@@ -42,7 +42,7 @@ function App() {
       </div>
 
       {/* Full-width sections */}
-      <Events />
+      {/* <Events /> */}
       <Games />
       <AvalancheEcosystem />
 

@@ -130,20 +130,20 @@ const Stats = () => {
             </div>
 
             {/* Stats counters */}
-            {/* <div className='flex flex-col md:flex-row justify-center items-center gap-[10%] md:gap-[8%] xl:gap-16 2xl:gap-40 text-center mt-[15%] md:mt-[10%] xl:mt-6 xl:ml-12'>
+            <div className='flex flex-col md:flex-row gap-[10%] md:gap-[8%] xl:gap-16 2xl:gap-20 text-center mt-[15%] md:mt-[10%] xl:mt-6 xl:ml-12'>
                 <div className='leading-tight mb-[8%] md:mb-0'>
-                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[100px] font-bold'>{eventsCount}</p>
+                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px]'>{eventsCount}</p>
                     <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold mt-[0.3em]'>Events</p>
                 </div>
                 <div className='leading-tight mb-[8%] md:mb-0'>
-                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[100px] font-bold'>{membersCount}+</p>
+                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px]'>{membersCount}+</p>
                     <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold mt-[0.3em]'>Community Members</p>
                 </div>
                 <div className='leading-tight'>
-                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[100px] font-bold'>{partnersCount}</p>
+                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px]'>{partnersCount}</p>
                     <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold mt-[0.3em]'>Game Partners</p>
                 </div>
-            </div> */}
+            </div>
 
         </div>
     );
