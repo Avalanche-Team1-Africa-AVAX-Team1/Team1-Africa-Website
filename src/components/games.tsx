@@ -37,9 +37,11 @@ const FeaturedGames: React.FC = () => {
   const [currentGameIndex, setCurrentGameIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const [cardPositions, setCardPositions] = useState<number[]>([0, 1, 2]);
+  // cardPositions tracks the visual position of the games [-1, 0, 1, 2]
+  // We need 4 slots to handle Next (left shift) and Prev (right shift) smoothly
+  // We need 4 slots to handle Next (left shift) and Prev (right shift) smoothly
+  const [cardPositions, setCardPositions] = useState<number[]>([-1, 0, 1, 2]);
   const [visibleGames, setVisibleGames] = useState(2);
-  const [isGoingBackward, setIsGoingBackward] = useState(false);
 
   const games: Game[] = React.useMemo(() => [
     {
@@ -176,30 +178,33 @@ const FeaturedGames: React.FC = () => {
   const nextGame = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setIsGoingBackward(true);
     setShowDetails(false);
 
+    // Shift positions to the RIGHT (current card exits right)
     setCardPositions(prev => prev.map(pos => pos + 1));
 
     setTimeout(() => {
+      // Decrement index to show previous content
       setCurrentGameIndex((prev) => (prev - 1 + games.length) % games.length);
-      setCardPositions([0, 1, 2]);
+      // Reset positions to stable state
+      setCardPositions([-1, 0, 1, 2]);
       setIsTransitioning(false);
-      setIsGoingBackward(false);
     }, 500);
   };
 
   const prevGame = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setIsGoingBackward(false);
     setShowDetails(false);
 
+    // Shift positions to the LEFT (current card exits left)
     setCardPositions(prev => prev.map(pos => pos - 1));
 
     setTimeout(() => {
+      // Increment index to show next content
       setCurrentGameIndex((prev) => (prev + 1) % games.length);
-      setCardPositions([0, 1, 2]);
+      // Reset positions to stable state
+      setCardPositions([-1, 0, 1, 2]);
       setIsTransitioning(false);
     }, 500);
   };
@@ -367,7 +372,7 @@ const FeaturedGames: React.FC = () => {
           </div>
         </div>
 
-          <AnimatedText variant="fadeIn" delay={0.4} className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
+        <AnimatedText variant="fadeIn" delay={0.4} className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
           {/* Fixed Details Card - Left Side (Desktop Only) */}
           <div className="relative w-[30%] lt-1024:hidden h-full bg-gradient-to-br from-gray-950 via-black to-gray-900 rounded-l-2xl px-6 lg:px-8 xl:px-10 py-8 lg:py-10 xl:py-12 flex flex-col justify-between z-10 overflow-hidden shadow-2xl">
             {/* Subtle gradient overlay */}
@@ -433,32 +438,14 @@ const FeaturedGames: React.FC = () => {
 
           {/* Sliding Image Cards Container */}
           <div className="relative flex-1 h-full overflow-hidden lt-1024:rounded-2xl bg-gray-100">
-            {/* Previous game - always rendered off-screen left */}
-            <div
-              key={`prev-card-${getGameAtPosition(-1)}`}
-              className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
-              style={{
-                transform: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 'translateX(0%)' : 'translateX(-100%)',
-                zIndex: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 10 : 1,
-                width: '60%',
-                left: '0',
-                opacity: 1,
-                transition: 'transform 500ms'
-              }}
-            >
-              <AppImage
-                src={games[getGameAtPosition(-1)].image}
-                srcWebp={games[getGameAtPosition(-1)].imageWebp}
-                alt={games[getGameAtPosition(-1)].title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Original 3 positions */}
-            {[0, 1, 2].map((positionIndex) => {
-              const gameIndex = getGameAtPosition(positionIndex);
+            {[-1, 0, 1, 2].map((relativeIndex) => { // Render 4 slots relative to current index
+              const gameIndex = getGameAtPosition(relativeIndex);
               const game = games[gameIndex];
-              const cardPosition = cardPositions[positionIndex];
+              // Map the relative index (-1..2) to the tracked position state index (0..3)
+              // The cardPositions state array corresponds to slots [-1, 0, 1, 2]
+              // So cardPositions[0] tracks where slot -1 is visually, cardPositions[1] tracks slot 0, etc.
+              const trackedIndex = relativeIndex + 1; // Map -1..2 to 0..3
+              const visualPosition = cardPositions[trackedIndex] ?? relativeIndex; // Fallback to relativeIndex if initializing
 
               let translateX = 'translateX(200%)';
               let zIndex = 0;
@@ -466,33 +453,47 @@ const FeaturedGames: React.FC = () => {
               let opacity = 0;
               let left = 'auto';
 
-              if (cardPosition === -1) {
+              if (visualPosition === -1) {
                 translateX = 'translateX(-100%)';
-                zIndex = 0;
+                zIndex = 1;
                 opacity = 1;
                 width = '60%';
-              } else if (cardPosition === 0) {
+                left = '0';
+              } else if (visualPosition === 0) {
                 translateX = 'translateX(0%)';
                 zIndex = 10;
                 width = '60%';
                 opacity = 1;
                 left = '0';
-              } else if (cardPosition === 1) {
+              } else if (visualPosition === 1) {
                 translateX = 'translateX(calc(100% + 2rem))';
                 zIndex = 5;
                 width = '60%';
                 opacity = 1;
                 left = 'auto';
-              } else if (cardPosition === 2) {
+              } else if (visualPosition === 2) {
                 translateX = 'translateX(200%)';
+                zIndex = 0;
+                opacity = 1;
+                width = '60%';
+              } else if (visualPosition === 3) {
+                // Buffer right (during Prev transition, slot 2 moves to 3)
+                translateX = 'translateX(300%)';
+                zIndex = 0;
+                opacity = 1;
+                width = '60%';
+              } else if (visualPosition === -2) {
+                // Buffer left (during Next transition, slot -1 moves to -2)
+                translateX = 'translateX(-200%)';
                 zIndex = 0;
                 opacity = 1;
                 width = '60%';
               }
 
+
               return (
                 <div
-                  key={gameIndex}
+                  key={relativeIndex} // Stable position key - prevents unmounting
                   className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
                   style={{
                     transform: translateX,
@@ -500,7 +501,7 @@ const FeaturedGames: React.FC = () => {
                     width: width,
                     left: left,
                     opacity: opacity,
-                    transition: 'transform 500ms'
+                    transition: isTransitioning ? 'transform 500ms ease-in-out' : 'none'
                   }}
                 >
                   <AppImage
@@ -508,10 +509,10 @@ const FeaturedGames: React.FC = () => {
                     srcWebp={game.imageWebp}
                     alt={game.title}
                     className="w-full h-full object-cover"
-                    priority={gameIndex === currentGameIndex || cardPosition === 0 || cardPosition === 1}
+                    priority={visualPosition === 0 || visualPosition === 1 || visualPosition === -1}
                   />
 
-                  {cardPosition === 1 && (
+                  {visualPosition === 1 && (
                     <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
                   )}
                 </div>
