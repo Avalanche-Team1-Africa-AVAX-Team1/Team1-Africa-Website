@@ -120,6 +120,22 @@ const FLOATING_IMAGES = [
     delay: 1.65,
     shape: 'rounded' as const,
   },
+  {
+    src: enclaveMarkets,
+    alt: 'Enclave Markets',
+    width: 90,
+    height: 90,
+    delay: 1.8,
+    shape: 'circle' as const,
+  },
+  {
+    src: coqInu,
+    alt: 'Coq Inu',
+    width: 105,
+    height: 60,
+    delay: 1.95,
+    shape: 'rounded' as const,
+  },
 ] as const
 
 // Trending Tokens data (exact from screenshot)
@@ -243,9 +259,7 @@ export default function AvalancheEcosystem() {
         const targetX = gsap.utils.random(0, maxX)
         const startX = targetX + gsap.utils.random(-150, 150)
         const startY = -containerHeight - gsap.utils.random(80, 220)
-        const baseY = containerHeight - config.height
-        const landingOffset = Math.min(60, Math.max(0, baseY)) // avoid going below floor
-        const landingY = Math.max(0, baseY - gsap.utils.random(0, landingOffset))
+        const landingY = containerHeight - config.height // Icons can now drop to the very bottom
         const dropDuration = gsap.utils.random(1.05, 1.6)
         const startRotation = gsap.utils.random(-35, 35)
         const endRotation = gsap.utils.random(-10, 10)
@@ -468,7 +482,7 @@ export default function AvalancheEcosystem() {
         <AnimatedText variant="fadeIn" delay={0.4}>
           <div
             ref={logoContainerRef}
-            className="relative w-full h-[600px] bg-gray-100 rounded-[32px] hidden lg:block overflow-hidden"
+            className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] bg-gray-100 rounded-[32px] overflow-hidden p-0 m-0"
           >
             {FLOATING_IMAGES.map((image, index) => {
               return (
@@ -496,8 +510,9 @@ export default function AvalancheEcosystem() {
 
         {/* Right Column - Stacked Cards */}
         <AnimatedText variant="fadeIn" delay={0.5}>
+          {/* Desktop: Animated stacked cards */}
           <div
-            className="relative w-full h-[600px]"
+            className="hidden lg:block relative w-full h-[600px]"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
           >
@@ -506,6 +521,70 @@ export default function AvalancheEcosystem() {
                 {renderFeaturedCard()}
                 {renderTrendingCard()}
               </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Mobile/Tablet: Simple block display - Full content, no scroll */}
+          <div className="lg:hidden space-y-6">
+            {/* Featured Projects Card */}
+            <div className="relative w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+              {/* Folder Tab */}
+              <div className="bg-black px-6 md:px-12 pt-4 md:pt-6 pb-3 md:pb-4 rounded-t-2xl relative">
+                <div className="absolute top-0 left-0 w-32 md:w-40 h-8 md:h-10 bg-black -translate-y-full rounded-t-xl"></div>
+                <h3 className="text-xl md:text-2xl font-semibold text-white">Featured Projects</h3>
+                <p className="text-xs md:text-sm text-white/80 mt-1">
+                  Gaming and DeFi projects on Avalanche
+                </p>
+              </div>
+
+              {/* Content */}
+              <div className="px-6 md:px-12 py-4 md:py-6 bg-white">
+                <ul className="space-y-3 md:space-y-4">
+                  {FEATURED_PROJECTS.map((project) => (
+                    <li key={project.rank} className="flex items-center gap-3 md:gap-6 py-3 md:py-4 border-b border-dashed border-slate-200 last:border-none">
+                      <span className="text-sm md:text-base font-medium text-slate-400 w-6">{project.rank}.</span>
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden bg-white ring-1 ring-slate-200 flex-shrink-0">
+                        <img src={project.icon} alt={project.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-base md:text-lg font-semibold text-slate-900">{project.name}</p>
+                        <p className="text-xs md:text-sm text-slate-500">{project.category}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Trending Tokens Card */}
+            <div className="relative w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+              {/* Folder Tab */}
+              <div className="bg-red-500 px-6 md:px-12 pt-4 md:pt-6 pb-3 md:pb-4 rounded-t-2xl relative">
+                <div className="absolute top-0 left-0 w-32 md:w-40 h-8 md:h-10 bg-red-500 -translate-y-full rounded-t-xl"></div>
+                <h3 className="text-xl md:text-2xl font-semibold text-white">Trending Tokens</h3>
+                <p className="text-xs md:text-sm text-white/80 mt-1">What's hot right now in the world of Web3</p>
+              </div>
+
+              {/* Content */}
+              <div className="px-6 md:px-12 py-4 md:py-6 bg-white">
+                <ul className="space-y-3 md:space-y-4">
+                  {TRENDING_TOKENS.map((token) => (
+                    <li
+                      key={token.rank}
+                      className="flex items-center gap-3 md:gap-6 py-3 md:py-4 border-b border-dashed border-slate-200 last:border-none"
+                    >
+                      <span className="text-sm md:text-base font-medium text-slate-400 w-6">{token.rank}.</span>
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden bg-white shadow-sm ring-1 ring-slate-200 flex-shrink-0">
+                        <img src={token.icon} alt={token.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-base md:text-lg font-semibold text-slate-900">{token.name}</p>
+                        <p className="text-xs md:text-sm text-slate-500">{token.description}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </AnimatedText>

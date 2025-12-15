@@ -104,7 +104,8 @@ const FeaturedGames: React.FC = () => {
     "PlayStation": playstationIcon,
     "Xbox": xboxIcon,
     "Steam": steamIcon,
-    "Nintendo Switch": nintendoSwitchIcon
+    "Nintendo Switch": nintendoSwitchIcon,
+    "Epic": steamIcon // Using steam as fallback for Epic
   };
 
   // Reusable Platform Icons Component
@@ -112,34 +113,42 @@ const FeaturedGames: React.FC = () => {
     if (variant === 'overlay') {
       return (
         <div className="flex gap-2 flex-wrap">
-          {platforms.map((platform, index) => (
-            <img
-              key={index}
-              src={platformIcons[platform]}
-              alt={platform}
-              className="w-8 h-8 object-contain"
-            />
-          ))}
+          {platforms.map((platform, index) => {
+            const icon = platformIcons[platform];
+            if (!icon) return null;
+            return (
+              <img
+                key={index}
+                src={icon}
+                alt={platform}
+                className="w-8 h-8 object-contain opacity-90"
+              />
+            );
+          })}
         </div>
       );
     }
 
     if (variant === 'desktop') {
       return (
-        <div className="flex gap-1.5 lg:gap-3 flex-wrap">
-          {platforms.map((platform, index) => (
-            <div
-              key={index}
-              className="w-7 h-7 lg:w-11 lg:h-11 xl:w-12 xl:h-12 backdrop-blur-sm rounded-lg flex items-center justify-center"
-              title={platform}
-            >
-              <img
-                src={platformIcons[platform]}
-                alt={platform}
-                className="w-full h-full object-contain filter"
-              />
-            </div>
-          ))}
+        <div className="flex gap-2 lg:gap-2.5 flex-wrap">
+          {platforms.map((platform, index) => {
+            const icon = platformIcons[platform];
+            if (!icon) return null;
+            return (
+              <div
+                key={index}
+                className="w-8 h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10 bg-white/5 hover:bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all border border-white/10"
+                title={platform}
+              >
+                <img
+                  src={icon}
+                  alt={platform}
+                  className="w-5 h-5 lg:w-6 lg:h-6 object-contain opacity-80"
+                />
+              </div>
+            );
+          })}
         </div>
       );
     }
@@ -147,15 +156,19 @@ const FeaturedGames: React.FC = () => {
     // mobile variant (default)
     return (
       <div className="flex gap-3 flex-wrap">
-        {platforms.map((platform, index) => (
-          <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-            <img
-              src={platformIcons[platform]}
-              alt={platform}
-              className="w-8 h-8 object-contain"
-            />
-          </div>
-        ))}
+        {platforms.map((platform, index) => {
+          const icon = platformIcons[platform];
+          if (!icon) return null;
+          return (
+            <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+              <img
+                src={icon}
+                alt={platform}
+                className="w-8 h-8 object-contain"
+              />
+            </div>
+          );
+        })}
       </div>
     );
   };
@@ -214,27 +227,38 @@ const FeaturedGames: React.FC = () => {
     }
   };
 
-  // Carousel Dots Component
+  // Carousel Dots Component - Minimal & Elegant
   const CarouselDots = ({ variant = 'desktop' }: { variant?: 'desktop' | 'mobile' }) => {
-    const dotClasses = variant === 'desktop'
-      ? 'w-2 h-2 lg:w-3 lg:h-3 mx-1 lg:mx-2 xl:mx-4 rounded-full transition-all duration-300'
-      : 'w-2.5 h-2.5 rounded-full transition-all duration-300';
+    if (variant === 'desktop') {
+      return (
+        <div className="flex gap-1.5 items-center">
+          {games.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => navigateToGame(index)}
+              className={`transition-all duration-300 rounded-full ${index === currentGameIndex
+                ? 'w-6 h-1.5 bg-white'
+                : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/50'
+                }`}
+              aria-label={`Go to game ${index + 1}`}
+            />
+          ))}
+        </div>
+      );
+    }
 
-    const activeClasses = variant === 'desktop'
-      ? 'bg-white scale-125'
-      : 'bg-gray-900 scale-125';
-
-    const inactiveClasses = variant === 'desktop'
-      ? 'bg-gray-400 hover:bg-gray-300'
-      : 'bg-gray-400';
-
+    // Mobile variant
     return (
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
         {games.map((_, index) => (
           <button
             key={index}
             onClick={() => navigateToGame(index)}
-            className={`${dotClasses} ${index === currentGameIndex ? activeClasses : inactiveClasses}`}
+            className={`transition-all duration-300 rounded-full ${index === currentGameIndex
+              ? 'w-8 h-2 bg-gray-900'
+              : 'w-2 h-2 bg-gray-400 hover:bg-gray-500'
+              }`}
+            aria-label={`Go to game ${index + 1}`}
           />
         ))}
       </div>
@@ -343,55 +367,66 @@ const FeaturedGames: React.FC = () => {
           </div>
         </div>
 
-        <AnimatedText variant="fadeIn" delay={0.4} className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
+          <AnimatedText variant="fadeIn" delay={0.4} className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
           {/* Fixed Details Card - Left Side (Desktop Only) */}
-          <div className="relative w-[30%] lt-1024:hidden h-full bg-black rounded-l-2xl p-4 lg:p-8 xl:p-10 2xl:p-12 flex flex-col justify-between z-10 overflow-hidden">
-            <div className={`transition-all duration-300 border-2 border-blue-500 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-              <h2 className="text-white text-2xl lg:text-4xl xl:text-5xl font-bold mb-3 lg:mb-5 xl:mb-6 leading-tight">
-                {games[currentGameIndex].title}
-              </h2>
+          <div className="relative w-[30%] lt-1024:hidden h-full bg-gradient-to-br from-gray-950 via-black to-gray-900 rounded-l-2xl px-6 lg:px-8 xl:px-10 py-8 lg:py-10 xl:py-12 flex flex-col justify-between z-10 overflow-hidden shadow-2xl">
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 
-              <p className="text-gray-300 text-xs lg:text-base xl:text-lg 2xl:text-xl mb-3 lg:mb-6 xl:mb-8 leading-relaxed">
-                {games[currentGameIndex].description}
-              </p>
+            {/* Content wrapper */}
+            <div className="relative z-10 flex flex-col h-full">
+              {/* Top section - Game info */}
+              <div className={`flex-1 flex flex-col transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+                <h2 className="text-white text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 lg:mb-6 leading-tight tracking-tight">
+                  {games[currentGameIndex].title}
+                </h2>
 
-              <button className="bg-red-500 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-3 lg:px-7 lg:py-5 xl:px-5 xl:py-3 rounded-lg flex items-center justify-center gap-2 lg:gap-3 transition-all duration-300 hover:scale-105 border border-white/20 text-xs lg:text-base">
-                WEBSITE
-                <ExternalLink size={14} className="lg:w-5 lg:h-5" />
-              </button>
-            </div>
+                <p className="text-gray-300 text-sm lg:text-base xl:text-lg mb-6 lg:mb-8 leading-relaxed line-clamp-6">
+                  {games[currentGameIndex].description}
+                </p>
 
-            <div className={`border-2 border-red-500 transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-              <div className="mb-3 lg:mb-5 xl:mb-6">
-                <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-2 lg:mb-3">Platforms</h3>
-                <PlatformIcons platforms={games[currentGameIndex].platforms} variant="desktop" />
-              </div>
-
-              <div className="mb-3 lg:mb-5">
-                <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-1 lg:mb-2">Genre</h3>
-                <p className="text-white font-medium text-sm lg:text-lg">{games[currentGameIndex].genre}</p>
-              </div>
-
-              <div className="flex justify-center mt-3 lg:mt-6 xl:mt-10 items-center">
-                <button
-                  onClick={prevGame}
-                  disabled={isTransitioning}
-                  className="w-12 h-12 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 hover:bg-gray-900"
-                >
-                  <ChevronLeft size={16} className="lg:w-5 lg:h-5" />
+                <button className="bg-red-500 hover:bg-red-600 text-white px-6 py-3.5 lg:px-8 lg:py-4 rounded-xl font-semibold flex items-center justify-center gap-2.5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-500/20 text-sm lg:text-base w-full lg:w-auto">
+                  VISIT WEBSITE
+                  <ExternalLink size={18} className="lg:w-5 lg:h-5" />
                 </button>
+              </div>
 
-                <div className="flex gap-1 lg:gap-2 mx-2 lg:mx-4">
-                  <CarouselDots variant="desktop" />
+              {/* Bottom section - Metadata & Navigation */}
+              <div className={`space-y-6 lg:space-y-8 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+                {/* Platforms */}
+                <div>
+                  <h3 className="text-gray-400 text-xs lg:text-sm font-semibold mb-3 uppercase tracking-wider">Platforms</h3>
+                  <PlatformIcons platforms={games[currentGameIndex].platforms} variant="desktop" />
                 </div>
 
-                <button
-                  onClick={nextGame}
-                  disabled={isTransitioning}
-                  className="w-12 h-12 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 hover:bg-gray-900"
-                >
-                  <ChevronRight size={16} className="lg:w-5 lg:h-5" />
-                </button>
+                {/* Genre */}
+                <div>
+                  <h3 className="text-gray-400 text-xs lg:text-sm font-semibold mb-2 uppercase tracking-wider">Genre</h3>
+                  <p className="text-white font-medium text-base lg:text-lg">{games[currentGameIndex].genre}</p>
+                </div>
+
+                {/* Navigation */}
+                <div className="flex justify-between items-center pt-4 lg:pt-6 border-t border-gray-800">
+                  <button
+                    onClick={prevGame}
+                    disabled={isTransitioning}
+                    className="w-11 h-11 lg:w-14 lg:h-14 bg-white/5 hover:bg-white/10 text-white rounded-full flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed backdrop-blur-sm border border-white/10"
+                    aria-label="Previous game"
+                  >
+                    <ChevronLeft size={20} className="lg:w-6 lg:h-6" />
+                  </button>
+
+                  <CarouselDots variant="desktop" />
+
+                  <button
+                    onClick={nextGame}
+                    disabled={isTransitioning}
+                    className="w-11 h-11 lg:w-14 lg:h-14 bg-white/5 hover:bg-white/10 text-white rounded-full flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed backdrop-blur-sm border border-white/10"
+                    aria-label="Next game"
+                  >
+                    <ChevronRight size={20} className="lg:w-6 lg:h-6" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -523,21 +558,23 @@ const FeaturedGames: React.FC = () => {
         </AnimatedText>
 
         {/* Mobile/Tablet Navigation */}
-        <div className="hidden lt-1024:flex justify-center items-center gap-6 mt-6 px-4">
+        <div className="hidden lt-1024:flex justify-center items-center gap-4 mt-8 px-4">
           <button
             onClick={prevGame}
             disabled={isTransitioning}
-            className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center disabled:opacity-50"
+            className="w-12 h-12 bg-gray-900 hover:bg-gray-800 text-white rounded-full flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-lg"
+            aria-label="Previous game"
           >
-            <ChevronLeft size={18} />
+            <ChevronLeft size={20} />
           </button>
           <CarouselDots variant="mobile" />
           <button
             onClick={nextGame}
             disabled={isTransitioning}
-            className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center disabled:opacity-50"
+            className="w-12 h-12 bg-gray-900 hover:bg-gray-800 text-white rounded-full flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-lg"
+            aria-label="Next game"
           >
-            <ChevronRight size={18} />
+            <ChevronRight size={20} />
           </button>
         </div>
       </div>
