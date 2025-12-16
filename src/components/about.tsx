@@ -28,7 +28,7 @@ const AboutUs = () => {
                 {/* Scale heading down progressively on smaller screens; 4K unchanged */}
                 <AnimatedText variant="slideUp" delay={0.2}>
                   <h1 className='text-5xl lt-1440:text-3xl lt-1024:text-2xl lt-768:text-xl lt-480:text-lg font-bold text-black leading-tight'>
-                    Africa Isn't Just <span className="text-red-500">Adopting</span> Blockchain, We're <span className="text-red-500">Building</span> It
+                    Mobilizing Africa's <span className="text-red-500">Builders.</span> Powered by <span className="text-red-500">Avalanche.</span>
                   </h1>
                 </AnimatedText>
               </div>
@@ -36,7 +36,7 @@ const AboutUs = () => {
               <div className='lg:basis-[40%] lt-1024:basis-auto lt-1024:max-w-[680px]'> {/* Relax fixed basis on tablet/phone */}
                 <AnimatedText variant="slideUp" delay={0.3}>
                   <p className='text-lg lt-1440:text-base lt-1024:text-[0.95rem] lt-768:text-[0.9rem] lt-480:text-[0.875rem] text-gray-600 leading-relaxed mb-6'>
-                    Team1 Africa is where the continent's boldest builders, creators, and innovators come together to shape Web3's future. Through workshops, grants, hackathons, and global partnerships, we're equipping African talent with everything needed to lead the blockchain revolution—not just participate in it.
+                    Team1 Africa fuels the continent's blockchain ecosystem through hands-on workshops, developer grants, hackathons, and partnerships with global protocols. We're not talking about the future—we're building it.
                   </p>
                 </AnimatedText>
 

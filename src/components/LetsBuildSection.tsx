@@ -156,7 +156,7 @@ const LetsBuildSection = () => {
             <div className="hidden lg:block">
                 <section ref={pinnedRef} className="h-screen bg-white text-black overflow-hidden flex flex-col justify-center relative">
                     <div className="absolute top-12 left-0 w-full text-center z-20">
-                        <h2 className="text-6xl font-black tracking-tight">Who We Are</h2>
+                        <h2 className="text-6xl font-black tracking-tight">The Builders We're Building For</h2>
                         <div className="w-20 h-1 bg-black mx-auto mt-4" />
                     </div>
 
@@ -239,7 +239,7 @@ const LetsBuildSection = () => {
             {/* MOBILE: Vertical Stack */}
             <div className="lg:hidden bg-white text-black py-20 px-6 space-y-32">
                 <div className="text-center mb-12">
-                    <h2 className="text-5xl font-black">Who We Are</h2>
+                    <h2 className="text-5xl font-black">The Builders We're Building For</h2>
                     <div className="w-20 h-1 bg-black mx-auto mt-4" />
                 </div>
                 <AnimatedSection staggerChildren={0.2} className="space-y-32">
@@ -267,7 +267,7 @@ const LetsBuildSection = () => {
             <div className="hidden lg:block">
                 <section ref={horizontalContainerRef} className="h-screen overflow-hidden bg-black text-white relative">
                     <div className="absolute top-12 left-12 z-20">
-                        <h2 className="text-6xl font-black">What We Do</h2>
+                        <h2 className="text-6xl font-black">How We Show Up</h2>
                         <div className="w-20 h-1 bg-red-600 mt-4" />
                     </div>
 
@@ -328,7 +328,7 @@ const LetsBuildSection = () => {
             {/* WHAT WE DO SECTION - VERTICAL STACK (Mobile) */}
             <div className="lg:hidden bg-black text-white py-24 px-6">
                 <div className="text-center mb-16">
-                    <h2 className="text-5xl font-black">What We Do</h2>
+                    <h2 className="text-5xl font-black">How We Show Up</h2>
                     <div className="w-20 h-1 bg-red-600 mx-auto mt-4" />
                 </div>
                 <AnimatedSection staggerChildren={0.2} className="space-y-24">

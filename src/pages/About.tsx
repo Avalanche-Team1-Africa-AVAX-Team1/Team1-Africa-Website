@@ -48,7 +48,7 @@ const About = () => {
                     transition={{ delay: 1, duration: 1 }}
                     className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30"
                 >
-                    <p className="text-sm font-mono animate-bounce text-white/50">SCROLL. DON’T BLINK.</p>
+                    <p className="text-sm font-mono animate-bounce text-white/50">KEEP SCROLLING</p>
                 </motion.div>
             </section>
 
@@ -59,28 +59,27 @@ const About = () => {
                         <div className="lg:sticky lg:top-32">
                             <AnimatedText variant="slideUp" delay={0.2}>
                                 <h2 className="text-[10vw] lg:text-[5vw] font-black tracking-tighter mb-8 leading-[0.9]" data-cursor="Our Mission">
-                                    BUILDING <br />
-                                    THE NEXT <br />
-                                    <span className="text-red-600">AFRICAN</span> <br />
-                                    FRONTIER
+                                    WHERE AFRICA <br />
+                                    BUILDS ON <br />
+                                    <span className="text-red-600">AVALANCHE</span>
                                 </h2>
                             </AnimatedText>
                             <AnimatedText variant="slideUp" delay={0.3}>
                                 <p className="text-lg md:text-xl font-medium text-gray-600 max-w-md">
-                                    Team1 is where African ambition meets Avalanche-grade execution. We turn raw talent into real builders and ideas into onchain reality.
+                                    Team1 Africa is the continent's home for Avalanche builders—connecting talent with training, funding, and opportunities to ship world-class blockchain products.
                                 </p>
                             </AnimatedText>
                         </div>
                         <AnimatedSection staggerChildren={0.2} className="space-y-16 md:space-y-24 text-xl md:text-2xl font-light leading-relaxed">
                             {[{
-                                title: "Decentralization",
-                                desc: "To us, decentralization isn’t a buzzword — it’s leverage. Avalanche gives African builders speed, scale, and sovereignty to ship without permission and compete globally."
+                                title: "Why Avalanche",
+                                desc: "Speed matters. Scalability matters. Avalanche's sub-second finality and customizable subnets give African builders the infrastructure to compete globally—without compromise."
                             }, {
-                                title: "Community",
-                                desc: "Team1 is community-first, always. Designers, devs, traders, writers, students — different lanes, one mission. From WhatsApp groups to hackathons, we move as one."
+                                title: "Community-First",
+                                desc: "Developers, designers, creators, students—we're a cross-continental network united by one mission. From local meetups to continental hackathons, Team1 shows up for African builders."
                             }, {
-                                title: "Education",
-                                desc: "We don’t gatekeep knowledge. We translate complex blockchain concepts into usable skills, helping Africans build careers, startups, and protocols on Avalanche."
+                                title: "Build Careers, Not Just Skills",
+                                desc: "We turn blockchain curiosity into professional capability. Through mentorship, workshops, and direct funding, Team1 helps you go from learning Solidity to launching your first protocol."
                             }].map((item, i) => (
                                 <AnimatedItem key={i}>
                                     <span className="text-4xl md:text-5xl font-bold block mb-4 text-red-500">0{i + 1}.</span>
@@ -98,11 +97,11 @@ const About = () => {
                 <div className="flex whitespace-nowrap animate-infinite-scroll">
                     {[...Array(4)].map((_, i) => (
                         <div key={i} className="flex items-center gap-8 mx-8">
-                            <span className="text-6xl md:text-8xl font-black italic">BUILDERS</span>
+                            <span className="text-6xl md:text-8xl font-black italic">BUILD</span>
                             <span className="text-2xl md:text-4xl">★</span>
-                            <span className="text-6xl md:text-8xl font-black italic text-black">AVALANCHE</span>
+                            <span className="text-6xl md:text-8xl font-black italic text-black">ON AVAX</span>
                             <span className="text-2xl md:text-4xl">★</span>
-                            <span className="text-6xl md:text-8xl font-black italic">AFRICA</span>
+                            <span className="text-6xl md:text-8xl font-black italic">FROM AFRICA</span>
                             <span className="text-2xl md:text-4xl">★</span>
                         </div>
                     ))}

@@ -23,7 +23,7 @@ const Partners = () => {
 
             <div className='text-left lg:text-center mb-16'>
                 <AnimatedText variant="slideUp" delay={0.2}>
-                    <p className='text-2xl md:text-6xl font-semibold leading-tight tracking-tighter'>We have achieved so much as a <span className='text-red-500'>community</span>. We were only able to <span className='text-red-500'>achieve</span> this level of <span className='text-red-500'>greatness</span> with the help of <span className='text-red-500'>our partners</span>.</p>
+                    <p className='text-2xl md:text-6xl font-semibold leading-tight tracking-tighter'>Our ecosystem <span className='text-red-500'>partners</span> accelerate what's possible. Together, we're building Africa's <span className='text-red-500'>blockchain infrastructure</span>—from education to <span className='text-red-500'>funding opportunities</span>.</p>
                 </AnimatedText>
                 <AnimatedText variant="slideUp" delay={0.3}>
                     <p className='text-sm md:text-sm text-gray-600 pt-1 md:pt-4'>We proudly collaborate with organizations that believe in Africa's potential.</p>
