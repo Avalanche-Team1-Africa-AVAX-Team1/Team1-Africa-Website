@@ -33,9 +33,9 @@ const VerticalFlagCarousel = () => {
     const nextCountry = ACTIVE_COUNTRIES[getNextIndex()];
 
     return (
-        <div className="relative h-[900px] flex items-center justify-center overflow-hidden px-8">
+        <div className="relative h-[500px] md:h-[700px] lg:h-[900px] flex items-center justify-center overflow-hidden px-4 md:px-6 lg:px-8">
             {/* Vertical stack container */}
-            <div className="flex flex-col items-center justify-center gap-12 relative">
+            <div className="flex flex-col items-center justify-center gap-6 md:gap-8 lg:gap-12 relative">
                 {/* Top Flag (Previous) */}
                 <motion.div
                     key={`prev-${currentIndex}`}
@@ -44,7 +44,7 @@ const VerticalFlagCarousel = () => {
                     transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
                     className="relative"
                 >
-                    <div className="w-[600px] h-[400px] rounded-3xl overflow-hidden shadow-xl">
+                    <div className="w-[280px] h-[180px] md:w-[400px] md:h-[260px] lg:w-[600px] lg:h-[400px] rounded-xl md:rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl">
                         <img
                             src={`https://flagcdn.com/${prevCountry.code}.svg`}
                             alt={prevCountry.name}
@@ -62,7 +62,7 @@ const VerticalFlagCarousel = () => {
                     transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
                     className="relative z-10"
                 >
-                    <div className="w-[600px] h-[400px] rounded-3xl overflow-hidden shadow-2xl">
+                    <div className="w-[280px] h-[180px] md:w-[400px] md:h-[260px] lg:w-[600px] lg:h-[400px] rounded-xl md:rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl">
                         <img
                             src={`https://flagcdn.com/${currentCountry.code}.svg`}
                             alt={currentCountry.name}
@@ -75,9 +75,9 @@ const VerticalFlagCarousel = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3, duration: 0.4 }}
-                        className="mt-6 text-center"
+                        className="mt-4 md:mt-5 lg:mt-6 text-center"
                     >
-                        <h3 className="text-4xl font-bold text-white tracking-tight">
+                        <h3 className="text-xl md:text-2xl lg:text-4xl font-bold text-white tracking-tight">
                             {currentCountry.name}
                         </h3>
                     </motion.div>
@@ -91,7 +91,7 @@ const VerticalFlagCarousel = () => {
                     transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
                     className="relative"
                 >
-                    <div className="w-[600px] h-[400px] rounded-3xl overflow-hidden shadow-xl">
+                    <div className="w-[280px] h-[180px] md:w-[400px] md:h-[260px] lg:w-[600px] lg:h-[400px] rounded-xl md:rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl">
                         <img
                             src={`https://flagcdn.com/${nextCountry.code}.svg`}
                             alt={nextCountry.name}
@@ -103,8 +103,8 @@ const VerticalFlagCarousel = () => {
             </div>
 
             {/* Gradient masks for top and bottom */}
-            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-zinc-950 to-transparent pointer-events-none z-20" />
-            <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-zinc-950 to-transparent pointer-events-none z-20" />
+            <div className="absolute top-0 left-0 w-full h-24 md:h-28 lg:h-32 bg-gradient-to-b from-zinc-950 to-transparent pointer-events-none z-20" />
+            <div className="absolute bottom-0 left-0 w-full h-24 md:h-28 lg:h-32 bg-gradient-to-t from-zinc-950 to-transparent pointer-events-none z-20" />
         </div>
     );
 };
