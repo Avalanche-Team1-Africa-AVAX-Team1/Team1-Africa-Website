@@ -58,36 +58,83 @@ const About = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
                         <div className="lg:sticky lg:top-32">
                             <AnimatedText variant="slideUp" delay={0.2}>
-                                <h2 className="text-[10vw] lg:text-[5vw] font-black tracking-tighter mb-8 leading-[0.9]" data-cursor="Our Mission">
-                                    WHERE AFRICA <br />
-                                    BUILDS ON <br />
-                                    <span className="text-red-600">AVALANCHE</span>
+                                <h2 className="text-[10vw] lg:text-[5vw] tracking-wide mb-8 leading-[0.9]" data-cursor="Our Mission" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                    TEAM<span className="text-red-600">1</span> <br />
+                                    AFRICA'S <br />
+                                    <span className="text-red-600">COMMUNITY</span>
                                 </h2>
                             </AnimatedText>
                             <AnimatedText variant="slideUp" delay={0.3}>
                                 <p className="text-lg md:text-xl font-medium text-gray-600 max-w-md">
-                                    Team1 Africa is the continent's home for Avalanche builders—connecting talent with training, funding, and opportunities to ship world-class blockchain products.
+                                    Team1 is built for Africans shaping the next greastest technological innovations, from gaming to blockchain and creator platforms to scalable software and custom blockchains on Avalanche.
+
                                 </p>
                             </AnimatedText>
                         </div>
-                        <AnimatedSection staggerChildren={0.2} className="space-y-16 md:space-y-24 text-xl md:text-2xl font-light leading-relaxed">
+
+                        <div className="space-y-0 relative">
                             {[{
-                                title: "Why Avalanche",
-                                desc: "Speed matters. Scalability matters. Avalanche's sub-second finality and customizable subnets give African builders the infrastructure to compete globally—without compromise."
+                                title: "Built for an Emerging Market",
+                                desc: "Africa is one of the world's fastest-emerging markets, and Team1 exists to help Africans build for it first. From games and creator platforms to scalable software, we support builders using Avalanche to solve real problems at massive scale."
                             }, {
-                                title: "Community-First",
-                                desc: "Developers, designers, creators, students—we're a cross-continental network united by one mission. From local meetups to continental hackathons, Team1 shows up for African builders."
+                                title: "Avalanche as the Backbone",
+                                desc: "Emerging markets need infrastructure that doesn't break under pressure. Avalanche's low fees, fast finality, and custom L1s give African builders the freedom to launch games, platforms, and digital economies designed for growth from day one."
                             }, {
-                                title: "Build Careers, Not Just Skills",
-                                desc: "We turn blockchain curiosity into professional capability. Through mentorship, workshops, and direct funding, Team1 helps you go from learning Solidity to launching your first protocol."
+                                title: "Local Builders, Global Impact",
+                                desc: "Team1 helps Africans turn local insight into global products — connecting builders from an emerging market to the Avalanche ecosystem so they can compete, scale, and win on a worldwide stage."
                             }].map((item, i) => (
                                 <AnimatedItem key={i}>
-                                    <span className="text-4xl md:text-5xl font-bold block mb-4 text-red-500">0{i + 1}.</span>
-                                    <h3 className="text-3xl md:text-4xl font-black mb-4 uppercase">{item.title}</h3>
-                                    <p>{item.desc}</p>
+                                    <div className="group relative mb-16 md:mb-24">
+                                        {/* Rotated background number */}
+                                        <div className="absolute -left-4 md:-left-8 top-0 -rotate-12 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
+                                            <span className="text-[12rem] md:text-[15rem] font-black text-red-500 leading-none" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                                {i + 1}
+                                            </span>
+                                        </div>
+
+                                        {/* Content container with offset */}
+                                        <div className={`relative ${i % 2 === 0 ? 'md:ml-0' : 'md:ml-12'}`}>
+                                            {/* Large number indicator */}
+                                            <div className="flex items-start gap-8 mb-6">
+                                                <div className="relative">
+                                                    <div className="w-16 h-16 md:w-20 md:h-20 bg-black group-hover:bg-red-600 transition-all duration-300 flex items-center justify-center rotate-3 group-hover:rotate-0 group-hover:scale-110">
+                                                        <span className="text-4xl md:text-5xl font-black text-white" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                                            {i + 1}
+                                                        </span>
+                                                    </div>
+                                                    {/* Accent square */}
+                                                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-red-500 group-hover:bg-black transition-colors duration-300"></div>
+                                                </div>
+
+                                                {/* Title */}
+                                                <div className="flex-1 pt-2">
+                                                    <h3 className="text-3xl md:text-4xl font-black text-black mb-2 leading-tight tracking-tight group-hover:text-red-600 transition-colors duration-300">
+                                                        {item.title}
+                                                    </h3>
+                                                    {/* Decorative line */}
+                                                    <div className="h-1 bg-black w-0 group-hover:w-full transition-all duration-500 ease-out"></div>
+                                                </div>
+                                            </div>
+
+                                            {/* Description with reveal effect */}
+                                            <div className="relative overflow-hidden">
+                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none"></div>
+                                                <p className="text-base md:text-lg text-gray-700 leading-relaxed pl-0 md:pl-28 relative">
+                                                    {item.desc}
+                                                </p>
+                                            </div>
+
+                                            {/* Decorative elements */}
+                                            <div className="mt-6 flex gap-2 pl-0 md:pl-28">
+                                                <div className="h-1 w-12 bg-red-500 group-hover:w-24 transition-all duration-300"></div>
+                                                <div className="h-1 w-8 bg-black group-hover:w-16 transition-all duration-300 delay-75"></div>
+                                                <div className="h-1 w-4 bg-red-500 group-hover:w-12 transition-all duration-300 delay-150"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </AnimatedItem>
                             ))}
-                        </AnimatedSection>
+                        </div>
                     </div>
                 </div>
             </section>
