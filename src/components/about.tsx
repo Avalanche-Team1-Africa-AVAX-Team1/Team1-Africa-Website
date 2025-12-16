@@ -1,6 +1,8 @@
 import communityImg from '../assets/community.png'
 import arrow from '../assets/white-arrow.svg'
 import arrowup from '../assets/arrow-up.svg'
+import AnimatedText from './AnimatedText'
+import MagneticButton from './MagneticButton'
 
 const AboutUs = () => {
   return (
@@ -12,35 +14,41 @@ const AboutUs = () => {
           <div className=''>
 
             {/* About Us Badge */}
-            <div className='mb-2'>
-              <span className='bg-red-500 px-4 py-2 rounded-lg text-sm inline-block transform -rotate-12 font-semibold'>
-                About us
-              </span>
-            </div>
+            <AnimatedText variant="scale" delay={0.1}>
+              <div className='mb-2'>
+                <span className='bg-red-500 text-white px-4 py-2 rounded-lg text-sm inline-block transform md:-rotate-12 font-semibold'>
+                  About us
+                </span>
+              </div>
+            </AnimatedText>
 
             {/* Keep two-column on md+, stack on small; tighten gaps on small */}
             <div className='flex flex-col md:flex-row items-start justify-between w-full gap-8 lt-1024:gap-6 lt-768:gap-5 lt-480:gap-4'>
               <div className='lg:basis-[60%] md:basis-[120%]'>
                 {/* Scale heading down progressively on smaller screens; 4K unchanged */}
-                <h1 className='text-4xl lt-1440:text-3xl lt-1024:text-2xl lt-768:text-xl lt-480:text-lg font-bold text-black leading-tight'>
-                  Empowering Africa's Builders, Creators & Educators on Avalanche
-                </h1>
+                <AnimatedText variant="slideUp" delay={0.2}>
+                  <h1 className='text-5xl lt-1440:text-3xl lt-1024:text-2xl lt-768:text-xl lt-480:text-lg font-bold text-black leading-tight'>
+                    Africa Isn't Just <span className="text-red-500">Adopting</span> Blockchain, We're <span className="text-red-500">Building</span> It
+                  </h1>
+                </AnimatedText>
               </div>
 
               <div className='lg:basis-[40%] lt-1024:basis-auto lt-1024:max-w-[680px]'> {/* Relax fixed basis on tablet/phone */}
-                <p className='text-lg lt-1440:text-base lt-1024:text-[0.95rem] lt-768:text-[0.9rem] lt-480:text-[0.875rem] text-gray-600 leading-relaxed mb-6'>
-                  We empower local talent, foster global partnerships,
-                  and support the next generation of Web3 leaders
-                  through hands-on events, education, and collaboration.
-                </p>
+                <AnimatedText variant="slideUp" delay={0.3}>
+                  <p className='text-lg lt-1440:text-base lt-1024:text-[0.95rem] lt-768:text-[0.9rem] lt-480:text-[0.875rem] text-gray-600 leading-relaxed mb-6'>
+                    Team1 Africa is where the continent's boldest builders, creators, and innovators come together to shape Web3's future. Through workshops, grants, hackathons, and global partnerships, we're equipping African talent with everything needed to lead the blockchain revolution—not just participate in it.
+                  </p>
+                </AnimatedText>
 
                 {/* Shrink CTA padding and gap on smaller screens */}
-                <div className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 lt-1024:px-5 lt-1024:py-2.5 lt-768:px-4 lt-768:py-2 rounded-full font-medium transition-colors flex items-center gap-2 lt-768:gap-1.5 group cursor-pointer'>
-                  About Us
-                  {/* Scale icons down on smaller screens */}
-                  <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden lt-768:w-4 lt-768:h-4' />
-                  <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden lt-768:w-4 lt-768:h-4' />
-                </div>
+                <AnimatedText variant="fadeIn" delay={0.4}>
+                  <MagneticButton className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 lt-1024:px-5 lt-1024:py-2.5 lt-768:px-4 lt-768:py-2 rounded-full font-medium transition-colors flex items-center gap-2 lt-768:gap-1.5 group'>
+                    About Us
+                    {/* Scale icons down on smaller screens */}
+                    <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden lt-768:w-4 lt-768:h-4' />
+                    <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden lt-768:w-4 lt-768:h-4' />
+                  </MagneticButton>
+                </AnimatedText>
               </div>
             </div>
           </div>

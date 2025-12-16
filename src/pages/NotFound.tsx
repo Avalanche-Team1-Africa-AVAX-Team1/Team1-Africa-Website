@@ -73,8 +73,8 @@ export default function NotFound() {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="group relative px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 text-white font-bold rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
@@ -86,8 +86,8 @@ export default function NotFound() {
               <div className="absolute inset-0 bg-black/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
             </Link>
 
-            <Link 
-              to="/blog" 
+            <Link
+              to="/blog"
               className="px-8 py-4 bg-white border-2 border-gray-200 text-gray-700 font-bold rounded-full hover:border-red-500 hover:text-red-500 transition-all duration-300"
             >
               Visit Blog
@@ -106,9 +106,9 @@ export default function NotFound() {
               <span className="text-gray-300">•</span>
               <a href="#events" className="text-gray-600 hover:text-red-500 transition-colors">Events</a>
             </div>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
 
       <Footer />
     </div>

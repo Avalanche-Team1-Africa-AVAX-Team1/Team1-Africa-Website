@@ -2,13 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Fonts */
+/* Lenis Smooth Scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+
+/* Bastliga One Font */
 @font-face {
   font-family: 'Bastliga One';
-  src: url('./assets/fonts/Bastliga One.woff2') format('woff2'),
-       url('./assets/fonts/Bastliga One.ttf') format('truetype'),
-       url('./assets/fonts/Bastliga One.otf') format('opentype');
+  src: url('./assets/fonts/Bastliga One.otf') format('opentype'),
+    url('./assets/fonts/Bastliga One.ttf') format('truetype');
   font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* SansBeam Font - Multiple variants for better compatibility */
+@font-face {
+  font-family: 'beamSansFont';
+  src: url('./assets/fonts/stawix-sansbeambody-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'beamSansFont';
+  src: url('./assets/fonts/stawix-sansbeambody-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'beamSansFont';
+  src: url('./assets/fonts/stawix-sansbeambody-semibold.otf') format('opentype');
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
@@ -18,18 +65,37 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
 }
 
-/* Hide native scrollbars while preserving scroll behavior */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.animate-infinite-scroll {
+  animation: infiniteScroll 20s linear infinite;
+}
 
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+/* Hide native scrollbars while preserving scroll behavior */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
 /* Simple multi-line clamps without Tailwind plugin */
-.clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

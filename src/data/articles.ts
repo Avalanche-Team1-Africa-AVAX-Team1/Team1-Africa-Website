@@ -1,8 +1,12 @@
 import type { Article } from '../types/blog'
 import avaxImg from '../assets/avax.png'
+import avaxImgWebp from '../assets/avax.webp'
 import avalancheLogo from '../assets/avalanche_logo.png'
+import avalancheLogoWebp from '../assets/avalanche_logo.webp'
 import communityImg from '../assets/community.png'
+import communityImgWebp from '../assets/community.webp'
 import collageImg from '../assets/collage.png'
+import collageImgWebp from '../assets/collage.webp'
 
 // Helper to format ISO date strings consistently
 const toISO = (d: string) => new Date(d).toISOString()
@@ -20,7 +24,7 @@ export const articles: Article[] = [
       <ul><li>High throughput and sub-second finality</li><li>Low and predictable fees</li><li>Subnets for app-specific chains</li></ul>
       <blockquote>“We can finally ship products that users love without making them pay a premium.” — Team1 Africa</blockquote>
       <p>Explore projects, grants, and community programs supporting developers in the region.</p>`,
-    featuredImage: { url: avalancheLogo, alt: 'Avalanche logo with coins' },
+    featuredImage: { url: avalancheLogo, urlWebp: avalancheLogoWebp, alt: 'Avalanche logo with coins' },
     category: { name: 'Education', color: '#FF5A5F', slug: 'education' },
     author: { name: 'Avalanche Team1' },
     publishedDate: toISO('2025-08-20'),
@@ -38,7 +42,7 @@ export const articles: Article[] = [
       <h2>What they’re building</h2>
       <ol><li>Hackathon dApps</li><li>Open-source tooling</li><li>On-chain credentials</li></ol>
       <p>Want to start a club? Reach out to join our community.</p>`,
-    featuredImage: { url: communityImg, alt: 'Student developer community' },
+    featuredImage: { url: communityImg, urlWebp: communityImgWebp, alt: 'Student developer community' },
     category: { name: 'Gaming', color: '#EF4444', slug: 'gaming' },
     author: { name: 'Avalanche Team1' },
     publishedDate: toISO('2025-08-19'),
@@ -56,7 +60,7 @@ export const articles: Article[] = [
       <h2>Highlights</h2>
       <ul><li>Developer workshops in 4 cities</li><li>Launch of educator toolkit</li><li>New open grants</li></ul>
       <p>See photos and session recordings inside.</p>`,
-    featuredImage: { url: avaxImg, alt: 'Red Avalanche mark and gold coins' },
+    featuredImage: { url: avaxImg, urlWebp: avaxImgWebp, alt: 'Red Avalanche mark and gold coins' },
     category: { name: 'Team1 Africa', color: '#FF3B30', slug: 'team1-africa' },
     author: { name: 'Avalanche Team1' },
     publishedDate: toISO('2025-08-17'),
@@ -83,7 +87,7 @@ export const articles: Article[] = [
         <li>Reputation primitives for verifiable teaching, speaking, and community leadership.</li>
       </ul>
       <p>These stories are only a glimpse of a growing movement. If you want to participate—whether as a mentor, creator, or partner—reach out to join our next cohort.</p>`,
-    featuredImage: { url: collageImg, alt: 'Collage of community highlights' },
+    featuredImage: { url: collageImg, urlWebp: collageImgWebp, alt: 'Collage of community highlights' },
     category: { name: 'Education', color: '#F97316', slug: 'education' },
     author: { name: 'Avalanche Team1' },
     publishedDate: toISO('2025-08-10'),

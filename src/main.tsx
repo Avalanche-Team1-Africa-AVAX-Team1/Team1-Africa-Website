@@ -6,14 +6,25 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import BlogIndex from './pages/BlogIndex'
 import BlogArticle from './pages/BlogArticle'
 import NotFound from './pages/NotFound'
+import EventCalendar from './components/EventCalendar'
+import About from './pages/About'
+import SmoothScrollProvider from './components/SmoothScrollProvider'
+
+import Layout from './components/Layout'
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/blog" element={<BlogIndex />} />
-      <Route path="/blog/:slug" element={<BlogArticle />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <SmoothScrollProvider>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<App />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/blog" element={<BlogIndex />} />
+          <Route path="/blog/:slug" element={<BlogArticle />} />
+          <Route path="/events" element={<EventCalendar />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </SmoothScrollProvider>
   </BrowserRouter>
 )

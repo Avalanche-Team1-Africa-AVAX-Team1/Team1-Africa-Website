@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { gsap } from 'gsap'
+import AnimatedText from './AnimatedText'
 
 // Import the exact images from chat - for left side falling images
 import poiint from '../assets/poiint.png'
@@ -29,6 +30,7 @@ const FLOATING_IMAGES = [
     width: 100,
     height: 100,
     delay: 0,
+    shape: 'circle' as const,
   },
   {
     src: arenaLogo,
@@ -36,6 +38,7 @@ const FLOATING_IMAGES = [
     width: 110,
     height: 60,
     delay: 0.15,
+    shape: 'rounded' as const,
   },
   {
     src: avalancheBadge,
@@ -43,6 +46,7 @@ const FLOATING_IMAGES = [
     width: 95,
     height: 95,
     delay: 0.3,
+    shape: 'circle' as const,
   },
   {
     src: arenaBadge,
@@ -50,6 +54,7 @@ const FLOATING_IMAGES = [
     width: 105,
     height: 105,
     delay: 0.45,
+    shape: 'circle' as const,
   },
   {
     src: dexalot,
@@ -57,6 +62,7 @@ const FLOATING_IMAGES = [
     width: 100,
     height: 100,
     delay: 0.6,
+    shape: 'rounded' as const,
   },
   {
     src: audius,
@@ -64,6 +70,7 @@ const FLOATING_IMAGES = [
     width: 110,
     height: 110,
     delay: 0.75,
+    shape: 'circle' as const,
   },
   {
     src: ava,
@@ -71,6 +78,63 @@ const FLOATING_IMAGES = [
     width: 90,
     height: 90,
     delay: 0.9,
+    shape: 'rounded' as const,
+  },
+  {
+    src: onlydust,
+    alt: 'OnlyDust',
+    width: 85,
+    height: 85,
+    delay: 1.05,
+    shape: 'circle' as const,
+  },
+  {
+    src: sqauds,
+    alt: 'Squads',
+    width: 95,
+    height: 95,
+    delay: 1.2,
+    shape: 'rounded' as const,
+  },
+  {
+    src: refi,
+    alt: 'ReFi',
+    width: 115,
+    height: 70,
+    delay: 1.35,
+    shape: 'rounded' as const,
+  },
+  {
+    src: yellowKet,
+    alt: 'Yellow Ket',
+    width: 80,
+    height: 80,
+    delay: 1.5,
+    shape: 'circle' as const,
+  },
+  {
+    src: benqiToken,
+    alt: 'BENQI',
+    width: 100,
+    height: 55,
+    delay: 1.65,
+    shape: 'rounded' as const,
+  },
+  {
+    src: enclaveMarkets,
+    alt: 'Enclave Markets',
+    width: 90,
+    height: 90,
+    delay: 1.8,
+    shape: 'circle' as const,
+  },
+  {
+    src: coqInu,
+    alt: 'Coq Inu',
+    width: 105,
+    height: 60,
+    delay: 1.95,
+    shape: 'rounded' as const,
   },
 ] as const
 
@@ -153,7 +217,30 @@ export default function AvalancheEcosystem() {
   const logoContainerRef = useRef<HTMLDivElement>(null)
   const hasAnimated = useRef(false)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const accumulatedScroll = useRef(0)
+  const slideshowInterval = useRef<number | null>(null)
+
+  // Auto-slideshow effect - switches every 3 seconds, pauses on hover
+  useEffect(() => {
+    const startSlideshow = () => {
+      if (slideshowInterval.current) {
+        clearInterval(slideshowInterval.current)
+      }
+
+      slideshowInterval.current = setInterval(() => {
+        if (!isHovering) {
+          setActiveCard(prev => prev === 'trending' ? 'featured' : 'trending')
+        }
+      }, 3000)
+    }
+
+    startSlideshow()
+
+    return () => {
+      if (slideshowInterval.current) {
+        clearInterval(slideshowInterval.current)
+      }
+    }
+  }, [isHovering])
 
   // Falling images animation with GSAP
   useEffect(() => {
@@ -172,9 +259,7 @@ export default function AvalancheEcosystem() {
         const targetX = gsap.utils.random(0, maxX)
         const startX = targetX + gsap.utils.random(-150, 150)
         const startY = -containerHeight - gsap.utils.random(80, 220)
-        const baseY = containerHeight - config.height
-        const landingOffset = Math.min(60, Math.max(0, baseY)) // avoid going below floor
-        const landingY = Math.max(0, baseY - gsap.utils.random(0, landingOffset))
+        const landingY = containerHeight - config.height // Icons can now drop to the very bottom
         const dropDuration = gsap.utils.random(1.05, 1.6)
         const startRotation = gsap.utils.random(-35, 35)
         const endRotation = gsap.utils.random(-10, 10)
@@ -221,27 +306,7 @@ export default function AvalancheEcosystem() {
     return () => observer.disconnect()
   }, [])
 
-  // Handle scroll/wheel events on card container
-  const handleWheel = (e: React.WheelEvent) => {
-    if (!isHovering) return
 
-    e.preventDefault()
-    accumulatedScroll.current += e.deltaY
-
-    // Threshold for switching cards (adjust for sensitivity)
-    const threshold = 100
-
-    if (Math.abs(accumulatedScroll.current) >= threshold) {
-      if (accumulatedScroll.current > 0) {
-        // Scrolling down - show featured projects
-        setActiveCard('featured')
-      } else {
-        // Scrolling up - show trending tokens
-        setActiveCard('trending')
-      }
-      accumulatedScroll.current = 0
-    }
-  }
 
   const renderFeaturedCard = () => {
     const isActive = activeCard === 'featured'
@@ -251,11 +316,11 @@ export default function AvalancheEcosystem() {
         key="featured"
         initial={false}
         animate={{
-          y: isActive ? 0 : 26,
-          opacity: isActive ? 1 : 0.6,
-          scale: isActive ? 1 : 0.95,
+          y: isActive ? 0 : -60,
+          opacity: 1,
+          scale: isActive ? 1 : 0.92,
           zIndex: isActive ? 40 : 12,
-          rotateX: isActive ? 0 : -4,
+          rotateX: isActive ? 0 : -6,
         }}
         transition={{
           duration: 0.9,
@@ -319,11 +384,11 @@ export default function AvalancheEcosystem() {
         key="trending"
         initial={false}
         animate={{
-          y: isActive ? 0 : -24,
-          opacity: isActive ? 1 : 0.6,
-          scale: isActive ? 1 : 0.95,
+          y: isActive ? 0 : -60,
+          opacity: 1,
+          scale: isActive ? 1 : 0.92,
           zIndex: isActive ? 50 : 18,
-          rotateX: isActive ? 0 : -3,
+          rotateX: isActive ? 0 : -6,
         }}
         transition={{
           duration: 0.9,
@@ -387,69 +452,143 @@ export default function AvalancheEcosystem() {
     >
       {/* Header */}
       <div className="relative z-10 max-w-7xl mx-auto mb-20">
-        <div className="inline-block mb-6">
-          <span className="bg-[#FF3B5C] text-white text-sm font-bold px-5 py-2 rounded-full">
-            Token & Trends
-          </span>
-        </div>
-        <h2 className="text-5xl md:text-6xl font-bold text-black mb-6 max-w-3xl">
-          Discover Avalanche's Ecosystem
-        </h2>
-        <p className="text-gray-600 text-base md:text-lg max-w-2xl leading-relaxed">
-          Discover a wide variety of apps, blockchains, wallets and explorers, 
-          built on the Avalanche ecosystem by developers and contributors from across the globe
-        </p>
+        <AnimatedText variant="scale" delay={0.1}>
+          <div className="inline-block">
+            <motion.div
+              initial={{ rotate: -12 }}
+              className="inline-block bg-red-600 px-6 py-3 rounded-xl text-base text-white font-semibold mb-6 shadow-lg"
+            >
+              Tokens & Trends
+            </motion.div>
+          </div>
+        </AnimatedText>
+        <AnimatedText variant="slideUp" delay={0.2}>
+          <h2 className="text-5xl md:text-6xl font-bold text-black mb-6 max-w-3xl">
+            Discover Avalanche's Ecosystem
+          </h2>
+        </AnimatedText>
+        <AnimatedText variant="slideUp" delay={0.3}>
+          <p className="text-gray-600 text-base md:text-lg max-w-2xl leading-relaxed">
+            Discover a wide variety of apps, blockchains, wallets and explorers,
+            built on the Avalanche ecosystem by developers and contributors from across the globe
+          </p>
+        </AnimatedText>
       </div>
 
       {/* Main Content Grid */}
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-        
+
         {/* Left Column - Falling Images Container */}
-        <div
-          ref={logoContainerRef}
-          className="relative w-full h-[600px] bg-gray-100 rounded-[32px] hidden lg:block overflow-hidden"
-        >
-          {FLOATING_IMAGES.map((image, index) => {
-            return (
-              <div
-                key={index}
-                ref={(el) => {
-                  imageRefs.current[index] = el
-                }}
-                className="absolute pointer-events-none"
-                style={{
-                  width: image.width,
-                  height: image.height,
-                  top: 0,
-                  left: 0,
-                  opacity: 0,
-                }}
-              >
-                <img src={image.src} alt={image.alt} className="w-full h-full object-contain" />
-              </div>
-            )
-          })}
-        </div>
+        <AnimatedText variant="fadeIn" delay={0.4}>
+          <div
+            ref={logoContainerRef}
+            className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] bg-gray-100 rounded-[32px] overflow-hidden p-0 m-0"
+          >
+            {FLOATING_IMAGES.map((image, index) => {
+              return (
+                <div
+                  key={index}
+                  ref={(el) => {
+                    imageRefs.current[index] = el
+                  }}
+                  className={`absolute pointer-events-none ${image.shape === 'circle' ? 'rounded-full' : 'rounded-md'
+                    }`}
+                  style={{
+                    width: image.width,
+                    height: image.height,
+                    top: 0,
+                    left: 0,
+                    opacity: 0,
+                  }}
+                >
+                  <img src={image.src} alt={image.alt} className="w-full h-full object-contain" />
+                </div>
+              )
+            })}
+          </div>
+        </AnimatedText>
 
         {/* Right Column - Stacked Cards */}
-        <div
-          className="relative w-full h-[600px]"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => {
-            setIsHovering(false)
-            accumulatedScroll.current = 0
-          }}
-          onWheel={handleWheel}
-        >
-          <div className="relative w-full h-full" style={{ perspective: '1400px' }}>
-            <AnimatePresence initial={false} mode="sync">
-              {renderFeaturedCard()}
-              {renderTrendingCard()}
-            </AnimatePresence>
+        <AnimatedText variant="fadeIn" delay={0.5}>
+          {/* Desktop: Animated stacked cards */}
+          <div
+            className="hidden lg:block relative w-full h-[600px]"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            <div className="relative w-full h-full" style={{ perspective: '1400px' }}>
+              <AnimatePresence initial={false} mode="sync">
+                {renderFeaturedCard()}
+                {renderTrendingCard()}
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
+
+          {/* Mobile/Tablet: Simple block display - Full content, no scroll */}
+          <div className="lg:hidden space-y-6">
+            {/* Featured Projects Card */}
+            <div className="relative w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+              {/* Folder Tab */}
+              <div className="bg-black px-6 md:px-12 pt-4 md:pt-6 pb-3 md:pb-4 rounded-t-2xl relative">
+                <div className="absolute top-0 left-0 w-32 md:w-40 h-8 md:h-10 bg-black -translate-y-full rounded-t-xl"></div>
+                <h3 className="text-xl md:text-2xl font-semibold text-white">Featured Projects</h3>
+                <p className="text-xs md:text-sm text-white/80 mt-1">
+                  Gaming and DeFi projects on Avalanche
+                </p>
+              </div>
+
+              {/* Content */}
+              <div className="px-6 md:px-12 py-4 md:py-6 bg-white">
+                <ul className="space-y-3 md:space-y-4">
+                  {FEATURED_PROJECTS.map((project) => (
+                    <li key={project.rank} className="flex items-center gap-3 md:gap-6 py-3 md:py-4 border-b border-dashed border-slate-200 last:border-none">
+                      <span className="text-sm md:text-base font-medium text-slate-400 w-6">{project.rank}.</span>
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden bg-white ring-1 ring-slate-200 flex-shrink-0">
+                        <img src={project.icon} alt={project.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-base md:text-lg font-semibold text-slate-900">{project.name}</p>
+                        <p className="text-xs md:text-sm text-slate-500">{project.category}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Trending Tokens Card */}
+            <div className="relative w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+              {/* Folder Tab */}
+              <div className="bg-red-500 px-6 md:px-12 pt-4 md:pt-6 pb-3 md:pb-4 rounded-t-2xl relative">
+                <div className="absolute top-0 left-0 w-32 md:w-40 h-8 md:h-10 bg-red-500 -translate-y-full rounded-t-xl"></div>
+                <h3 className="text-xl md:text-2xl font-semibold text-white">Trending Tokens</h3>
+                <p className="text-xs md:text-sm text-white/80 mt-1">What's hot right now in the world of Web3</p>
+              </div>
+
+              {/* Content */}
+              <div className="px-6 md:px-12 py-4 md:py-6 bg-white">
+                <ul className="space-y-3 md:space-y-4">
+                  {TRENDING_TOKENS.map((token) => (
+                    <li
+                      key={token.rank}
+                      className="flex items-center gap-3 md:gap-6 py-3 md:py-4 border-b border-dashed border-slate-200 last:border-none"
+                    >
+                      <span className="text-sm md:text-base font-medium text-slate-400 w-6">{token.rank}.</span>
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden bg-white shadow-sm ring-1 ring-slate-200 flex-shrink-0">
+                        <img src={token.icon} alt={token.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-base md:text-lg font-semibold text-slate-900">{token.name}</p>
+                        <p className="text-xs md:text-sm text-slate-500">{token.description}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </AnimatedText>
       </div>
     </section>
   )
 }
-

@@ -1,6 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
+
+import AnimatedText from './AnimatedText';
+import AppImage from './ui/AppImage';
 import event1 from '../assets/event1-img.png'
+import event1Webp from '../assets/event1-img.webp'
 import event2 from '../assets/event2-img.png'
+import event2Webp from '../assets/event2-img.webp'
+import avaxlogo from '../assets/logo.png'
+import otgVideo from '../assets/videos/otg.mp4'
+import bloodloopVideo from '../assets/videos/bloodloop-use.mp4'
 
 const Stats = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -28,7 +36,7 @@ const Stats = () => {
 
     useEffect(() => {
         if (isVisible) {
-            // Animate Events count (0 to 12)
+            // Animate Events count (0 to 100)
             const eventsInterval = setInterval(() => {
                 setEventsCount(prev => {
                     if (prev >= 100) {
@@ -39,7 +47,7 @@ const Stats = () => {
                 });
             }, 50);
 
-            // Animate Members count (0 to 200)
+            // Animate Members count (0 to 500)
             const membersInterval = setInterval(() => {
                 setMembersCount(prev => {
                     if (prev >= 500) {
@@ -70,40 +78,70 @@ const Stats = () => {
     }, [isVisible]);
 
     return (
-        <div ref={statsRef} className='w-full mt-10 relative flex h-screen xl:py-10 lt-1920:h-auto lt-1440:py-20 lt-1024:py-16 pb-12 md:pb-16 flex-col justify-around md:justify-center items-center overflow-visible'> {/* Changed to overflow-visible to prevent image clipping */}
-            <div className='flex justify-center items-center'>
-                {/* Scale intro paragraph on non-4K screens; constrain width */}
-                <p className='text-[1.4rem] md:text-[50px] lt-1920:text-[40px] lt-1440:text-[34px] lt-1024:text-[25px] lt-768:text-[22px] lt-480:text-[1rem] font-semibold text-center md:w-[65%] w-full lt-1440:max-w-[820px] lt-1024:max-w-[680px]'>Team1 Africa <span className='text-[#6D6D6D]'>is a vibrant grassroots movement committed to equipping</span> African builders, creators, and educators with the tools, resources, and opportunities to thrive in the Avalanche blockchain ecosystem.</p>
+        <div ref={statsRef} className='w-full 2xl:min-h-screen md:min-h-[calc(100vh-20rem)] lt-1024:min-h-[calc(100vh-20rem)] relative flex flex-col justify-center items-center py-[10%] px-[6%] xl:py-10 xl:h-auto overflow-visible'>
+
+            {/* Main content container - everything percentage-based, but fixed on XL */}
+            <div className='w-full max-w-[92%] md:max-w-[85%] lg:max-w-[80%] xl:w-[calc(100%-14rem)] 2xl:w-[calc(100%-24rem)] xl:max-w-none mx-auto relative'>
+
+                {/* Side images positioned with percentages */}
+                <AppImage
+                    src={event1}
+                    srcWebp={event1Webp}
+                    alt="event1"
+                    className='hidden md:block absolute aspect-[3/4] rounded-xl pointer-events-none z-0 md:w-24 md:-left-[20%] md:top-[-30%] lg:w-32 xl:left-[-45%] xl:top-[-60%] 2xl:w-[350px]'
+                />
+                <AppImage
+                    src={event2}
+                    srcWebp={event2Webp}
+                    alt="event2"
+                    className='hidden md:block absolute aspect-[3/4] rounded-xl pointer-events-none z-0 md:w-24 md:-right-[20%] md:bottom-[-20%] lg:w-32 xl:right-[-45%] xl:bottom-[-60%] 2xl:w-[350px]'
+                />
+
+                {/* Text content */}
+                <AnimatedText
+                    variant="slideUp"
+                    delay={0.2}
+                    className='w-full text-[2.75rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[34px] 2xl:text-[40px] font-inter tracking-tight'
+                >
+                    <p className='font-normal text-left xl:text-center leading-[1.1] md:leading-[1.2] lg:leading-[1.25] xl:leading-none'>
+                        Team1 <span className='text-[#ef4444]'>Africa</span>
+                        <span className='inline-block w-[1.2em] h-[1.2em] xl:w-28 xl:h-28 xl:-mb-3 relative align-middle mx-[0.15em]'>
+                            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHBxaXg0bTFmOGZnYjN3YWJ6dGJxNWJxenBoZjV0OXl5enJ5dHZ6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6MbtUNOSRhgVPTFK/giphy.gif" alt="" className='w-full h-full object-contain' />
+                        </span>
+                        is Avalanche's
+                        <span className='inline-block w-[1.2em] h-[1.2em] xl:w-28 xl:h-28 xl:-mb-6 relative align-middle mx-[0.15em]'>
+                            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXQ3ZTh5YmpoNWRnbWIzcmg5Nnp3eXI3Mjk0OHR4eHZ5bDBydzVpaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlQXlQ3nHyLMvte/giphy.gif" alt="" className='w-full h-full object-contain' />
+                        </span>
+                        African
+                        <span className='inline-block w-[2em] h-[1em] xl:w-40 xl:h-20 relative align-middle mx-[0.2em]'>
+                            <video key="bloodloop-video" src={bloodloopVideo} autoPlay loop muted playsInline className='w-full h-full object-cover rounded-full border-2 border-white' />
+                        </span>
+                        network empowering <span className='text-[#ef4444]'>Builders</span> and Creators
+                        <span className='inline-block w-[2em] h-[1em] xl:w-40 xl:h-20 relative align-middle mx-[0.2em]'>
+                            <video key="otg-video" src={otgVideo} autoPlay loop muted playsInline className='w-full h-full object-cover rounded-full border-2 border-white' />
+                        </span>
+                        with resources to thrive on
+                        <span className='inline-block relative align-middle mx-[0.15em]'>
+                            <img src={avaxlogo} alt="logo" className='w-[0.9em] h-[0.9em] xl:w-10 xl:h-10 object-contain' />
+                        </span>
+                        <span>valanche.</span>
+                    </p>
+                </AnimatedText>
             </div>
 
-            {/* positioned images */}
-            {/* Show decorative images from tablet (md) upward; size/offset adapt to avoid text overlap */}
-            <img
-                src={event1}
-                alt="event1"
-                width={300}
-                height={150}
-                className='hidden xl:top-0 md:block absolute md:bottom-24 md:left-0 md:w-28 lg:bottom-24 lg:left-0 lg:w-48 xl:top-2 xl:left-0 xl:w-52 2xl:bottom-96 2xl:left-[-15%] 2xl:ml-0 2xl:w-[350px] rounded-xl pointer-events-none z-0' /> {/* Smaller and pushed out on tablets; scales up on larger screens */}
-            <img
-                src={event2}
-                alt="event2"
-                width={300}
-                height={150}
-                className='hidden md:block absolute md:top-10 md:right-0 md:w-28 lg:top-24 lg:right-0 lg:w-48 xl:top-56 xl:right-0 xl:w-52 2xl:top-96 2xl:right-[-15%] 2xl:mr-0 2xl:w-[350px] rounded-xl pointer-events-none z-0' /> {/* Smaller and pushed out on tablets; scales up on larger screens */}
-
-            <div className='flex flex-col md:flex-row justify-center items-center gap-8 lg:gap-40 lt-1920:gap-16 lt-1024:gap-10 lt-768:gap-8 text-center z-10 md:mt-6 md:ml-12'> {/* Ensure counters render above decorative images and add spacing on tablets */}
-                <div className='leading-tight'>
-                    {/* Scale numbers down on smaller screens */}
-                    <p className='text-[70px] xl:text-[100px] lt-1024:text-[40px] lt-768:text-[48px] lt-480:text-[40px]'>{eventsCount}</p>
-                    <p className='text-xl font-semibold'>Events</p>
+            {/* Stats counters */}
+            <div className='flex flex-col md:flex-row gap-[10%] md:gap-[8%] xl:gap-16 2xl:gap-20 text-center mt-[15%] md:mt-[10%] xl:mt-6 xl:ml-12'>
+                <div className='leading-tight mb-[8%] md:mb-0'>
+                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px]'>{eventsCount}</p>
+                    <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold mt-[0.3em]'>Events</p>
+                </div>
+                <div className='leading-tight mb-[8%] md:mb-0'>
+                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px]'>{membersCount}+</p>
+                    <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold mt-[0.3em]'>Community Members</p>
                 </div>
                 <div className='leading-tight'>
-                    <p className='text-[70px] xl:text-[100px] lt-1024:text-[40px] lt-768:text-[48px] lt-480:text-[40px]'>{membersCount}+</p>
-                    <p className='text-xl font-semibold'>Community Members</p>
-                </div>
-                <div className='leading-tight'>
-                    <p className='text-[70px] xl:text-[100px] lt-1024:text-[40px] lt-768:text-[48px] lt-480:text-[40px]'>{partnersCount}</p>
-                    <p className='text-xl font-semibold'>Game Partners</p>
+                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px]'>{partnersCount}</p>
+                    <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold mt-[0.3em]'>Game Partners</p>
                 </div>
             </div>
 

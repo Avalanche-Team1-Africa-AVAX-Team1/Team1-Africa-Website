@@ -1,99 +1,149 @@
-import logo from '../assets/avalanche_logo.png'
-import telegram from '../assets/telegram.svg'
-import youtube from '../assets/youtube.svg'
-import x from '../assets/x.svg'
-import discord from '../assets/Discord.svg'
-import instagram from '../assets/Instagram.svg'
-import reddit from '../assets/reddit.svg'
-import github from '../assets/github.svg'
-
-
+import { useState } from 'react';
+import logo from '../assets/avalanche_logo.png';
+import telegram from '../assets/telegram.svg';
+import youtube from '../assets/youtube.svg';
+import x from '../assets/x.svg';
+import discord from '../assets/Discord.svg';
+import instagram from '../assets/Instagram.svg';
+import reddit from '../assets/reddit.svg';
+import github from '../assets/github.svg';
+import AnimatedText from './AnimatedText';
 
 const Footer = () => {
+    const [email, setEmail] = useState('');
+
+    const socialLinks = [
+        { icon: telegram, alt: 'telegram', url: '#' },
+        { icon: youtube, alt: 'youtube', url: '#' },
+        { icon: x, alt: 'x', url: '#' },
+        { icon: discord, alt: 'discord', url: '#' },
+        { icon: instagram, alt: 'instagram', url: '#' },
+        { icon: reddit, alt: 'reddit', url: '#' },
+        { icon: github, alt: 'github', url: '#' }
+    ];
+
+    const navLinks = [
+        { label: 'About', href: '/about' },
+        { label: 'Events', href: '/events' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Contact', href: '#contact' }
+    ];
+
+    const handleSubscribe = (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log('Subscribing:', email);
+        setEmail('');
+    };
+
     return (
-        <div className='bg-black text-white p-8 lt-1024:p-6 lt-768:p-5 lt-480:p-4'> {/* Responsive padding on smaller screens */}
-            <div className='flex justify-between lt-1024:flex-col lt-1024:gap-10'> {/* Stack columns on tablet/phone */}
-                <div className='lt-1024:w-full'>
-                    <div>
-                        <img src={logo} alt="team1-logo" width={150} height={150} />
-                        {/* Make paragraph width responsive; keep 4K baseline untouched */}
-                        <p className='text-lg lt-1440:text-base lt-1024:text-[0.95rem] text-[#A1A1A1] leading-relaxed -tracking-wider w-[40%] lt-1440:w-[50%] lt-1024:w-full my-8'>A community-led initiative supporting builders, creators, and educators in the Avalanche ecosystem across the continent.</p>
-                    </div>
-                     <div className='flex items-center gap-4 lt-1024:flex-wrap lt-1024:gap-3'> {/* Wrap icons on tablet/phone */}
-                         <a href="#" className='hover:scale-110 hover:brightness-125 transition-all duration-300'>
-                             <img src={telegram} alt="telegram" className='w-10 h-10 lt-768:w-9 lt-768:h-9 lt-480:w-8 lt-480:h-8' />
-                         </a>
-                         <a href="#" className='hover:scale-110 hover:brightness-125 transition-all duration-300'>
-                             <img src={youtube} alt="youtube" className='w-10 h-10 lt-768:w-9 lt-768:h-9 lt-480:w-8 lt-480:h-8' />
-                         </a>
-                         <a href="#" className='hover:scale-110 hover:brightness-125 transition-all duration-300'>
-                             <img src={x} alt="x" className='w-10 h-10 lt-768:w-9 lt-768:h-9 lt-480:w-8 lt-480:h-8' />
-                         </a>
-                         <a href="#" className='hover:scale-110 hover:brightness-125 transition-all duration-300'>
-                             <img src={discord} alt="discord" className='w-10 h-10 lt-768:w-9 lt-768:h-9 lt-480:w-8 lt-480:h-8' />
-                         </a>
-                         <a href="#" className='hover:scale-110 hover:brightness-125 transition-all duration-300'>
-                             <img src={instagram} alt="instagram" className='w-10 h-10 lt-768:w-9 lt-768:h-9 lt-480:w-8 lt-480:h-8' />
-                         </a>
-                         <a href="#" className='hover:scale-110 hover:brightness-125 transition-all duration-300'>
-                             <img src={reddit} alt="reddit" className='w-10 h-10 lt-768:w-9 lt-768:h-9 lt-480:w-8 lt-480:h-8' />
-                         </a>
-                         <a href="#" className='hover:scale-110 hover:brightness-125 transition-all duration-300'>
-                             <img src={github} alt="github" className='w-10 h-10 lt-768:w-9 lt-768:h-9 lt-480:w-8 lt-480:h-8' />
-                         </a>
-                     </div>
+        <footer className="relative bg-black text-white font-sans">
+            {/* Main Footer Section */}
+            <div className="max-w-[2000px] mx-auto px-6 md:px-12 pt-20 pb-12">
+
+                {/* Top Row: Navigation & Socials */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-24 gap-8">
+                    {/* Navigation Links */}
+                    <AnimatedText variant="fadeIn" delay={0.1}>
+                        <nav className="flex flex-wrap gap-6 md:gap-8">
+                            {navLinks.map((link, index) => (
+                                <a
+                                    key={index}
+                                    href={link.href}
+                                    className="text-sm font-medium uppercase tracking-wider hover:text-gray-400 transition-colors"
+                                >
+                                    {link.label}
+                                </a>
+                            ))}
+                        </nav>
+                    </AnimatedText>
+
+                    {/* Social Icons */}
+                    <AnimatedText variant="fadeIn" delay={0.2}>
+                        <div className="flex gap-4">
+                            {socialLinks.map((social, index) => (
+                                <a
+                                    key={index}
+                                    href={social.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                                >
+                                    <img src={social.icon} alt={social.alt} className="w-4 h-4 invert brightness-0 filter" />
+                                </a>
+                            ))}
+                        </div>
+                    </AnimatedText>
                 </div>
 
-                {/* Link columns become grid on smaller screens */}
-                <div className='flex gap-20 lt-1440:gap-12 lt-1024:grid lt-1024:grid-cols-2 lt-1024:gap-10 lt-768:gap-8 justify-end lt-1024:justify-start'>
-                    {/* Company */}
-                    <div>
-                        <p className='text-xl lt-1024:text-lg font-semibold'>Company</p>
-                         <ul className='text-lg lt-1024:text-base text-[#A1A1A1] font-roboto tracking-wider leading-loose'>
-                             <li className='hover:text-white hover:translate-x-2 transition-all duration-300 cursor-pointer'>About Us</li>
-                             <li className='hover:text-white hover:translate-x-2 transition-all duration-300 cursor-pointer'>Events</li>
-                             <li className='hover:text-white hover:translate-x-2 transition-all duration-300 cursor-pointer'>Partners</li>
-                             <li className='hover:text-white hover:translate-x-2 transition-all duration-300 cursor-pointer'>Contact us</li>
-                             <li className='hover:text-white hover:translate-x-2 transition-all duration-300 cursor-pointer'>Privacy Policy</li>
-                         </ul>
-                    </div>
+                {/* Middle Row: Huge CTA */}
+                <div className="mb-32">
+                    <AnimatedText variant="slideUp" delay={0.3}>
+                        <a href="#contact" className="group block w-full">
+                            <h2 className="text-6xl md:text-8xl lg:text-[10rem] leading-[0.9] font-black tracking-tighter uppercase transition-colors group-hover:text-gray-300">
+                                Shall we <br />
+                                <span className="italic font-serif font-normal group-hover:text-red-500 transition-colors duration-300">work together?</span>
+                            </h2>
+                        </a>
+                    </AnimatedText>
+                </div>
 
-                    {/* Resources */}
-                    <div >
-                        <p className='text-xl lt-1024:text-lg font-semibold'>Resources</p>
-                         <ul className='text-lg lt-1024:text-base text-[#A1A1A1] font-roboto tracking-wider leading-loose'>
-                             <li className='hover:text-blue-400 hover:translate-x-2 transition-all duration-300 cursor-pointer'>Blog</li>
-                             <li className='hover:text-blue-400 hover:translate-x-2 transition-all duration-300 cursor-pointer'>Learn more</li>
-                             <li className='hover:text-blue-400 hover:translate-x-2 transition-all duration-300 cursor-pointer'>FAQs</li>
-                         </ul>
-                    </div>
+                {/* Bottom Row: Newsletter & Logo */}
+                <div className="flex flex-col lg:flex-row justify-between items-end gap-12">
+                    {/* Newsletter */}
+                    <AnimatedText variant="fadeIn" delay={0.4} className="w-full max-w-md">
+                        <div>
+                            <p className="text-sm font-medium mb-4">Subscribe to our newsletter</p>
+                            <form onSubmit={handleSubscribe} className="flex gap-0 border-b border-white/30 focus-within:border-white transition-colors pb-2">
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="name@email.com"
+                                    className="bg-transparent w-full outline-none placeholder-gray-500 text-lg"
+                                    required
+                                />
+                                <button type="submit" className="text-sm font-bold uppercase tracking-wider hover:text-red-500 transition-colors">
+                                    Subscribe
+                                </button>
+                            </form>
+                        </div>
+                    </AnimatedText>
 
-                    {/* Community */}
-                    <div >
-                        <p className='text-xl lt-1024:text-lg font-semibold'>Community</p>
-                         <ul className='text-lg lt-1024:text-base text-[#A1A1A1] font-roboto tracking-wider leading-loose'>
-                             <li className='hover:text-red-400 hover:translate-x-2 transition-all duration-300 cursor-pointer'>Join the community</li>
-                             <li className='hover:text-red-400 hover:translate-x-2 transition-all duration-300 cursor-pointer'>Become a core contributor</li>
-                             <li className='hover:text-red-400 hover:translate-x-2 transition-all duration-300 cursor-pointer'>Sponsor/Host an event</li>
-                             <li className='hover:text-red-400 hover:translate-x-2 transition-all duration-300 cursor-pointer'>Partner with us</li>
-                             <li className='hover:text-red-400 hover:translate-x-2 transition-all duration-300 cursor-pointer'>Games on Avalanche</li>
-                         </ul>
-                    </div>
+                    {/* Logo Area */}
+                    <AnimatedText variant="fadeIn" delay={0.5}>
+                        <div className="flex flex-col items-end">
+                            {/* Animated Logo Placeholder - Using existing logo for now but styled */}
+                            <div className="w-32 h-32 md:w-48 md:h-48 relative group">
+                                <div className="absolute inset-0 border-2 border-white/20 rounded-full animate-[spin_10s_linear_infinite] group-hover:border-red-500/50 transition-colors"></div>
+                                <div className="absolute inset-4 border-2 border-white/40 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                                <img
+                                    src={logo}
+                                    alt="Team1 Africa"
+                                    className="absolute inset-0 w-full h-full object-contain p-8 opacity-80 group-hover:opacity-100 transition-opacity"
+                                />
+                            </div>
+                        </div>
+                    </AnimatedText>
                 </div>
             </div>
 
-            {/* Team1 Africa */}
-            <div className='my-10 lt-1024:my-8 lt-768:my-6 overflow-x-hidden px-2 py-8'> {/* Prevent horizontal scroll and add slight side padding on small */}
-                <p className="overflow-y-hidden text-[170px] lt-1920:text-[130px] lt-1440:text-[80px] lt-1024:text-[60px] lt-768:text-[48px] lt-480:text-[36px] flex justify-center items-center font-bold text-white select-none whitespace-nowrap lt-1024:whitespace-normal tracking-normal lt-1024:tracking-tight lt-768:tracking-tighter leading-none lt-1024:leading-tight lt-768:leading-snug text-center" style={{ fontFamily: "'Press Start 2P', monospace" }}>TEAM1 AFRICA</p> {/* Allow wrap/adjust tracking & leading on smaller screens */}
+            {/* Sub-Footer Section */}
+            <div className="bg-gray-100 text-black py-6 px-6 md:px-12">
+                <AnimatedText variant="fadeIn" delay={0.6}>
+                    <div className="max-w-[2000px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm font-medium uppercase tracking-wide">
+                        <div className="flex flex-col md:flex-row gap-2 md:gap-6 text-center md:text-left">
+                            <span>{new Date().getFullYear()}</span>
+                            <span>All rights reserved - © Team1 Africa</span>
+                        </div>
+                        <div className="flex gap-6">
+                            <a href="#privacy" className="hover:text-red-600 transition-colors">Privacy</a>
+                            <a href="#cookies" className="hover:text-red-600 transition-colors">Cookie Settings</a>
+                        </div>
+                    </div>
+                </AnimatedText>
             </div>
-
-            {/* Copyright */}
-            <div className='flex justify-between items-center lt-768:flex-col lt-768:gap-2'>
-                <p className='text-sm lt-1024:text-xs'>© 2025 Team1 Africa. All rights reserved.</p>
-                <p className='text-sm lt-1024:text-xs'>Deon Lexjo Dio</p>
-            </div>
-        </div>
+        </footer>
     );
-}
+};
 
 export default Footer;
