@@ -10,7 +10,7 @@ const Gallery = () => {
             {/* GalleryBadge */}
             <div className='flex flex-col items-center justify-center'>
                 <AnimatedText variant="scale" delay={0.1}>
-                    <span className='bg-red-500 px-4 py-2 rounded-lg text-sm inline-block transform -rotate-12 font-bold'>
+                    <span className='bg-red-500 text-white px-4 py-2 rounded-lg text-sm inline-block transform -rotate-12 font-bold'>
                         Gallery
                     </span>
                 </AnimatedText>

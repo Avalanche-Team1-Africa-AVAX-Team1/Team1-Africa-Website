@@ -16,7 +16,7 @@ const AboutUs = () => {
             {/* About Us Badge */}
             <AnimatedText variant="scale" delay={0.1}>
               <div className='mb-2'>
-                <span className='bg-red-500 px-4 py-2 rounded-lg text-sm inline-block transform md:-rotate-12 font-semibold'>
+                <span className='bg-red-500 text-white px-4 py-2 rounded-lg text-sm inline-block transform md:-rotate-12 font-semibold'>
                   About us
                 </span>
               </div>
