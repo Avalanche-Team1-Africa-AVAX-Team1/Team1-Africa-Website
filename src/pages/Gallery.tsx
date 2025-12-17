@@ -14,12 +14,22 @@ import south2 from '../assets/south2.webp';
 import south3 from '../assets/south3.webp';
 import south4 from '../assets/south4.webp';
 import south5 from '../assets/south5.webp';
+import south6 from '../assets/south6.webp';
+import south7 from '../assets/south7.webp';
+import south8 from '../assets/south8.webp';
+import south9 from '../assets/south9.webp';
+import south10 from '../assets/south10.webp';
+import south11 from '../assets/south11.webp';
+import south12 from '../assets/south12.webp';
 import ghana1 from '../assets/ghana1.JPG';
 import ghana2 from '../assets/ghana2.JPG';
+import ghana3 from '../assets/ghana3.JPG';
+import ghana4 from '../assets/ghana4.JPG';
 
 // World configuration - much larger than viewport
 const WORLD_WIDTH = 10000;
-const WORLD_HEIGHT = 8000;
+const WORLD_HEIGHT = 10000;
+const WORLD_PADDING = 800; // Large padding to ensure edge images are fully visible (like Colu)
 const CAMERA_SPEED = 0.06;
 const CAMERA_DAMPING = 20;
 const CAMERA_STIFFNESS = 60;
@@ -173,6 +183,249 @@ const moments: Moment[] = [
         date: 'April 2024',
         description: 'Local developers showcased projects to investors and mentors.',
         x: -1500, y: 3300, z: 0, size: 410
+    },
+    {
+        id: 16,
+        image: south6,
+        title: 'Pretoria Tech Meetup',
+        location: 'Pretoria',
+        date: 'May 2024',
+        description: '70 developers shared insights on scaling blockchain applications.',
+        x: 600, y: -2700, z: 0, size: 400
+    },
+    {
+        id: 17,
+        image: ghana3,
+        title: 'Tema Port Blockchain Summit',
+        location: 'Tema',
+        date: 'June 2024',
+        description: 'Exploring blockchain for logistics. 95 industry professionals attended.',
+        x: -3600, y: -1500, z: 0, size: 420
+    },
+    {
+        id: 18,
+        image: ghana4,
+        title: 'Takoradi Developer Workshop',
+        location: 'Takoradi',
+        date: 'July 2024',
+        description: '60 new developers onboarded to Avalanche ecosystem.',
+        x: 2700, y: 2400, z: 0, size: 390
+    },
+    {
+        id: 19,
+        image: south7,
+        title: 'Bloemfontein Innovation Day',
+        location: 'Bloemfontein',
+        date: 'August 2024',
+        description: 'University students built 5 DeFi prototypes in one day.',
+        x: -900, y: -3600, z: 0, size: 410
+    },
+    {
+        id: 20,
+        image: south8,
+        title: 'East London Blockchain Expo',
+        location: 'East London',
+        date: 'September 2024',
+        description: 'Regional businesses explored blockchain integration. 110 attendees.',
+        x: -2100, y: -3300, z: 0, size: 400
+    },
+    {
+        id: 21,
+        image: south9,
+        title: 'Polokwane Developer Meetup',
+        location: 'Polokwane',
+        date: 'October 2024',
+        description: '55 developers from northern regions connected and shared knowledge.',
+        x: 3300, y: -3000, z: 0, size: 390
+    },
+    {
+        id: 22,
+        image: south10,
+        title: 'Kimberley Mining & Blockchain',
+        location: 'Kimberley',
+        date: 'November 2024',
+        description: 'Exploring blockchain for mining industry transparency.',
+        x: -4500, y: -2400, z: 0, size: 410
+    },
+    {
+        id: 23,
+        image: south11,
+        title: 'Nelspruit Tech Summit',
+        location: 'Nelspruit',
+        date: 'December 2024',
+        description: '80 entrepreneurs learned about DeFi opportunities.',
+        x: 4500, y: 3300, z: 0, size: 420
+    },
+    {
+        id: 24,
+        image: south12,
+        title: 'George Coastal Tech Day',
+        location: 'George',
+        date: 'January 2024',
+        description: 'Coastal developers showcased innovative blockchain solutions.',
+        x: 0, y: -3900, z: 0, size: 410
+    },
+    {
+        id: 25,
+        image: event1,
+        title: 'Ibadan Innovation Hub',
+        location: 'Ibadan',
+        date: 'February 2024',
+        description: '100 students introduced to Web3 development.',
+        x: -3900, y: 900, z: 0, size: 400
+    },
+    {
+        id: 26,
+        image: event2,
+        title: 'Mombasa Blockchain Week',
+        location: 'Mombasa',
+        date: 'March 2024',
+        description: 'Coastal Kenya explored maritime blockchain applications.',
+        x: 3900, y: 600, z: 0, size: 390
+    },
+    {
+        id: 27,
+        image: south1,
+        title: 'Rustenburg Mining Innovation',
+        location: 'Rustenburg',
+        date: 'April 2024',
+        description: 'Blockchain solutions for mining sector transparency.',
+        x: 1500, y: -3300, z: 0, size: 415
+    },
+    {
+        id: 28,
+        image: event3,
+        title: 'Kampala Developer Conference',
+        location: 'Kampala',
+        date: 'May 2024',
+        description: '150 developers from East Africa gathered to share knowledge.',
+        x: -1200, y: 3600, z: 0, size: 400
+    },
+    {
+        id: 29,
+        image: ghana1,
+        title: 'Dodoma Blockchain Forum',
+        location: 'Dodoma',
+        date: 'June 2024',
+        description: 'Government officials explored blockchain for public services.',
+        x: 2100, y: 3300, z: 0, size: 395
+    },
+    {
+        id: 30,
+        image: event4,
+        title: 'Windhoek Blockchain Initiative',
+        location: 'Windhoek',
+        date: 'July 2024',
+        description: 'Namibian developers explored cross-border payment solutions.',
+        x: -4800, y: -3600, z: 0, size: 405
+    },
+    {
+        id: 31,
+        image: event5,
+        title: 'Harare Tech Expo',
+        location: 'Harare',
+        date: 'August 2024',
+        description: 'Zimbabwean entrepreneurs discovered DeFi opportunities.',
+        x: 4800, y: -3600, z: 0, size: 400
+    },
+    {
+        id: 32,
+        image: south2,
+        title: 'Gaborone Innovation Summit',
+        location: 'Gaborone',
+        date: 'September 2024',
+        description: 'Botswana first major blockchain conference with 200 attendees.',
+        x: 0, y: 3900, z: 0, size: 410
+    },
+    {
+        id: 33,
+        image: event6,
+        title: 'Lusaka Web3 Conference',
+        location: 'Lusaka',
+        date: 'October 2024',
+        description: 'Zambian developers gathered to explore blockchain opportunities.',
+        x: -3600, y: -3000, z: 0, size: 400
+    },
+    {
+        id: 34,
+        image: event7,
+        title: 'Dar es Salaam Tech Week',
+        location: 'Dar es Salaam',
+        date: 'November 2024',
+        description: 'Tanzania blockchain ecosystem showcase. 180 participants.',
+        x: 3600, y: 3600, z: 0, size: 415
+    },
+    {
+        id: 35,
+        image: south3,
+        title: 'Maputo Innovation Day',
+        location: 'Maputo',
+        date: 'December 2024',
+        description: 'Mozambique first blockchain developer meetup.',
+        x: 2400, y: -3900, z: 0, size: 395
+    },
+    {
+        id: 36,
+        image: ghana2,
+        title: 'Abidjan DeFi Summit',
+        location: 'Abidjan',
+        date: 'January 2025',
+        description: 'West African DeFi leaders discussed cross-border solutions.',
+        x: -4200, y: 1800, z: 0, size: 405
+    },
+    {
+        id: 37,
+        image: event8,
+        title: 'Freetown Blockchain Initiative',
+        location: 'Freetown',
+        date: 'February 2025',
+        description: 'Sierra Leone developers explored Web3 applications.',
+        x: 4200, y: -1800, z: 0, size: 410
+    },
+    {
+        id: 38,
+        image: south4,
+        title: 'Ouagadougou Tech Forum',
+        location: 'Ouagadougou',
+        date: 'March 2025',
+        description: 'Burkina Faso first major blockchain education event.',
+        x: -1800, y: 4200, z: 0, size: 400
+    },
+    {
+        id: 39,
+        image: south5,
+        title: 'Bamako Developer Workshop',
+        location: 'Bamako',
+        date: 'April 2025',
+        description: 'Mali developers learned smart contract development.',
+        x: 1800, y: -4200, z: 0, size: 390
+    },
+    {
+        id: 40,
+        image: event1,
+        title: 'Conakry Blockchain Week',
+        location: 'Conakry',
+        date: 'May 2025',
+        description: 'Guinea blockchain community launched local projects.',
+        x: -4500, y: -1200, z: 0, size: 415
+    },
+    {
+        id: 41,
+        image: event2,
+        title: 'Monrovia Innovation Hub',
+        location: 'Monrovia',
+        date: 'June 2025',
+        description: 'Liberia entrepreneurs discovered blockchain use cases.',
+        x: 4500, y: 1200, z: 0, size: 405
+    },
+    {
+        id: 42,
+        image: south1,
+        title: 'Niamey Blockchain Forum',
+        location: 'Niamey',
+        date: 'July 2025',
+        description: 'Niger developers connected with regional Web3 community.',
+        x: -2700, y: 3900, z: 0, size: 420
     }
 ];
 
@@ -254,8 +507,9 @@ function DesktopGallery({
                 const newX = currentX + velocityRef.current.x;
                 const newY = currentY + velocityRef.current.y;
 
-                const maxCameraX = WORLD_WIDTH / 2 - innerWidth / 2;
-                const maxCameraY = WORLD_HEIGHT / 2 - innerHeight / 2;
+                // Add padding to camera bounds so edge images are fully visible
+                const maxCameraX = WORLD_WIDTH / 2 - innerWidth / 2 - WORLD_PADDING;
+                const maxCameraY = WORLD_HEIGHT / 2 - innerHeight / 2 - WORLD_PADDING;
 
                 const clampedX = Math.max(-maxCameraX, Math.min(maxCameraX, newX));
                 const clampedY = Math.max(-maxCameraY, Math.min(maxCameraY, newY));
@@ -283,7 +537,7 @@ function DesktopGallery({
         <div className="fixed inset-0 bg-black overflow-hidden cursor-default">
             {/* Center Gallery Text - High z-index */}
             <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-                <h1 className="text-[20vw] font-semibold tracking-tight text-red-500/10 select-none">
+                <h1 className="text-[15vw] font-semibold tracking-tight text-red-500/70 select-none">
                     GALLERY
                 </h1>
             </div>
@@ -325,18 +579,6 @@ function WorldImage({
     onClick: () => void;
     onHoverChange: (hovering: boolean) => void;
 }) {
-    const [isHovered, setIsHovered] = useState(false);
-
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-        onHoverChange(true);
-    };
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-        onHoverChange(false);
-    };
-
     return (
         <motion.div
             initial={{
@@ -369,8 +611,8 @@ function WorldImage({
                 height: moment.size,
                 transformOrigin: 'center center',
             }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={() => onHoverChange(true)}
+            onMouseLeave={() => onHoverChange(false)}
             onClick={onClick}
             className="cursor-pointer"
         >
@@ -380,22 +622,6 @@ function WorldImage({
                     alt={moment.title}
                     className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
-                    transition={{ duration: 0.25 }}
-                    className="absolute inset-0 bg-black/92 backdrop-blur-sm flex items-end p-6"
-                >
-                    <div className="text-white">
-                        <div className="text-xs uppercase tracking-widest text-red-400 mb-2">
-                            {moment.location} · {moment.date}
-                        </div>
-                        <h3 className="text-xl font-bold mb-2">{moment.title}</h3>
-                        <p className="text-sm text-white/80 leading-relaxed">{moment.description}</p>
-                    </div>
-                </motion.div>
             </div>
         </motion.div>
     );
@@ -435,7 +661,6 @@ function MobileGallery({
                                 alt={moment.title}
                                 className="w-full h-full object-cover"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                         </div>
                         <div className="p-6">
                             <div className="text-xs uppercase tracking-widest text-red-400 mb-2">
@@ -484,7 +709,6 @@ function EventFullPage({
                         alt={moment.title}
                         className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
 
                     <div className="absolute inset-0 flex items-end p-16">
                         <div className="max-w-4xl">
