@@ -129,7 +129,7 @@ const Footer = () => {
                 </div>
 
                 {/* Sub-Footer Section */}
-                <div className="bg-gray-100 text-black py-6 px-6 md:px-12">
+                <div className="bg-black text-gray-400 py-6 px-6 md:px-12 md:rounded-b-[3rem] border-t border-white/10">
                     <AnimatedText variant="fadeIn" delay={0.6}>
                         <div className="max-w-[2000px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm font-medium uppercase tracking-wide">
                             <div className="flex flex-col md:flex-row gap-2 md:gap-6 text-center md:text-left">
