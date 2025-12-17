@@ -30,16 +30,16 @@ import ghana3 from '../assets/ghana3.JPG';
 import ghana4 from '../assets/ghana4.JPG';
 
 // --- CONFIGURATION ---
-const MIN_IMAGE_SIZE = 400;
-const MAX_IMAGE_SIZE = 450;
+const MIN_IMAGE_SIZE = 300;
+const MAX_IMAGE_SIZE = 400;
 
 // INDIVIDUAL MARGIN SETTINGS
-const MARGIN_MIN = 80;
-const MARGIN_MAX = 100;
+const MARGIN_MIN = 60;
+const MARGIN_MAX = 80;
 
 // NEW: GLOBAL CANVAS PADDING
 // This ensures the furthest images are exactly this far from the edge of the scrollable area
-const CANVAS_PADDING = 150;
+const CANVAS_PADDING = 100;
 
 const CAMERA_DAMPING = 20;
 const CAMERA_STIFFNESS = 60;
@@ -209,11 +209,12 @@ function MobileGalleryHero({ moments }: { moments: Moment[] }) {
     }, []); // Empty dependency array ensures this only runs once on mount
 
     // Random positions for each image - more scattered like the reference
+    // Using vw for size ensures responsiveness across mobile (sm) and tablet (md)
     const positions = useMemo(() => [
-        { top: '8%', right: '5%', size: 160, rotate: -5 }, // Top right
-        { top: '30%', left: '2%', size: 150, rotate: 3 },  // Mid left (smaller)
-        { bottom: '25%', right: '-10%', size: 190, rotate: -7 }, // Lower right
-        { bottom: '8%', left: '-10%', size: 220, rotate: 5 }, // Bottom left
+        { top: '8%', right: '5%', size: '40vw', rotate: -5 }, // Top right
+        { top: '30%', left: '2%', size: '35vw', rotate: 3 },  // Mid left (smaller)
+        { bottom: '25%', right: '-10%', size: '45vw', rotate: -7 }, // Lower right
+        { bottom: '8%', left: '-10%', size: '50vw', rotate: 5 }, // Bottom left
     ], []);
 
     return (
