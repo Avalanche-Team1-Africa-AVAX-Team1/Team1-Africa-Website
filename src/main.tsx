@@ -10,12 +10,15 @@ import EventCalendar from './components/EventCalendar'
 import About from './pages/About'
 import Spotlight from './pages/Spotlight'
 import Gallery from './pages/Gallery'
+import GalleryAlbum from './pages/GalleryAlbum'
 import SmoothScrollProvider from './components/SmoothScrollProvider'
+import ScrollToTop from './components/ScrollToTop'
 
 import Layout from './components/Layout'
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
+    <ScrollToTop />
     <SmoothScrollProvider>
       <Routes>
         <Route element={<Layout />}>
@@ -25,6 +28,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/spotlight" element={<Spotlight />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/gallery/:albumId" element={<GalleryAlbum />} />
           <Route path="/events" element={<EventCalendar />} />
           <Route path="*" element={<NotFound />} />
         </Route>

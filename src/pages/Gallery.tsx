@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Footer from '../components/footer';
 
 // --- ASSET IMPORTS ---
@@ -252,7 +253,7 @@ const eventAlbums = [
         number: "01",
         description: "We brought together 300+ builders from 15 African countries for the largest Avalanche gathering on the continent. Projects pitched, partnerships formed, and the future of blockchain in Africa was shaped.",
         image: south1,
-        link: "#"
+        link: "/gallery/avalanche-africa-summit"
     },
     {
         id: 2,
@@ -260,7 +261,7 @@ const eventAlbums = [
         number: "02",
         description: "48 intense hours of innovation in Ghana's tech capital. 47 developers built 8 production-ready dApps that shipped to mainnet. The energy was unmatched.",
         image: ghana1,
-        link: "#"
+        link: "/gallery/accra-hackathon"
     },
     {
         id: 3,
@@ -268,7 +269,7 @@ const eventAlbums = [
         number: "03",
         description: "Kenya's first decentralized exchange was born here. 65 developers learned DeFi fundamentals and the community gained new validators for the ecosystem.",
         image: event2,
-        link: "#"
+        link: "/gallery/nairobi-defi-workshop"
     },
     {
         id: 4,
@@ -276,7 +277,7 @@ const eventAlbums = [
         number: "04",
         description: "Senior developers dove deep into Avalanche subnet architecture. By the end, we had deployed Africa's first custom subnet - a milestone moment.",
         image: south3,
-        link: "#"
+        link: "/gallery/cape-town-subnet-workshop"
     }
 ];
 
@@ -364,8 +365,8 @@ function EventAlbumsSection() {
                                     <p className="text-gray-400 leading-relaxed mb-6">
                                         {album.description}
                                     </p>
-                                    <a
-                                        href={album.link}
+                                    <Link
+                                        to={album.link}
                                         className="inline-flex items-center gap-2 text-red-500 font-semibold hover:gap-4 transition-all duration-300"
                                     >
                                         View full album
@@ -382,7 +383,7 @@ function EventAlbumsSection() {
                                                 d="M17 8l4 4m0 0l-4 4m4-4H3"
                                             />
                                         </svg>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </motion.div>
@@ -401,7 +402,8 @@ const galleryEvents = [
         description: "We brought together 300+ builders from 15 African countries for the largest Avalanche gathering on the continent.",
         images: [south1, event1, ghana1, south2],
         country: "ZA", // South Africa
-        flagEmoji: "🇿🇦"
+        flagEmoji: "🇿🇦",
+        slug: "avalanche-africa-summit"
     },
     {
         id: 2,
@@ -409,7 +411,8 @@ const galleryEvents = [
         description: "48 intense hours of innovation in Ghana's tech capital. 47 developers built 8 production-ready dApps.",
         images: [event2, south3, ghana2, event3],
         country: "GH", // Ghana
-        flagEmoji: "🇬🇭"
+        flagEmoji: "🇬🇭",
+        slug: "accra-hackathon"
     },
     {
         id: 3,
@@ -417,7 +420,8 @@ const galleryEvents = [
         description: "Kenya's first decentralized exchange was born here. 65 developers learned DeFi fundamentals.",
         images: [event4, south4, event5, ghana3],
         country: "KE", // Kenya
-        flagEmoji: "🇰🇪"
+        flagEmoji: "🇰🇪",
+        slug: "nairobi-defi-workshop"
     },
     {
         id: 4,
@@ -425,7 +429,8 @@ const galleryEvents = [
         description: "Senior developers dove deep into Avalanche subnet architecture. Africa's first custom subnet was deployed.",
         images: [event6, south5, ghana4, event7],
         country: "ZA", // South Africa
-        flagEmoji: "🇿🇦"
+        flagEmoji: "🇿🇦",
+        slug: "cape-town-subnet-workshop"
     },
     {
         id: 5,
@@ -433,7 +438,8 @@ const galleryEvents = [
         description: "Nigeria's tech capital hosted the biggest blockchain gathering in West Africa with over 500 participants and groundbreaking partnerships.",
         images: [event8, event1, south1, ghana1],
         country: "NG", // Nigeria
-        flagEmoji: "🇳🇬"
+        flagEmoji: "🇳🇬",
+        slug: "lagos-blockchain-summit"
     }
 ];
 
@@ -558,12 +564,12 @@ function PolaroidGallerySection() {
                                             ))}
                                         </div>
                                         <div className="mt-6">
-                                            <a href="#" className="inline-flex items-center gap-2 text-red-500 font-semibold hover:gap-4 transition-all duration-300">
+                                            <Link to={`/gallery/${event.slug}`} className="inline-flex items-center gap-2 text-red-500 font-semibold hover:gap-4 transition-all duration-300">
                                                 View full album
                                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                                 </svg>
-                                            </a>
+                                            </Link>
                                         </div>
                                     </div>
                                 </motion.div>
