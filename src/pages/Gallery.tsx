@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import Footer from '../components/footer';
 
 // --- ASSET IMPORTS ---
 import event1 from '../assets/event1-img.webp';
@@ -236,6 +237,9 @@ export default function Gallery() {
             {/* Scrollable Content Below */}
             <EventAlbumsSection />
             <PolaroidGallerySection />
+
+            {/* Footer */}
+            <Footer />
         </div>
     );
 }
@@ -422,6 +426,14 @@ const galleryEvents = [
         images: [event6, south5, ghana4, event7],
         country: "ZA", // South Africa
         flagEmoji: "🇿🇦"
+    },
+    {
+        id: 5,
+        title: "LAGOS BLOCKCHAIN SUMMIT",
+        description: "Nigeria's tech capital hosted the biggest blockchain gathering in West Africa with over 500 participants and groundbreaking partnerships.",
+        images: [event8, event1, south1, ghana1],
+        country: "NG", // Nigeria
+        flagEmoji: "🇳🇬"
     }
 ];
 
@@ -431,7 +443,10 @@ function PolaroidGallerySection() {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
     const toggleExpand = (id: number) => {
-        setExpandedId(expandedId === id ? null : id);
+        // Don't allow closing if clicking the already expanded item
+        if (expandedId !== id) {
+            setExpandedId(id);
+        }
     };
 
     const handleMouseMove = (e: React.MouseEvent) => {
@@ -495,9 +510,12 @@ function PolaroidGallerySection() {
                                 <h3 className="text-3xl md:text-5xl font-black text-gray-900 mb-2 group-hover:text-red-500 transition-colors duration-300">
                                     {event.title}
                                 </h3>
-                                <p className="text-gray-600 text-lg">
-                                    {event.description}
-                                </p>
+                                {/* Only show description when expanded */}
+                                {expandedId === event.id && (
+                                    <p className="text-gray-600 text-lg">
+                                        {event.description}
+                                    </p>
+                                )}
                             </div>
                             <motion.div
                                 animate={{ rotate: expandedId === event.id ? 180 : 0 }}
