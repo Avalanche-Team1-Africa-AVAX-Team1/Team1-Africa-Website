@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Footer from '../components/footer';
@@ -283,19 +283,47 @@ const eventAlbums = [
 
 function EventAlbumsSection() {
     const [scrollProgress, setScrollProgress] = useState(0);
+    const sectionRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
         const handleScroll = () => {
-            const scrollPosition = window.scrollY;
+            if (!sectionRef.current) return;
+
+            const rect = sectionRef.current.getBoundingClientRect();
             const windowHeight = window.innerHeight;
 
-            // Start animation after scrolling past the hero section
-            // Progress from 0 to 1 over the next 300px of scrolling
-            const startScroll = windowHeight * 0.5; // Start halfway through hero
-            const scrollRange = 400; // Complete transition over 400px
+            // Calculate progress based on section position
+            const sectionTop = rect.top;
+            const sectionBottom = rect.bottom;
 
-            const progress = Math.min(Math.max((scrollPosition - startScroll) / scrollRange, 0), 1);
-            setScrollProgress(progress);
+            // Expand phase: when section enters viewport
+            const expandStart = windowHeight * 0.5;
+            const expandRange = 400;
+
+            // Shrink phase: when reaching bottom of section
+            const shrinkStart = windowHeight;
+            const shrinkRange = 400;
+
+            let progress = 0;
+
+            if (sectionTop > expandStart) {
+                // Before expansion starts
+                progress = 0;
+            } else if (sectionTop <= expandStart && sectionTop > expandStart - expandRange) {
+                // Expanding phase
+                progress = (expandStart - sectionTop) / expandRange;
+            } else if (sectionBottom > shrinkStart) {
+                // Fully expanded
+                progress = 1;
+            } else if (sectionBottom <= shrinkStart && sectionBottom > shrinkStart - shrinkRange) {
+                // Shrinking phase - mirror the expansion calculation
+                progress = (sectionBottom - (shrinkStart - shrinkRange)) / shrinkRange;
+            } else {
+                // After shrink completes
+                progress = 0;
+            }
+
+            setScrollProgress(Math.min(Math.max(progress, 0), 1));
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -310,6 +338,7 @@ function EventAlbumsSection() {
 
     return (
         <motion.section
+            ref={sectionRef}
             style={{
                 marginLeft: `${marginX}px`,
                 marginRight: `${marginX}px`,
