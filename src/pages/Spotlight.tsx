@@ -87,7 +87,7 @@ export default function Spotlight() {
             if (Math.abs(diff) > 50) navigate(current + (diff > 0 ? 1 : -1));
         };
 
-        let wheelTimeout: NodeJS.Timeout;
+        let wheelTimeout: number;
         const handleWheel = (e: WheelEvent) => {
             clearTimeout(wheelTimeout);
             wheelTimeout = setTimeout(() => {

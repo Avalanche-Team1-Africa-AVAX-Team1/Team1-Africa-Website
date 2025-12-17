@@ -7,7 +7,7 @@ import CustomCursor from '../components/CustomCursor';
 import videoSrc from '../assets/videos/video.mp4';
 import { LogoMask, LogoOutline } from '../components/LogoMask';
 import AnimatedText from '../components/AnimatedText';
-import AnimatedSection, { AnimatedItem } from '../components/AnimatedSection';
+import { AnimatedItem } from '../components/AnimatedSection';
 import AfricaPresence from '../components/AfricaPresence';
 
 const About = () => {

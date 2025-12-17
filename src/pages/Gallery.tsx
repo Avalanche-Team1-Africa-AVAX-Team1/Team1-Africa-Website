@@ -41,7 +41,6 @@ const MARGIN_MAX = 100;
 // This ensures the furthest images are exactly this far from the edge of the scrollable area
 const CANVAS_PADDING = 150;
 
-const CAMERA_SPEED = 0.06;
 const CAMERA_DAMPING = 20;
 const CAMERA_STIFFNESS = 60;
 
@@ -211,10 +210,10 @@ function MobileGalleryHero({ moments }: { moments: Moment[] }) {
 
     // Random positions for each image - more scattered like the reference
     const positions = useMemo(() => [
-        { top: '8%', right: '5%', size: 160 }, // Top right
-        { top: '30%', left: '2%', size: 150 },  // Mid left (smaller)
-        { bottom: '25%', right: '-10%', size: 190 }, // Lower right
-        { bottom: '8%', left: '-10%', size: 220 }, // Bottom left
+        { top: '8%', right: '5%', size: 160, rotate: -5 }, // Top right
+        { top: '30%', left: '2%', size: 150, rotate: 3 },  // Mid left (smaller)
+        { bottom: '25%', right: '-10%', size: 190, rotate: -7 }, // Lower right
+        { bottom: '8%', left: '-10%', size: 220, rotate: 5 }, // Bottom left
     ], []);
 
     return (
@@ -267,7 +266,6 @@ function MobileGalleryHero({ moments }: { moments: Moment[] }) {
 // --- MAIN COMPONENT ---
 export default function Gallery() {
     const [isMobile, setIsMobile] = useState(false);
-    const [selected, setSelected] = useState<Moment | null>(null);
 
     // Calculate positions AND world size ONCE when component loads
     // Destructure to get the moments and the calculated world dimensions
@@ -304,9 +302,6 @@ export default function Gallery() {
                     moments={moments}
                     worldWidth={width}
                     worldHeight={height}
-                    onSelect={setSelected}
-                    selected={selected}
-                    onClose={() => setSelected(null)}
                 />
             </div>
 
@@ -719,17 +714,11 @@ function PolaroidGallerySection() {
 function DesktopGallery({
     moments,
     worldWidth,
-    worldHeight,
-    onSelect,
-    selected,
-    onClose
+    worldHeight
 }: {
     moments: Moment[];
     worldWidth: number;
     worldHeight: number;
-    onSelect: (m: Moment) => void;
-    selected: Moment | null;
-    onClose: () => void;
 }) {
     // Camera Logic
     const cameraX = useMotionValue(0);
@@ -805,15 +794,10 @@ function DesktopGallery({
                         key={moment.id}
                         moment={moment}
                         delay={index * 0.02}
-                        onClick={() => onSelect(moment)}
                         onHoverChange={setIsHoveringImage}
                     />
                 ))}
             </motion.div>
-
-            <AnimatePresence>
-                {selected && <EventFullPage moment={selected} onClose={onClose} />}
-            </AnimatePresence>
         </div>
     );
 }
@@ -827,7 +811,7 @@ function WorldImage({
 }: {
     moment: Moment;
     delay: number;
-    onClick: () => void;
+    onClick?: () => void;
     onHoverChange: (hovering: boolean) => void;
 }) {
     return (
@@ -874,137 +858,6 @@ function WorldImage({
                     className="w-full h-full object-cover"
                     loading="lazy"
                 />
-            </div>
-        </motion.div>
-    );
-}
-
-// --- MOBILE GALLERY (Unchanged) ---
-function MobileGallery({
-    moments,
-    onSelect,
-    selected,
-    onClose
-}: {
-    moments: Moment[];
-    onSelect: (m: Moment) => void;
-    selected: Moment | null;
-    onClose: () => void;
-}) {
-    return (
-        <div className="min-h-screen bg-black text-white">
-            <div className="pt-32 pb-16 px-6">
-                <h1 className="text-5xl font-black tracking-tighter mb-2">Gallery</h1>
-                <p className="text-white/60">Events from across Africa</p>
-            </div>
-
-            <div className="px-6 pb-16 space-y-6">
-                {moments.map((moment) => (
-                    <motion.div
-                        key={moment.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        onClick={() => onSelect(moment)}
-                        className="bg-zinc-900 rounded-2xl overflow-hidden border border-white/10 active:scale-95 transition-transform"
-                    >
-                        <div className="relative aspect-square">
-                            <img
-                                src={moment.image}
-                                alt={moment.title}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-                        <div className="p-6">
-                            <div className="text-xs uppercase tracking-widest text-red-400 mb-2">
-                                {moment.location} · {moment.date}
-                            </div>
-                            <h3 className="text-xl font-bold mb-2">{moment.title}</h3>
-                            <p className="text-sm text-white/70">{moment.description}</p>
-                        </div>
-                    </motion.div>
-                ))}
-            </div>
-
-            <AnimatePresence>
-                {selected && <EventFullPage moment={selected} onClose={onClose} />}
-            </AnimatePresence>
-        </div>
-    );
-}
-
-// --- MODAL / FULL PAGE VIEW (Unchanged) ---
-function EventFullPage({
-    moment,
-    onClose
-}: {
-    moment: Moment;
-    onClose: () => void;
-}) {
-    return (
-        <motion.div
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-            className="fixed inset-0 z-[300] bg-black overflow-auto"
-        >
-            <div className="min-h-screen relative">
-                <button
-                    onClick={onClose}
-                    className="fixed top-8 right-8 z-10 text-white/60 hover:text-red-500 text-5xl font-light leading-none transition-colors"
-                >
-                    ×
-                </button>
-
-                <div className="relative h-screen">
-                    <img
-                        src={moment.image}
-                        alt={moment.title}
-                        className="w-full h-full object-cover"
-                    />
-
-                    <div className="absolute inset-0 flex items-end p-16 bg-gradient-to-t from-black via-transparent to-transparent">
-                        <div className="max-w-4xl">
-                            <motion.div
-                                initial={{ opacity: 0, y: 40 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3, duration: 0.6 }}
-                            >
-                                <div className="text-sm uppercase tracking-widest text-red-400 mb-4">
-                                    {moment.location} · {moment.date}
-                                </div>
-                                <h1 className="text-5xl md:text-7xl font-black mb-6 text-white">{moment.title}</h1>
-                                <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
-                                    {moment.description}
-                                </p>
-                            </motion.div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-black p-16">
-                    <div className="max-w-4xl mx-auto">
-                        <h2 className="text-4xl font-bold text-white mb-8">Event Details</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-white/80">
-                            <div>
-                                <h3 className="text-xl font-bold mb-3 text-red-400">Location</h3>
-                                <p className="text-lg">{moment.location}</p>
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-bold mb-3 text-red-400">Date</h3>
-                                <p className="text-lg">{moment.date}</p>
-                            </div>
-                        </div>
-
-                        <button
-                            onClick={onClose}
-                            className="mt-12 bg-red-600 hover:bg-red-700 text-white px-10 py-5 rounded-full font-bold text-lg transition-colors"
-                        >
-                            Back to Gallery
-                        </button>
-                    </div>
-                </div>
             </div>
         </motion.div>
     );
