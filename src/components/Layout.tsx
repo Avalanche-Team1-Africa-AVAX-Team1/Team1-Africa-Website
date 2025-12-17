@@ -3,7 +3,6 @@ import Navbar from './navbar';
 import { useState, useEffect } from 'react';
 import Preloader from './Preloader';
 import ScrollProgress from './ScrollProgress';
-import CustomCursor from './CustomCursor';
 
 const Layout = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -33,10 +32,7 @@ const Layout = () => {
             {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 
             {showContent && (
-                <div className="cursor-none">
-                    {/* Custom Cursor - Site Wide */}
-                    <CustomCursor />
-
+                <div>
                     {/* Scroll Progress Indicator */}
                     <ScrollProgress />
 

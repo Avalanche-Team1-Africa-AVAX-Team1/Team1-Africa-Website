@@ -220,14 +220,345 @@ export default function Gallery() {
     }
 
     return (
-        <DesktopGallery
-            moments={moments}
-            worldWidth={width}
-            worldHeight={height}
-            onSelect={setSelected}
-            selected={selected}
-            onClose={() => setSelected(null)}
-        />
+        <div className="relative">
+            {/* Hero Section - Infinite Canvas */}
+            <div className="h-screen">
+                <DesktopGallery
+                    moments={moments}
+                    worldWidth={width}
+                    worldHeight={height}
+                    onSelect={setSelected}
+                    selected={selected}
+                    onClose={() => setSelected(null)}
+                />
+            </div>
+
+            {/* Scrollable Content Below */}
+            <EventAlbumsSection />
+            <PolaroidGallerySection />
+        </div>
+    );
+}
+
+// --- EVENT ALBUMS SECTION ---
+const eventAlbums = [
+    {
+        id: 1,
+        title: "AVALANCHE AFRICA SUMMIT",
+        number: "01",
+        description: "We brought together 300+ builders from 15 African countries for the largest Avalanche gathering on the continent. Projects pitched, partnerships formed, and the future of blockchain in Africa was shaped.",
+        image: south1,
+        link: "#"
+    },
+    {
+        id: 2,
+        title: "ACCRA HACKATHON",
+        number: "02",
+        description: "48 intense hours of innovation in Ghana's tech capital. 47 developers built 8 production-ready dApps that shipped to mainnet. The energy was unmatched.",
+        image: ghana1,
+        link: "#"
+    },
+    {
+        id: 3,
+        title: "NAIROBI DEFI WORKSHOP",
+        number: "03",
+        description: "Kenya's first decentralized exchange was born here. 65 developers learned DeFi fundamentals and the community gained new validators for the ecosystem.",
+        image: event2,
+        link: "#"
+    },
+    {
+        id: 4,
+        title: "CAPE TOWN SUBNET WORKSHOP",
+        number: "04",
+        description: "Senior developers dove deep into Avalanche subnet architecture. By the end, we had deployed Africa's first custom subnet - a milestone moment.",
+        image: south3,
+        link: "#"
+    }
+];
+
+function EventAlbumsSection() {
+    const [scrollProgress, setScrollProgress] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+
+            // Start animation after scrolling past the hero section
+            // Progress from 0 to 1 over the next 300px of scrolling
+            const startScroll = windowHeight * 0.5; // Start halfway through hero
+            const scrollRange = 400; // Complete transition over 400px
+
+            const progress = Math.min(Math.max((scrollPosition - startScroll) / scrollRange, 0), 1);
+            setScrollProgress(progress);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Initial check
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Calculate dynamic values based on scroll progress
+    const marginX = 40 - (scrollProgress * 40); // 40px (mx-10) to 0px
+    const borderRadius = 16 - (scrollProgress * 16); // 16px (rounded-2xl) to 0px
+
+    return (
+        <motion.section
+            style={{
+                marginLeft: `${marginX}px`,
+                marginRight: `${marginX}px`,
+                borderRadius: `${borderRadius}px`,
+            }}
+            className="relative bg-black border-t py-24 px-6 md:px-12"
+        >
+            <div className="max-w-7xl mx-auto">
+                {/* Section Header */}
+                <div className="mb-16">
+                    <h2 className="text-5xl md:text-7xl font-black tracking-tight text-white mb-4">
+                        Experience Avalanche Africa
+                    </h2>
+                    <p className="text-lg md:text-xl text-gray-400 max-w-2xl">
+                        Share our best moments with us. Feel the vibe, see the impact, bask in the innovation.
+                    </p>
+                </div>
+
+                {/* Event Albums Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {eventAlbums.map((album, index) => (
+                        <motion.div
+                            key={album.id}
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: index * 0.1 }}
+                            className="group"
+                        >
+                            <div className="relative bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                                {/* Image */}
+                                <div className="relative h-64 md:h-80 overflow-hidden">
+                                    <img
+                                        src={album.image}
+                                        alt={album.title}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+                                    {/* Event Number */}
+                                    <div className="absolute top-6 right-6">
+                                        <span className="text-6xl font-black text-white/20">
+                                            {album.number}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Content */}
+                                <div className="p-8">
+                                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
+                                        {album.title}
+                                    </h3>
+                                    <p className="text-gray-400 leading-relaxed mb-6">
+                                        {album.description}
+                                    </p>
+                                    <a
+                                        href={album.link}
+                                        className="inline-flex items-center gap-2 text-red-500 font-semibold hover:gap-4 transition-all duration-300"
+                                    >
+                                        View full album
+                                        <svg
+                                            className="w-5 h-5"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                            />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </motion.section>
+    );
+}
+
+// --- POLAROID GALLERY SECTION ---
+const galleryEvents = [
+    {
+        id: 1,
+        title: "AVALANCHE AFRICA SUMMIT",
+        description: "We brought together 300+ builders from 15 African countries for the largest Avalanche gathering on the continent.",
+        images: [south1, event1, ghana1, south2],
+        country: "ZA", // South Africa
+        flagEmoji: "🇿🇦"
+    },
+    {
+        id: 2,
+        title: "ACCRA HACKATHON",
+        description: "48 intense hours of innovation in Ghana's tech capital. 47 developers built 8 production-ready dApps.",
+        images: [event2, south3, ghana2, event3],
+        country: "GH", // Ghana
+        flagEmoji: "🇬🇭"
+    },
+    {
+        id: 3,
+        title: "NAIROBI DEFI WORKSHOP",
+        description: "Kenya's first decentralized exchange was born here. 65 developers learned DeFi fundamentals.",
+        images: [event4, south4, event5, ghana3],
+        country: "KE", // Kenya
+        flagEmoji: "🇰🇪"
+    },
+    {
+        id: 4,
+        title: "CAPE TOWN SUBNET WORKSHOP",
+        description: "Senior developers dove deep into Avalanche subnet architecture. Africa's first custom subnet was deployed.",
+        images: [event6, south5, ghana4, event7],
+        country: "ZA", // South Africa
+        flagEmoji: "🇿🇦"
+    }
+];
+
+function PolaroidGallerySection() {
+    const [expandedId, setExpandedId] = useState<number | null>(1); // First item expanded by default
+    const [hoveredId, setHoveredId] = useState<number | null>(null);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+    const toggleExpand = (id: number) => {
+        setExpandedId(expandedId === id ? null : id);
+    };
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setMousePosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        });
+    };
+
+    return (
+        <section className="relative bg-white py-24 px-6 md:px-12">
+            <div className="max-w-7xl mx-auto">
+                {galleryEvents.map((event, index) => (
+                    <motion.div
+                        key={event.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        onMouseEnter={() => setHoveredId(event.id)}
+                        onMouseLeave={() => setHoveredId(null)}
+                        onMouseMove={(e) => handleMouseMove(e)}
+                        transition={{ delay: index * 0.1 }}
+                        className="border-t border-gray-200 py-8 relative"
+                    >
+                        {/* Kinetic Flag */}
+                        <AnimatePresence>
+                            {hoveredId === event.id && (
+                                <motion.div
+                                    className="absolute pointer-events-none z-50"
+                                    style={{
+                                        left: mousePosition.x,
+                                        top: mousePosition.y,
+                                    }}
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{
+                                        opacity: 1,
+                                        scale: 1,
+                                        x: -32, // Center the 64px circle
+                                        y: -32
+                                    }}
+                                    exit={{ opacity: 0, scale: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    <div className="w-16 h-16 rounded-full overflow-hidden shadow-xl border-2 border-white">
+                                        <img
+                                            src={`https://flagcdn.com/w160/${event.country.toLowerCase()}.png`}
+                                            alt={`${event.country} flag`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        <button
+                            onClick={() => toggleExpand(event.id)}
+                            className="w-full flex items-center justify-between text-left group relative z-10"
+                        >
+                            <div className="flex-1">
+                                <h3 className="text-3xl md:text-5xl font-black text-gray-900 mb-2 group-hover:text-red-500 transition-colors duration-300">
+                                    {event.title}
+                                </h3>
+                                <p className="text-gray-600 text-lg">
+                                    {event.description}
+                                </p>
+                            </div>
+                            <motion.div
+                                animate={{ rotate: expandedId === event.id ? 180 : 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="ml-4 text-gray-900"
+                            >
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </motion.div>
+                        </button>
+
+                        <AnimatePresence>
+                            {expandedId === event.id && (
+                                <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.4 }}
+                                    className="overflow-hidden"
+                                >
+                                    <div className="pt-8 pb-4">
+                                        <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+                                            {event.images.map((image, imgIndex) => (
+                                                <motion.div
+                                                    key={imgIndex}
+                                                    initial={{ opacity: 0, y: 20, rotate: -5 }}
+                                                    animate={{ opacity: 1, y: 0, rotate: imgIndex % 2 === 0 ? 2 : -2 }}
+                                                    transition={{ delay: imgIndex * 0.1 }}
+                                                    whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
+                                                    className="flex-shrink-0"
+                                                >
+                                                    <div className="bg-white p-3" style={{ width: '280px' }}>
+                                                        <div className="relative aspect-[4/3] bg-gray-200 overflow-hidden">
+                                                            <img src={image} alt={`${event.title} - ${imgIndex + 1}`} className="w-full h-full object-cover" />
+                                                        </div>
+                                                        <div className="h-16 bg-white"></div>
+                                                    </div>
+                                                </motion.div>
+                                            ))}
+                                        </div>
+                                        <div className="mt-6">
+                                            <a href="#" className="inline-flex items-center gap-2 text-red-500 font-semibold hover:gap-4 transition-all duration-300">
+                                                View full album
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </motion.div>
+                ))}
+            </div>
+            <style>{`
+                .scrollbar-hide::-webkit-scrollbar { display: none; }
+                .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+            `}</style>
+        </section>
     );
 }
 
