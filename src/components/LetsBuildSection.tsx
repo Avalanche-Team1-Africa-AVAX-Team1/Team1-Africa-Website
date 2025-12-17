@@ -156,14 +156,14 @@ const LetsBuildSection = () => {
             <div className="hidden lg:block">
                 <section ref={pinnedRef} className="h-screen bg-white text-black overflow-hidden flex flex-col justify-center relative">
                     <div className="absolute top-12 left-0 w-full text-center z-20">
-                        <h2 className="text-6xl font-black tracking-tight">The Builders We're Building For</h2>
+                        <h2 className="text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight">The Builders We're Building For</h2>
                         <div className="w-20 h-1 bg-black mx-auto mt-4" />
                     </div>
 
-                    <div className="max-w-[95vw] mx-auto w-full grid grid-cols-2 gap-16 items-center mt-20">
+                    <div className="max-w-[95vw] mx-auto w-full grid grid-cols-2 gap-8 lg:gap-16 items-center mt-20">
                         {/* LEFT: Polaroid Stack */}
                         <div className="flex items-center justify-center h-full">
-                            <div className="relative w-full max-w-lg h-[600px]">
+                            <div className="relative w-full max-w-sm lg:max-w-md xl:max-w-lg h-[500px] lg:h-[600px]">
                                 <AnimatePresence mode="sync">
                                     {profiles.map((profile, index) => (
                                         <motion.div
@@ -179,19 +179,19 @@ const LetsBuildSection = () => {
                                             }}
                                             transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
                                         >
-                                            <div className="bg-white p-6 shadow-2xl h-full transform transition-transform">
-                                                <div className="relative h-[480px] overflow-hidden">
+                                            <div className="bg-white p-4 lg:p-6 shadow-2xl h-full transform transition-transform">
+                                                <div className="relative h-[350px] lg:h-[480px] overflow-hidden">
                                                     <img src={profile.image} alt={profile.title} className="w-full h-full object-cover" />
                                                 </div>
-                                                <div className="pt-6 text-center">
-                                                    <p className="font-handwriting text-3xl text-gray-700">{profile.title.toLowerCase()}</p>
+                                                <div className="pt-4 lg:pt-6 text-center">
+                                                    <p className="font-handwriting text-2xl lg:text-3xl text-gray-700">{profile.title.toLowerCase()}</p>
                                                 </div>
                                             </div>
                                             {activeIndex === index && (
                                                 <motion.div
                                                     initial={{ opacity: 0 }}
                                                     animate={{ opacity: 1 }}
-                                                    className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-yellow-100/70 backdrop-blur-sm rotate-2 shadow-md"
+                                                    className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 lg:w-32 h-6 lg:h-8 bg-yellow-100/70 backdrop-blur-sm rotate-2 shadow-md"
                                                 />
                                             )}
                                         </motion.div>
@@ -201,7 +201,7 @@ const LetsBuildSection = () => {
                         </div>
 
                         {/* RIGHT: Content Slideshow */}
-                        <div className="relative h-[500px] flex items-center">
+                        <div className="relative h-[400px] lg:h-[500px] flex items-center pr-12">
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={activeIndex}
@@ -211,15 +211,15 @@ const LetsBuildSection = () => {
                                     transition={{ duration: 0.5, ease: "easeOut" }}
                                     className="absolute inset-0 flex flex-col justify-center"
                                 >
-                                    <h3 className="text-7xl xl:text-8xl font-black mb-8 tracking-tight">{profiles[activeIndex].title}</h3>
-                                    <p className="text-xl md:text-2xl leading-relaxed text-gray-700 max-w-2xl mb-10">{profiles[activeIndex].description}</p>
+                                    <h3 className="text-5xl lg:text-6xl xl:text-8xl font-black mb-6 lg:mb-8 tracking-tight">{profiles[activeIndex].title}</h3>
+                                    <p className="text-lg lg:text-xl xl:text-2xl leading-relaxed text-gray-700 max-w-xl xl:max-w-2xl mb-8 lg:mb-10">{profiles[activeIndex].description}</p>
                                     <motion.button
                                         whileHover={{ scale: 1.05, x: 10 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="inline-flex items-center gap-3 text-black font-bold text-xl group w-fit"
+                                        className="inline-flex items-center gap-3 text-black font-bold text-lg lg:text-xl group w-fit"
                                     >
                                         Learn More
-                                        <svg className="w-8 h-8 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-6 h-6 lg:w-8 lg:h-8 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                         </svg>
                                     </motion.button>
@@ -228,35 +228,38 @@ const LetsBuildSection = () => {
                         </div>
                     </div>
 
-                    <div className="absolute right-12 top-1/2 -translate-y-1/2 flex flex-col gap-6">
+                    <div className="absolute right-6 lg:right-12 top-1/2 -translate-y-1/2 flex flex-col gap-4 lg:gap-6">
                         {profiles.map((_, i) => (
-                            <div key={i} className={`w-3 h-3 rounded-full transition-all duration-300 ${i === activeIndex ? 'bg-black h-12' : 'bg-gray-300'}`} />
+                            <div key={i} className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full transition-all duration-300 ${i === activeIndex ? 'bg-black h-8 lg:h-12' : 'bg-gray-300'}`} />
                         ))}
                     </div>
                 </section>
             </div>
 
-            {/* MOBILE: Vertical Stack */}
-            <div className="lg:hidden bg-white text-black py-20 px-6 space-y-32">
-                <div className="text-center mb-12">
-                    <h2 className="text-5xl font-black">The Builders We're Building For</h2>
-                    <div className="w-20 h-1 bg-black mx-auto mt-4" />
+            {/* MOBILE: Vertical Stack (Includes Tablets <1024px) */}
+            <div className="lg:hidden bg-white text-black py-16 md:py-20 px-6 space-y-24 md:space-y-32">
+                <div className="text-center mb-8 md:mb-12">
+                    <h2 className="text-3xl md:text-5xl font-black">The Builders We're Building For</h2>
+                    <div className="w-16 md:w-20 h-1 bg-black mx-auto mt-4" />
                 </div>
-                <AnimatedSection staggerChildren={0.2} className="space-y-32">
+                <AnimatedSection staggerChildren={0.2} className="space-y-20 md:space-y-32">
                     {profiles.map((profile) => (
-                        <AnimatedItem key={profile.id} className="flex flex-col gap-10">
-                            <div className="relative w-full max-w-sm mx-auto aspect-[4/5] rotate-2">
-                                <div className="bg-white p-4 shadow-xl h-full">
+                        <AnimatedItem key={profile.id} className="flex flex-col md:flex-row md:items-center gap-10 md:gap-16 max-w-2xl mx-auto md:max-w-4xl">
+                            {/* Image - Left on Tablet */}
+                            <div className="relative w-full max-w-xs md:max-w-sm mx-auto md:mx-0 aspect-[4/5] rotate-2 flex-shrink-0">
+                                <div className="bg-white p-3 md:p-4 shadow-xl h-full">
                                     <img src={profile.image} alt={profile.title} className="w-full h-[85%] object-cover" />
                                     <div className="h-[15%] flex items-center justify-center">
-                                        <p className="font-handwriting text-2xl text-gray-700">{profile.title.toLowerCase()}</p>
+                                        <p className="font-handwriting text-xl md:text-2xl text-gray-700">{profile.title.toLowerCase()}</p>
                                     </div>
                                 </div>
-                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-yellow-100/70 rotate-2 shadow-sm" />
+                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 md:w-24 h-6 md:h-8 bg-yellow-100/70 rotate-2 shadow-sm" />
                             </div>
-                            <div className="text-center">
-                                <h3 className="text-5xl font-black mb-6">{profile.title}</h3>
-                                <p className="text-lg text-gray-700 leading-relaxed">{profile.description}</p>
+
+                            {/* Text - Right on Tablet */}
+                            <div className="text-center md:text-left flex-1">
+                                <h3 className="text-4xl md:text-5xl font-black mb-4 md:mb-6">{profile.title}</h3>
+                                <p className="text-base md:text-lg text-gray-700 leading-relaxed">{profile.description}</p>
                             </div>
                         </AnimatedItem>
                     ))}
@@ -266,9 +269,9 @@ const LetsBuildSection = () => {
             {/* WHAT WE DO SECTION - HORIZONTAL SCROLL (Desktop) */}
             <div className="hidden lg:block">
                 <section ref={horizontalContainerRef} className="h-screen overflow-hidden bg-black text-white relative">
-                    <div className="absolute top-12 left-12 z-20">
-                        <h2 className="text-6xl font-black">How We Show Up</h2>
-                        <div className="w-20 h-1 bg-red-600 mt-4" />
+                    <div className="absolute top-8 lg:top-12 left-8 lg:left-12 z-20">
+                        <h2 className="text-4xl lg:text-5xl font-black">How We Show Up</h2>
+                        <div className="w-16 lg:w-20 h-1 bg-red-600 mt-4" />
                     </div>
 
                     <div ref={horizontalWrapperRef} className="flex h-full w-[300vw]">
@@ -285,36 +288,36 @@ const LetsBuildSection = () => {
                                 </div>
 
                                 {/* RIGHT: Content */}
-                                <div className="w-1/2 h-full flex flex-col justify-center px-24 relative z-10">
+                                <div className="w-1/2 h-full flex flex-col justify-center px-12 lg:px-24 relative z-10">
 
                                     {/* Title */}
-                                    <h3 className="text-6xl font-bold mb-6">{activity.title}</h3>
+                                    <h3 className="text-5xl lg:text-6xl font-bold mb-6">{activity.title}</h3>
 
                                     {/* Description */}
-                                    <p className="text-xl text-gray-400 leading-relaxed max-w-2xl mb-10">
+                                    <p className="text-lg lg:text-xl text-gray-400 leading-relaxed max-w-xl lg:max-w-2xl mb-8 lg:mb-10">
                                         {activity.description}
                                     </p>
 
                                     {/* Video Preview (Large) */}
                                     <div
-                                        className="w-full max-w-2xl aspect-video rounded-xl overflow-hidden cursor-pointer group border border-white/20 hover:border-red-600 transition-colors duration-300 mb-10 relative"
+                                        className="w-full max-w-xl lg:max-w-2xl aspect-video rounded-xl overflow-hidden cursor-pointer group border border-white/20 hover:border-red-600 transition-colors duration-300 mb-8 lg:mb-10 relative"
                                         onClick={() => setVideoOpen(true)}
                                     >
                                         <img src={activity.thumbnail} alt="Video Thumbnail" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                         <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                                            <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center pl-1 group-hover:scale-110 transition-transform shadow-lg">
-                                                <FaPlay className="text-white text-3xl" />
+                                            <div className="w-16 h-16 lg:w-20 lg:h-20 bg-red-600 rounded-full flex items-center justify-center pl-1 group-hover:scale-110 transition-transform shadow-lg">
+                                                <FaPlay className="text-white text-2xl lg:text-3xl" />
                                             </div>
                                         </div>
                                         <div className="absolute bottom-4 left-4">
-                                            <p className="text-white font-bold text-lg uppercase tracking-wider">Watch Highlights</p>
+                                            <p className="text-white font-bold text-base lg:text-lg uppercase tracking-wider">Watch Highlights</p>
                                         </div>
                                     </div>
 
                                     {/* CTA */}
-                                    <button className="px-8 py-4 bg-white text-black font-bold text-lg rounded-full hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center gap-3 group w-fit">
+                                    <button className="px-6 py-3 lg:px-8 lg:py-4 bg-white text-black font-bold text-base lg:text-lg rounded-full hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center gap-3 group w-fit">
                                         {activity.cta}
-                                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-4 h-4 lg:w-5 lg:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                         </svg>
                                     </button>
@@ -325,38 +328,38 @@ const LetsBuildSection = () => {
                 </section>
             </div>
 
-            {/* WHAT WE DO SECTION - VERTICAL STACK (Mobile) */}
-            <div className="lg:hidden bg-black text-white py-24 px-6">
-                <div className="text-center mb-16">
-                    <h2 className="text-5xl font-black">How We Show Up</h2>
-                    <div className="w-20 h-1 bg-red-600 mx-auto mt-4" />
+            {/* WHAT WE DO SECTION - VERTICAL STACK (Mobile & Tablet) */}
+            <div className="lg:hidden bg-black text-white py-16 md:py-20 px-6">
+                <div className="text-center mb-12 md:mb-16">
+                    <h2 className="text-3xl md:text-5xl font-black">How We Show Up</h2>
+                    <div className="w-16 md:w-20 h-1 bg-red-600 mx-auto mt-4" />
                 </div>
-                <AnimatedSection staggerChildren={0.2} className="space-y-24">
+                <AnimatedSection staggerChildren={0.2} className="space-y-12 md:space-y-0 md:grid md:grid-cols-2 md:gap-8">
                     {activities.map((activity, index) => (
-                        <AnimatedItem key={index} className="bg-white/5 border border-white/10 p-6 rounded-2xl">
+                        <AnimatedItem key={index} className={`bg-white/5 border border-white/10 p-6 rounded-2xl ${index === activities.length - 1 ? 'md:col-span-2 md:w-3/4 md:mx-auto' : ''}`}>
                             {/* Title */}
-                            <h3 className="text-3xl font-bold mb-4">{activity.title}</h3>
+                            <h3 className="text-2xl md:text-3xl font-bold mb-4">{activity.title}</h3>
 
                             {/* Description */}
-                            <p className="text-gray-400 text-lg leading-relaxed mb-8">
+                            <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-6 md:mb-8">
                                 {activity.description}
                             </p>
 
                             {/* Video Preview Mobile */}
                             <div
-                                className="relative aspect-video rounded-xl overflow-hidden mb-8 cursor-pointer"
+                                className="relative aspect-video rounded-xl overflow-hidden mb-6 md:mb-8 cursor-pointer group"
                                 onClick={() => setVideoOpen(true)}
                             >
-                                <img src={activity.thumbnail} alt="Video" className="w-full h-full object-cover" />
-                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                                    <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center pl-1">
-                                        <FaPlay className="text-white text-xl" />
+                                <img src={activity.thumbnail} alt="Video" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                    <div className="w-12 h-12 md:w-14 md:h-14 bg-red-600 rounded-full flex items-center justify-center pl-1 group-hover:scale-110 transition-transform">
+                                        <FaPlay className="text-white text-lg md:text-xl" />
                                     </div>
                                 </div>
                             </div>
 
                             {/* CTA */}
-                            <button className="w-full px-6 py-4 bg-white text-black font-bold rounded-xl hover:bg-red-600 hover:text-white transition-colors">
+                            <button className="w-full px-6 py-3 md:py-4 bg-white text-black font-bold text-sm md:text-base rounded-xl hover:bg-red-600 hover:text-white transition-colors">
                                 {activity.cta}
                             </button>
                         </AnimatedItem>

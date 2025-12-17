@@ -30,16 +30,16 @@ import ghana3 from '../assets/ghana3.JPG';
 import ghana4 from '../assets/ghana4.JPG';
 
 // --- CONFIGURATION ---
-const MIN_IMAGE_SIZE = 400;
-const MAX_IMAGE_SIZE = 450;
+const MIN_IMAGE_SIZE = 300;
+const MAX_IMAGE_SIZE = 400;
 
 // INDIVIDUAL MARGIN SETTINGS
-const MARGIN_MIN = 80;
-const MARGIN_MAX = 100;
+const MARGIN_MIN = 60;
+const MARGIN_MAX = 80;
 
 // NEW: GLOBAL CANVAS PADDING
 // This ensures the furthest images are exactly this far from the edge of the scrollable area
-const CANVAS_PADDING = 150;
+const CANVAS_PADDING = 100;
 
 const CAMERA_DAMPING = 20;
 const CAMERA_STIFFNESS = 60;
@@ -91,9 +91,19 @@ const rawMoments: MomentData[] = [
 
 // --- ALGORITHM: INDIVIDUAL MARGIN PACKING + SHRINK WRAP ---
 const generatePositions = (data: MomentData[]): { moments: Moment[], width: number, height: number } => {
+    // Determine screen size scale factor (simplified version of CSS breakpoints)
+    const isSmallLaptop = window.innerWidth < 1280 && window.innerWidth >= 1024;
+    const isTablet = window.innerWidth < 1024;
+
+    // Scale sizes down for smaller screens
+    // 1.0 for large desktop, 0.75 for laptop, 0.6 for tablet
+    let scaleFactor = 1.0;
+    if (isTablet) scaleFactor = 0.6;
+    else if (isSmallLaptop) scaleFactor = 0.75;
+
     // Initial World Size (will expand as needed)
-    let currentWorldWidth = 4500;
-    let currentWorldHeight = 4500;
+    let currentWorldWidth = 4500 * scaleFactor;
+    let currentWorldHeight = 4500 * scaleFactor;
 
     // Shuffle data to keep it random
     const shuffledData = [...data].sort(() => Math.random() - 0.5);
@@ -113,16 +123,21 @@ const generatePositions = (data: MomentData[]): { moments: Moment[], width: numb
             let placed = false;
             let placementAttempts = 0;
 
-            // Random Size & Margin
-            const size = Math.random() * (MAX_IMAGE_SIZE - MIN_IMAGE_SIZE) + MIN_IMAGE_SIZE;
+            // Random Size & Margin - SCALED
+            const baseSize = Math.random() * (MAX_IMAGE_SIZE - MIN_IMAGE_SIZE) + MIN_IMAGE_SIZE;
+            const size = baseSize * scaleFactor;
+
             const radius = size / 2;
-            const margin = Math.random() * (MARGIN_MAX - MARGIN_MIN) + MARGIN_MIN;
+
+            const baseMargin = Math.random() * (MARGIN_MAX - MARGIN_MIN) + MARGIN_MIN;
+            const margin = baseMargin * scaleFactor;
 
             // Try to find a spot
             while (!placed && placementAttempts < 800) {
                 // Determine available space respecting padding
-                const availableWidth = currentWorldWidth - (CANVAS_PADDING * 2) - size;
-                const availableHeight = currentWorldHeight - (CANVAS_PADDING * 2) - size;
+                const padding = CANVAS_PADDING * scaleFactor;
+                const availableWidth = currentWorldWidth - (padding * 2) - size;
+                const availableHeight = currentWorldHeight - (padding * 2) - size;
 
                 const x = (Math.random() - 0.5) * availableWidth;
                 const y = (Math.random() - 0.5) * availableHeight;
@@ -162,8 +177,8 @@ const generatePositions = (data: MomentData[]): { moments: Moment[], width: numb
             success = true;
         } else {
             // Expand world aggressively to ensure next attempt fits
-            currentWorldWidth += 1200;
-            currentWorldHeight += 1200;
+            currentWorldWidth += (1200 * scaleFactor);
+            currentWorldHeight += (1200 * scaleFactor);
             console.log("Expanding world to...", currentWorldWidth, "x", currentWorldHeight);
         }
     }
@@ -180,8 +195,9 @@ const generatePositions = (data: MomentData[]): { moments: Moment[], width: numb
     const contentHeight = maxY - minY;
 
     // Final world size is exactly Content + Padding on both sides
-    const finalWorldWidth = contentWidth + CANVAS_PADDING * 2;
-    const finalWorldHeight = contentHeight + CANVAS_PADDING * 2;
+    const padding = CANVAS_PADDING * scaleFactor;
+    const finalWorldWidth = contentWidth + padding * 2;
+    const finalWorldHeight = contentHeight + padding * 2;
 
     // Re-center everything to (0,0) based on the new bounding box center
     const offsetX = (minX + maxX) / 2;
@@ -209,11 +225,12 @@ function MobileGalleryHero({ moments }: { moments: Moment[] }) {
     }, []); // Empty dependency array ensures this only runs once on mount
 
     // Random positions for each image - more scattered like the reference
+    // Using vw for size ensures responsiveness across mobile (sm) and tablet (md)
     const positions = useMemo(() => [
-        { top: '8%', right: '5%', size: 160, rotate: -5 }, // Top right
-        { top: '30%', left: '2%', size: 150, rotate: 3 },  // Mid left (smaller)
-        { bottom: '25%', right: '-10%', size: 190, rotate: -7 }, // Lower right
-        { bottom: '8%', left: '-10%', size: 220, rotate: 5 }, // Bottom left
+        { top: '8%', right: '5%', size: '40vw', rotate: -5 }, // Top right
+        { top: '30%', left: '2%', size: '35vw', rotate: 3 },  // Mid left (smaller)
+        { bottom: '25%', right: '-10%', size: '45vw', rotate: -7 }, // Lower right
+        { bottom: '8%', left: '-10%', size: '50vw', rotate: 5 }, // Bottom left
     ], []);
 
     return (
@@ -272,7 +289,7 @@ export default function Gallery() {
     const { moments, width, height } = useMemo(() => generatePositions(rawMoments), []);
 
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
         checkMobile();
         window.addEventListener('resize', checkMobile);
         return () => window.removeEventListener('resize', checkMobile);
@@ -359,7 +376,7 @@ function EventAlbumsSection() {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
         checkMobile();
         window.addEventListener('resize', checkMobile);
         return () => window.removeEventListener('resize', checkMobile);
@@ -424,12 +441,25 @@ function EventAlbumsSection() {
     }, []);
 
     // Calculate dynamic values based on scroll progress
-    // Use smaller margins on mobile for smoother animation
-    const maxMargin = isMobile ? 16 : 40; // 16px on mobile, 40px on desktop
-    const maxRadius = isMobile ? 12 : 16; // 12px on mobile, 16px on desktop
+    // If mobile/tablet (isMobile), we keep it stationary (no scroll effect)
+    // We'll fix it to the "expanded" state or a specific static state.
+    // User requested "stationary". Let's standardise to 0 margin for full width feel or small static margin.
+    // Let's go with static small margin effectively "expanded" or just completely static.
 
-    const marginX = maxMargin - (scrollProgress * maxMargin);
-    const borderRadius = maxRadius - (scrollProgress * maxRadius);
+    // Desktop: Animates from 40px -> 0px margin
+    // Mobile/Tablet: Stationary (Fixed at 0px or small padding? User said "stationary").
+    // Let's set it to 0 for stationary full-width-like feel or fixed 16px.
+    // Given the previous design allowed shrinking, "stationary" probably means "don't shrink". 
+    // So we'll force progress to 0 (expanded state) or 1 (shrunk state)? 
+    // Actually the animation was shrinking on exit.
+    // Let's just force the values.
+
+    const marginX = isMobile ? 16 : (40 - (scrollProgress * 40));
+    const borderRadius = isMobile ? 12 : (16 - (scrollProgress * 16));
+
+    // Actually, if it's stationary, we likely don't want it to react to scroll at all.
+    // If we want it to look "normal", we probably just want standard spacing.
+    // Let's keep a consistent small margin for mobile/tablet so it looks like a nice card but doesn't move.
 
     return (
         <motion.section
@@ -642,7 +672,7 @@ function PolaroidGallerySection() {
                                 </h3>
                                 {/* Only show description when expanded */}
                                 {expandedId === event.id && (
-                                    <p className="text-gray-600 text-lg">
+                                    <p className="text-gray-600 text-[1rem] md:text-lg leading-relaxed">
                                         {event.description}
                                     </p>
                                 )}
@@ -678,7 +708,7 @@ function PolaroidGallerySection() {
                                                     whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
                                                     className="flex-shrink-0"
                                                 >
-                                                    <div className="bg-white p-3" style={{ width: '280px' }}>
+                                                    <div className="bg-white p-3 w-[70vw] md:w-[280px] flex-shrink-0">
                                                         <div className="relative aspect-[4/3] bg-gray-200 overflow-hidden">
                                                             <img src={image} alt={`${event.title} - ${imgIndex + 1}`} className="w-full h-full object-cover" />
                                                         </div>
