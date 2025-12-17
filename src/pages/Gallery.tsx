@@ -31,10 +31,13 @@ import ghana4 from '../assets/ghana4.JPG';
 const MIN_IMAGE_SIZE = 400;
 const MAX_IMAGE_SIZE = 450;
 
-// NEW: INDIVIDUAL MARGIN SETTINGS
-// Each image gets a random margin between these two values.
-const MARGIN_MIN = 80; 
+// INDIVIDUAL MARGIN SETTINGS
+const MARGIN_MIN = 80;
 const MARGIN_MAX = 100;
+
+// NEW: GLOBAL CANVAS PADDING
+// This ensures the furthest images are exactly this far from the edge of the scrollable area
+const CANVAS_PADDING = 150;
 
 const CAMERA_SPEED = 0.06;
 const CAMERA_DAMPING = 20;
@@ -54,7 +57,7 @@ interface Moment extends MomentData {
     x: number;
     y: number;
     size: number;
-    margin: number; // Added specific margin property per image
+    margin: number;
 }
 
 // --- RAW DATA ---
@@ -82,63 +85,46 @@ const rawMoments: MomentData[] = [
     { id: 21, image: south9, title: 'Polokwane Developer Meetup', location: 'Polokwane', date: 'October 2024', description: '55 developers from northern regions connected and shared knowledge.' },
     { id: 22, image: south10, title: 'Kimberley Mining & Blockchain', location: 'Kimberley', date: 'November 2024', description: 'Exploring blockchain for mining industry transparency.' },
     { id: 23, image: south11, title: 'Nelspruit Tech Summit', location: 'Nelspruit', date: 'December 2024', description: '80 entrepreneurs learned about DeFi opportunities.' },
-    { id: 24, image: south12, title: 'George Coastal Tech Day', location: 'George', date: 'January 2024', description: 'Coastal developers showcased innovative blockchain solutions.' },
-    { id: 25, image: event1, title: 'Ibadan Innovation Hub', location: 'Ibadan', date: 'February 2024', description: '100 students introduced to Web3 development.' },
-    { id: 26, image: event2, title: 'Mombasa Blockchain Week', location: 'Mombasa', date: 'March 2024', description: 'Coastal Kenya explored maritime blockchain applications.' },
-    { id: 27, image: south1, title: 'Rustenburg Mining Innovation', location: 'Rustenburg', date: 'April 2024', description: 'Blockchain solutions for mining sector transparency.' },
-    { id: 28, image: event3, title: 'Kampala Developer Conference', location: 'Kampala', date: 'May 2024', description: '150 developers from East Africa gathered to share knowledge.' },
-    { id: 29, image: ghana1, title: 'Dodoma Blockchain Forum', location: 'Dodoma', date: 'June 2024', description: 'Government officials explored blockchain for public services.' },
-    { id: 30, image: event4, title: 'Windhoek Blockchain Initiative', location: 'Windhoek', date: 'July 2024', description: 'Namibian developers explored cross-border payment solutions.' },
-    { id: 31, image: event5, title: 'Harare Tech Expo', location: 'Harare', date: 'August 2024', description: 'Zimbabwean entrepreneurs discovered DeFi opportunities.' },
-    { id: 32, image: south2, title: 'Gaborone Innovation Summit', location: 'Gaborone', date: 'September 2024', description: 'Botswana first major blockchain conference with 200 attendees.' },
-    { id: 33, image: event6, title: 'Lusaka Web3 Conference', location: 'Lusaka', date: 'October 2024', description: 'Zambian developers gathered to explore blockchain opportunities.' },
-    { id: 34, image: event7, title: 'Dar es Salaam Tech Week', location: 'Dar es Salaam', date: 'November 2024', description: 'Tanzania blockchain ecosystem showcase. 180 participants.' },
-    { id: 35, image: south3, title: 'Maputo Innovation Day', location: 'Maputo', date: 'December 2024', description: 'Mozambique first blockchain developer meetup.' },
-    { id: 36, image: ghana2, title: 'Abidjan DeFi Summit', location: 'Abidjan', date: 'January 2025', description: 'West African DeFi leaders discussed cross-border solutions.' },
-    { id: 37, image: event8, title: 'Freetown Blockchain Initiative', location: 'Freetown', date: 'February 2025', description: 'Sierra Leone developers explored Web3 applications.' },
-    { id: 38, image: south4, title: 'Ouagadougou Tech Forum', location: 'Ouagadougou', date: 'March 2025', description: 'Burkina Faso first major blockchain education event.' },
-    { id: 39, image: south5, title: 'Bamako Developer Workshop', location: 'Bamako', date: 'April 2025', description: 'Mali developers learned smart contract development.' },
-    { id: 40, image: event1, title: 'Conakry Blockchain Week', location: 'Conakry', date: 'May 2025', description: 'Guinea blockchain community launched local projects.' },
-    { id: 41, image: event2, title: 'Monrovia Innovation Hub', location: 'Monrovia', date: 'June 2025', description: 'Liberia entrepreneurs discovered blockchain use cases.' },
-    { id: 42, image: south1, title: 'Niamey Blockchain Forum', location: 'Niamey', date: 'July 2025', description: 'Niger developers connected with regional Web3 community.' }
+    { id: 24, image: south12, title: 'George Coastal Tech Day', location: 'George', date: 'January 2024', description: 'Coastal developers showcased innovative blockchain solutions.' }
 ];
 
-// --- ALGORITHM: INDIVIDUAL MARGIN PACKING ---
-const generatePositions = (data: MomentData[]): Moment[] => {
-    // Initial World Size
+// --- ALGORITHM: INDIVIDUAL MARGIN PACKING + SHRINK WRAP ---
+const generatePositions = (data: MomentData[]): { moments: Moment[], width: number, height: number } => {
+    // Initial World Size (will expand as needed)
     let currentWorldWidth = 4500;
     let currentWorldHeight = 4500;
-    
-    // We shuffle data to keep it random
+
+    // Shuffle data to keep it random
     const shuffledData = [...data].sort(() => Math.random() - 0.5);
-    
+
     let success = false;
     let resultingMoments: Moment[] = [];
     let attempts = 0;
-    
-    // Loop until we find a layout where NOTHING overlaps (honoring unique margins)
+
+    // Phase 1: Placement Loop (Expands world until everything fits without overlap)
     while (!success && attempts < 15) {
         attempts++;
         resultingMoments = [];
-        // We track placed circles: x, y, radius, AND specific margin
         const placedCircles: { x: number; y: number; r: number; margin: number }[] = [];
         let allPlaced = true;
 
         for (const item of shuffledData) {
             let placed = false;
             let placementAttempts = 0;
-            
-            // 1. Random Size
+
+            // Random Size & Margin
             const size = Math.random() * (MAX_IMAGE_SIZE - MIN_IMAGE_SIZE) + MIN_IMAGE_SIZE;
             const radius = size / 2;
-            
-            // 2. Random Individual Margin (Personal Bubble)
             const margin = Math.random() * (MARGIN_MAX - MARGIN_MIN) + MARGIN_MIN;
 
             // Try to find a spot
             while (!placed && placementAttempts < 800) {
-                const x = (Math.random() - 0.5) * (currentWorldWidth - size);
-                const y = (Math.random() - 0.5) * (currentWorldHeight - size);
+                // Determine available space respecting padding
+                const availableWidth = currentWorldWidth - (CANVAS_PADDING * 2) - size;
+                const availableHeight = currentWorldHeight - (CANVAS_PADDING * 2) - size;
+
+                const x = (Math.random() - 0.5) * availableWidth;
+                const y = (Math.random() - 0.5) * availableHeight;
 
                 let overlapping = false;
 
@@ -147,10 +133,8 @@ const generatePositions = (data: MomentData[]): Moment[] => {
                     const dx = circle.x - x;
                     const dy = circle.y - y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    // THIS IS THE KEY FIX:
+
                     // The required distance includes Radius A + Radius B + Margin A + Margin B
-                    // This creates a specific buffer unique to this pair of images
                     const requiredDistance = circle.r + radius + circle.margin + margin;
 
                     if (distance < requiredDistance) {
@@ -168,16 +152,13 @@ const generatePositions = (data: MomentData[]): Moment[] => {
             }
 
             if (!placed) {
-                // If we hit a wall, the world is too small to respect these specific margins.
                 allPlaced = false;
-                break; 
+                break;
             }
         }
 
         if (allPlaced) {
             success = true;
-            // Center the final result in the world to ensure camera feels good
-            // (Optional, but makes it feel balanced)
         } else {
             // Expand world aggressively to ensure next attempt fits
             currentWorldWidth += 1200;
@@ -185,8 +166,37 @@ const generatePositions = (data: MomentData[]): Moment[] => {
             console.log("Expanding world to...", currentWorldWidth, "x", currentWorldHeight);
         }
     }
-    
-    return resultingMoments;
+
+    // Phase 2: Shrink-Wrap
+    // We calculate the exact bounding box of the generated content and snap the world size to it.
+
+    const minX = Math.min(...resultingMoments.map(m => m.x - m.size / 2));
+    const maxX = Math.max(...resultingMoments.map(m => m.x + m.size / 2));
+    const minY = Math.min(...resultingMoments.map(m => m.y - m.size / 2));
+    const maxY = Math.max(...resultingMoments.map(m => m.y + m.size / 2));
+
+    const contentWidth = maxX - minX;
+    const contentHeight = maxY - minY;
+
+    // Final world size is exactly Content + Padding on both sides
+    const finalWorldWidth = contentWidth + CANVAS_PADDING * 2;
+    const finalWorldHeight = contentHeight + CANVAS_PADDING * 2;
+
+    // Re-center everything to (0,0) based on the new bounding box center
+    const offsetX = (minX + maxX) / 2;
+    const offsetY = (minY + maxY) / 2;
+
+    const centeredMoments = resultingMoments.map(m => ({
+        ...m,
+        x: m.x - offsetX,
+        y: m.y - offsetY
+    }));
+
+    return {
+        moments: centeredMoments,
+        width: finalWorldWidth,
+        height: finalWorldHeight
+    };
 };
 
 // --- MAIN COMPONENT ---
@@ -194,8 +204,9 @@ export default function Gallery() {
     const [isMobile, setIsMobile] = useState(false);
     const [selected, setSelected] = useState<Moment | null>(null);
 
-    // Calculate positions ONCE when component loads
-    const moments = useMemo(() => generatePositions(rawMoments), []);
+    // Calculate positions AND world size ONCE when component loads
+    // Destructure to get the moments and the calculated world dimensions
+    const { moments, width, height } = useMemo(() => generatePositions(rawMoments), []);
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -208,17 +219,30 @@ export default function Gallery() {
         return <MobileGallery moments={moments} onSelect={setSelected} selected={selected} onClose={() => setSelected(null)} />;
     }
 
-    return <DesktopGallery moments={moments} onSelect={setSelected} selected={selected} onClose={() => setSelected(null)} />;
+    return (
+        <DesktopGallery
+            moments={moments}
+            worldWidth={width}
+            worldHeight={height}
+            onSelect={setSelected}
+            selected={selected}
+            onClose={() => setSelected(null)}
+        />
+    );
 }
 
 // --- DESKTOP GALLERY ---
 function DesktopGallery({
     moments,
+    worldWidth,
+    worldHeight,
     onSelect,
     selected,
     onClose
 }: {
     moments: Moment[];
+    worldWidth: number;
+    worldHeight: number;
     onSelect: (m: Moment) => void;
     selected: Moment | null;
     onClose: () => void;
@@ -250,16 +274,17 @@ function DesktopGallery({
                 if (isHoveringImage) return;
 
                 const { innerWidth, innerHeight } = window;
-                
-                // We use a large virtual size for camera movement Feel
-                const VIRTUAL_WIDTH = 5500; 
-                const VIRTUAL_HEIGHT = 5500;
+
+                // Calculate max translation based on world size vs screen size
+                // This ensures we can reach the edge of the world, but no further (respecting padding)
+                const maxTranslateX = Math.max(0, (worldWidth - innerWidth) / 2);
+                const maxTranslateY = Math.max(0, (worldHeight - innerHeight) / 2);
 
                 const mouseXNormalized = (e.clientX / innerWidth - 0.5) * 2;
                 const mouseYNormalized = (e.clientY / innerHeight - 0.5) * 2;
 
-                const targetX = -mouseXNormalized * (VIRTUAL_WIDTH / 2 - innerWidth / 2);
-                const targetY = -mouseYNormalized * (VIRTUAL_HEIGHT / 2 - innerHeight / 2);
+                const targetX = -mouseXNormalized * maxTranslateX;
+                const targetY = -mouseYNormalized * maxTranslateY;
 
                 cameraX.set(targetX);
                 cameraY.set(targetY);
@@ -267,18 +292,18 @@ function DesktopGallery({
         };
 
         window.addEventListener('mousemove', handleMouseMove);
-        
+
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             if (animationFrame) cancelAnimationFrame(animationFrame);
         };
-    }, [cameraX, cameraY, isHoveringImage]);
+    }, [cameraX, cameraY, isHoveringImage, worldWidth, worldHeight]);
 
     return (
-        <div className="fixed inset-0 bg-black overflow-hidden cursor-default">
+        <div className="fixed inset-0 bg-[#F7F7F7] overflow-hidden cursor-default">
             {/* Center Gallery Text */}
             <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-                <h1 className="text-[15vw] font-semibold tracking-tight text-red-500/70 select-none opacity-20">
+                <h1 className="text-[15vw] font-semibold tracking-tight text-red-500 select-none">
                     GALLERY
                 </h1>
             </div>
@@ -324,7 +349,7 @@ function WorldImage({
     return (
         <motion.div
             initial={{
-                y: moment.y + 500, 
+                y: moment.y + 500,
                 opacity: 0,
                 scale: 0.6
             }}
@@ -346,7 +371,7 @@ function WorldImage({
             style={{
                 position: 'absolute',
                 left: moment.x,
-                top: 0, 
+                top: 0,
                 marginLeft: -moment.size / 2,
                 marginTop: -moment.size / 2,
                 width: moment.size,
@@ -358,7 +383,7 @@ function WorldImage({
             onClick={onClick}
             className="cursor-pointer group"
         >
-            <div className="relative w-full h-full overflow-hidden rounded-3xl shadow-2xl border-[4px] border-white/20 group-hover:border-red-500 transition-colors duration-300 bg-zinc-900">
+            <div className="relative w-full h-full overflow-hidden rounded-3xl shadow-2xl bg-zinc-900">
                 <img
                     src={moment.image}
                     alt={moment.title}
