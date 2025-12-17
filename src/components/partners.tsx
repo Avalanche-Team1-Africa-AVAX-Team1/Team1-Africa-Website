@@ -11,19 +11,19 @@ import AnimatedSection, { AnimatedItem } from './AnimatedSection'
 
 const Partners = () => {
     return (
-        <div className='px-4 py-16 flex flex-col items-center justify-center'>
+        <div className='px-4 py-16 flex flex-col lg:items-center justify-center'>
             {/* PartnersBadge */}
             <AnimatedText variant="scale" delay={0.1}>
                 <div className='mb-2'>
-                    <span className='bg-red-500 px-4 py-2 rounded-lg text-sm inline-block transform -rotate-12 font-bold'>
+                    <span className='bg-red-500 text-white px-4 py-2 rounded-lg text-sm inline-block transform md:-rotate-12 font-bold'>
                         Our Partners
                     </span>
                 </div>
             </AnimatedText>
 
-            <div className='text-center md:w-[60%] mb-16'>
+            <div className='text-left lg:text-center mb-16'>
                 <AnimatedText variant="slideUp" delay={0.2}>
-                    <p className='text-2xl md:text-3xl font-bold leading-tight'>Trusted By Top Blockchain Teams That Know Every Step Matters.</p>
+                    <p className='text-2xl md:text-6xl font-semibold leading-tight tracking-tighter'>Our ecosystem <span className='text-red-500'>partners</span> accelerate what's possible. Together, we're building Africa's <span className='text-red-500'>blockchain infrastructure</span>—from education to <span className='text-red-500'>funding opportunities</span>.</p>
                 </AnimatedText>
                 <AnimatedText variant="slideUp" delay={0.3}>
                     <p className='text-sm md:text-sm text-gray-600 pt-1 md:pt-4'>We proudly collaborate with organizations that believe in Africa's potential.</p>

@@ -129,7 +129,7 @@ const TeamGrid = ({ members }: TeamGridProps) => {
             <div className="relative z-10 max-w-[90vw] mx-auto">
                 <div className="mb-16 border-b border-white/20 pb-8">
                     <h2 className="text-[5vw] font-black text-white leading-none tracking-tighter uppercase">
-                        The <span className="text-transparent stroke-white stroke-1" style={{ WebkitTextStroke: '1px white' }}>Squad</span>
+                        The <span className="text-red-500">Squad</span>
                     </h2>
                 </div>
 

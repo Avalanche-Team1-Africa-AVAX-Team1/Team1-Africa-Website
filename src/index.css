@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -31,6 +33,31 @@ html.lenis body {
   src: url('./assets/fonts/Bastliga One.otf') format('opentype'),
     url('./assets/fonts/Bastliga One.ttf') format('truetype');
   font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* SansBeam Font - Multiple variants for better compatibility */
+@font-face {
+  font-family: 'beamSansFont';
+  src: url('./assets/fonts/stawix-sansbeambody-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'beamSansFont';
+  src: url('./assets/fonts/stawix-sansbeambody-medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'beamSansFont';
+  src: url('./assets/fonts/stawix-sansbeambody-semibold.otf') format('opentype');
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }

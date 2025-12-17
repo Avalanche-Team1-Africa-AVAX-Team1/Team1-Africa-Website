@@ -7,7 +7,8 @@ import CustomCursor from '../components/CustomCursor';
 import videoSrc from '../assets/videos/video.mp4';
 import { LogoMask, LogoOutline } from '../components/LogoMask';
 import AnimatedText from '../components/AnimatedText';
-import AnimatedSection, { AnimatedItem } from '../components/AnimatedSection';
+import { AnimatedItem } from '../components/AnimatedSection';
+import AfricaPresence from '../components/AfricaPresence';
 
 const About = () => {
 
@@ -30,13 +31,12 @@ const About = () => {
                     </video>
                 </div>
 
-                {/* 2. The Mask Layer (Middle) - Shows video through logo outline using mix-blend-multiply */}
-                {/* Black Background (hides video) + White Logo Outline (shows video) */}
+                {/* 2. The Mask Layer (Middle) */}
                 <div className="absolute inset-0 z-10 bg-black mix-blend-multiply flex items-center justify-center">
                     <LogoMask />
                 </div>
 
-                {/* 3. The Outline Layer (Top) - Adds the stroke */}
+                {/* 3. The Outline Layer (Top) */}
                 <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
                     <LogoOutline />
                 </div>
@@ -48,43 +48,93 @@ const About = () => {
                     transition={{ delay: 1, duration: 1 }}
                     className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30"
                 >
-                    <p className="text-sm font-mono animate-bounce text-white/50">SCROLL TO EXPLORE</p>
+                    <p className="text-sm font-mono animate-bounce text-white/50">KEEP SCROLLING</p>
                 </motion.div>
             </section>
 
-            {/* Manifesto / Mission - Responsive & Dynamic */}
+            {/* Manifesto / Mission */}
             <section className="py-20 md:py-32 px-6 md:px-20 bg-white text-black relative z-10 rounded-t-[2rem] md:rounded-t-[3rem] -mt-10">
                 <div className="max-w-[90vw] mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
                         <div className="lg:sticky lg:top-32">
                             <AnimatedText variant="slideUp" delay={0.2}>
-                                <h2 className="text-[10vw] lg:text-[5vw] font-black tracking-tighter mb-8 leading-[0.9]" data-cursor="Our Mission">
-                                    REDEFINING <br />
-                                    <span className="text-red-600">AFRICAN</span> <br />
-                                    INNOVATION
+                                <h2 className="text-[10vw] lg:text-[5vw] tracking-wide mb-8 leading-[0.9]" data-cursor="Our Mission" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                    TEAM<span className="text-red-600">1</span> <br />
+                                    AFRICA'S <br />
+                                    <span className="text-red-600">COMMUNITY</span>
                                 </h2>
                             </AnimatedText>
                             <AnimatedText variant="slideUp" delay={0.3}>
                                 <p className="text-lg md:text-xl font-medium text-gray-600 max-w-md">
-                                    We are not just a team; we are a movement. Bridging the gap between potential and opportunity across the continent.
+                                    Team1 is built for Africans shaping the next greastest technological innovations, from gaming to blockchain and creator platforms to scalable software and custom blockchains on Avalanche.
+
                                 </p>
                             </AnimatedText>
                         </div>
-                        <AnimatedSection staggerChildren={0.2} className="space-y-16 md:space-y-24 text-xl md:text-2xl font-light leading-relaxed">
-                            {[
-                                { title: "Decentralization", desc: "We believe in the power of decentralization. It's not just technology; it's a tool for economic liberation and borderless collaboration." },
-                                { title: "Community", desc: "Our roots are deep in the soil of community. From Lagos to Nairobi, Accra to Cape Town, we are connecting the dots of the African Web3 ecosystem." },
-                                { title: "Education", desc: "We don't just build; we educate. Empowering the next generation of developers, creators, and entrepreneurs to take ownership of their digital future." }
-                            ].map((item, i) => (
-                                <AnimatedItem
-                                    key={i}
-                                >
-                                    <span className="text-4xl md:text-5xl font-bold block mb-4 text-red-500">0{i + 1}.</span>
-                                    <h3 className="text-3xl md:text-4xl font-black mb-4 uppercase">{item.title}</h3>
-                                    <p>{item.desc}</p>
+
+                        <div className="space-y-0 relative">
+                            {[{
+                                title: "Built for an Emerging Market",
+                                desc: "Africa is one of the world's fastest-emerging markets, and Team1 exists to help Africans build for it first. From games and creator platforms to scalable software, we support builders using Avalanche to solve real problems at massive scale."
+                            }, {
+                                title: "Avalanche as the Backbone",
+                                desc: "Emerging markets need infrastructure that doesn't break under pressure. Avalanche's low fees, fast finality, and custom L1s give African builders the freedom to launch games, platforms, and digital economies designed for growth from day one."
+                            }, {
+                                title: "Local Builders, Global Impact",
+                                desc: "Team1 helps Africans turn local insight into global products — connecting builders from an emerging market to the Avalanche ecosystem so they can compete, scale, and win on a worldwide stage."
+                            }].map((item, i) => (
+                                <AnimatedItem key={i}>
+                                    <div className="group relative mb-16 md:mb-24">
+                                        {/* Rotated background number */}
+                                        <div className="absolute -left-4 md:-left-8 top-0 -rotate-12 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
+                                            <span className="text-[12rem] md:text-[15rem] font-black text-red-500 leading-none" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                                {i + 1}
+                                            </span>
+                                        </div>
+
+                                        {/* Content container with offset */}
+                                        <div className={`relative ${i % 2 === 0 ? 'md:ml-0' : 'md:ml-12'}`}>
+                                            {/* Large number indicator */}
+                                            <div className="flex items-start gap-8 mb-6">
+                                                <div className="relative">
+                                                    <div className="w-16 h-16 md:w-20 md:h-20 bg-black group-hover:bg-red-600 transition-all duration-300 flex items-center justify-center rotate-3 group-hover:rotate-0 group-hover:scale-110">
+                                                        <span className="text-4xl md:text-5xl font-black text-white" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                                            {i + 1}
+                                                        </span>
+                                                    </div>
+                                                    {/* Accent square */}
+                                                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-red-500 group-hover:bg-black transition-colors duration-300"></div>
+                                                </div>
+
+                                                {/* Title */}
+                                                <div className="flex-1 pt-2">
+                                                    <h3 className="text-3xl md:text-4xl font-black text-black mb-2 leading-tight tracking-tight group-hover:text-red-600 transition-colors duration-300">
+                                                        {item.title}
+                                                    </h3>
+                                                    {/* Decorative line */}
+                                                    <div className="h-1 bg-black w-0 group-hover:w-full transition-all duration-500 ease-out"></div>
+                                                </div>
+                                            </div>
+
+                                            {/* Description with reveal effect */}
+                                            <div className="relative overflow-hidden">
+                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none"></div>
+                                                <p className="text-base md:text-lg text-gray-700 leading-relaxed pl-0 md:pl-28 relative">
+                                                    {item.desc}
+                                                </p>
+                                            </div>
+
+                                            {/* Decorative elements */}
+                                            <div className="mt-6 flex gap-2 pl-0 md:pl-28">
+                                                <div className="h-1 w-12 bg-red-500 group-hover:w-24 transition-all duration-300"></div>
+                                                <div className="h-1 w-8 bg-black group-hover:w-16 transition-all duration-300 delay-75"></div>
+                                                <div className="h-1 w-4 bg-red-500 group-hover:w-12 transition-all duration-300 delay-150"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </AnimatedItem>
                             ))}
-                        </AnimatedSection>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -94,21 +144,24 @@ const About = () => {
                 <div className="flex whitespace-nowrap animate-infinite-scroll">
                     {[...Array(4)].map((_, i) => (
                         <div key={i} className="flex items-center gap-8 mx-8">
-                            <span className="text-6xl md:text-8xl font-black italic">COMMUNITY</span>
+                            <span className="text-6xl md:text-8xl font-black italic">BUILD</span>
                             <span className="text-2xl md:text-4xl">★</span>
-                            <span className="text-6xl md:text-8xl font-black italic text-black">INNOVATION</span>
+                            <span className="text-6xl md:text-8xl font-black italic text-black">ON AVAX</span>
                             <span className="text-2xl md:text-4xl">★</span>
-                            <span className="text-6xl md:text-8xl font-black italic">IMPACT</span>
+                            <span className="text-6xl md:text-8xl font-black italic">FROM AFRICA</span>
                             <span className="text-2xl md:text-4xl">★</span>
                         </div>
                     ))}
                 </div>
             </section>
 
-            {/* Team Section - Kinetic List */}
+            {/* African Presence Section */}
+            <AfricaPresence />
+
+            {/* Team Section */}
             <TeamGrid members={team1AfricaMembers} />
 
-            {/* Let's Build - Sophisticated Section with Polaroids and Advanced Animations */}
+            {/* Let's Build */}
             <LetsBuildSection />
 
             <Footer />

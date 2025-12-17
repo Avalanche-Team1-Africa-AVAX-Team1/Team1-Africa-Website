@@ -16,7 +16,7 @@ const AboutUs = () => {
             {/* About Us Badge */}
             <AnimatedText variant="scale" delay={0.1}>
               <div className='mb-2'>
-                <span className='bg-red-500 px-4 py-2 rounded-lg text-sm inline-block transform -rotate-12 font-semibold'>
+                <span className='bg-red-500 text-white px-4 py-2 rounded-lg text-sm inline-block transform md:-rotate-12 font-semibold'>
                   About us
                 </span>
               </div>
@@ -27,8 +27,8 @@ const AboutUs = () => {
               <div className='lg:basis-[60%] md:basis-[120%]'>
                 {/* Scale heading down progressively on smaller screens; 4K unchanged */}
                 <AnimatedText variant="slideUp" delay={0.2}>
-                  <h1 className='text-4xl lt-1440:text-3xl lt-1024:text-2xl lt-768:text-xl lt-480:text-lg font-bold text-black leading-tight'>
-                    Empowering Africa's Builders, Creators & Educators on Avalanche
+                  <h1 className='text-5xl lt-1440:text-3xl lt-1024:text-2xl lt-768:text-xl lt-480:text-lg font-bold text-black leading-tight'>
+                    Mobilizing Africa's <span className="text-red-500">Builders.</span> Powered by <span className="text-red-500">Avalanche.</span>
                   </h1>
                 </AnimatedText>
               </div>
@@ -36,9 +36,7 @@ const AboutUs = () => {
               <div className='lg:basis-[40%] lt-1024:basis-auto lt-1024:max-w-[680px]'> {/* Relax fixed basis on tablet/phone */}
                 <AnimatedText variant="slideUp" delay={0.3}>
                   <p className='text-lg lt-1440:text-base lt-1024:text-[0.95rem] lt-768:text-[0.9rem] lt-480:text-[0.875rem] text-gray-600 leading-relaxed mb-6'>
-                    We empower local talent, foster global partnerships,
-                    and support the next generation of Web3 leaders
-                    through hands-on events, education, and collaboration.
+                    Team1 Africa fuels the continent's blockchain ecosystem through hands-on workshops, developer grants, hackathons, and partnerships with global protocols. We're not talking about the future—we're building it.
                   </p>
                 </AnimatedText>
 

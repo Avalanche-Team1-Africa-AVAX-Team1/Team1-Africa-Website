@@ -37,9 +37,11 @@ const FeaturedGames: React.FC = () => {
   const [currentGameIndex, setCurrentGameIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const [cardPositions, setCardPositions] = useState<number[]>([0, 1, 2]);
+  // cardPositions tracks the visual position of the games [-1, 0, 1, 2]
+  // We need 4 slots to handle Next (left shift) and Prev (right shift) smoothly
+  // We need 4 slots to handle Next (left shift) and Prev (right shift) smoothly
+  const [cardPositions, setCardPositions] = useState<number[]>([-1, 0, 1, 2]);
   const [visibleGames, setVisibleGames] = useState(2);
-  const [isGoingBackward, setIsGoingBackward] = useState(false);
 
   const games: Game[] = React.useMemo(() => [
     {
@@ -99,45 +101,110 @@ const FeaturedGames: React.FC = () => {
 
   ], []);
 
-  const platformIcons = {
+  const platformIcons: Record<string, string> = {
     "Windows": windowsIcon,
     "PlayStation": playstationIcon,
     "Xbox": xboxIcon,
     "Steam": steamIcon,
-    "Nintendo Switch": nintendoSwitchIcon
+    "Nintendo Switch": nintendoSwitchIcon,
+    "Epic": steamIcon // Using steam as fallback for Epic
+  };
+
+  // Reusable Platform Icons Component
+  const PlatformIcons = ({ platforms, variant = 'mobile' }: { platforms: string[], variant?: 'mobile' | 'desktop' | 'overlay' }) => {
+    if (variant === 'overlay') {
+      return (
+        <div className="flex gap-2 flex-wrap">
+          {platforms.map((platform, index) => {
+            const icon = platformIcons[platform];
+            if (!icon) return null;
+            return (
+              <img
+                key={index}
+                src={icon}
+                alt={platform}
+                className="w-8 h-8 object-contain opacity-90"
+              />
+            );
+          })}
+        </div>
+      );
+    }
+
+    if (variant === 'desktop') {
+      return (
+        <div className="flex gap-2 lg:gap-2.5 flex-wrap">
+          {platforms.map((platform, index) => {
+            const icon = platformIcons[platform];
+            if (!icon) return null;
+            return (
+              <div
+                key={index}
+                className="w-8 h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10 bg-white/5 hover:bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center transition-all border border-white/10"
+                title={platform}
+              >
+                <img
+                  src={icon}
+                  alt={platform}
+                  className="w-5 h-5 lg:w-6 lg:h-6 object-contain opacity-80"
+                />
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    // mobile variant (default)
+    return (
+      <div className="flex gap-3 flex-wrap">
+        {platforms.map((platform, index) => {
+          const icon = platformIcons[platform];
+          if (!icon) return null;
+          return (
+            <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+              <img
+                src={icon}
+                alt={platform}
+                className="w-8 h-8 object-contain"
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   const nextGame = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setIsGoingBackward(true);
     setShowDetails(false);
 
-    // Forward Button (Right Arrow) -> Slide Right -> Show Previous Game
+    // Shift positions to the RIGHT (current card exits right)
     setCardPositions(prev => prev.map(pos => pos + 1));
 
     setTimeout(() => {
-      // Update to Previous Game (i-1) to match the slide-in of the left card
+      // Decrement index to show previous content
       setCurrentGameIndex((prev) => (prev - 1 + games.length) % games.length);
-      setCardPositions([0, 1, 2]);
+      // Reset positions to stable state
+      setCardPositions([-1, 0, 1, 2]);
       setIsTransitioning(false);
-      setIsGoingBackward(false);
     }, 500);
   };
 
   const prevGame = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setIsGoingBackward(false);
     setShowDetails(false);
 
-    // Backward Button (Left Arrow) -> Slide Left -> Show Next Game
+    // Shift positions to the LEFT (current card exits left)
     setCardPositions(prev => prev.map(pos => pos - 1));
 
     setTimeout(() => {
-      // Update to Next Game (i+1) to match the slide-in of the right card
+      // Increment index to show next content
       setCurrentGameIndex((prev) => (prev + 1) % games.length);
-      setCardPositions([0, 1, 2]);
+      // Reset positions to stable state
+      setCardPositions([-1, 0, 1, 2]);
       setIsTransitioning(false);
     }, 500);
   };
@@ -147,6 +214,60 @@ const FeaturedGames: React.FC = () => {
     if (position === 0) return currentGameIndex;
     if (position === 1) return (currentGameIndex + 1) % games.length;
     return (currentGameIndex + 2) % games.length;
+  };
+
+  // Shared navigation function for carousel dots
+  const navigateToGame = (targetIndex: number) => {
+    if (isTransitioning || targetIndex === currentGameIndex) return;
+    const diff = (targetIndex - currentGameIndex + games.length) % games.length;
+    if (diff <= games.length / 2) {
+      for (let i = 0; i < diff; i++) {
+        setTimeout(() => nextGame(), i * 500);
+      }
+    } else {
+      const backSteps = games.length - diff;
+      for (let i = 0; i < backSteps; i++) {
+        setTimeout(() => prevGame(), i * 500);
+      }
+    }
+  };
+
+  // Carousel Dots Component - Minimal & Elegant
+  const CarouselDots = ({ variant = 'desktop' }: { variant?: 'desktop' | 'mobile' }) => {
+    if (variant === 'desktop') {
+      return (
+        <div className="flex gap-1.5 items-center">
+          {games.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => navigateToGame(index)}
+              className={`transition-all duration-300 rounded-full ${index === currentGameIndex
+                ? 'w-6 h-1.5 bg-white'
+                : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/50'
+                }`}
+              aria-label={`Go to game ${index + 1}`}
+            />
+          ))}
+        </div>
+      );
+    }
+
+    // Mobile variant
+    return (
+      <div className="flex gap-2 items-center">
+        {games.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => navigateToGame(index)}
+            className={`transition-all duration-300 rounded-full ${index === currentGameIndex
+              ? 'w-8 h-2 bg-gray-900'
+              : 'w-2 h-2 bg-gray-400 hover:bg-gray-500'
+              }`}
+            aria-label={`Go to game ${index + 1}`}
+          />
+        ))}
+      </div>
+    );
   };
 
   // Preload all images on mount
@@ -171,7 +292,7 @@ const FeaturedGames: React.FC = () => {
       <div className="lt-1024:block hidden px-6 py-12">
         <div className="mb-8">
           <AnimatedText variant="scale" delay={0.1}>
-            <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-6">
+            <div className="inline-block text-white bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-6">
               Games
             </div>
           </AnimatedText>
@@ -191,17 +312,7 @@ const FeaturedGames: React.FC = () => {
 
                 <div className="mb-4">
                   <h3 className="text-gray-500 text-sm font-semibold mb-2">Platforms</h3>
-                  <div className="flex gap-3 flex-wrap">
-                    {game.platforms.map((platform, index) => (
-                      <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                        <img
-                          src={platformIcons[platform as keyof typeof platformIcons] as string}
-                          alt={platform}
-                          className="w-8 h-8 object-contain"
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  <PlatformIcons platforms={game.platforms} variant="mobile" />
                 </div>
 
                 <div className="mb-4">
@@ -238,13 +349,13 @@ const FeaturedGames: React.FC = () => {
         </div>
       </div>
 
-      {/* Desktop Carousel View - Keep exactly as is */}
+      {/* Desktop Carousel View */}
       <div className="lt-1024:hidden block bg-gray-100 py-16">
         <div className="w-full px-8">
           <div className="flex items-center justify-between mb-8">
             <div>
               <AnimatedText variant="scale" delay={0.1}>
-                <div className="inline-block bg-red-500 px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-12">
+                <div className="inline-block text-white bg-red-500 font-semibold px-3 py-1 rounded-md text-sm font-medium mb-3 -rotate-12">
                   Games
                 </div>
               </AnimatedText>
@@ -263,118 +374,78 @@ const FeaturedGames: React.FC = () => {
 
         <AnimatedText variant="fadeIn" delay={0.4} className="relative w-[120vw] lt-1024:w-full h-[90vh] min-h-[550px] max-h-[900px] lt-1024:h-[540px] lt-768:h-[480px] flex lt-1024:gap-6 pl-8 lt-1024:px-4">
           {/* Fixed Details Card - Left Side (Desktop Only) */}
-          <div className="relative w-[30%] lt-1024:hidden h-full bg-black rounded-l-2xl p-4 lg:p-8 xl:p-10 2xl:p-12 flex flex-col justify-between z-10 overflow-hidden">
-            <div className={`transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-              <h2 className="text-white text-2xl lg:text-4xl xl:text-5xl font-bold mb-3 lg:mb-5 xl:mb-6 leading-tight">
-                {games[currentGameIndex].title}
-              </h2>
+          <div className="relative w-[30%] lt-1024:hidden h-full bg-gradient-to-br from-gray-950 via-black to-gray-900 rounded-l-2xl px-6 lg:px-8 xl:px-10 py-8 lg:py-10 xl:py-12 flex flex-col justify-between z-10 overflow-hidden shadow-2xl">
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 
-              <p className="text-gray-300 text-xs lg:text-base xl:text-lg 2xl:text-xl mb-3 lg:mb-6 xl:mb-8 leading-relaxed">
-                {games[currentGameIndex].description}
-              </p>
+            {/* Content wrapper */}
+            <div className="relative z-10 flex flex-col h-full">
+              {/* Top section - Game info */}
+              <div className={`flex-1 flex flex-col transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+                <h2 className="text-white text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 lg:mb-6 leading-tight tracking-tight">
+                  {games[currentGameIndex].title}
+                </h2>
 
-              <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-3 lg:px-7 lg:py-5 xl:px-8 xl:py-6 rounded-full flex items-center justify-center gap-2 lg:gap-3 transition-all duration-300 hover:scale-105 border border-white/20 text-xs lg:text-base">
-                WEBSITE
-                <ExternalLink size={14} className="lg:w-5 lg:h-5" />
-              </button>
-            </div>
+                <p className="text-gray-300 text-sm lg:text-base xl:text-lg mb-6 lg:mb-8 leading-relaxed line-clamp-6">
+                  {games[currentGameIndex].description}
+                </p>
 
-            <div className={`transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-              <div className="mb-3 lg:mb-5 xl:mb-6">
-                <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-2 lg:mb-3">Platforms</h3>
-                <div className="flex gap-1.5 lg:gap-3 flex-wrap">
-                  {games[currentGameIndex].platforms.map((platform, index) => (
-                    <div
-                      key={index}
-                      className="w-7 h-7 lg:w-11 lg:h-11 xl:w-12 xl:h-12 backdrop-blur-sm rounded-lg flex items-center justify-center"
-                      title={platform}
-                    >
-                      <img
-                        src={platformIcons[platform as keyof typeof platformIcons] as string}
-                        alt={platform}
-                        className="w-full h-full object-contain filter"
-                      />
-                    </div>
-                  ))}
-                </div>
+                <button className="bg-red-500 hover:bg-red-600 text-white px-6 py-3.5 lg:px-8 lg:py-4 rounded-xl font-semibold flex items-center justify-center gap-2.5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-500/20 text-sm lg:text-base w-full lg:w-auto">
+                  VISIT WEBSITE
+                  <ExternalLink size={18} className="lg:w-5 lg:h-5" />
+                </button>
               </div>
 
-              <div className="mb-3 lg:mb-5">
-                <h3 className="text-gray-400 text-[10px] lg:text-sm font-semibold mb-1 lg:mb-2">Genre</h3>
-                <p className="text-white font-medium text-sm lg:text-lg">{games[currentGameIndex].genre}</p>
-              </div>
-
-              <div className="flex justify-center mt-3 lg:mt-6 xl:mt-10 items-center">
-                <button
-                  onClick={prevGame}
-                  disabled={isTransitioning}
-                  className="w-12 h-12 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 hover:bg-gray-900"
-                >
-                  <ChevronLeft size={16} className="lg:w-5 lg:h-5" />
-                </button>
-
-                <div className="flex gap-1 lg:gap-2 mx-2 lg:mx-4">
-                  {games.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        if (isTransitioning || index === currentGameIndex) return;
-                        const diff = (index - currentGameIndex + games.length) % games.length;
-                        if (diff <= games.length / 2) {
-                          for (let i = 0; i < diff; i++) {
-                            setTimeout(() => nextGame(), i * 500);
-                          }
-                        } else {
-                          const backSteps = games.length - diff;
-                          for (let i = 0; i < backSteps; i++) {
-                            setTimeout(() => prevGame(), i * 500);
-                          }
-                        }
-                      }}
-                      className={`w-2 h-2 lg:w-3 lg:h-3 mx-1 lg:mx-2 xl:mx-4 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-white scale-125' : 'bg-gray-400 hover:bg-gray-300'}`}
-                    />
-                  ))}
+              {/* Bottom section - Metadata & Navigation */}
+              <div className={`space-y-6 lg:space-y-8 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+                {/* Platforms */}
+                <div>
+                  <h3 className="text-gray-400 text-xs lg:text-sm font-semibold mb-3 uppercase tracking-wider">Platforms</h3>
+                  <PlatformIcons platforms={games[currentGameIndex].platforms} variant="desktop" />
                 </div>
 
-                <button
-                  onClick={nextGame}
-                  disabled={isTransitioning}
-                  className="w-12 h-12 lg:w-20 lg:h-20 xl:w-24 xl:h-24 bg-gray-950 text-white rounded-full flex items-center justify-center transition-colors disabled:opacity-50 hover:bg-gray-900"
-                >
-                  <ChevronRight size={16} className="lg:w-5 lg:h-5" />
-                </button>
+                {/* Genre */}
+                <div>
+                  <h3 className="text-gray-400 text-xs lg:text-sm font-semibold mb-2 uppercase tracking-wider">Genre</h3>
+                  <p className="text-white font-medium text-base lg:text-lg">{games[currentGameIndex].genre}</p>
+                </div>
+
+                {/* Navigation */}
+                <div className="flex justify-between items-center pt-4 lg:pt-6 border-t border-gray-800">
+                  <button
+                    onClick={prevGame}
+                    disabled={isTransitioning}
+                    className="w-11 h-11 lg:w-14 lg:h-14 bg-white/5 hover:bg-white/10 text-white rounded-full flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed backdrop-blur-sm border border-white/10"
+                    aria-label="Previous game"
+                  >
+                    <ChevronLeft size={20} className="lg:w-6 lg:h-6" />
+                  </button>
+
+                  <CarouselDots variant="desktop" />
+
+                  <button
+                    onClick={nextGame}
+                    disabled={isTransitioning}
+                    className="w-11 h-11 lg:w-14 lg:h-14 bg-white/5 hover:bg-white/10 text-white rounded-full flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed backdrop-blur-sm border border-white/10"
+                    aria-label="Next game"
+                  >
+                    <ChevronRight size={20} className="lg:w-6 lg:h-6" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Sliding Image Cards Container */}
           <div className="relative flex-1 h-full overflow-hidden lt-1024:rounded-2xl bg-gray-100">
-            {/* Previous game - always rendered off-screen left, ready to slide in when going backward */}
-            <div
-              key={`prev-card-${getGameAtPosition(-1)}`}
-              className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
-              style={{
-                transform: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 'translateX(0%)' : 'translateX(-100%)',
-                zIndex: (isGoingBackward && isTransitioning && cardPositions[0] === 1) ? 10 : 1,
-                width: '60%',
-                left: '0',
-                opacity: 1,
-                transition: 'transform 500ms'
-              }}
-            >
-              <AppImage
-                src={games[getGameAtPosition(-1)].image}
-                srcWebp={games[getGameAtPosition(-1)].imageWebp}
-                alt={games[getGameAtPosition(-1)].title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Original 3 positions - restore original logic */}
-            {[0, 1, 2].map((positionIndex) => {
-              const gameIndex = getGameAtPosition(positionIndex);
+            {[-1, 0, 1, 2].map((relativeIndex) => { // Render 4 slots relative to current index
+              const gameIndex = getGameAtPosition(relativeIndex);
               const game = games[gameIndex];
-              const cardPosition = cardPositions[positionIndex];
+              // Map the relative index (-1..2) to the tracked position state index (0..3)
+              // The cardPositions state array corresponds to slots [-1, 0, 1, 2]
+              // So cardPositions[0] tracks where slot -1 is visually, cardPositions[1] tracks slot 0, etc.
+              const trackedIndex = relativeIndex + 1; // Map -1..2 to 0..3
+              const visualPosition = cardPositions[trackedIndex] ?? relativeIndex; // Fallback to relativeIndex if initializing
 
               let translateX = 'translateX(200%)';
               let zIndex = 0;
@@ -382,33 +453,47 @@ const FeaturedGames: React.FC = () => {
               let opacity = 0;
               let left = 'auto';
 
-              if (cardPosition === -1) {
+              if (visualPosition === -1) {
                 translateX = 'translateX(-100%)';
-                zIndex = 0;
+                zIndex = 1;
                 opacity = 1;
                 width = '60%';
-              } else if (cardPosition === 0) {
+                left = '0';
+              } else if (visualPosition === 0) {
                 translateX = 'translateX(0%)';
                 zIndex = 10;
                 width = '60%';
                 opacity = 1;
                 left = '0';
-              } else if (cardPosition === 1) {
+              } else if (visualPosition === 1) {
                 translateX = 'translateX(calc(100% + 2rem))';
                 zIndex = 5;
                 width = '60%';
                 opacity = 1;
                 left = 'auto';
-              } else if (cardPosition === 2) {
+              } else if (visualPosition === 2) {
                 translateX = 'translateX(200%)';
+                zIndex = 0;
+                opacity = 1;
+                width = '60%';
+              } else if (visualPosition === 3) {
+                // Buffer right (during Prev transition, slot 2 moves to 3)
+                translateX = 'translateX(300%)';
+                zIndex = 0;
+                opacity = 1;
+                width = '60%';
+              } else if (visualPosition === -2) {
+                // Buffer left (during Next transition, slot -1 moves to -2)
+                translateX = 'translateX(-200%)';
                 zIndex = 0;
                 opacity = 1;
                 width = '60%';
               }
 
+
               return (
                 <div
-                  key={gameIndex}
+                  key={relativeIndex} // Stable position key - prevents unmounting
                   className="absolute top-0 h-full rounded-r-2xl lt-1024:rounded-2xl overflow-hidden lt-1024:hidden"
                   style={{
                     transform: translateX,
@@ -416,7 +501,7 @@ const FeaturedGames: React.FC = () => {
                     width: width,
                     left: left,
                     opacity: opacity,
-                    transition: 'transform 500ms'
+                    transition: isTransitioning ? 'transform 500ms ease-in-out' : 'none'
                   }}
                 >
                   <AppImage
@@ -424,10 +509,10 @@ const FeaturedGames: React.FC = () => {
                     srcWebp={game.imageWebp}
                     alt={game.title}
                     className="w-full h-full object-cover"
-                    priority={gameIndex === currentGameIndex || cardPosition === 0 || cardPosition === 1} // Prioritize visible cards
+                    priority={visualPosition === 0 || visualPosition === 1 || visualPosition === -1}
                   />
 
-                  {cardPosition === 1 && (
+                  {visualPosition === 1 && (
                     <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
                   )}
                 </div>
@@ -465,11 +550,7 @@ const FeaturedGames: React.FC = () => {
                 <p className="text-sm text-gray-300 mb-4">{games[currentGameIndex].description}</p>
                 <div className="mb-3">
                   <h3 className="text-gray-400 text-xs font-semibold mb-2">Platforms</h3>
-                  <div className="flex gap-2 flex-wrap">
-                    {games[currentGameIndex].platforms.map((platform, index) => (
-                      <img key={index} src={platformIcons[platform as keyof typeof platformIcons] as string} alt={platform} className="w-8 h-8 object-contain" />
-                    ))}
-                  </div>
+                  <PlatformIcons platforms={games[currentGameIndex].platforms} variant="overlay" />
                 </div>
                 <p className="text-sm"><span className="text-gray-400">Genre:</span> {games[currentGameIndex].genre}</p>
               </div>
@@ -478,42 +559,23 @@ const FeaturedGames: React.FC = () => {
         </AnimatedText>
 
         {/* Mobile/Tablet Navigation */}
-        <div className="hidden lt-1024:flex justify-center items-center gap-6 mt-6 px-4">
+        <div className="hidden lt-1024:flex justify-center items-center gap-4 mt-8 px-4">
           <button
             onClick={prevGame}
             disabled={isTransitioning}
-            className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center disabled:opacity-50"
+            className="w-12 h-12 bg-gray-900 hover:bg-gray-800 text-white rounded-full flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-lg"
+            aria-label="Previous game"
           >
-            <ChevronLeft size={18} />
+            <ChevronLeft size={20} />
           </button>
-          <div className="flex gap-2">
-            {games.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  if (isTransitioning || index === currentGameIndex) return;
-                  const diff = (index - currentGameIndex + games.length) % games.length;
-                  if (diff <= games.length / 2) {
-                    for (let i = 0; i < diff; i++) {
-                      setTimeout(() => nextGame(), i * 500);
-                    }
-                  } else {
-                    const backSteps = games.length - diff;
-                    for (let i = 0; i < backSteps; i++) {
-                      setTimeout(() => prevGame(), i * 500);
-                    }
-                  }
-                }}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentGameIndex ? 'bg-gray-900 scale-125' : 'bg-gray-400'}`}
-              />
-            ))}
-          </div>
+          <CarouselDots variant="mobile" />
           <button
             onClick={nextGame}
             disabled={isTransitioning}
-            className="w-12 h-12 bg-gray-900 text-white rounded-full flex items-center justify-center disabled:opacity-50"
+            className="w-12 h-12 bg-gray-900 hover:bg-gray-800 text-white rounded-full flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-lg"
+            aria-label="Next game"
           >
-            <ChevronRight size={18} />
+            <ChevronRight size={20} />
           </button>
         </div>
       </div>
