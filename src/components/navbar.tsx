@@ -101,8 +101,6 @@ const Navbar = () => {
                             <li><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : 'text-black'}>Blog</Link></li>
                             <div className="flex gap-2">
                                 <li><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
-                                {/* Shrink arrow icon on smaller screens */}
-                                <img src={arrow} alt="arrow" className="lt-1440:w-4 lt-1440:h-4 lt-1024:w-3.5 lt-1024:h-3.5" />
                             </div>
                         </ul>
                     </div>
