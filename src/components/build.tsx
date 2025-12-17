@@ -56,7 +56,7 @@ const cards = [
 ]
 
 const Build = () => {
-    const [activeIndex, setActiveIndex] = useState(1) // Start with Card 2 (Create)
+    const [activeIndex, setActiveIndex] = useState(0) // Start with Card 1 (infra BUIDL)
     const pinnedRef = useRef<HTMLDivElement>(null)
     const mainRef = useRef<HTMLDivElement>(null)
 

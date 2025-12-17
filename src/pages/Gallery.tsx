@@ -201,6 +201,69 @@ const generatePositions = (data: MomentData[]): { moments: Moment[], width: numb
     };
 };
 
+// --- MOBILE GALLERY HERO ---
+function MobileGalleryHero({ moments }: { moments: Moment[] }) {
+    // Randomly select 4 images from moments
+    const randomImages = useMemo(() => {
+        const shuffled = [...moments].sort(() => Math.random() - 0.5);
+        return shuffled.slice(0, 4);
+    }, []); // Empty dependency array ensures this only runs once on mount
+
+    // Random positions for each image - more scattered like the reference
+    const positions = useMemo(() => [
+        { top: '8%', right: '5%', size: 160 }, // Top right
+        { top: '30%', left: '2%', size: 150 },  // Mid left (smaller)
+        { bottom: '25%', right: '-10%', size: 190 }, // Lower right
+        { bottom: '8%', left: '-10%', size: 220 }, // Bottom left
+    ], []);
+
+    return (
+        <div className="relative h-screen bg-white overflow-hidden">
+            {/* GALLERY Title - Centered */}
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+                <h1 className="text-[20vw] font-semibold text-red-500 tracking-tight leading-none">
+                    GALLERY
+                </h1>
+            </div>
+
+            {/* Random Images - Scattered */}
+            {randomImages.map((moment, index) => {
+                const pos = positions[index];
+                return (
+                    <motion.div
+                        key={moment.id}
+                        initial={{ opacity: 0, scale: 0, rotate: pos.rotate - 10 }}
+                        animate={{ opacity: 1, scale: 1, rotate: pos.rotate }}
+                        transition={{
+                            delay: index * 0.15,
+                            duration: 0.6,
+                            type: "spring",
+                            stiffness: 100
+                        }}
+                        style={{
+                            position: 'absolute',
+                            top: pos.top,
+                            left: pos.left,
+                            right: pos.right,
+                            bottom: pos.bottom,
+                            width: pos.size,
+                            height: pos.size,
+                            transform: `rotate(${pos.rotate}deg)`,
+                        }}
+                        className="rounded-xl overflow-hidden shadow-2xl border-4 border-white z-20"
+                    >
+                        <img
+                            src={moment.image}
+                            alt={moment.title}
+                            className="w-full h-full object-cover"
+                        />
+                    </motion.div>
+                );
+            })}
+        </div>
+    );
+}
+
 // --- MAIN COMPONENT ---
 export default function Gallery() {
     const [isMobile, setIsMobile] = useState(false);
@@ -218,7 +281,19 @@ export default function Gallery() {
     }, []);
 
     if (isMobile) {
-        return <MobileGallery moments={moments} onSelect={setSelected} selected={selected} onClose={() => setSelected(null)} />;
+        return (
+            <div className="relative">
+                {/* Mobile Hero - 4 Random Images */}
+                <MobileGalleryHero moments={moments} />
+
+                {/* Scrollable Content Below */}
+                <EventAlbumsSection />
+                <PolaroidGallerySection />
+
+                {/* Footer */}
+                <Footer />
+            </div>
+        );
     }
 
     return (
@@ -285,56 +360,81 @@ function EventAlbumsSection() {
     const [scrollProgress, setScrollProgress] = useState(0);
     const sectionRef = useRef<HTMLElement>(null);
 
+    // Check mobile once and store it
+    const [isMobile, setIsMobile] = useState(false);
+
     useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    useEffect(() => {
+        let ticking = false;
+
         const handleScroll = () => {
-            if (!sectionRef.current) return;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    if (!sectionRef.current) {
+                        ticking = false;
+                        return;
+                    }
 
-            const rect = sectionRef.current.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
+                    const rect = sectionRef.current.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
 
-            // Calculate progress based on section position
-            const sectionTop = rect.top;
-            const sectionBottom = rect.bottom;
+                    // Calculate progress based on section position
+                    const sectionTop = rect.top;
+                    const sectionBottom = rect.bottom;
 
-            // Expand phase: when section enters viewport
-            const expandStart = windowHeight * 0.5;
-            const expandRange = 400;
+                    // Expand phase: when section enters viewport
+                    const expandStart = windowHeight * 0.5;
+                    const expandRange = 400;
 
-            // Shrink phase: when reaching bottom of section
-            const shrinkStart = windowHeight;
-            const shrinkRange = 400;
+                    // Shrink phase: when reaching bottom of section
+                    const shrinkStart = windowHeight;
+                    const shrinkRange = 400;
 
-            let progress = 0;
+                    let progress = 0;
 
-            if (sectionTop > expandStart) {
-                // Before expansion starts
-                progress = 0;
-            } else if (sectionTop <= expandStart && sectionTop > expandStart - expandRange) {
-                // Expanding phase
-                progress = (expandStart - sectionTop) / expandRange;
-            } else if (sectionBottom > shrinkStart) {
-                // Fully expanded
-                progress = 1;
-            } else if (sectionBottom <= shrinkStart && sectionBottom > shrinkStart - shrinkRange) {
-                // Shrinking phase - mirror the expansion calculation
-                progress = (sectionBottom - (shrinkStart - shrinkRange)) / shrinkRange;
-            } else {
-                // After shrink completes
-                progress = 0;
+                    if (sectionTop > expandStart) {
+                        // Before expansion starts
+                        progress = 0;
+                    } else if (sectionTop <= expandStart && sectionTop > expandStart - expandRange) {
+                        // Expanding phase
+                        progress = (expandStart - sectionTop) / expandRange;
+                    } else if (sectionBottom > shrinkStart) {
+                        // Fully expanded
+                        progress = 1;
+                    } else if (sectionBottom <= shrinkStart && sectionBottom > shrinkStart - shrinkRange) {
+                        // Shrinking phase - mirror the expansion calculation
+                        progress = (sectionBottom - (shrinkStart - shrinkRange)) / shrinkRange;
+                    } else {
+                        // After shrink completes
+                        progress = 0;
+                    }
+
+                    setScrollProgress(Math.min(Math.max(progress, 0), 1));
+                    ticking = false;
+                });
+                ticking = true;
             }
-
-            setScrollProgress(Math.min(Math.max(progress, 0), 1));
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll(); // Initial check
 
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     // Calculate dynamic values based on scroll progress
-    const marginX = 40 - (scrollProgress * 40); // 40px (mx-10) to 0px
-    const borderRadius = 16 - (scrollProgress * 16); // 16px (rounded-2xl) to 0px
+    // Use smaller margins on mobile for smoother animation
+    const maxMargin = isMobile ? 16 : 40; // 16px on mobile, 40px on desktop
+    const maxRadius = isMobile ? 12 : 16; // 12px on mobile, 16px on desktop
+
+    const marginX = maxMargin - (scrollProgress * maxMargin);
+    const borderRadius = maxRadius - (scrollProgress * maxRadius);
 
     return (
         <motion.section
