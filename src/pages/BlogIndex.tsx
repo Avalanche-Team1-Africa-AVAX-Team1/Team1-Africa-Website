@@ -140,12 +140,12 @@ const dontMissArticles = [
 export default function BlogIndex() {
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pt-24 md:pt-28">
       {/* Header */}
       <div className="border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-12">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-8 md:py-12">
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-serif">Editorial</h1>
+            <h1 className="text-3xl md:text-4xl font-serif">Editorial</h1>
             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -162,15 +162,15 @@ export default function BlogIndex() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-5xl md:text-7xl font-serif mb-8 group-hover:text-red-600 transition-colors">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif mb-6 md:mb-8 group-hover:text-red-600 transition-colors leading-tight">
               {featuredArticle.title}
             </h2>
-            <div className="flex items-center gap-4 text-sm text-gray-600 mb-8">
+            <div className="flex items-center gap-4 text-sm text-gray-600 mb-6 md:mb-8">
               <span className="font-medium">{featuredArticle.author}</span>
               <span>•</span>
               <span>{featuredArticle.date}</span>
             </div>
-            <div className="relative aspect-[21/9] rounded-xl overflow-hidden">
+            <div className="relative aspect-[4/3] md:aspect-[21/9] rounded-xl overflow-hidden">
               <img
                 src={featuredArticle.image}
                 alt={featuredArticle.title}
@@ -194,7 +194,7 @@ export default function BlogIndex() {
           >
             <a href={`/blog/${trendingArticles[0].slug}`} className="block group">
               {/* Portrait Image */}
-              <div className="relative w-full aspect-[3/3] lg:aspect-[5/2] rounded-2xl overflow-hidden mb-4">
+              <div className="relative w-full aspect-[4/3] lg:aspect-[5/2] rounded-2xl overflow-hidden mb-4">
                 <img
                   src={trendingArticles[0].image}
                   alt={trendingArticles[0].title}
