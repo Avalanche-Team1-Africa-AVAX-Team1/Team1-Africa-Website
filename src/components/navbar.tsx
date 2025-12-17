@@ -99,6 +99,8 @@ const Navbar = () => {
                         <ul className="flex items-center gap-8 lt-1440:gap-6 lt-1024:gap-4 cursor-pointer text-black">
                             <li><Link to="/about" className={location.pathname === '/about' ? 'font-semibold text-red-400' : 'text-black'}>About</Link></li>
                             <li><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : 'text-black'}>Blog</Link></li>
+                            <li><Link to="/spotlight" className={location.pathname === '/spotlight' ? 'font-semibold text-red-400' : 'text-black'}>Spotlight</Link></li>
+                            <li><Link to="/gallery" className={location.pathname === '/gallery' ? 'font-semibold text-red-400' : 'text-black'}>Gallery</Link></li>
                             <div className="flex gap-2">
                                 <li><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
                             </div>
@@ -159,6 +161,8 @@ const Navbar = () => {
                 <ul className="flex flex-col gap-8 lt-768:gap-6 lt-480:gap-5 px-8 lt-768:px-6 lt-480:px-5 text-xl lt-768:text-lg lt-480:text-base cursor-pointer text-black">
                     <li onClick={() => setSidebarOpen(false)}><Link to="/about" className={location.pathname === '/about' ? 'font-semibold text-red-400' : 'text-black'}>About</Link></li>
                     <li onClick={() => setSidebarOpen(false)}><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : 'text-black'}>Blog</Link></li>
+                    <li onClick={() => setSidebarOpen(false)}><Link to="/spotlight" className={location.pathname === '/spotlight' ? 'font-semibold text-red-400' : 'text-black'}>Spotlight</Link></li>
+                    <li onClick={() => setSidebarOpen(false)}><Link to="/gallery" className={location.pathname === '/gallery' ? 'font-semibold text-red-400' : 'text-black'}>Gallery</Link></li>
                     <li onClick={() => setSidebarOpen(false)}><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
                     <li onClick={() => setSidebarOpen(false)} className="text-black">Games</li>
                     <li onClick={() => setSidebarOpen(false)} className="text-black">Community</li>

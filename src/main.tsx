@@ -8,6 +8,8 @@ import BlogArticle from './pages/BlogArticle'
 import NotFound from './pages/NotFound'
 import EventCalendar from './components/EventCalendar'
 import About from './pages/About'
+import Spotlight from './pages/Spotlight'
+import Gallery from './pages/Gallery'
 import SmoothScrollProvider from './components/SmoothScrollProvider'
 
 import Layout from './components/Layout'
@@ -21,6 +23,8 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<BlogIndex />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
+          <Route path="/spotlight" element={<Spotlight />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/events" element={<EventCalendar />} />
           <Route path="*" element={<NotFound />} />
         </Route>
