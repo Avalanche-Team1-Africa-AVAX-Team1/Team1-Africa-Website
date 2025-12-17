@@ -20,18 +20,18 @@ export interface TeamMember {
 export const team1AfricaMembers: TeamMember[] = [
     {
         id: 'tm-africa-ng-001',
-        name: 'Adewale Ogunlesi',
+        name: 'Feezy Techboy',
         role: 'Regional Lead',
         region: 'Nigeria',
-        headshotUrl: new URL('../assets/testimonial10.jpg', import.meta.url).href,
-        headshotAlt: 'Adewale Ogunlesi, Team1 Africa Nigeria Regional Lead',
+        headshotUrl: new URL('../assets/testimonial1.jpg', import.meta.url).href,
+        headshotAlt: 'Feezy Techboy, Team1 Africa Nigeria Regional Lead',
         bio: 'Blockchain advocate with 5+ years building developer communities across West Africa.',
         location: 'Lagos, Nigeria',
         socials: [
-            { platform: 'twitter', url: 'https://twitter.com/adewale_avax', handle: '@adewale_avax' },
-            { platform: 'linkedin', url: 'https://linkedin.com/in/adewale', handle: 'adewale' },
+            { platform: 'twitter', url: 'https://twitter.com/feezytechboy', handle: '@feezytechboy' },
+            { platform: 'linkedin', url: 'https://linkedin.com/in/feezytechboy', handle: 'feezytechboy' },
         ],
-        specialties: ['Developer Relations', 'Community Building', 'Content Strategy'],
+        specialties: ['Community Building', 'Content Strategy'],
     },
     {
         id: 'tm-africa-ng-002',
