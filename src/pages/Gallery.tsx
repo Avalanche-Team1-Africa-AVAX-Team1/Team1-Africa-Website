@@ -630,7 +630,7 @@ function PolaroidGallerySection() {
                         onMouseLeave={() => setHoveredId(null)}
                         onMouseMove={(e) => handleMouseMove(e)}
                         transition={{ delay: index * 0.1 }}
-                        className="border-t border-gray-200 py-8 relative"
+                        className="border-t border-gray-200 py-8 relative group"
                     >
                         {/* Kinetic Flag */}
                         <AnimatePresence>
@@ -664,10 +664,10 @@ function PolaroidGallerySection() {
 
                         <button
                             onClick={() => toggleExpand(event.id)}
-                            className="w-full flex items-center justify-between text-left group relative z-10"
+                            className="w-full flex items-center justify-between text-left relative z-10"
                         >
                             <div className="flex-1">
-                                <h3 className="text-2xl lt-768:text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-2 group-hover:text-red-500 transition-colors duration-300">
+                                <h3 className={`text-2xl lt-768:text-2xl md:text-4xl lg:text-5xl font-black mb-2 transition-colors duration-300 ${expandedId === event.id ? '!text-red-600' : 'text-gray-900'} group-hover:!text-red-800`}>
                                     {event.title}
                                 </h3>
                                 {/* Only show description when expanded */}
