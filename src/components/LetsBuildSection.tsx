@@ -152,8 +152,8 @@ const LetsBuildSection = () => {
         <div ref={mainRef}>
             <VideoModal isOpen={videoOpen} onClose={() => setVideoOpen(false)} videoSrc={mainVideo} />
 
-            {/* DESKTOP: Pinned Slideshow */}
-            <div className="hidden lg:block">
+            {/* DESKTOP: Pinned Slideshow - Only shows on laptop+ (1200px+) */}
+            <div className="hidden laptop:block">
                 <section ref={pinnedRef} className="h-screen bg-white text-black overflow-hidden flex flex-col justify-center relative">
                     <div className="absolute top-12 left-0 w-full text-center z-20">
                         <h2 className="text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight">The Builders We're Building For</h2>
@@ -236,8 +236,8 @@ const LetsBuildSection = () => {
                 </section>
             </div>
 
-            {/* MOBILE: Vertical Stack (Includes Tablets <1024px) */}
-            <div className="lg:hidden bg-white text-black py-16 md:py-20 px-6 space-y-24 md:space-y-32">
+            {/* MOBILE: Vertical Stack (Includes Tablets and small laptops below 1200px) */}
+            <div className="laptop:hidden bg-white text-black py-16 md:py-20 px-6 space-y-24 md:space-y-32">
                 <div className="text-center mb-8 md:mb-12">
                     <h2 className="text-3xl md:text-5xl font-black">The Builders We're Building For</h2>
                     <div className="w-16 md:w-20 h-1 bg-black mx-auto mt-4" />
@@ -266,8 +266,8 @@ const LetsBuildSection = () => {
                 </AnimatedSection>
             </div>
 
-            {/* WHAT WE DO SECTION - HORIZONTAL SCROLL (Desktop) */}
-            <div className="hidden lg:block">
+            {/* WHAT WE DO SECTION - HORIZONTAL SCROLL (Desktop 1200px+) */}
+            <div className="hidden laptop:block">
                 <section ref={horizontalContainerRef} className="h-screen overflow-hidden bg-black text-white relative">
                     <div className="absolute top-8 lg:top-12 left-8 lg:left-12 z-20 hidden xl:block">
                         <h2 className="text-4xl lg:text-5xl font-black">How We Show Up</h2>
@@ -328,8 +328,8 @@ const LetsBuildSection = () => {
                 </section>
             </div>
 
-            {/* WHAT WE DO SECTION - VERTICAL STACK (Mobile & Tablet) */}
-            <div className="lg:hidden bg-black text-white py-16 md:py-20 px-6">
+            {/* WHAT WE DO SECTION - VERTICAL STACK (Mobile, Tablet & Small Laptops below 1200px) */}
+            <div className="laptop:hidden bg-black text-white py-16 md:py-20 px-6">
                 <div className="text-center mb-12 md:mb-16">
                     <h2 className="text-3xl md:text-5xl font-black">How We Show Up</h2>
                     <div className="w-16 md:w-20 h-1 bg-red-600 mx-auto mt-4" />

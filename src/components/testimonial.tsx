@@ -341,7 +341,7 @@ export default function TestimonialSlider() {
       t.kill();
       tlRef.current = null;
     };
-  }, [originalCount, GAP, isHovering, isReady, cardWidth]); // Added cardWidth to dependencies
+  }, [originalCount, GAP, isReady, cardWidth]); // Removed isHovering - pause/resume handled separately
 
   // Pause/resume when hovering or when expanded
   useEffect(() => {

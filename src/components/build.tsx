@@ -81,11 +81,11 @@ const Build = () => {
 
     return (
         <div ref={mainRef}>
-            {/* DESKTOP: Pinned Scroll-Lock Section */}
-            <div className="hidden lg:block">
+            {/* DESKTOP: Pinned Scroll-Lock Section - Only shows on laptop+ (1200px+) */}
+            <div className="hidden laptop:block">
                 <section ref={pinnedRef} className="h-screen bg-black text-white overflow-hidden flex items-center relative">
                     {/* Header - Top Left - Limited to 40% width to prevent card overlap */}
-                    <div className="absolute left-8 lg:left-12 z-20 w-[38%] lg:w-[40%] max-w-md xl:max-w-xl">
+                    <div className="absolute left-8 laptop:left-12 z-20 w-[40%] laptop:w-[42%] max-w-md xl:max-w-xl">
                         <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
                         <motion.div
                             initial={{ rotate: -12 }}
@@ -195,8 +195,8 @@ const Build = () => {
                 </section>
             </div>
 
-            {/* MOBILE: Vertical Stack */}
-            <div className="lg:hidden py-20 px-6">
+            {/* MOBILE: Vertical Stack - Shows on screens below 1200px */}
+            <div className="laptop:hidden py-20 px-6">
                 <div className="max-w-4xl mx-auto">
                     <div className="md:text-center mb-16">
                         <div className="inline-block bg-red-600 text-white px-5 py-2.5 rounded-lg text-sm font-bold mb-6 -rotate-6">
