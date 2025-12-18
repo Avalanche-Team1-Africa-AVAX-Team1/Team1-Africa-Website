@@ -81,11 +81,11 @@ const Build = () => {
 
     return (
         <div ref={mainRef}>
-            {/* DESKTOP: Pinned Scroll-Lock Section - Only shows on laptop+ (1200px+) */}
-            <div className="hidden laptop:block">
+            {/* DESKTOP: Pinned Scroll-Lock Section */}
+            <div className="hidden lg:block">
                 <section ref={pinnedRef} className="h-screen bg-black text-white overflow-hidden flex items-center relative">
-                    {/* Header - Top Left - Limited to 40% width to prevent card overlap */}
-                    <div className="absolute left-8 laptop:left-12 z-20 w-[40%] laptop:w-[42%] max-w-md xl:max-w-xl">
+                    {/* Header - Top Left */}
+                    <div className="absolute left-12 z-20 max-w-xl">
                         <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
                         <motion.div
                             initial={{ rotate: -12 }}
@@ -93,13 +93,13 @@ const Build = () => {
                         >
                             What we do
                         </motion.div>
-                        <h2 className="text-4xl lg:text-5xl xl:text-6xl font-black mb-4 tracking-tighter uppercase leading-none">
+                        <h2 className="text-6xl font-black mb-4 tracking-tighter uppercase leading-none">
                             Educate. <span className="text-red-500">Build.</span> Collaborate.
                         </h2>
-                        <h3 className="text-2xl lg:text-3xl font-bold text-red-500 mb-4 lg:mb-6">
+                        <h3 className="text-3xl font-bold text-red-500 mb-6">
                             On Avalanche. For Africa.
                         </h3>
-                        <p className="text-base lg:text-lg text-gray-300 mb-6 lg:mb-8 max-w-sm lg:max-w-md leading-relaxed">
+                        <p className="text-lg text-gray-300 mb-8 max-w-md leading-relaxed">
                             Africa has the talent. We provide the resources. Through, hackathons, workshops, and global partnerships, we're connecting African innovators with everything they need to lead the blockchain revolution with Avalanche.
                         </p>
 
@@ -120,8 +120,8 @@ const Build = () => {
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#ff000008_1px,transparent_1px),linear-gradient(to_bottom,#ff000008_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
 
                     {/* Right Side: Vertically Stacked Cards with Peek */}
-                    <div className="absolute right-0 top-0 h-full w-[55%] lg:w-[55%] xl:w-1/2 flex items-center justify-center overflow-hidden">
-                        <div className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl h-full flex items-center">
+                    <div className="absolute right-0 top-0 h-full w-1/2 flex items-center justify-center overflow-hidden">
+                        <div className="relative w-full max-w-xl h-full flex items-center">
                             <AnimatePresence mode="sync">
                                 {cards.map((card, index) => {
                                     const offset = index - activeIndex
@@ -141,7 +141,7 @@ const Build = () => {
                                             transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
                                         >
                                             <div
-                                                className="h-[55vh] lg:h-[55vh] xl:h-[60vh] rounded-2xl lg:rounded-3xl p-6 lg:p-8 xl:p-10 flex flex-col justify-between shadow-2xl border-2 border-white/10"
+                                                className="h-fit xl:py-[20%] rounded-3xl p-10 flex flex-col justify-between shadow-2xl border-2 border-white/10"
                                                 style={{ backgroundColor: card.color }}
                                             >
                                                 <div className="flex justify-between items-start">
@@ -150,18 +150,18 @@ const Build = () => {
                                                         whileHover={{ rotate: 15, scale: 1.1 }}
                                                         transition={{ type: "spring", stiffness: 300 }}
                                                     >
-                                                        <img src={card.icon} alt={card.title} className="w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16" />
+                                                        <img src={card.icon} alt={card.title} className="w-16 h-16" />
                                                     </motion.div>
-                                                    <div className="text-6xl lg:text-7xl xl:text-8xl font-black opacity-10 text-black">
+                                                    <div className="text-8xl font-black opacity-10 text-black">
                                                         0{index + 1}
                                                     </div>
                                                 </div>
 
                                                 <div className={card.textColor}>
-                                                    <h2 className="text-3xl lg:text-4xl xl:text-5xl font-semibold mb-4 uppercase">
+                                                    <h2 className="text-5xl font-semibold mb-4 uppercase">
                                                         {card.title}
                                                     </h2>
-                                                    <p className="text-base lg:text-lg leading-relaxed opacity-90 mb-4 lg:mb-6">
+                                                    <p className="text-lg leading-relaxed opacity-90 mb-6">
                                                         {card.description}
                                                     </p>
                                                     <motion.button
@@ -195,8 +195,8 @@ const Build = () => {
                 </section>
             </div>
 
-            {/* MOBILE: Vertical Stack - Shows on screens below 1200px */}
-            <div className="laptop:hidden py-20 px-6">
+            {/* MOBILE: Vertical Stack */}
+            <div className="lg:hidden py-20 px-6">
                 <div className="max-w-4xl mx-auto">
                     <div className="md:text-center mb-16">
                         <div className="inline-block bg-red-600 text-white px-5 py-2.5 rounded-lg text-sm font-bold mb-6 -rotate-6">
