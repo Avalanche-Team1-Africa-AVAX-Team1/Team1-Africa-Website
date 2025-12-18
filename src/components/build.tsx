@@ -141,7 +141,7 @@ const Build = () => {
                                             transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
                                         >
                                             <div
-                                                className="h-fit xl:py-[20%] rounded-3xl p-10 flex flex-col justify-between shadow-2xl border-2 border-white/10"
+                                                className="h-fit xl:py-[20%] rounded-3xl p-10 flex flex-col gap-8 justify-between shadow-2xl border-2 border-white/10"
                                                 style={{ backgroundColor: card.color }}
                                             >
                                                 <div className="flex justify-between items-start">
