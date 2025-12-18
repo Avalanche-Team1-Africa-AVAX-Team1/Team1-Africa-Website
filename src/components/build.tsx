@@ -89,17 +89,18 @@ const Build = () => {
                         <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
                         <motion.div
                             initial={{ rotate: -12 }}
-                            className="inline-block bg-red-600 px-6 py-3 rounded-xl text-base font-bold mb-6 shadow-lg"
+                            className="inline-block bg-red-600 px-6 py-3 rounded-xl font-bold mb-6 shadow-lg"
+                            style={{ fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}
                         >
                             What we do
                         </motion.div>
-                        <h2 className="text-6xl font-black mb-4 tracking-tighter uppercase leading-none">
+                        <h2 className="font-black mb-4 tracking-tighter uppercase leading-none" style={{ fontSize: 'clamp(2.5rem, 4vw, 3.75rem)' }}>
                             Educate. <span className="text-red-500">Build.</span> Collaborate.
                         </h2>
-                        <h3 className="text-3xl font-bold text-red-500 mb-6">
+                        <h3 className="font-bold text-red-500 mb-6" style={{ fontSize: 'clamp(1.25rem, 2vw, 1.875rem)' }}>
                             On Avalanche. For Africa.
                         </h3>
-                        <p className="text-lg text-gray-300 mb-8 max-w-md leading-relaxed">
+                        <p className="text-gray-300 mb-8 max-w-md leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.2vw, 1.125rem)' }}>
                             Africa has the talent. We provide the resources. Through, hackathons, workshops, and global partnerships, we're connecting African innovators with everything they need to lead the blockchain revolution with Avalanche.
                         </p>
 
@@ -141,7 +142,7 @@ const Build = () => {
                                             transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
                                         >
                                             <div
-                                                className="rounded-3xl p-10 flex flex-col justify-between shadow-2xl border-2 border-white/10"
+                                                className="min-h-[55vh] py-10 px-10 rounded-3xl flex flex-col justify-between shadow-2xl border-2 border-white/10"
                                                 style={{ backgroundColor: card.color }}
                                             >
                                                 <div className="flex justify-between items-start">
@@ -152,25 +153,26 @@ const Build = () => {
                                                     >
                                                         <img src={card.icon} alt={card.title} className="w-16 h-16" />
                                                     </motion.div>
-                                                    <div className="text-8xl font-black opacity-10 text-black">
+                                                    <div className="font-black opacity-10 text-black" style={{ fontSize: 'clamp(3rem, 5vw, 6rem)' }}>
                                                         0{index + 1}
                                                     </div>
                                                 </div>
 
                                                 <div className={card.textColor}>
-                                                    <h2 className="text-5xl font-semibold mb-4 uppercase">
+                                                    <h2 className="font-semibold mb-4 uppercase" style={{ fontSize: 'clamp(1.75rem, 3vw, 3rem)' }}>
                                                         {card.title}
                                                     </h2>
-                                                    <p className="text-lg leading-relaxed opacity-90 mb-6">
+                                                    <p className="leading-relaxed opacity-90 mb-6" style={{ fontSize: 'clamp(0.875rem, 1.1vw, 1.125rem)' }}>
                                                         {card.description}
                                                     </p>
                                                     <motion.button
                                                         whileHover={{ scale: 1.05 }}
                                                         whileTap={{ scale: 0.95 }}
-                                                        className={`inline-flex items-center gap-3 font-bold text-base group w-fit px-6 py-3 border-2 rounded-full transition-all ${card.textColor === 'text-black'
+                                                        className={`inline-flex items-center gap-3 font-bold group w-fit px-6 py-3 border-2 rounded-full transition-all ${card.textColor === 'text-black'
                                                             ? 'border-black hover:bg-black hover:text-white'
                                                             : 'border-white hover:bg-white hover:text-black'
                                                             }`}
+                                                        style={{ fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}
                                                     >
                                                         Learn More
                                                         <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
