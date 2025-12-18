@@ -271,7 +271,7 @@ const LetsBuildSection = () => {
             <div className="hidden laptop:block">
                 <section ref={horizontalContainerRef} className="h-screen overflow-hidden bg-black text-white relative">
                     <div className="absolute top-12 lg:top-16 left-8 lg:left-12 z-20 hidden xl:block text-left">
-                        <div className="w-16 lg:w-20 h-1 bg-red-600 mb-4 ml-auto" />
+                        <div className="w-16 lg:w-20 h-1 bg-red-600 mb-4" />
                         <h2 className="font-black" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)' }}>How We Show Up</h2>
                     </div>
 
@@ -289,7 +289,7 @@ const LetsBuildSection = () => {
                                 </div>
 
                                 {/* RIGHT: Content */}
-                                <div className="w-[55%] lg:w-[55%] xl:w-1/2 h-full flex flex-col justify-center px-8 lg:px-12 xl:px-24 relative z-10">
+                                <div className="w-[55%] lg:w-[55%] xl:w-1/2 h-full flex flex-col justify-center px-8 lg:px-12 xl:px-24 relative z-10 pt-32 lg:pt-40">
 
                                     {/* Title */}
                                     <h3 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 lg:mb-6">{activity.title}</h3>
