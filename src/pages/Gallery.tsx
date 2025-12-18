@@ -474,7 +474,7 @@ function EventAlbumsSection() {
             <div className="max-w-7xl mx-auto">
                 {/* Section Header */}
                 <div className="mb-16">
-                    <h2 className="text-5xl md:text-7xl font-black tracking-tight text-white mb-4">
+                    <h2 className="text-3xl lt-768:text-3xl md:text-5xl lg:text-7xl font-black tracking-tight text-white mb-4">
                         Experience Avalanche Africa
                     </h2>
                     <p className="text-lg md:text-xl text-gray-400 max-w-2xl">
@@ -513,7 +513,7 @@ function EventAlbumsSection() {
 
                                 {/* Content */}
                                 <div className="p-8">
-                                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
+                                    <h3 className="text-xl lt-768:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4 tracking-tight">
                                         {album.title}
                                     </h3>
                                     <p className="text-gray-400 leading-relaxed mb-6">
@@ -667,7 +667,7 @@ function PolaroidGallerySection() {
                             className="w-full flex items-center justify-between text-left group relative z-10"
                         >
                             <div className="flex-1">
-                                <h3 className="text-3xl md:text-5xl font-black text-gray-900 mb-2 group-hover:text-red-500 transition-colors duration-300">
+                                <h3 className="text-2xl lt-768:text-2xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-2 group-hover:text-red-500 transition-colors duration-300">
                                     {event.title}
                                 </h3>
                                 {/* Only show description when expanded */}

@@ -85,7 +85,7 @@ const Build = () => {
             <div className="hidden lg:block">
                 <section ref={pinnedRef} className="h-screen bg-black text-white overflow-hidden flex items-center relative">
                     {/* Header - Top Left */}
-                    <div className="absolute left-12 z-20 max-w-xl">
+                    <div className="absolute left-8 lg:left-12 z-20 max-w-md lg:max-w-xl">
                         <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
                         <motion.div
                             initial={{ rotate: -12 }}
@@ -93,13 +93,13 @@ const Build = () => {
                         >
                             What we do
                         </motion.div>
-                        <h2 className="text-6xl font-black mb-4 tracking-tighter uppercase leading-none">
+                        <h2 className="text-4xl lg:text-5xl xl:text-6xl font-black mb-4 tracking-tighter uppercase leading-none">
                             Educate. <span className="text-red-500">Build.</span> Collaborate.
                         </h2>
-                        <h3 className="text-3xl font-bold text-red-500 mb-6">
+                        <h3 className="text-2xl lg:text-3xl font-bold text-red-500 mb-4 lg:mb-6">
                             On Avalanche. For Africa.
                         </h3>
-                        <p className="text-lg text-gray-300 mb-8 max-w-md leading-relaxed">
+                        <p className="text-base lg:text-lg text-gray-300 mb-6 lg:mb-8 max-w-sm lg:max-w-md leading-relaxed">
                             Africa has the talent. We provide the resources. Through, hackathons, workshops, and global partnerships, we're connecting African innovators with everything they need to lead the blockchain revolution with Avalanche.
                         </p>
 
@@ -158,10 +158,10 @@ const Build = () => {
                                                 </div>
 
                                                 <div className={card.textColor}>
-                                                    <h2 className="text-5xl font-semibold mb-4 uppercase">
+                                                    <h2 className="text-3xl lg:text-4xl xl:text-5xl font-semibold mb-4 uppercase">
                                                         {card.title}
                                                     </h2>
-                                                    <p className="text-lg leading-relaxed opacity-90 mb-6">
+                                                    <p className="text-base lg:text-lg leading-relaxed opacity-90 mb-4 lg:mb-6">
                                                         {card.description}
                                                     </p>
                                                     <motion.button

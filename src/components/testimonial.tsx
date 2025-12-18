@@ -459,7 +459,7 @@ export default function TestimonialSlider() {
           </div>
         </AnimatedText>
         <AnimatedText variant="slideUp" delay={0.2}>
-          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+          <h2 className="text-3xl lt-768:text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
             Straight from the source!!<br />
             <span className=""><span className="text-red-600">Avalanche</span> has impacted the <br /> world greastest <span className="text-red-600">innovators</span><br /> through <span className="text-red-600">Team1</span></span>
           </h2>

@@ -28,7 +28,7 @@ export default function Blog() {
               <span className="mb-3 inline-block rounded-full bg-red-500 px-2.5 py-1 text-xs font-semibold text-white">Blog</span>
             </AnimatedText>
             <AnimatedText variant="slideUp" delay={0.2}>
-              <h2 className="text-3xl font-bold text-gray-900">News To Keep You Updated Always</h2>
+              <h2 className="text-2xl lt-768:text-2xl md:text-3xl font-bold text-gray-900">News To Keep You Updated Always</h2>
             </AnimatedText>
             <AnimatedText variant="slideUp" delay={0.3}>
               <p className="mt-2 text-gray-600 max-w-3xl leading-relaxed">Join our community and stay informed about the latest campaigns, success stories, and blockchain innovations in fundraising.</p>

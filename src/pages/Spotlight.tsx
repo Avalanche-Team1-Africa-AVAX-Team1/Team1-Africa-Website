@@ -165,7 +165,7 @@ export default function Spotlight() {
                                             </span>
                                         </div>
 
-                                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6 leading-[0.9]">
+                                        <h1 className="text-4xl lt-768:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter mb-6 leading-[0.9]">
                                             {monthlySpotlights[current].title}
                                         </h1>
 

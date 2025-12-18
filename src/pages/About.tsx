@@ -143,13 +143,13 @@ const About = () => {
             <section className="py-12 md:py-20 bg-red-600 text-white overflow-hidden">
                 <div className="flex whitespace-nowrap animate-infinite-scroll">
                     {[...Array(4)].map((_, i) => (
-                        <div key={i} className="flex items-center gap-8 mx-8">
-                            <span className="text-6xl md:text-8xl font-black italic">BUILD</span>
-                            <span className="text-2xl md:text-4xl">★</span>
-                            <span className="text-6xl md:text-8xl font-black italic text-black">ON AVAX</span>
-                            <span className="text-2xl md:text-4xl">★</span>
-                            <span className="text-6xl md:text-8xl font-black italic">FROM AFRICA</span>
-                            <span className="text-2xl md:text-4xl">★</span>
+                        <div key={i} className="flex items-center gap-4 lt-768:gap-4 md:gap-8 mx-4 lt-768:mx-4 md:mx-8">
+                            <span className="text-4xl lt-768:text-4xl md:text-6xl lg:text-8xl font-black italic">BUILD</span>
+                            <span className="text-xl lt-768:text-xl md:text-2xl lg:text-4xl">★</span>
+                            <span className="text-4xl lt-768:text-4xl md:text-6xl lg:text-8xl font-black italic text-black">ON AVAX</span>
+                            <span className="text-xl lt-768:text-xl md:text-2xl lg:text-4xl">★</span>
+                            <span className="text-4xl lt-768:text-4xl md:text-6xl lg:text-8xl font-black italic">FROM AFRICA</span>
+                            <span className="text-xl lt-768:text-xl md:text-2xl lg:text-4xl">★</span>
                         </div>
                     ))}
                 </div>

@@ -17,17 +17,17 @@
   --color-grey-700: #404040;
   --color-grey-800: #262626;
   --color-grey-900: #171717;
-  
+
   /* Accent Colors */
   --color-red: #ef4444;
   --color-red-dark: #dc2626;
   --color-red-light: #fca5a5;
-  
+
   /* Semantic Colors */
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
-  
+
   /* Background Colors */
   --color-bg-light: #ffffff;
   --color-bg-dark: #000000;
@@ -36,19 +36,45 @@
 
 /* Custom Utility Classes - Based on your actual design */
 @layer components {
+
   /* Text Colors */
-  .text-primary { color: var(--color-black); }
-  .text-secondary { color: var(--color-grey-600); }
-  .text-muted { color: var(--color-grey-500); }
-  .text-light { color: var(--color-white); }
-  .text-accent { color: var(--color-red); }
-  
+  .text-primary {
+    color: var(--color-black);
+  }
+
+  .text-secondary {
+    color: var(--color-grey-600);
+  }
+
+  .text-muted {
+    color: var(--color-grey-500);
+  }
+
+  .text-light {
+    color: var(--color-white);
+  }
+
+  .text-accent {
+    color: var(--color-red);
+  }
+
   /* Background Colors */
-  .bg-primary { background-color: var(--color-white); }
-  .bg-secondary { background-color: var(--color-bg-grey); }
-  .bg-dark { background-color: var(--color-bg-dark); }
-  .bg-accent { background-color: var(--color-red); }
-  
+  .bg-primary {
+    background-color: var(--color-white);
+  }
+
+  .bg-secondary {
+    background-color: var(--color-bg-grey);
+  }
+
+  .bg-dark {
+    background-color: var(--color-bg-dark);
+  }
+
+  .bg-accent {
+    background-color: var(--color-red);
+  }
+
   /* Button Styles - Based on your CTA buttons */
   .btn-primary {
     background-color: var(--color-black);
@@ -58,12 +84,12 @@
     font-weight: 600;
     transition: all 0.2s ease;
   }
-  
+
   .btn-primary:hover {
     background-color: var(--color-grey-800);
     transform: translateY(-1px);
   }
-  
+
   .btn-secondary {
     background-color: var(--color-white);
     color: var(--color-black);
@@ -73,12 +99,12 @@
     border: 2px solid var(--color-black);
     transition: all 0.2s ease;
   }
-  
+
   .btn-secondary:hover {
     background-color: var(--color-black);
     color: var(--color-white);
   }
-  
+
   .btn-accent {
     background-color: var(--color-red);
     color: var(--color-white);
@@ -87,12 +113,12 @@
     font-weight: 600;
     transition: all 0.2s ease;
   }
-  
+
   .btn-accent:hover {
     background-color: var(--color-red-dark);
     transform: translateY(-1px);
   }
-  
+
   /* Card Styles - For your content cards */
   .card {
     background-color: var(--color-white);
@@ -101,91 +127,107 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
   }
-  
+
   .card:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
   }
-  
+
   .card-dark {
     background-color: var(--color-bg-dark);
     color: var(--color-white);
     border-radius: 0.5rem;
     padding: 1.5rem;
   }
-  
+
   /* Section Styles */
   .section-light {
     background-color: var(--color-bg-light);
     padding: 4rem 0;
   }
-  
+
   .section-dark {
     background-color: var(--color-bg-dark);
     color: var(--color-white);
     padding: 4rem 0;
   }
-  
+
   .section-grey {
     background-color: var(--color-bg-grey);
     padding: 4rem 0;
   }
-  
-  /* Typography - Based on your design */
+
+  /* Typography - Fluid scaling with clamp() for responsive design */
   .heading-hero {
-    font-size: 3.5rem;
+    /* Scales from 2rem (32px) at 320px to 3.5rem (56px) at 1280px */
+    font-size: clamp(2rem, 1.25rem + 3.75vw, 3.5rem);
     font-weight: 700;
     line-height: 1.1;
     color: var(--color-black);
   }
-  
+
   .heading-large {
-    font-size: 2.5rem;
+    /* Scales from 1.75rem (28px) at 320px to 2.5rem (40px) at 1280px */
+    font-size: clamp(1.75rem, 1.25rem + 2.5vw, 2.5rem);
     font-weight: 700;
     line-height: 1.2;
     color: var(--color-black);
   }
-  
+
   .heading-medium {
-    font-size: 1.875rem;
+    /* Scales from 1.5rem (24px) at 320px to 1.875rem (30px) at 1280px */
+    font-size: clamp(1.5rem, 1.25rem + 1.25vw, 1.875rem);
     font-weight: 600;
     line-height: 1.3;
     color: var(--color-black);
   }
-  
+
   .text-body {
-    font-size: 1.125rem;
+    /* Scales from 1rem (16px) at 320px to 1.125rem (18px) at 1280px */
+    font-size: clamp(1rem, 0.9375rem + 0.625vw, 1.125rem);
     line-height: 1.6;
     color: var(--color-grey-600);
   }
-  
+
   .text-caption {
-    font-size: 0.875rem;
+    /* Scales from 0.8125rem (13px) at 320px to 0.875rem (14px) at 1280px */
+    font-size: clamp(0.8125rem, 0.75rem + 0.3125vw, 0.875rem);
     line-height: 1.5;
     color: var(--color-grey-500);
   }
-  
+
   /* Navigation Styles */
   .nav-link {
     color: var(--color-grey-600);
     font-weight: 500;
     transition: color 0.2s ease;
   }
-  
+
   .nav-link:hover {
     color: var(--color-black);
   }
-  
+
   .nav-link.active {
     color: var(--color-red);
   }
-  
+
   /* Border Styles */
-  .border-light { border-color: var(--color-grey-200); }
-  .border-medium { border-color: var(--color-grey-300); }
-  .border-dark { border-color: var(--color-grey-400); }
-  .border-accent { border-color: var(--color-red); }
-  
+  .border-light {
+    border-color: var(--color-grey-200);
+  }
+
+  .border-medium {
+    border-color: var(--color-grey-300);
+  }
+
+  .border-dark {
+    border-color: var(--color-grey-400);
+  }
+
+  .border-accent {
+    border-color: var(--color-red);
+  }
+
   /* Focus States */
   .focus-ring:focus {
     outline: none;
@@ -201,6 +243,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -211,6 +254,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -224,31 +268,27 @@
   animation: scroll 20s linear infinite;
 }
 
+
 /* Responsive Design Helpers */
-@media (max-width: 768px) {
-  .heading-hero {
-    font-size: 2.5rem;
-  }
-  
-  .heading-large {
-    font-size: 2rem;
-  }
-  
-  .section-light,
-  .section-dark,
-  .section-grey {
-    padding: 2rem 0;
-  }
+/* Section padding now uses clamp() for fluid scaling */
+.section-light,
+.section-dark,
+.section-grey {
+  /* Scales from 2rem at 320px to 4rem at 1280px */
+  padding: clamp(2rem, 1rem + 5vw, 4rem) 0;
 }
 
 /* Hide scrollbar utility */
 .hide-scrollbar {
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important;
+  /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE and Edge */
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-  display: none !important; /* Chrome, Safari, Opera */
+  display: none !important;
+  /* Chrome, Safari, Opera */
   width: 0 !important;
   height: 0 !important;
   background: transparent !important;

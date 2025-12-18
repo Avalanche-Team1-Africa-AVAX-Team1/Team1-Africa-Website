@@ -162,7 +162,7 @@ export default function BlogIndex() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif mb-6 md:mb-8 group-hover:text-red-600 transition-colors leading-tight">
+            <h2 className="text-3xl lt-480:text-3xl md:text-5xl lg:text-7xl font-serif mb-6 md:mb-8 group-hover:text-red-600 transition-colors leading-tight">
               {featuredArticle.title}
             </h2>
             <div className="flex items-center gap-4 text-sm text-gray-600 mb-6 md:mb-8">
@@ -288,7 +288,7 @@ export default function BlogIndex() {
 
       {/* Builder Event Section */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        <div className="bg-gray-50 rounded-3xl p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="bg-gray-50 rounded-3xl p-6 md:p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div>
             <div className="flex items-center gap-3 mb-6">
               <span className="text-xs font-semibold text-gray-500 tracking-wider">{builderEvent.category}</span>
@@ -296,8 +296,8 @@ export default function BlogIndex() {
                 <span key={i} className="text-xs font-semibold text-gray-500 tracking-wider">• {theme}</span>
               ))}
             </div>
-            <h2 className="text-5xl font-serif mb-4">{builderEvent.title}</h2>
-            <p className="text-xl text-gray-600 mb-8">{builderEvent.subtitle}</p>
+            <h2 className="text-3xl lt-768:text-3xl md:text-4xl lg:text-5xl font-serif mb-4">{builderEvent.title}</h2>
+            <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">{builderEvent.subtitle}</p>
             <a
               href={builderEvent.link}
               className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors"
