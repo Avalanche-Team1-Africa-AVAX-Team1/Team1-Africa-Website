@@ -155,15 +155,15 @@ const LetsBuildSection = () => {
             {/* DESKTOP: Pinned Slideshow - Only shows on laptop+ (1200px+) */}
             <div className="hidden laptop:block">
                 <section ref={pinnedRef} className="h-screen bg-white text-black overflow-hidden flex flex-col justify-center relative">
-                    <div className="absolute top-12 left-0 w-full text-center z-20">
-                        <h2 className="text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight">The Builders We're Building For</h2>
-                        <div className="w-20 h-1 bg-black mx-auto mt-4" />
+                    <div className="absolute top-24 left-0 w-full text-center z-20">
+                        <div className="w-20 h-1 bg-black mx-auto mb-4" />
+                        <h2 className="font-black tracking-tight" style={{ fontSize: 'clamp(2rem, 4vw, 3.75rem)' }}>The Builders We're Building For</h2>
                     </div>
 
                     <div className="max-w-[95vw] mx-auto w-full grid grid-cols-2 gap-8 lg:gap-16 items-center mt-20">
                         {/* LEFT: Polaroid Stack */}
                         <div className="flex items-center justify-center h-full">
-                            <div className="relative w-full max-w-sm lg:max-w-md xl:max-w-lg h-[500px] lg:h-[600px]">
+                            <div className="relative w-full max-w-xs lg:max-w-sm h-[350px] lg:h-[450px]">
                                 <AnimatePresence mode="sync">
                                     {profiles.map((profile, index) => (
                                         <motion.div
@@ -180,11 +180,11 @@ const LetsBuildSection = () => {
                                             transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
                                         >
                                             <div className="bg-white p-4 lg:p-6 shadow-2xl h-full transform transition-transform">
-                                                <div className="relative h-[350px] lg:h-[480px] overflow-hidden">
+                                                <div className="relative h-[250px] lg:h-[350px] overflow-hidden">
                                                     <img src={profile.image} alt={profile.title} className="w-full h-full object-cover" />
                                                 </div>
                                                 <div className="pt-4 lg:pt-6 text-center">
-                                                    <p className="font-handwriting text-2xl lg:text-3xl text-gray-700">{profile.title.toLowerCase()}</p>
+                                                    <p className="font-handwriting text-gray-700" style={{ fontSize: 'clamp(1.25rem, 2vw, 1.875rem)' }}>{profile.title.toLowerCase()}</p>
                                                 </div>
                                             </div>
                                             {activeIndex === index && (
@@ -211,12 +211,13 @@ const LetsBuildSection = () => {
                                     transition={{ duration: 0.5, ease: "easeOut" }}
                                     className="absolute inset-0 flex flex-col justify-center"
                                 >
-                                    <h3 className="text-4xl lg:text-5xl xl:text-8xl font-black mb-4 lg:mb-6 xl:mb-8 tracking-tight">{profiles[activeIndex].title}</h3>
-                                    <p className="text-base lg:text-lg xl:text-2xl leading-relaxed text-gray-700 max-w-sm lg:max-w-lg xl:max-w-2xl mb-6 lg:mb-8 xl:mb-10">{profiles[activeIndex].description}</p>
+                                    <h3 className="font-black mb-4 lg:mb-6 xl:mb-8 tracking-tight" style={{ fontSize: 'clamp(2rem, 5vw, 6rem)' }}>{profiles[activeIndex].title}</h3>
+                                    <p className="leading-relaxed text-gray-700 max-w-sm lg:max-w-lg xl:max-w-2xl mb-6 lg:mb-8 xl:mb-10" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.5rem)' }}>{profiles[activeIndex].description}</p>
                                     <motion.button
                                         whileHover={{ scale: 1.05, x: 10 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="inline-flex items-center gap-3 text-black font-bold text-lg lg:text-xl group w-fit"
+                                        className="inline-flex items-center gap-3 text-black font-bold group w-fit"
+                                        style={{ fontSize: 'clamp(1rem, 1.3vw, 1.25rem)' }}
                                     >
                                         Learn More
                                         <svg className="w-6 h-6 lg:w-8 lg:h-8 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -269,9 +270,9 @@ const LetsBuildSection = () => {
             {/* WHAT WE DO SECTION - HORIZONTAL SCROLL (Desktop 1200px+) */}
             <div className="hidden laptop:block">
                 <section ref={horizontalContainerRef} className="h-screen overflow-hidden bg-black text-white relative">
-                    <div className="absolute top-8 lg:top-12 left-8 lg:left-12 z-20 hidden xl:block">
-                        <h2 className="text-4xl lg:text-5xl font-black">How We Show Up</h2>
-                        <div className="w-16 lg:w-20 h-1 bg-red-600 mt-4" />
+                    <div className="absolute top-12 lg:top-16 left-8 lg:left-12 z-20 hidden xl:block text-left">
+                        <div className="w-16 lg:w-20 h-1 bg-red-600 mb-4 ml-auto" />
+                        <h2 className="font-black" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)' }}>How We Show Up</h2>
                     </div>
 
                     <div ref={horizontalWrapperRef} className="flex h-full w-[300vw]">
@@ -294,7 +295,7 @@ const LetsBuildSection = () => {
                                     <h3 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 lg:mb-6">{activity.title}</h3>
 
                                     {/* Description */}
-                                    <p className="text-base lg:text-lg xl:text-xl text-gray-400 leading-relaxed max-w-md lg:max-w-xl xl:max-w-2xl mb-6 lg:mb-8 xl:mb-10">
+                                    <p className="text-gray-400 leading-relaxed max-w-md lg:max-w-xl xl:max-w-2xl mb-6 lg:mb-8 xl:mb-10" style={{ fontSize: 'clamp(0.875rem, 1.2vw, 1.25rem)' }}>
                                         {activity.description}
                                     </p>
 
