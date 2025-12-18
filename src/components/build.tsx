@@ -133,7 +133,7 @@ const Build = () => {
                                             className="absolute left-0 top-1/2 w-full"
                                             initial={false}
                                             animate={{
-                                                y: `calc(-50% + ${offset * 70}vh)`, // Reduced spacing between cards
+                                                y: `calc(-50% + ${offset * 80}vh)`, // Card spacing
                                                 scale: 1, // All cards same size
                                                 opacity: isActive ? 1 : 0.5,
                                                 zIndex: isActive ? 10 : 5 - Math.abs(offset),
@@ -141,7 +141,7 @@ const Build = () => {
                                             transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
                                         >
                                             <div
-                                                className="h-fit rounded-3xl p-10 flex flex-col justify-between shadow-2xl border-2 border-white/10"
+                                                className="rounded-3xl p-10 flex flex-col justify-between shadow-2xl border-2 border-white/10"
                                                 style={{ backgroundColor: card.color }}
                                             >
                                                 <div className="flex justify-between items-start">
@@ -196,25 +196,28 @@ const Build = () => {
             </div>
 
             {/* MOBILE: Vertical Stack */}
-            <div className="lg:hidden py-20 px-6">
-                <div className="max-w-4xl mx-auto">
+            <div className="lg:hidden py-20 px-6 bg-black text-white relative">
+                {/* Background Grid */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ff000008_1px,transparent_1px),linear-gradient(to_bottom,#ff000008_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
+
+                <div className="max-w-4xl mx-auto relative z-10">
                     <div className="md:text-center mb-16">
                         <div className="inline-block bg-red-600 text-white px-5 py-2.5 rounded-lg text-sm font-bold mb-6 -rotate-6">
                             What we do
                         </div>
                         <h2 className="text-5xl lt-768:text-4xl font-black mb-4 tracking-tighter uppercase leading-none">
-                            Build. Create. Educate.
+                            Educate. <span className="text-red-500">Build.</span> Collaborate.
                         </h2>
                         <h3 className="text-2xl lt-768:text-xl font-bold text-red-500 mb-6">
                             On Avalanche. For Africa.
                         </h3>
-                        <p className="text-lg lt-768:text-base text-gray-600 mb-8 max-w-2xl mx-auto">
-                            Africa isn't adopting blockchain—we're building it. Team1 Africa connects the continent's boldest innovators with workshops, developer grants, and global partnerships to lead the Web3 revolution.
+                        <p className="text-lg lt-768:text-base text-gray-300 mb-8 max-w-2xl mx-auto">
+                            Africa has the talent. We provide the resources. Through, hackathons, workshops, and global partnerships, we're connecting African innovators with everything they need to lead the blockchain revolution with Avalanche.
                         </p>
 
-                        <MagneticButton className="group bg-black text-white px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-gray-800 transition-colors cursor-pointer md:mx-auto w-fit">
+                        <MagneticButton className="group bg-white text-black px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-black hover:text-white transition-colors cursor-pointer md:mx-auto w-fit">
                             <span>Start Building</span>
-                            <img src={arrowup} width={20} height={20} />
+                            <img src={arrowup} width={20} height={20} className="bg-black hover:bg-white" />
                         </MagneticButton>
                     </div>
 
@@ -222,7 +225,7 @@ const Build = () => {
                         {cards.map((card, i) => (
                             <AnimatedItem key={i}>
                                 <div
-                                    className="rounded-2xl p-8 flex flex-col gap-6 border-2 border-gray-200"
+                                    className="rounded-2xl p-8 flex flex-col gap-6"
                                     style={{ backgroundColor: card.color }}
                                 >
                                     <div className="flex justify-between items-start">
