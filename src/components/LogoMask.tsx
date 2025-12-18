@@ -12,7 +12,7 @@ interface LogoMaskProps {
  * The logo is displayed as an outline only (no fill) so video plays inside.
  */
 export const LogoMask: React.FC<LogoMaskProps> = ({
-    className = "w-[70vw] h-[50vh] lt-1024:w-[70vw] lt-1024:h-[50vh] md:w-[55vw] md:h-[50vh] lg:w-[45vw] lg:h-[45vh] max-w-[900px] max-h-[900px]"
+    className = "w-[70vw] h-[50vh] lt-1024:w-[60vw] lt-1024:h-[45vh] md:w-[50vw] md:h-[45vh] lg:w-[38vw] lg:h-[40vh] xl:w-[45vw] xl:h-[45vh] max-w-[700px] lg:max-w-[550px] xl:max-w-[900px] max-h-[900px]"
 }) => {
     return (
         <div
@@ -68,7 +68,7 @@ export const LogoMask: React.FC<LogoMaskProps> = ({
  * Creates the outline stroke layer on top using inline SVG with stroke only.
  */
 export const LogoOutline: React.FC<LogoMaskProps> = ({
-    className = "w-[70vw] h-[50vh] lt-1024:w-[70vw] lt-1024:h-[50vh] md:w-[55vw] md:h-[50vh] lg:w-[45vw] lg:h-[45vh] max-w-[900px] max-h-[900px]"
+    className = "w-[70vw] h-[50vh] lt-1024:w-[60vw] lt-1024:h-[45vh] md:w-[50vw] md:h-[45vh] lg:w-[38vw] lg:h-[40vh] xl:w-[45vw] xl:h-[45vh] max-w-[700px] lg:max-w-[550px] xl:max-w-[900px] max-h-[900px]"
 }) => {
     return (
         <div
