@@ -84,8 +84,8 @@ const Build = () => {
             {/* DESKTOP: Pinned Scroll-Lock Section */}
             <div className="hidden lg:block">
                 <section ref={pinnedRef} className="h-screen bg-black text-white overflow-hidden flex items-center relative">
-                    {/* Header - Top Left */}
-                    <div className="absolute left-8 lg:left-12 z-20 max-w-md lg:max-w-xl">
+                    {/* Header - Top Left - Limited to 40% width to prevent card overlap */}
+                    <div className="absolute left-8 lg:left-12 z-20 w-[38%] lg:w-[40%] max-w-md xl:max-w-xl">
                         <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
                         <motion.div
                             initial={{ rotate: -12 }}
@@ -120,8 +120,8 @@ const Build = () => {
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#ff000008_1px,transparent_1px),linear-gradient(to_bottom,#ff000008_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
 
                     {/* Right Side: Vertically Stacked Cards with Peek */}
-                    <div className="absolute right-0 top-0 h-full w-1/2 flex items-center justify-center overflow-hidden">
-                        <div className="relative w-full max-w-xl h-full flex items-center">
+                    <div className="absolute right-0 top-0 h-full w-[55%] lg:w-[55%] xl:w-1/2 flex items-center justify-center overflow-hidden">
+                        <div className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl h-full flex items-center">
                             <AnimatePresence mode="sync">
                                 {cards.map((card, index) => {
                                     const offset = index - activeIndex
@@ -141,7 +141,7 @@ const Build = () => {
                                             transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
                                         >
                                             <div
-                                                className="h-[60vh] rounded-3xl p-10 flex flex-col justify-between shadow-2xl border-2 border-white/10"
+                                                className="h-[55vh] lg:h-[55vh] xl:h-[60vh] rounded-2xl lg:rounded-3xl p-6 lg:p-8 xl:p-10 flex flex-col justify-between shadow-2xl border-2 border-white/10"
                                                 style={{ backgroundColor: card.color }}
                                             >
                                                 <div className="flex justify-between items-start">
@@ -150,9 +150,9 @@ const Build = () => {
                                                         whileHover={{ rotate: 15, scale: 1.1 }}
                                                         transition={{ type: "spring", stiffness: 300 }}
                                                     >
-                                                        <img src={card.icon} alt={card.title} className="w-16 h-16" />
+                                                        <img src={card.icon} alt={card.title} className="w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16" />
                                                     </motion.div>
-                                                    <div className="text-8xl font-black opacity-10 text-black">
+                                                    <div className="text-6xl lg:text-7xl xl:text-8xl font-black opacity-10 text-black">
                                                         0{index + 1}
                                                     </div>
                                                 </div>

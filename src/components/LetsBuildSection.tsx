@@ -201,7 +201,7 @@ const LetsBuildSection = () => {
                         </div>
 
                         {/* RIGHT: Content Slideshow */}
-                        <div className="relative h-[400px] lg:h-[500px] flex items-center pr-12">
+                        <div className="relative h-[400px] lg:h-[450px] xl:h-[500px] flex items-center pr-6 lg:pr-8 xl:pr-12">
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={activeIndex}
@@ -211,8 +211,8 @@ const LetsBuildSection = () => {
                                     transition={{ duration: 0.5, ease: "easeOut" }}
                                     className="absolute inset-0 flex flex-col justify-center"
                                 >
-                                    <h3 className="text-5xl lg:text-6xl xl:text-8xl font-black mb-6 lg:mb-8 tracking-tight">{profiles[activeIndex].title}</h3>
-                                    <p className="text-lg lg:text-xl xl:text-2xl leading-relaxed text-gray-700 max-w-xl xl:max-w-2xl mb-8 lg:mb-10">{profiles[activeIndex].description}</p>
+                                    <h3 className="text-4xl lg:text-5xl xl:text-8xl font-black mb-4 lg:mb-6 xl:mb-8 tracking-tight">{profiles[activeIndex].title}</h3>
+                                    <p className="text-base lg:text-lg xl:text-2xl leading-relaxed text-gray-700 max-w-sm lg:max-w-lg xl:max-w-2xl mb-6 lg:mb-8 xl:mb-10">{profiles[activeIndex].description}</p>
                                     <motion.button
                                         whileHover={{ scale: 1.05, x: 10 }}
                                         whileTap={{ scale: 0.95 }}
@@ -269,7 +269,7 @@ const LetsBuildSection = () => {
             {/* WHAT WE DO SECTION - HORIZONTAL SCROLL (Desktop) */}
             <div className="hidden lg:block">
                 <section ref={horizontalContainerRef} className="h-screen overflow-hidden bg-black text-white relative">
-                    <div className="absolute top-8 lg:top-12 left-8 lg:left-12 z-20">
+                    <div className="absolute top-8 lg:top-12 left-8 lg:left-12 z-20 hidden xl:block">
                         <h2 className="text-4xl lg:text-5xl font-black">How We Show Up</h2>
                         <div className="w-16 lg:w-20 h-1 bg-red-600 mt-4" />
                     </div>
@@ -278,7 +278,7 @@ const LetsBuildSection = () => {
                         {activities.map((activity, index) => (
                             <div key={index} className="w-screen h-full flex horizontal-item relative overflow-hidden bg-black">
                                 {/* LEFT: Full Image */}
-                                <div className="w-1/2 h-full relative">
+                                <div className="w-[45%] lg:w-[45%] xl:w-1/2 h-full relative">
                                     <img
                                         src={activity.mainImage}
                                         alt={activity.title}
@@ -288,19 +288,19 @@ const LetsBuildSection = () => {
                                 </div>
 
                                 {/* RIGHT: Content */}
-                                <div className="w-1/2 h-full flex flex-col justify-center px-12 lg:px-24 relative z-10">
+                                <div className="w-[55%] lg:w-[55%] xl:w-1/2 h-full flex flex-col justify-center px-8 lg:px-12 xl:px-24 relative z-10">
 
                                     {/* Title */}
-                                    <h3 className="text-5xl lg:text-6xl font-bold mb-6">{activity.title}</h3>
+                                    <h3 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 lg:mb-6">{activity.title}</h3>
 
                                     {/* Description */}
-                                    <p className="text-lg lg:text-xl text-gray-400 leading-relaxed max-w-xl lg:max-w-2xl mb-8 lg:mb-10">
+                                    <p className="text-base lg:text-lg xl:text-xl text-gray-400 leading-relaxed max-w-md lg:max-w-xl xl:max-w-2xl mb-6 lg:mb-8 xl:mb-10">
                                         {activity.description}
                                     </p>
 
                                     {/* Video Preview (Large) */}
                                     <div
-                                        className="w-full max-w-xl lg:max-w-2xl aspect-video rounded-xl overflow-hidden cursor-pointer group border border-white/20 hover:border-red-600 transition-colors duration-300 mb-8 lg:mb-10 relative"
+                                        className="w-full max-w-md lg:max-w-xl xl:max-w-2xl aspect-video rounded-xl overflow-hidden cursor-pointer group border border-white/20 hover:border-red-600 transition-colors duration-300 mb-6 lg:mb-8 xl:mb-10 relative"
                                         onClick={() => setVideoOpen(true)}
                                     >
                                         <img src={activity.thumbnail} alt="Video Thumbnail" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />

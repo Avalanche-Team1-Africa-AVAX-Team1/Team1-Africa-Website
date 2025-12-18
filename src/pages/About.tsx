@@ -53,12 +53,12 @@ const About = () => {
             </section>
 
             {/* Manifesto / Mission */}
-            <section className="py-20 md:py-32 px-6 md:px-20 bg-white text-black relative z-10 rounded-t-[2rem] md:rounded-t-[3rem] -mt-10">
+            <section className="py-20 md:py-32 px-6 md:px-12 lg:px-20 bg-white text-black relative z-10 rounded-t-[2rem] md:rounded-t-[3rem] -mt-10">
                 <div className="max-w-[90vw] mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-12 xl:gap-24 items-start">
                         <div className="lg:sticky lg:top-32">
                             <AnimatedText variant="slideUp" delay={0.2}>
-                                <h2 className="text-[10vw] lg:text-[5vw] tracking-wide mb-8 leading-[0.9]" data-cursor="Our Mission" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                <h2 className="text-[10vw] lg:text-[4.5vw] xl:text-[5vw] tracking-wide mb-6 lg:mb-8 leading-[0.9]" data-cursor="Our Mission" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                                     TEAM<span className="text-red-600">1</span> <br />
                                     AFRICA'S <br />
                                     <span className="text-red-600">COMMUNITY</span>
