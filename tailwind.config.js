@@ -13,11 +13,13 @@ export default {
         'lt-1280': { 'max': '1279px' }, // Small laptop / tablet landscape
         'lt-1200': { 'max': '1199px' }, // Tablet landscape / small screens
         'lt-1024': { 'max': '1023px' }, // Tablet and below
+        'lt-900': { 'max': '899px' },   // Between md and lg
         'lt-768': { 'max': '767px' },   // Large phone and below
         'lt-480': { 'max': '479px' },   // Small phone
-        'ultrawide': '1600px',          // Ultrawide monitors
+        'tablet': '900px',              // Tablet screens (900px+) - bridges md to lg gap
         'laptop': '1200px',             // Laptop screens (1200px+)
         'desktop': '1440px',            // Desktop screens (1440px+)
+        'ultrawide': '1600px',          // Ultrawide monitors
       },
       // Max width constraint for centered content on ultrawide screens
       maxWidth: {
