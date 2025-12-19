@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import Footer from '../components/footer';
+
 import TeamGrid from '../components/TeamGrid';
 import LetsBuildSection from '../components/LetsBuildSection';
 import { team1AfricaMembers } from '../data/team-members';
@@ -164,7 +164,7 @@ const About = () => {
             {/* Let's Build */}
             <LetsBuildSection />
 
-            <Footer />
+
         </div>
     );
 };

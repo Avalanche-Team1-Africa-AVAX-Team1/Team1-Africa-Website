@@ -2,7 +2,6 @@ import { useState, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FaGamepad, FaUniversity, FaCode } from 'react-icons/fa';
 import { FaPlay } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
 
@@ -10,7 +9,6 @@ import { IoClose } from 'react-icons/io5';
 import community1 from '../assets/community.webp';
 import ghana1 from '../assets/ghana1.JPG';
 import south1 from '../assets/south1.webp';
-import south2 from '../assets/south2.webp';
 
 // Import video
 import mainVideo from '../assets/videos/video.mp4';
@@ -24,53 +22,55 @@ const LetsBuildSection = () => {
 
     const activities = [
         {
-            icon: FaGamepad,
             title: "Gamified Learning",
             description: "Interactive Web3 education through challenges, quests, and rewards that make blockchain development engaging and accessible.",
-            image: community1,
-            achievements: ["500+ developers trained", "12 learning paths", "NFT badges"]
+            mainImage: community1,
+            thumbnail: community1,
+            cta: "Start Learning"
         },
         {
-            icon: FaUniversity,
             title: "University Programs",
             description: "Partnering with African universities to integrate Avalanche development into computer science curricula.",
-            image: ghana1,
-            achievements: ["15 partner universities", "1000+ students", "Research grants"]
+            mainImage: ghana1,
+            thumbnail: ghana1,
+            cta: "Partner With Us"
         },
         {
-            icon: FaCode,
             title: "Hackathons & Bootcamps",
             description: "Intensive building experiences where ideas transform into production-ready dApps on Avalanche.",
-            image: south1,
-            achievements: ["24 hackathons", "300+ projects", "$500K in prizes"]
+            mainImage: south1,
+            thumbnail: south1,
+            cta: "Build With Us"
         }
     ];
 
-    // GSAP Horizontal Scroll for "How We Show Up"
+    // GSAP Horizontal Scroll
     useLayoutEffect(() => {
         const element = horizontalContainerRef.current;
         const wrapper = horizontalWrapperRef.current;
         if (!element || !wrapper) return;
 
-        const items = gsap.utils.toArray('.horizontal-item');
-        const totalWidth = items.length * window.innerWidth;
+        // Calculate scroll distance dynamically based on content width
+        const totalWidth = wrapper.scrollWidth;
+        const scrollDistance = totalWidth - window.innerWidth;
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: element,
                 pin: true,
                 scrub: 1,
-                end: `+=${totalWidth}`,
+                end: () => `+=${scrollDistance}`,
                 invalidateOnRefresh: true,
             }
         });
 
         tl.to(wrapper, {
-            x: () => -(totalWidth - window.innerWidth),
+            x: () => -scrollDistance,
             ease: 'none',
         });
 
         return () => {
+            tl.scrollTrigger?.kill();
             tl.kill();
         };
     }, []);
@@ -114,64 +114,60 @@ const LetsBuildSection = () => {
             {/* WHAT WE DO SECTION - HORIZONTAL SCROLL (Desktop 1200px+) */}
             <div className="hidden laptop:block">
                 <section ref={horizontalContainerRef} className="h-screen overflow-hidden bg-white text-black relative">
-                    <div ref={horizontalWrapperRef} className="flex h-full will-change-transform">
+                    <div className="absolute top-12 lg:top-16 left-8 lg:left-12 z-20 hidden xl:block text-left">
+                        <div className="w-16 lg:w-20 h-1 bg-red-600 mb-4" />
+                        <h2 className="font-black" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)' }}>How We Show Up</h2>
+                    </div>
+
+                    {/* Wrapper with gap and padding for significant peek effect */}
+                    <div ref={horizontalWrapperRef} className="flex h-full w-max gap-12 px-12 items-center">
                         {activities.map((activity, index) => (
-                            <div key={index} className="w-screen h-full flex items-center justify-center horizontal-item p-4">
+                            <div key={index} className="w-[65vw] h-full flex items-center justify-center horizontal-item flex-shrink-0">
                                 {/* CARD CONTAINER - Black Card on White Background */}
-                                <div className="w-full max-w-[1400px] h-[75vh] min-h-[600px] bg-black text-white rounded-[3rem] overflow-hidden flex relative shadow-2xl">
-                                    {/* Left: Image */}
+                                <div className="w-full h-[65vh] min-h-[500px] bg-black text-white rounded-[3rem] overflow-hidden flex relative shadow-2xl">
+                                    {/* Left: Image (45%) */}
                                     <div className="w-[45%] h-full relative border-r border-white/5">
                                         <img
-                                            src={activity.image}
+                                            src={activity.mainImage}
                                             alt={activity.title}
-                                            className="w-full h-full object-cover opacity-90"
+                                            className="w-full h-full object-cover opacity-60"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/40" />
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-black/80" />
                                     </div>
 
-                                    {/* Right: Content */}
-                                    <div className="w-[55%] h-full p-12 flex flex-col justify-between relative overflow-hidden">
-                                        {/* Decorative Background Elements */}
-                                        <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl" />
-                                        <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl" />
+                                    {/* Right: Content (55%) */}
+                                    <div className="w-[55%] h-full flex flex-col justify-center px-8 lg:px-12 xl:px-16 relative z-10 bg-black">
+                                        {/* Title */}
+                                        <h3 className="text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">{activity.title}</h3>
 
-                                        <div className="relative z-10">
-                                            {/* Icon */}
-                                            <div className="mb-8">
-                                                <activity.icon className="w-16 h-16 text-red-500" />
+                                        {/* Description */}
+                                        <p className="text-gray-400 leading-relaxed max-w-xl mb-6 text-base xl:text-lg">
+                                            {activity.description}
+                                        </p>
+
+                                        {/* Video Preview */}
+                                        <div
+                                            className="w-full max-w-md aspect-video rounded-xl overflow-hidden cursor-pointer group border border-white/20 hover:border-red-600 transition-colors duration-300 mb-8 relative"
+                                            onClick={() => setVideoOpen(true)}
+                                        >
+                                            <img src={activity.thumbnail} alt="Video Thumbnail" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                                <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center pl-1 group-hover:scale-110 transition-transform shadow-lg">
+                                                    <FaPlay className="text-white text-lg" />
+                                                </div>
                                             </div>
-
-                                            {/* Title */}
-                                            <h3 className="text-5xl font-black mb-6 leading-tight tracking-tight">
-                                                {activity.title}
-                                            </h3>
-
-                                            {/* Description */}
-                                            <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                                                {activity.description}
-                                            </p>
-
-                                            {/* Achievements */}
-                                            <div className="space-y-4">
-                                                {activity.achievements.map((achievement, i) => (
-                                                    <div key={i} className="flex items-center gap-3">
-                                                        <span className="w-2 h-2 bg-red-500 rounded-full" />
-                                                        <span className="text-gray-400 font-medium">{achievement}</span>
-                                                    </div>
-                                                ))}
+                                            <div className="absolute bottom-4 left-4">
+                                                <p className="text-white font-bold text-[10px] uppercase tracking-wider">Watch Highlights</p>
                                             </div>
                                         </div>
 
-                                        {/* Bottom: CTA */}
-                                        <div className="relative z-10">
-                                            <button
-                                                onClick={() => setVideoOpen(true)}
-                                                className="group flex items-center gap-4 bg-red-500 hover:bg-red-600 text-white px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105"
-                                            >
-                                                <FaPlay className="w-5 h-5" />
-                                                <span className="font-bold text-lg">Watch Our Impact</span>
-                                            </button>
-                                        </div>
+                                        {/* CTA */}
+                                        <button className="px-8 py-3 bg-white text-black font-bold text-base xl:text-lg rounded-full hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center gap-3 group w-fit">
+                                            {activity.cta}
+                                            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -183,6 +179,10 @@ const LetsBuildSection = () => {
             {/* MOBILE & TABLET VERSION (Below 1200px) */}
             <div className="laptop:hidden bg-white py-16 px-6">
                 <div className="max-w-4xl mx-auto space-y-12">
+                    <div className="text-left mb-12">
+                        <div className="w-16 h-1 bg-red-600 mb-4" />
+                        <h2 className="text-4xl font-black text-black">How We Show Up</h2>
+                    </div>
                     {activities.map((activity, index) => (
                         <motion.div
                             key={index}
@@ -195,7 +195,7 @@ const LetsBuildSection = () => {
                             {/* Image */}
                             <div className="relative h-64">
                                 <img
-                                    src={activity.image}
+                                    src={activity.mainImage}
                                     alt={activity.title}
                                     className="w-full h-full object-cover opacity-90"
                                 />
@@ -204,9 +204,6 @@ const LetsBuildSection = () => {
 
                             {/* Content */}
                             <div className="p-8">
-                                {/* Icon */}
-                                <activity.icon className="w-12 h-12 text-red-500 mb-6" />
-
                                 {/* Title */}
                                 <h3 className="text-3xl font-black mb-4 leading-tight">
                                     {activity.title}
@@ -217,23 +214,18 @@ const LetsBuildSection = () => {
                                     {activity.description}
                                 </p>
 
-                                {/* Achievements */}
-                                <div className="space-y-3 mb-6">
-                                    {activity.achievements.map((achievement, i) => (
-                                        <div key={i} className="flex items-center gap-3">
-                                            <span className="w-2 h-2 bg-red-500 rounded-full" />
-                                            <span className="text-gray-400 text-sm">{achievement}</span>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                {/* CTA */}
+                                {/* Video Button */}
                                 <button
                                     onClick={() => setVideoOpen(true)}
-                                    className="flex items-center gap-3 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-full transition-colors"
+                                    className="flex items-center gap-3 text-red-500 hover:text-white font-bold mb-6 transition-colors"
                                 >
                                     <FaPlay className="w-4 h-4" />
-                                    <span className="font-bold">Watch Impact Video</span>
+                                    <span>Watch Highlights</span>
+                                </button>
+
+                                {/* CTA */}
+                                <button className="w-full bg-white text-black font-bold py-4 rounded-full hover:bg-red-600 hover:text-white transition-all duration-300">
+                                    {activity.cta}
                                 </button>
                             </div>
                         </motion.div>
