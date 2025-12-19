@@ -8,7 +8,7 @@ import Build from './components/build'
 import Gallery from './components/gallery'
 import TestimonialSlider from './components/testimonial'
 // import Events from './components/events'
-import Footer from './components/footer'
+
 import Games from './components/games'
 import Blog from './components/blog'
 // import Join from './components/join'
@@ -53,7 +53,7 @@ function App() {
 
       {/* Join and Footer - full-width */}
       {/* <Join /> */}
-      <Footer />
+
     </>
   )
 }

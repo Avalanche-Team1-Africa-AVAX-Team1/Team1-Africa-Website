@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import type { Event } from '../types/event';
 import { getEventsForDate } from '../data/events';
 import EventDetailPanel from './EventDetailPanel';
-import Footer from './footer';
+
 
 interface EventCalendarProps {
   initialDate?: Date;
@@ -553,7 +553,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
       </div>
 
       {/* Footer */}
-      <Footer />
+
     </div>
   );
 };

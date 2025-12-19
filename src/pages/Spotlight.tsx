@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Footer from '../components/footer';
+
 
 // Sample data - replace with real data
 const monthlySpotlights = [
@@ -253,7 +253,7 @@ export default function Spotlight() {
                 )}
             </section>
 
-            <Footer />
+
         </div>
     );
 }

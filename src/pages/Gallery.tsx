@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import Footer from '../components/footer';
+
 
 // --- ASSET IMPORTS ---
 import event1 from '../assets/event1-img.webp';
@@ -307,7 +307,7 @@ export default function Gallery() {
                 <PolaroidGallerySection />
 
                 {/* Footer */}
-                <Footer />
+
             </div>
         );
     }
@@ -328,7 +328,7 @@ export default function Gallery() {
             <PolaroidGallerySection />
 
             {/* Footer */}
-            <Footer />
+
         </div>
     );
 }

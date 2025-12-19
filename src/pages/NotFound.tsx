@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Navbar from '../components/navbar'
-import Footer from '../components/footer'
+
 
 export default function NotFound() {
   const navigate = useNavigate()
@@ -23,10 +22,7 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      {/* Navbar */}
-      <div className="mx-auto w-full max-w-site-nav px-2 md:px-8">
-        <Navbar />
-      </div>
+
 
       {/* 404 Content */}
       <main className="flex-1 grid place-items-center px-4 py-16 relative overflow-hidden">
@@ -110,7 +106,7 @@ export default function NotFound() {
         </div>
       </main>
 
-      <Footer />
+
     </div>
   )
 }

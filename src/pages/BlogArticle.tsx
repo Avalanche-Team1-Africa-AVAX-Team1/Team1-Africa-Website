@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import type { Article } from '../types/blog'
 import { findArticleBySlug, getRelatedArticles } from '../data/articles'
 import { setPageSeo } from '../lib/seo'
-import Footer from '../components/footer'
+
 
 function formatDate(value: string | Date) {
   const d = new Date(value)
@@ -116,7 +116,7 @@ export default function BlogArticle() {
           <p className="text-gray-600 text-xl mb-6">{error ?? 'Something went wrong.'}</p>
           <Link className="inline-block rounded-full bg-gradient-to-r from-red-500 to-red-600 px-6 py-3 text-white font-bold hover:shadow-lg transition-all" to="/blog">← Back to Blog</Link>
         </main>
-        <Footer />
+
       </div>
     )
   }
@@ -188,7 +188,7 @@ export default function BlogArticle() {
           </section>
         </div>
       </article>
-      <Footer />
+
     </div>
   )
 }
