@@ -1,11 +1,11 @@
-import avax from '../assets/avax.png'
-import gitcoin from '../assets/gitcoin.png'
-import onlydust from '../assets/onlydust.png'
-import polygonio from '../assets/polygonio.png'
-import refi from '../assets/refi.png'
-import spherre from '../assets/spherre.png'
-import squads from '../assets/sqauds.png'
-import web3bridge from '../assets/web3bridge.png'
+import team1logo from '../assets/team1logo.png'
+import avacloud from '../assets/avacloud.png'
+import arena from '../assets/arena_logo.png'
+import maplestory from '../assets/maplestory.png'
+import blaze from '../assets/blaze_logo.png'
+import core from '../assets/core.webp'
+import salvor from '../assets/salvor.png'
+import ket from '../assets/ket 2.png'
 import AnimatedText from './AnimatedText'
 import AnimatedSection, { AnimatedItem } from './AnimatedSection'
 
@@ -42,26 +42,26 @@ const Partners = () => {
                         {/* Row 1 */}
                         <AnimatedItem>
                             <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-red-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-red-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-red-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-red-600 md:group-hover:font-semibold'>Avalanche Foundation</p>
-                                <img src={avax} alt="avalanche" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                                <p className='text-sm text-center transition-colors duration-300 text-red-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-red-600 md:group-hover:font-semibold'>Team1</p>
+                                <img src={team1logo} alt="Team1" loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                             </div>
                         </AnimatedItem>
                         <AnimatedItem>
                             <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-blue-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-blue-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-blue-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-blue-600 md:group-hover:font-semibold'>Gitcoin Africa</p>
-                                <img src={gitcoin} alt="gitcoin" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                                <p className='text-sm text-center transition-colors duration-300 text-blue-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-blue-600 md:group-hover:font-semibold'>AvaCloud</p>
+                                <img src={avacloud} alt="AvaCloud" loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                             </div>
                         </AnimatedItem>
                         <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-green-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-green-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-green-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-green-600 md:group-hover:font-semibold'>Web3Bridge</p>
-                                <img src={web3bridge} alt="web3bridge" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-orange-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-orange-50 md:hover:shadow-lg group h-full w-full'>
+                                <p className='text-sm text-center transition-colors duration-300 text-orange-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-orange-600 md:group-hover:font-semibold'>The Arena</p>
+                                <img src={arena} alt="The Arena" loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                             </div>
                         </AnimatedItem>
                         <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 cursor-pointer transition-all duration-300 bg-purple-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-purple-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-purple-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-purple-600 md:group-hover:font-semibold'>ReFiDAO</p>
-                                <img src={refi} alt="refi" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 cursor-pointer transition-all duration-300 bg-green-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-green-50 md:hover:shadow-lg group h-full w-full'>
+                                <p className='text-sm text-center transition-colors duration-300 text-green-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-green-600 md:group-hover:font-semibold'>Maplestory</p>
+                                <img src={maplestory} alt="Maplestory" loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                             </div>
                         </AnimatedItem>
 
@@ -70,27 +70,27 @@ const Partners = () => {
 
                         {/* Row 2 */}
                         <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-orange-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-orange-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-orange-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-orange-600 md:group-hover:font-semibold'>Polygon Guild Accra</p>
-                                <img src={polygonio} alt="polygonio" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-yellow-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-yellow-50 md:hover:shadow-lg group h-full w-full'>
+                                <p className='text-sm text-center transition-colors duration-300 text-yellow-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-yellow-600 md:group-hover:font-semibold'>Blaze</p>
+                                <img src={blaze} alt="Blaze" loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                             </div>
                         </AnimatedItem>
                         <AnimatedItem>
                             <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-indigo-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-indigo-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-indigo-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-indigo-600 md:group-hover:font-semibold'>Only Dust</p>
-                                <img src={onlydust} alt="onlydust" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                                <p className='text-sm text-center transition-colors duration-300 text-indigo-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-indigo-600 md:group-hover:font-semibold'>Core App</p>
+                                <img src={core} alt="Core App" loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                             </div>
                         </AnimatedItem>
                         <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-pink-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-pink-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-pink-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-pink-600 md:group-hover:font-semibold'>Sqauds</p>
-                                <img src={squads} alt="squads" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-purple-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-purple-50 md:hover:shadow-lg group h-full w-full'>
+                                <p className='text-sm text-center transition-colors duration-300 text-purple-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-purple-600 md:group-hover:font-semibold'>Salvor</p>
+                                <img src={salvor} alt="Salvor" loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                             </div>
                         </AnimatedItem>
                         <AnimatedItem>
                             <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 cursor-pointer transition-all duration-300 bg-teal-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-teal-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-teal-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-teal-600 md:group-hover:font-semibold'>Spherre</p>
-                                <img src={spherre} alt="spherre" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                                <p className='text-sm text-center transition-colors duration-300 text-teal-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-teal-600 md:group-hover:font-semibold'>Ket</p>
+                                <img src={ket} alt="Ket" loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
                             </div>
                         </AnimatedItem>
                     </div>
