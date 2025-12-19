@@ -40,7 +40,7 @@ const VerticalFlagCarousel = () => {
                 <motion.div
                     key={`prev-${currentIndex}`}
                     initial={{ opacity: 0, y: -50, scale: 0.7 }}
-                    animate={{ opacity: 0.3, y: 0, scale: 0.75 }}
+                    animate={{ opacity: 1, y: 0, scale: 0.75 }}
                     transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
                     className="relative"
                 >
@@ -50,7 +50,7 @@ const VerticalFlagCarousel = () => {
                             alt={prevCountry.name}
                             className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
                     </div>
                 </motion.div>
 
@@ -77,7 +77,7 @@ const VerticalFlagCarousel = () => {
                         transition={{ delay: 0.3, duration: 0.4 }}
                         className="mt-4 md:mt-5 lg:mt-6 text-center"
                     >
-                        <h3 className="text-xl md:text-2xl lg:text-4xl font-bold text-white tracking-tight">
+                        <h3 className="text-xl md:text-2xl lg:text-4xl font-bold text-black tracking-tight">
                             {currentCountry.name}
                         </h3>
                     </motion.div>
@@ -87,7 +87,7 @@ const VerticalFlagCarousel = () => {
                 <motion.div
                     key={`next-${currentIndex}`}
                     initial={{ opacity: 0, y: 50, scale: 0.7 }}
-                    animate={{ opacity: 0.3, y: 0, scale: 0.75 }}
+                    animate={{ opacity: 1, y: 0, scale: 0.75 }}
                     transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
                     className="relative"
                 >
@@ -97,14 +97,14 @@ const VerticalFlagCarousel = () => {
                             alt={nextCountry.name}
                             className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
                     </div>
                 </motion.div>
             </div>
 
             {/* Gradient masks for top and bottom */}
-            <div className="absolute top-0 left-0 w-full h-24 md:h-28 lg:h-32 bg-gradient-to-b from-zinc-950 to-transparent pointer-events-none z-20" />
-            <div className="absolute bottom-0 left-0 w-full h-24 md:h-28 lg:h-32 bg-gradient-to-t from-zinc-950 to-transparent pointer-events-none z-20" />
+            <div className="absolute top-0 left-0 w-full h-24 md:h-28 lg:h-32 bg-gradient-to-b from-white to-transparent pointer-events-none z-20" />
+            <div className="absolute bottom-0 left-0 w-full h-24 md:h-28 lg:h-32 bg-gradient-to-t from-white to-transparent pointer-events-none z-20" />
         </div>
     );
 };
@@ -136,11 +136,11 @@ const InlineContactForm = () => {
             <div className="w-full max-w-lg">
                 {!submitted ? (
                     <>
-                        <div className="mb-10">
-                            <h3 className="text-3xl lg:text-4xl font-black text-white mb-3 leading-tight">
+                        <div className="mb-10 ">
+                            <h3 className="text-3xl lg:text-4xl font-black text-black mb-3 leading-tight">
                                 Expand Our Reach
                             </h3>
-                            <p className="text-zinc-400 text-lg leading-relaxed">
+                            <p className="text-gray-600 text-lg leading-relaxed">
                                 Don't see your country listed? Help us bring Team1 to your community.
                             </p>
                         </div>
@@ -153,9 +153,9 @@ const InlineContactForm = () => {
                                 <input
                                     required
                                     type="text"
-                                    className="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-5 py-4 text-white text-base
-                                             focus:outline-none focus:border-zinc-600 transition-colors
-                                             placeholder:text-zinc-600"
+                                    className="w-full bg-gray-100 border border-gray-200 rounded-lg px-5 py-4 text-black text-base
+                                             focus:outline-none focus:border-red-600 transition-colors
+                                             placeholder:text-gray-500"
                                     placeholder="Your name"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -169,9 +169,9 @@ const InlineContactForm = () => {
                                 <input
                                     required
                                     type="email"
-                                    className="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-5 py-4 text-white text-base
-                                             focus:outline-none focus:border-zinc-600 transition-colors
-                                             placeholder:text-zinc-600"
+                                    className="w-full bg-gray-100 border border-gray-200 rounded-lg px-5 py-4 text-black text-base
+                                             focus:outline-none focus:border-red-600 transition-colors
+                                             placeholder:text-gray-500"
                                     placeholder="your@email.com"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -185,9 +185,9 @@ const InlineContactForm = () => {
                                 <input
                                     required
                                     type="text"
-                                    className="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-5 py-4 text-white text-base
-                                             focus:outline-none focus:border-zinc-600 transition-colors
-                                             placeholder:text-zinc-600"
+                                    className="w-full bg-gray-100 border border-gray-200 rounded-lg px-5 py-4 text-black text-base
+                                             focus:outline-none focus:border-red-600 transition-colors
+                                             placeholder:text-gray-500"
                                     placeholder="Where are you based?"
                                     value={formData.country}
                                     onChange={(e) => setFormData({ ...formData, country: e.target.value })}
@@ -200,9 +200,9 @@ const InlineContactForm = () => {
                                 </label>
                                 <textarea
                                     rows={4}
-                                    className="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-5 py-4 text-white text-base
-                                             focus:outline-none focus:border-zinc-600 transition-colors
-                                             placeholder:text-zinc-600 resize-none"
+                                    className="w-full bg-gray-100 border border-gray-200 rounded-lg px-5 py-4 text-black text-base
+                                             focus:outline-none focus:border-red-600 transition-colors
+                                             placeholder:text-gray-500 resize-none"
                                     placeholder="Tell us about your community..."
                                     value={formData.message}
                                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -211,7 +211,7 @@ const InlineContactForm = () => {
 
                             <button
                                 type="submit"
-                                className="w-full bg-white hover:bg-zinc-200 text-black font-semibold py-4 px-6 rounded-lg
+                                className="w-full bg-black hover:bg-gray-800 text-white font-semibold py-4 px-6 rounded-lg
                                          transition-all duration-200 flex items-center justify-center gap-3 group mt-8"
                             >
                                 <span className="text-base">Submit Request</span>
@@ -229,8 +229,8 @@ const InlineContactForm = () => {
                                       flex items-center justify-center mx-auto mb-6">
                             <Check className="text-green-500 w-10 h-10" strokeWidth={2.5} />
                         </div>
-                        <h4 className="text-2xl font-bold text-white mb-3">Request Received</h4>
-                        <p className="text-zinc-400 text-base max-w-sm mx-auto leading-relaxed">
+                        <h4 className="text-2xl font-bold text-black mb-3">Request Received</h4>
+                        <p className="text-gray-600 text-base max-w-sm mx-auto leading-relaxed">
                             Thank you for your interest. We'll be in touch soon.
                         </p>
                     </motion.div>
@@ -243,13 +243,13 @@ const InlineContactForm = () => {
 // --- Main Section Component ---
 const AfricaPresence = () => {
     return (
-        <section className="relative bg-zinc-950 overflow-hidden">
+        <section className="relative bg-white overflow-hidden">
             {/* Subtle top border */}
-            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent" />
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[700px]">
                 {/* Left Side: Vertical Carousel */}
-                <div className="relative flex items-center justify-center py-20 lg:py-32 border-b lg:border-b-0 lg:border-r border-zinc-900">
+                <div className="relative flex items-center justify-center py-20 lg:py-32 border-b lg:border-b-0 lg:border-r border-gray-200">
                     <VerticalFlagCarousel />
                 </div>
 
@@ -260,7 +260,7 @@ const AfricaPresence = () => {
             </div>
 
             {/* Subtle bottom border */}
-            <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent" />
+            <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
         </section>
     );
 };

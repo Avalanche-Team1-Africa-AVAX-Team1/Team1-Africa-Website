@@ -767,6 +767,31 @@ function DesktopGallery({
     });
 
     const [isHoveringImage, setIsHoveringImage] = useState(false);
+    const [scrollOpacity, setScrollOpacity] = useState(1);
+
+    // Scroll listener to fade out gallery when scrolling past hero
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+
+            // Fade out between 0 and half screen height
+            if (scrollY < windowHeight * 0.5) {
+                setScrollOpacity(1);
+            } else if (scrollY < windowHeight) {
+                // Gradual fade from 100% at 0.5vh to 0% at 1vh
+                const fadeProgress = (scrollY - windowHeight * 0.5) / (windowHeight * 0.5);
+                setScrollOpacity(1 - fadeProgress);
+            } else {
+                setScrollOpacity(0);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Initial check
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         let animationFrame: number;
@@ -804,7 +829,13 @@ function DesktopGallery({
     }, [cameraX, cameraY, isHoveringImage, worldWidth, worldHeight]);
 
     return (
-        <div className="fixed inset-0 bg-[#F7F7F7] overflow-hidden cursor-default">
+        <div
+            className="fixed inset-0 bg-[#F7F7F7] overflow-hidden cursor-default transition-opacity duration-300"
+            style={{
+                opacity: scrollOpacity,
+                pointerEvents: scrollOpacity === 0 ? 'none' : 'auto'
+            }}
+        >
             {/* Center Gallery Text */}
             <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
                 <h1 className="text-[15vw] font-semibold tracking-tight text-red-500 select-none">
