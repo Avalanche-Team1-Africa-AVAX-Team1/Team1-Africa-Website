@@ -1,13 +1,88 @@
-import avax from '../assets/avax.png'
-import gitcoin from '../assets/gitcoin.png'
-import onlydust from '../assets/onlydust.png'
-import polygonio from '../assets/polygonio.png'
-import refi from '../assets/refi.png'
-import spherre from '../assets/spherre.png'
-import squads from '../assets/sqauds.png'
-import web3bridge from '../assets/web3bridge.png'
+import team1logo from '../assets/team1logo.png'
+import avacloud from '../assets/avacloud.png'
+import arena from '../assets/arena_logo.png'
+import maplestory from '../assets/maplestory.png'
+import blaze from '../assets/blaze_logo.png'
+import core from '../assets/core.webp'
+import salvor from '../assets/salvor.png'
+import ket from '../assets/ket 2.png'
 import AnimatedText from './AnimatedText'
 import AnimatedSection, { AnimatedItem } from './AnimatedSection'
+
+const partners = [
+    {
+        name: 'Team1',
+        logo: team1logo,
+        link: 'https://x.com/AvaxTeam1',
+        bgColor: 'bg-red-50',
+        textColor: 'text-red-600',
+        hoverBg: 'md:hover:bg-red-50',
+        hoverText: 'md:group-hover:text-red-600'
+    },
+    {
+        name: 'AvaCloud',
+        logo: avacloud,
+        link: 'https://avacloud.io/',
+        bgColor: 'bg-blue-50',
+        textColor: 'text-blue-600',
+        hoverBg: 'md:hover:bg-blue-50',
+        hoverText: 'md:group-hover:text-blue-600'
+    },
+    {
+        name: 'The Arena',
+        logo: arena,
+        link: 'https://arena.social/',
+        bgColor: 'bg-orange-50',
+        textColor: 'text-orange-600',
+        hoverBg: 'md:hover:bg-orange-50',
+        hoverText: 'md:group-hover:text-orange-600'
+    },
+    {
+        name: 'MapleStory Universe',
+        logo: maplestory,
+        link: 'https://msu.io/',
+        bgColor: 'bg-green-50',
+        textColor: 'text-green-600',
+        hoverBg: 'md:hover:bg-green-50',
+        hoverText: 'md:group-hover:text-green-600'
+    },
+    {
+        name: 'Blaze',
+        logo: blaze,
+        link: 'https://blaze.stream/',
+        bgColor: 'bg-yellow-50',
+        textColor: 'text-yellow-600',
+        hoverBg: 'md:hover:bg-yellow-50',
+        hoverText: 'md:group-hover:text-yellow-600'
+    },
+    {
+        name: 'Core App',
+        logo: core,
+        link: 'https://core.app/',
+        bgColor: 'bg-indigo-50',
+        textColor: 'text-indigo-600',
+        hoverBg: 'md:hover:bg-indigo-50',
+        hoverText: 'md:group-hover:text-indigo-600'
+    },
+    {
+        name: 'Salvor',
+        logo: salvor,
+        link: 'https://salvor.io/',
+        bgColor: 'bg-purple-50',
+        textColor: 'text-purple-600',
+        hoverBg: 'md:hover:bg-purple-50',
+        hoverText: 'md:group-hover:text-purple-600'
+    },
+    {
+        name: 'Ket',
+        logo: ket,
+        link: 'https://www.ketorbs.xyz/',
+        bgColor: 'bg-teal-50',
+        textColor: 'text-teal-600',
+        hoverBg: 'md:hover:bg-teal-50',
+        hoverText: 'md:group-hover:text-teal-600'
+    }
+]
 
 const Partners = () => {
     return (
@@ -23,7 +98,7 @@ const Partners = () => {
 
             <div className='text-left lg:text-center mb-16'>
                 <AnimatedText variant="slideUp" delay={0.2}>
-                    <p className='text-2xl md:text-6xl font-semibold leading-tight tracking-tighter'>Our ecosystem <span className='text-red-500'>partners</span> accelerate what's possible. Together, we're building Africa's <span className='text-red-500'>blockchain infrastructure</span>—from education to <span className='text-red-500'>funding opportunities</span>.</p>
+                    <p className='text-2xl md:text-4xl lg:text-6xl font-semibold leading-tight tracking-tighter'>Our ecosystem <span className='text-red-500'>partners</span> accelerate what's possible. Together, we're building Africa's <span className='text-red-500'>blockchain infrastructure</span>—from education to <span className='text-red-500'>funding opportunities</span>.</p>
                 </AnimatedText>
                 <AnimatedText variant="slideUp" delay={0.3}>
                     <p className='text-sm md:text-sm text-gray-600 pt-1 md:pt-4'>We proudly collaborate with organizations that believe in Africa's potential.</p>
@@ -35,64 +110,41 @@ const Partners = () => {
                 {/* Top border - dotted line */}
                 <div className='w-full border-dashed border-gray-300 mb-0'></div>
 
-
                 {/* Table content - responsive */}
                 <AnimatedSection staggerChildren={0.1} delay={0.4}>
                     <div className='grid grid-cols-1 md:grid-cols-4 border-dashed border-gray-300'>
                         {/* Row 1 */}
-                        <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-red-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-red-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-red-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-red-600 md:group-hover:font-semibold'>Avalanche Foundation</p>
-                                <img src={avax} alt="avalanche" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
-                            </div>
-                        </AnimatedItem>
-                        <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-blue-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-blue-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-blue-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-blue-600 md:group-hover:font-semibold'>Gitcoin Africa</p>
-                                <img src={gitcoin} alt="gitcoin" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
-                            </div>
-                        </AnimatedItem>
-                        <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-green-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-green-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-green-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-green-600 md:group-hover:font-semibold'>Web3Bridge</p>
-                                <img src={web3bridge} alt="web3bridge" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
-                            </div>
-                        </AnimatedItem>
-                        <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 cursor-pointer transition-all duration-300 bg-purple-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-purple-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-purple-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-purple-600 md:group-hover:font-semibold'>ReFiDAO</p>
-                                <img src={refi} alt="refi" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
-                            </div>
-                        </AnimatedItem>
+                        {partners.slice(0, 4).map((partner, index) => (
+                            <AnimatedItem key={partner.name}>
+                                <a
+                                    href={partner.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`flex flex-col items-center py-8 px-4 md:py-12 md:px-8 ${index < 3 ? 'border-b-2 md:border-b-0 md:border-r-2' : ''} border-dashed border-gray-300 cursor-pointer transition-all duration-300 ${partner.bgColor} shadow-lg md:bg-transparent md:shadow-none ${partner.hoverBg} md:hover:shadow-lg group h-full w-full`}
+                                >
+                                    <p className={`text-sm text-center transition-colors duration-300 ${partner.textColor} font-semibold md:text-gray-600 md:font-normal ${partner.hoverText} md:group-hover:font-semibold`}>{partner.name}</p>
+                                    <img src={partner.logo} alt={partner.name} loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                                </a>
+                            </AnimatedItem>
+                        ))}
 
                         {/* Horizontal dashed line between rows */}
                         <div className='col-span-1 md:col-span-4 border-t-2 border-dashed border-gray-300 hidden md:block'></div>
 
                         {/* Row 2 */}
-                        <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-orange-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-orange-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-orange-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-orange-600 md:group-hover:font-semibold'>Polygon Guild Accra</p>
-                                <img src={polygonio} alt="polygonio" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
-                            </div>
-                        </AnimatedItem>
-                        <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-indigo-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-indigo-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-indigo-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-indigo-600 md:group-hover:font-semibold'>Only Dust</p>
-                                <img src={onlydust} alt="onlydust" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
-                            </div>
-                        </AnimatedItem>
-                        <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 border-b-2 md:border-b-0 md:border-r-2 border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-pink-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-pink-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-pink-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-pink-600 md:group-hover:font-semibold'>Sqauds</p>
-                                <img src={squads} alt="squads" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
-                            </div>
-                        </AnimatedItem>
-                        <AnimatedItem>
-                            <div className='flex flex-col items-center py-8 px-4 md:py-12 md:px-8 cursor-pointer transition-all duration-300 bg-teal-50 shadow-lg md:bg-transparent md:shadow-none md:hover:bg-teal-50 md:hover:shadow-lg group h-full w-full'>
-                                <p className='text-sm text-center transition-colors duration-300 text-teal-600 font-semibold md:text-gray-600 md:font-normal md:group-hover:text-teal-600 md:group-hover:font-semibold'>Spherre</p>
-                                <img src={spherre} alt="spherre" loading="lazy" className='w-40 md:w-48 h-16 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
-                            </div>
-                        </AnimatedItem>
+                        {partners.slice(4, 8).map((partner, index) => (
+                            <AnimatedItem key={partner.name}>
+                                <a
+                                    href={partner.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`flex flex-col items-center py-8 px-4 md:py-12 md:px-8 ${index < 3 ? 'border-b-2 md:border-b-0 md:border-r-2' : ''} border-dashed border-gray-300 cursor-pointer transition-all duration-300 ${partner.bgColor} shadow-lg md:bg-transparent md:shadow-none ${partner.hoverBg} md:hover:shadow-lg group h-full w-full`}
+                                >
+                                    <p className={`text-sm text-center transition-colors duration-300 ${partner.textColor} font-semibold md:text-gray-600 md:font-normal ${partner.hoverText} md:group-hover:font-semibold`}>{partner.name}</p>
+                                    <img src={partner.logo} alt={partner.name} loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
+                                </a>
+                            </AnimatedItem>
+                        ))}
                     </div>
                 </AnimatedSection>
 

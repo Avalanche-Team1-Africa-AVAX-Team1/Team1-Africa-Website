@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import Footer from '../components/footer';
+
 import TeamGrid from '../components/TeamGrid';
 import LetsBuildSection from '../components/LetsBuildSection';
 import { team1AfricaMembers } from '../data/team-members';
@@ -53,12 +53,12 @@ const About = () => {
             </section>
 
             {/* Manifesto / Mission */}
-            <section className="py-20 md:py-32 px-6 md:px-20 bg-white text-black relative z-10 rounded-t-[2rem] md:rounded-t-[3rem] -mt-10">
+            <section className="py-20 md:py-32 px-6 md:px-12 laptop:px-20 bg-white text-black relative z-10 rounded-t-[2rem] md:rounded-t-[3rem] -mt-10">
                 <div className="max-w-[90vw] mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
-                        <div className="lg:sticky lg:top-32">
+                    <div className="grid grid-cols-1 laptop:grid-cols-2 gap-12 laptop:gap-12 xl:gap-24 items-start">
+                        <div className="laptop:sticky laptop:top-32">
                             <AnimatedText variant="slideUp" delay={0.2}>
-                                <h2 className="text-[10vw] lg:text-[5vw] tracking-wide mb-8 leading-[0.9]" data-cursor="Our Mission" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                <h2 className="text-[10vw] laptop:text-[4.5vw] xl:text-[5vw] tracking-wide mb-6 laptop:mb-8 leading-[0.9]" data-cursor="Our Mission" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                                     TEAM<span className="text-red-600">1</span> <br />
                                     AFRICA'S <br />
                                     <span className="text-red-600">COMMUNITY</span>
@@ -143,13 +143,13 @@ const About = () => {
             <section className="py-12 md:py-20 bg-red-600 text-white overflow-hidden">
                 <div className="flex whitespace-nowrap animate-infinite-scroll">
                     {[...Array(4)].map((_, i) => (
-                        <div key={i} className="flex items-center gap-8 mx-8">
-                            <span className="text-6xl md:text-8xl font-black italic">BUILD</span>
-                            <span className="text-2xl md:text-4xl">★</span>
-                            <span className="text-6xl md:text-8xl font-black italic text-black">ON AVAX</span>
-                            <span className="text-2xl md:text-4xl">★</span>
-                            <span className="text-6xl md:text-8xl font-black italic">FROM AFRICA</span>
-                            <span className="text-2xl md:text-4xl">★</span>
+                        <div key={i} className="flex items-center gap-4 lt-768:gap-4 md:gap-8 mx-4 lt-768:mx-4 md:mx-8">
+                            <span className="text-4xl lt-768:text-4xl md:text-6xl lg:text-8xl font-black italic">BUILD</span>
+                            <span className="text-xl lt-768:text-xl md:text-2xl lg:text-4xl">★</span>
+                            <span className="text-4xl lt-768:text-4xl md:text-6xl lg:text-8xl font-black italic text-black">ON AVAX</span>
+                            <span className="text-xl lt-768:text-xl md:text-2xl lg:text-4xl">★</span>
+                            <span className="text-4xl lt-768:text-4xl md:text-6xl lg:text-8xl font-black italic">FROM AFRICA</span>
+                            <span className="text-xl lt-768:text-xl md:text-2xl lg:text-4xl">★</span>
                         </div>
                     ))}
                 </div>
@@ -164,7 +164,7 @@ const About = () => {
             {/* Let's Build */}
             <LetsBuildSection />
 
-            <Footer />
+
         </div>
     );
 };

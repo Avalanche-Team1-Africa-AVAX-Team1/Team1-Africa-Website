@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './navbar';
+import Footer from './footer';
 import { useState, useEffect } from 'react';
 import Preloader from './Preloader';
 import ScrollProgress from './ScrollProgress';
@@ -44,6 +45,7 @@ const Layout = () => {
                     <main className="relative z-10 min-h-screen">
                         <Outlet />
                     </main>
+                    <Footer />
                 </div>
             )}
         </>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import Footer from '../components/footer';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 // --- ASSET IMPORTS ---
 import event1 from '../assets/event1-img.webp';
@@ -52,6 +52,7 @@ interface MomentData {
     location: string;
     date: string;
     description: string;
+    slug: string;
 }
 
 interface Moment extends MomentData {
@@ -63,30 +64,30 @@ interface Moment extends MomentData {
 
 // --- RAW DATA ---
 const rawMoments: MomentData[] = [
-    { id: 1, image: south1, title: 'Avalanche Africa Summit', location: 'Cape Town', date: 'March 2024', description: '300 builders from 15 countries. 12 projects demoed. 3 secured funding.' },
-    { id: 2, image: event1, title: 'Lagos Smart Contract Workshop', location: 'Lagos', date: 'April 2024', description: '85 developers learned Solidity. 24 contracts deployed.' },
-    { id: 3, image: ghana1, title: 'Accra Hackathon', location: 'Accra', date: 'May 2024', description: '48 hours. 47 developers. 8 dApps shipped to mainnet.' },
-    { id: 4, image: event2, title: 'Nairobi DeFi Workshop', location: 'Nairobi', date: 'June 2024', description: 'First Kenyan DEX launched. 65 developers onboarded.' },
-    { id: 5, image: south2, title: 'Johannesburg Web3 Summit', location: 'Johannesburg', date: 'July 2024', description: '450 attendees. $5M fund announced. 15 partnerships formed.' },
-    { id: 6, image: ghana2, title: 'Kumasi University Bootcamp', location: 'Kumasi', date: 'August 2024', description: '120 students trained. 3 startups formed.' },
-    { id: 7, image: event3, title: 'Abuja NFT Week', location: 'Abuja', date: 'September 2024', description: '200 participants. 8 NFT collections launched.' },
-    { id: 8, image: south3, title: 'Cape Town Subnet Workshop', location: 'Cape Town', date: 'October 2024', description: '35 senior developers. First African subnet deployed.' },
-    { id: 9, image: event4, title: 'Lagos DeFi Hackathon', location: 'Lagos', date: 'October 2024', description: '56 developers. Winner built micro-lending platform.' },
-    { id: 10, image: south4, title: 'Durban Meetup', location: 'Durban', date: 'November 2024', description: '90 members. 6 local projects showcased.' },
-    { id: 11, image: event5, title: 'Accra Developer Conference', location: 'Accra', date: 'November 2024', description: '180 engineers. 15 technical talks. 3 validator nodes launched.' },
-    { id: 12, image: event6, title: 'Nairobi Year-End Celebration', location: 'Nairobi', date: 'December 2024', description: '250 community members. 30 projects from the year.' },
-    { id: 13, image: event7, title: 'Addis Ababa Blockchain Forum', location: 'Addis Ababa', date: 'February 2024', description: 'First Ethiopian Web3 event. 140 attendees introduced to Avalanche.' },
-    { id: 14, image: event8, title: 'Kigali Innovation Workshop', location: 'Kigali', date: 'March 2024', description: 'Government representatives explored blockchain for public services.' },
-    { id: 15, image: south5, title: 'Port Elizabeth Community Gathering', location: 'Port Elizabeth', date: 'April 2024', description: 'Local developers showcased projects to investors and mentors.' },
-    { id: 16, image: south6, title: 'Pretoria Tech Meetup', location: 'Pretoria', date: 'May 2024', description: '70 developers shared insights on scaling blockchain applications.' },
-    { id: 17, image: ghana3, title: 'Tema Port Blockchain Summit', location: 'Tema', date: 'June 2024', description: 'Exploring blockchain for logistics. 95 industry professionals attended.' },
-    { id: 18, image: ghana4, title: 'Takoradi Developer Workshop', location: 'Takoradi', date: 'July 2024', description: '60 new developers onboarded to Avalanche ecosystem.' },
-    { id: 19, image: south7, title: 'Bloemfontein Innovation Day', location: 'Bloemfontein', date: 'August 2024', description: 'University students built 5 DeFi prototypes in one day.' },
-    { id: 20, image: south8, title: 'East London Blockchain Expo', location: 'East London', date: 'September 2024', description: 'Regional businesses explored blockchain integration. 110 attendees.' },
-    { id: 21, image: south9, title: 'Polokwane Developer Meetup', location: 'Polokwane', date: 'October 2024', description: '55 developers from northern regions connected and shared knowledge.' },
-    { id: 22, image: south10, title: 'Kimberley Mining & Blockchain', location: 'Kimberley', date: 'November 2024', description: 'Exploring blockchain for mining industry transparency.' },
-    { id: 23, image: south11, title: 'Nelspruit Tech Summit', location: 'Nelspruit', date: 'December 2024', description: '80 entrepreneurs learned about DeFi opportunities.' },
-    { id: 24, image: south12, title: 'George Coastal Tech Day', location: 'George', date: 'January 2024', description: 'Coastal developers showcased innovative blockchain solutions.' }
+    { id: 1, image: south1, title: 'Avalanche Africa Summit', location: 'Cape Town', date: 'March 2024', description: '300 builders from 15 countries. 12 projects demoed. 3 secured funding.', slug: 'avalanche-africa-summit' },
+    { id: 2, image: event1, title: 'Lagos Smart Contract Workshop', location: 'Lagos', date: 'April 2024', description: '85 developers learned Solidity. 24 contracts deployed.', slug: 'lagos-blockchain-summit' },
+    { id: 3, image: ghana1, title: 'Accra Hackathon', location: 'Accra', date: 'May 2024', description: '48 hours. 47 developers. 8 dApps shipped to mainnet.', slug: 'accra-hackathon' },
+    { id: 4, image: event2, title: 'Nairobi DeFi Workshop', location: 'Nairobi', date: 'June 2024', description: 'First Kenyan DEX launched. 65 developers onboarded.', slug: 'nairobi-defi-workshop' },
+    { id: 5, image: south2, title: 'Johannesburg Web3 Summit', location: 'Johannesburg', date: 'July 2024', description: '450 attendees. $5M fund announced. 15 partnerships formed.', slug: 'avalanche-africa-summit' },
+    { id: 6, image: ghana2, title: 'Kumasi University Bootcamp', location: 'Kumasi', date: 'August 2024', description: '120 students trained. 3 startups formed.', slug: 'accra-hackathon' },
+    { id: 7, image: event3, title: 'Abuja NFT Week', location: 'Abuja', date: 'September 2024', description: '200 participants. 8 NFT collections launched.', slug: 'lagos-blockchain-summit' },
+    { id: 8, image: south3, title: 'Cape Town Subnet Workshop', location: 'Cape Town', date: 'October 2024', description: '35 senior developers. First African subnet deployed.', slug: 'cape-town-subnet-workshop' },
+    { id: 9, image: event4, title: 'Lagos DeFi Hackathon', location: 'Lagos', date: 'October 2024', description: '56 developers. Winner built micro-lending platform.', slug: 'lagos-blockchain-summit' },
+    { id: 10, image: south4, title: 'Durban Meetup', location: 'Durban', date: 'November 2024', description: '90 members. 6 local projects showcased.', slug: 'avalanche-africa-summit' },
+    { id: 11, image: event5, title: 'Accra Developer Conference', location: 'Accra', date: 'November 2024', description: '180 engineers. 15 technical talks. 3 validator nodes launched.', slug: 'accra-hackathon' },
+    { id: 12, image: event6, title: 'Nairobi Year-End Celebration', location: 'Nairobi', date: 'December 2024', description: '250 community members. 30 projects from the year.', slug: 'nairobi-defi-workshop' },
+    { id: 13, image: event7, title: 'Addis Ababa Blockchain Forum', location: 'Addis Ababa', date: 'February 2024', description: 'First Ethiopian Web3 event. 140 attendees introduced to Avalanche.', slug: 'nairobi-defi-workshop' },
+    { id: 14, image: event8, title: 'Kigali Innovation Workshop', location: 'Kigali', date: 'March 2024', description: 'Government representatives explored blockchain for public services.', slug: 'nairobi-defi-workshop' },
+    { id: 15, image: south5, title: 'Port Elizabeth Community Gathering', location: 'Port Elizabeth', date: 'April 2024', description: 'Local developers showcased projects to investors and mentors.', slug: 'cape-town-subnet-workshop' },
+    { id: 16, image: south6, title: 'Pretoria Tech Meetup', location: 'Pretoria', date: 'May 2024', description: '70 developers shared insights on scaling blockchain applications.', slug: 'avalanche-africa-summit' },
+    { id: 17, image: ghana3, title: 'Tema Port Blockchain Summit', location: 'Tema', date: 'June 2024', description: 'Exploring blockchain for logistics. 95 industry professionals attended.', slug: 'accra-hackathon' },
+    { id: 18, image: ghana4, title: 'Takoradi Developer Workshop', location: 'Takoradi', date: 'July 2024', description: '60 new developers onboarded to Avalanche ecosystem.', slug: 'accra-hackathon' },
+    { id: 19, image: south7, title: 'Bloemfontein Innovation Day', location: 'Bloemfontein', date: 'August 2024', description: 'University students built 5 DeFi prototypes in one day.', slug: 'avalanche-africa-summit' },
+    { id: 20, image: south8, title: 'East London Blockchain Expo', location: 'East London', date: 'September 2024', description: 'Regional businesses explored blockchain integration. 110 attendees.', slug: 'cape-town-subnet-workshop' },
+    { id: 21, image: south9, title: 'Polokwane Developer Meetup', location: 'Polokwane', date: 'October 2024', description: '55 developers from northern regions connected and shared knowledge.', slug: 'avalanche-africa-summit' },
+    { id: 22, image: south10, title: 'Kimberley Mining & Blockchain', location: 'Kimberley', date: 'November 2024', description: 'Exploring blockchain for mining industry transparency.', slug: 'avalanche-africa-summit' },
+    { id: 23, image: south11, title: 'Nelspruit Tech Summit', location: 'Nelspruit', date: 'December 2024', description: '80 entrepreneurs learned about DeFi opportunities.', slug: 'avalanche-africa-summit' },
+    { id: 24, image: south12, title: 'George Coastal Tech Day', location: 'George', date: 'January 2024', description: 'Coastal developers showcased innovative blockchain solutions.', slug: 'cape-town-subnet-workshop' }
 ];
 
 // --- ALGORITHM: INDIVIDUAL MARGIN PACKING + SHRINK WRAP ---
@@ -306,7 +307,7 @@ export default function Gallery() {
                 <PolaroidGallerySection />
 
                 {/* Footer */}
-                <Footer />
+
             </div>
         );
     }
@@ -327,7 +328,7 @@ export default function Gallery() {
             <PolaroidGallerySection />
 
             {/* Footer */}
-            <Footer />
+
         </div>
     );
 }
@@ -474,7 +475,7 @@ function EventAlbumsSection() {
             <div className="max-w-7xl mx-auto">
                 {/* Section Header */}
                 <div className="mb-16">
-                    <h2 className="text-5xl md:text-7xl font-black tracking-tight text-white mb-4">
+                    <h2 className="text-3xl lt-768:text-3xl md:text-5xl lg:text-7xl font-black tracking-tight text-white mb-4">
                         Experience Avalanche Africa
                     </h2>
                     <p className="text-lg md:text-xl text-gray-400 max-w-2xl">
@@ -513,7 +514,7 @@ function EventAlbumsSection() {
 
                                 {/* Content */}
                                 <div className="p-8">
-                                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
+                                    <h3 className="text-xl lt-768:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4 tracking-tight">
                                         {album.title}
                                     </h3>
                                     <p className="text-gray-400 leading-relaxed mb-6">
@@ -630,7 +631,7 @@ function PolaroidGallerySection() {
                         onMouseLeave={() => setHoveredId(null)}
                         onMouseMove={(e) => handleMouseMove(e)}
                         transition={{ delay: index * 0.1 }}
-                        className="border-t border-gray-200 py-8 relative"
+                        className="border-t border-gray-200 py-8 relative group"
                     >
                         {/* Kinetic Flag */}
                         <AnimatePresence>
@@ -664,10 +665,10 @@ function PolaroidGallerySection() {
 
                         <button
                             onClick={() => toggleExpand(event.id)}
-                            className="w-full flex items-center justify-between text-left group relative z-10"
+                            className="w-full flex items-center justify-between text-left relative z-10"
                         >
                             <div className="flex-1">
-                                <h3 className="text-3xl md:text-5xl font-black text-gray-900 mb-2 group-hover:text-red-500 transition-colors duration-300">
+                                <h3 className={`text-2xl lt-768:text-2xl md:text-4xl lg:text-5xl font-black mb-2 transition-colors duration-300 ${expandedId === event.id ? '!text-red-600' : 'text-gray-900'} group-hover:!text-red-800`}>
                                     {event.title}
                                 </h3>
                                 {/* Only show description when expanded */}
@@ -766,6 +767,31 @@ function DesktopGallery({
     });
 
     const [isHoveringImage, setIsHoveringImage] = useState(false);
+    const [scrollOpacity, setScrollOpacity] = useState(1);
+
+    // Scroll listener to fade out gallery when scrolling past hero
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+
+            // Fade out between 0 and half screen height
+            if (scrollY < windowHeight * 0.5) {
+                setScrollOpacity(1);
+            } else if (scrollY < windowHeight) {
+                // Gradual fade from 100% at 0.5vh to 0% at 1vh
+                const fadeProgress = (scrollY - windowHeight * 0.5) / (windowHeight * 0.5);
+                setScrollOpacity(1 - fadeProgress);
+            } else {
+                setScrollOpacity(0);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Initial check
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         let animationFrame: number;
@@ -803,7 +829,13 @@ function DesktopGallery({
     }, [cameraX, cameraY, isHoveringImage, worldWidth, worldHeight]);
 
     return (
-        <div className="fixed inset-0 bg-[#F7F7F7] overflow-hidden cursor-default">
+        <div
+            className="fixed inset-0 bg-[#F7F7F7] overflow-hidden cursor-default transition-opacity duration-300"
+            style={{
+                opacity: scrollOpacity,
+                pointerEvents: scrollOpacity === 0 ? 'none' : 'auto'
+            }}
+        >
             {/* Center Gallery Text */}
             <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
                 <h1 className="text-[15vw] font-semibold tracking-tight text-red-500 select-none">
@@ -836,14 +868,14 @@ function DesktopGallery({
 function WorldImage({
     moment,
     delay,
-    onClick,
     onHoverChange
 }: {
     moment: Moment;
     delay: number;
-    onClick?: () => void;
     onHoverChange: (hovering: boolean) => void;
 }) {
+    const navigate = useNavigate();
+
     return (
         <motion.div
             initial={{
@@ -878,7 +910,7 @@ function WorldImage({
             }}
             onMouseEnter={() => onHoverChange(true)}
             onMouseLeave={() => onHoverChange(false)}
-            onClick={onClick}
+            onClick={() => navigate(`/gallery/${moment.slug}`)}
             className="cursor-pointer group"
         >
             <div className="relative w-full h-full overflow-hidden rounded-3xl shadow-2xl bg-zinc-900">

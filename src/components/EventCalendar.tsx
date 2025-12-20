@@ -3,6 +3,7 @@ import type { Event } from '../types/event';
 import { getEventsForDate } from '../data/events';
 import EventDetailPanel from './EventDetailPanel';
 
+
 interface EventCalendarProps {
   initialDate?: Date;
 }
@@ -128,7 +129,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
       <div className="w-full max-w-[2000px] mx-auto pt-24 md:pt-32 pb-8 md:pb-12 px-2 sm:px-4 md:px-8">
         {/* Page Title */}
         <div className="mb-6">
-          <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-2" style={{ fontFamily: '"Impact", "Anton", "Bebas Neue", sans-serif', letterSpacing: '0.02em' }}>
+          <h1 className="text-3xl lt-480:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-2" style={{ fontFamily: '"Impact", "Anton", "Bebas Neue", sans-serif', letterSpacing: '0.02em' }}>
             EVENTS CALENDAR
           </h1>
           <p className="text-gray-600 text-sm md:text-base">
@@ -550,8 +551,12 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
           }}
         />
       </div>
+
+      {/* Footer */}
+
     </div>
   );
 };
 
 export default EventCalendar;
+``

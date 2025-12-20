@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import Footer from '../components/footer';
+
 
 // Import all images
 import event1 from '../assets/event1-img.webp';
@@ -143,7 +143,7 @@ export default function GalleryAlbum() {
             </div>
 
             {/* Footer */}
-            <Footer />
+
         </div>
     );
 }

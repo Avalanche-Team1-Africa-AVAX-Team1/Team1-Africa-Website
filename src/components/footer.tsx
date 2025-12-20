@@ -80,7 +80,7 @@ const Footer = () => {
                     <div className="mb-32">
                         <AnimatedText variant="slideUp" delay={0.3}>
                             <a href="#contact" className="group block w-full">
-                                <h2 className="text-6xl md:text-8xl lg:text-[10rem] leading-[0.9] font-black tracking-tighter uppercase transition-colors group-hover:text-gray-300">
+                                <h2 className="text-4xl lt-768:text-4xl md:text-6xl lg:text-8xl xl:text-[10rem] leading-[0.9] font-black tracking-tighter uppercase transition-colors group-hover:text-gray-300">
                                     Shall we <br />
                                     <span className="italic font-serif font-normal group-hover:text-red-500 transition-colors duration-300">work together?</span>
                                 </h2>

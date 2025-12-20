@@ -463,7 +463,7 @@ export default function AvalancheEcosystem() {
           </div>
         </AnimatedText>
         <AnimatedText variant="slideUp" delay={0.2}>
-          <h2 className="text-5xl md:text-6xl font-bold text-black mb-6 max-w-3xl">
+          <h2 className="text-3xl lt-768:text-3xl md:text-5xl lg:text-6xl font-bold text-black mb-6 max-w-3xl">
             Discover Avalanche's Ecosystem
           </h2>
         </AnimatedText>

@@ -27,6 +27,11 @@ export type Article = {
   publishedDate: string | Date
   readTime: number
   tags?: string[]
+  engagement?: {
+    likes: number
+    shares: number
+    comments: number
+  }
 }
 
 export type ApiResult<T> = {
