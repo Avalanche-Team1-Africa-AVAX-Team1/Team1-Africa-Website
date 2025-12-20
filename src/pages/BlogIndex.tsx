@@ -6,7 +6,8 @@ import { articles } from '../data/articles';
 // Blog data matching Planhat editorial structure
 const featuredArticle = {
   title: "Building Avalanche Infrastructure Across Africa",
-  author: "Team1 Africa",
+  author: "Kwame Mensah",
+  authorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
   date: "December 18, 2024",
   image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200",
   slug: "building-avalanche-infrastructure-africa",
@@ -43,29 +44,18 @@ const trendingArticles = [
   }
 ];
 
-const builderEvent = {
-  title: "Builder's Hour: Subnets",
-  subtitle: "Custom infrastructure that scales",
-  link: "/events/builders-hour-subnets",
-  category: "DEMONSTRATION",
-  themes: ["Demonstration", "Subnets", "Avalanche", "Innovation"],
-  image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800"
+const essentialReads = {
+  title: "The Future of Decentralized Finance in Africa",
+  subtitle: "A comprehensive analysis from Ava Labs on how DeFi is reshaping financial inclusion across the continent",
+  link: "/blog/future-defi-africa",
+  category: "ESSENTIAL READING",
+  themes: ["DeFi", "Financial Inclusion", "Ava Labs", "Research"],
+  image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800",
+  author: "Ava Labs Research",
+  source: "External"
 };
 
-const pressArticles = [
-  {
-    title: "Team1 Africa Named Leading Avalanche Ecosystem Builder",
-    slug: "team1-named-ecosystem-leader"
-  },
-  {
-    title: "Avalanche Subnets Power African Financial Infrastructure",
-    slug: "subnets-power-african-fintech"
-  },
-  {
-    title: "Strategic Partnership with Ava Labs Announced",
-    slug: "strategic-partnership-ava-labs"
-  }
-];
+
 
 const impactArticles = [
   {
@@ -89,21 +79,26 @@ const impactArticles = [
 ];
 
 const contributors = [
-  {
-    name: "Eric Szafran",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300",
-    slug: "eric-szafran"
-  },
-  {
-    name: "Alberto Lambert",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300",
-    slug: "alberto-lambert"
-  },
-  {
-    name: "Ardalan Khosrowpour",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300",
-    slug: "ardalan-khosrowpour"
-  }
+  { name: "Eric Szafran", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300", slug: "eric-szafran" },
+  { name: "Alberto Lambert", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300", slug: "alberto-lambert" },
+  { name: "Ardalan Khosrowpour", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300", slug: "ardalan-khosrowpour" },
+  { name: "Marcus Osei", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300", slug: "marcus-osei" },
+  { name: "Amara Okafor", image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300", slug: "amara-okafor" },
+  { name: "Adam Cooney", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300", slug: "adam-cooney" },
+  { name: "Catherine De Verteuil", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300", slug: "catherine-de-verteuil" },
+  { name: "David Mensah", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300", slug: "david-mensah" },
+  { name: "Sarah Jallo", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300", slug: "sarah-jallo" },
+  { name: "Kofi Boaitey", image: "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=300", slug: "kofi-boaitey" },
+  { name: "Fatima Benta", image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=300", slug: "fatima-benta" },
+  { name: "Zainab Abba", image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=300", slug: "zainab-abba" },
+  { name: "Chidi Azeez", image: "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=300", slug: "chidi-azeez" },
+  { name: "Nadine Toure", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300", slug: "nadine-toure" },
+  { name: "Oscar Mbeki", image: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300", slug: "oscar-mbeki" },
+  { name: "Laila Sadiki", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300", slug: "laila-sadiki" },
+  { name: "Bemba Diop", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300", slug: "bemba-diop" },
+  { name: "Yara Gidado", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300", slug: "yara-gidado" },
+  { name: "Tunde Ednut", image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=300", slug: "tunde-ednut" },
+  { name: "Musa Keita", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300", slug: "musa-keita" }
 ];
 
 
@@ -131,35 +126,59 @@ export default function BlogIndex() {
         </div>
       </div>
 
-      {/* Featured Article */}
+      {/* Featured Article - Latest */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 py-16">
+        <div className="flex items-center gap-3 mb-8">
+          <h2 className="text-xs font-bold tracking-[0.2em] text-gray-900 uppercase">Latest</h2>
+          <span className="text-xs text-gray-500">• Most recent publication</span>
+        </div>
         <a href={`/blog/${featuredArticle.slug}`} className="block group">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h2 className="text-3xl lt-480:text-3xl md:text-5xl lg:text-7xl font-serif mb-6 md:mb-8 group-hover:text-red-600 transition-colors leading-tight">
-              {featuredArticle.title}
-            </h2>
-            <div className="flex items-center gap-4 text-sm text-gray-600 mb-6 md:mb-8">
-              <span className="font-medium">{featuredArticle.author}</span>
-              <span>•</span>
-              <span>{featuredArticle.date}</span>
-            </div>
-            <div className="relative aspect-[4/3] md:aspect-[21/9] rounded-xl overflow-hidden">
+            <div className="relative aspect-[4/3] md:aspect-[21/9] rounded-xl overflow-hidden mb-6">
               <img
                 src={featuredArticle.image}
                 alt={featuredArticle.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
+              <div className="absolute top-6 left-6">
+                <span className="bg-red-600 text-white text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-wider shadow-lg">
+                  Latest
+                </span>
+              </div>
+            </div>
+            <h2 className="text-3xl lt-480:text-3xl md:text-5xl lg:text-7xl font-serif mb-6 group-hover:text-red-600 transition-colors leading-tight">
+              {featuredArticle.title}
+            </h2>
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200">
+                <img
+                  src={featuredArticle.authorAvatar}
+                  alt={featuredArticle.author}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-bold text-gray-900">{featuredArticle.author}</p>
+                <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <span>{featuredArticle.date}</span>
+                  <span>•</span>
+                  <span>8 min read</span>
+                </div>
+              </div>
             </div>
           </motion.div>
         </a>
       </section>
 
-      {/* Trending Section - EXACT LAYOUT FROM REFERENCE */}
+      {/* Trending Section */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        <h2 className="text-xs font-bold mb-12 tracking-[0.2em] text-gray-900">TRENDING</h2>
+        <div className="flex items-center gap-3 mb-12">
+          <h2 className="text-xs font-bold tracking-[0.2em] text-gray-900 uppercase">Trending</h2>
+          <span className="text-xs text-gray-500">• Most viewed this week</span>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* LEFT SIDE - Single large portrait article with text below */}
@@ -262,66 +281,55 @@ export default function BlogIndex() {
         </div>
       </section>
 
-      {/* Builder Event Section */}
+      {/* Essential Reads Section */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        <div className="bg-gray-50 rounded-3xl p-6 md:p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-6 md:p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center border border-gray-200">
           <div>
-            <div className="flex items-center gap-3 mb-6">
-              <span className="text-xs font-semibold text-gray-500 tracking-wider">{builderEvent.category}</span>
-              {builderEvent.themes.map((theme, i) => (
+            <div className="flex items-center gap-3 mb-6 flex-wrap">
+              <span className="text-xs font-black text-red-600 tracking-wider uppercase">{essentialReads.category}</span>
+              {essentialReads.themes.map((theme, i) => (
                 <span key={i} className="text-xs font-semibold text-gray-500 tracking-wider">• {theme}</span>
               ))}
             </div>
-            <h2 className="text-3xl lt-768:text-3xl md:text-4xl lg:text-5xl font-serif mb-4">{builderEvent.title}</h2>
-            <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">{builderEvent.subtitle}</p>
+            <h2 className="text-3xl lt-768:text-3xl md:text-4xl lg:text-5xl font-serif mb-4">{essentialReads.title}</h2>
+            <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8">{essentialReads.subtitle}</p>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold">
+                  {essentialReads.author.charAt(0)}
+                </div>
+                <span className="font-semibold text-gray-700">{essentialReads.author}</span>
+              </div>
+              <span className="text-xs text-gray-400">• {essentialReads.source}</span>
+            </div>
             <a
-              href={builderEvent.link}
+              href={essentialReads.link}
               className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors"
             >
-              Discover Events
+              Read Article
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </a>
           </div>
-          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
             <img
-              src={builderEvent.image}
-              alt={builderEvent.title}
+              src={essentialReads.image}
+              alt={essentialReads.title}
               className="w-full h-full object-cover"
             />
           </div>
         </div>
       </section>
 
-      {/* Press Section */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        <h2 className="text-2xl font-bold mb-8">Press</h2>
-        <div className="space-y-4">
-          {pressArticles.map((article, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <a
-                href={`/blog/${article.slug}`}
-                className="block py-4 border-b border-gray-200 hover:pl-4 transition-all duration-300 group"
-              >
-                <span className="text-lg font-medium group-hover:text-red-600 transition-colors">
-                  {article.title}
-                </span>
-              </a>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+
 
       {/* Impact Section */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        <h2 className="text-2xl font-bold mb-8">Impact</h2>
+        <div className="flex items-center gap-3 mb-8">
+          <h2 className="text-2xl font-bold">Impact</h2>
+          <span className="text-sm text-gray-500">• Highest engagement & shares</span>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {impactArticles.map((article, i) => (
             <motion.div
@@ -356,31 +364,53 @@ export default function BlogIndex() {
       </section>
 
       {/* Contributors Section */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-16">
-        <h2 className="text-2xl font-bold mb-8">Contributors</h2>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
-          {contributors.map((contributor, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <a href={`/blog/contributors/${contributor.slug}`} className="block group text-center">
-                <div className="relative w-20 h-20 mx-auto mb-2 rounded-full overflow-hidden">
+      <section className="max-w-7xl mx-auto px-6 md:px-12 py-24">
+        <div className="flex flex-col md:flex-row md:items-center gap-12">
+          <div className="flex-shrink-0">
+            <h2 className="text-3xl font-black tracking-tighter mb-2">Active Contributors</h2>
+            <p className="text-gray-500 text-sm font-medium">Join 20+ builders shaping the ecosystem</p>
+          </div>
+
+          <div className="flex -space-x-2 md:-space-x-3 overflow-visible py-8 px-4 flex-wrap items-center justify-center md:justify-start max-w-2xl">
+            {contributors.map((contributor, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                whileHover={{
+                  scale: 1.4,
+                  zIndex: 50,
+                  transition: { type: "spring", stiffness: 500, damping: 15 }
+                }}
+                animate={{
+                  scale: 1,
+                  transition: { type: "spring", stiffness: 500, damping: 30, duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.9 }}
+                className="relative group"
+              >
+                <a
+                  href={`/blog/contributors/${contributor.slug}`}
+                  className="block w-12 h-12 md:w-16 md:h-16 rounded-full border-[3px] md:border-4 border-white overflow-hidden shadow-lg bg-gray-200 cursor-pointer"
+                >
                   <img
                     src={contributor.image}
                     alt={contributor.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover transition-all duration-300"
                   />
-                </div>
-                <p className="text-xs font-medium group-hover:text-red-600 transition-colors">
+                </a>
+
+                {/* Bubble Tooltip - Refined */}
+                <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300 bg-black text-white text-[11px] font-black px-4 py-2 rounded-xl shadow-2xl whitespace-nowrap pointer-events-none z-[60]">
                   {contributor.name}
-                </p>
-              </a>
-            </motion.div>
-          ))}
+                  {/* Tooltip Arrow */}
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-black" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -434,12 +464,33 @@ export default function BlogIndex() {
                   <div className="text-[10px] font-bold text-red-600 tracking-wider uppercase mb-2">
                     {article.category.name}
                   </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-red-600 transition-colors line-clamp-2">
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-red-600 transition-colors line-clamp-2">
                     {article.title}
                   </h3>
-                  <p className="text-sm text-gray-600 line-clamp-3">
+                  <p className="text-sm text-gray-600 line-clamp-3 mb-4">
                     {article.excerpt}
                   </p>
+
+                  {/* Author and Read Time */}
+                  <div className="flex items-center gap-3 mt-auto pt-4 border-t border-gray-100">
+                    {article.author.avatar ? (
+                      <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-100">
+                        <img
+                          src={article.author.avatar}
+                          alt={article.author.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-white text-xs font-bold">
+                        {article.author.name.charAt(0)}
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <p className="text-xs font-semibold text-gray-900">{article.author.name}</p>
+                      <p className="text-[10px] text-gray-500">{article.readTime} min read</p>
+                    </div>
+                  </div>
                 </a>
               </motion.div>
             ))}

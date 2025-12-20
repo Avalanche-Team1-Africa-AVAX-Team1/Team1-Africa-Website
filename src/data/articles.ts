@@ -20,9 +20,9 @@ export const articles: Article[] = [
       'Discover how African developers are leveraging Avalanche’s scalability to create decentralized applications that solve local problems.',
     content:
       `<p>Avalanche is powering a new wave of innovation across Africa...</p>`,
-    featuredImage: { url: avalancheLogo, urlWebp: avalancheLogoWebp, alt: 'Avalanche logo' },
+    featuredImage: { url: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800', alt: 'Blockchain technology' },
     category: { name: 'Education', color: '#FF5A5F', slug: 'education' },
-    author: { name: 'Avalanche Team1' },
+    author: { name: 'Kwame Mensah', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100' },
     publishedDate: toISO('2024-12-20'),
     readTime: 5,
     tags: ['Tech talk', 'Infrastructure']
@@ -35,7 +35,7 @@ export const articles: Article[] = [
     content: '<p>Content...</p>',
     featuredImage: { url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800', alt: 'Customer success' },
     category: { name: 'Tech talk', color: '#3B82F6', slug: 'tech-talk' },
-    author: { name: 'Amara Okafor' },
+    author: { name: 'Amara Okafor', avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100' },
     publishedDate: toISO('2024-12-19'),
     readTime: 5,
     tags: ['Tech talk', 'IRL Events']
@@ -48,7 +48,7 @@ export const articles: Article[] = [
     content: '<p>Content...</p>',
     featuredImage: { url: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800', alt: 'Gaming' },
     category: { name: 'Gaming', color: '#EF4444', slug: 'gaming' },
-    author: { name: 'Team1 Gaming' },
+    author: { name: 'Chidi Nwosu', avatar: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=100' },
     publishedDate: toISO('2024-12-18'),
     readTime: 8,
     tags: ['Gaming', 'Infrastructure']
@@ -61,7 +61,7 @@ export const articles: Article[] = [
     content: '<p>Content...</p>',
     featuredImage: { url: collageImg, urlWebp: collageImgWebp, alt: 'IRL Events' },
     category: { name: 'IRL Events', color: '#10B981', slug: 'irl-events' },
-    author: { name: 'Marcus Osei' },
+    author: { name: 'Marcus Osei', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100' },
     publishedDate: toISO('2024-12-17'),
     readTime: 4,
     tags: ['IRL Events', 'Community']
