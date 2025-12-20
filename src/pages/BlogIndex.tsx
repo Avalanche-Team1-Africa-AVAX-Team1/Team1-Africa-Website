@@ -1,4 +1,6 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { articles } from '../data/articles';
 
 
 // Blog data matching Planhat editorial structure
@@ -104,40 +106,14 @@ const contributors = [
   }
 ];
 
-const dontMissArticles = [
-  "Scaling Customer-Centricity",
-  "Becoming More Proactive and Efficient",
-  "One Place for Every Insight",
-  "Scaling Impact with Speed & Flexibility",
-  "Moving Faster Together",
-  "Defining What You Need From Your Customer Platform",
-  "The Rise of the Forward-Deployed Developer",
-  "Subnet Architecture Best Practices",
-  "Vertical Integration in African Web3",
-  "Serving an Exploding Customer Base",
-  "When Founders Lead Engineering",
-  "Platform Upgrade: Custom VMs",
-  "Cross-Chain Integration Demo",
-  "African Builders Are Leading",
-  "The Real Job Isn't Support—It's Innovation",
-  "The Feedback Loop: Dev and Product Collaboration",
-  "When Community Shapes the Roadmap",
-  "Redefining Feature Adoption",
-  "The Work We Won't Let Our Teams Do",
-  "Open Source Contribution Guide",
-  "Mastering Digital Payment Infrastructure",
-  "Learnings From Avalanche Summit",
-  "Outcome-Based Development",
-  "How To Create Developer Programs",
-  "AI in Blockchain Development",
-  "Raising the Bar for African Tech",
-  "Introducing: Smart Contract Templates",
-  "The Infinite Frontier of Subnets",
-  "Risk Management in DeFi",
-  "Scaled Infrastructure Solutions"
-];
 
 export default function BlogIndex() {
+  const [activeTag, setActiveTag] = useState('All');
+  const tags = ['All', 'Tech talk', 'IRL Events', 'Gaming', 'Infrastructure'];
+
+  const filteredArticles = activeTag === 'All'
+    ? articles
+    : articles.filter(article => article.tags?.includes(activeTag));
 
   return (
     <div className="min-h-screen bg-white pt-24 md:pt-28">
@@ -408,26 +384,66 @@ export default function BlogIndex() {
         </div>
       </section>
 
-      {/* Don't Miss These Section */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-16 pb-32">
-        <h2 className="text-2xl font-bold mb-8">Don't Miss these</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
-          {dontMissArticles.map((title, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.02 }}
-            >
-              <a
-                href={`/blog/${title.toLowerCase().replace(/\s+/g, '-')}`}
-                className="block py-2 text-sm hover:text-red-600 hover:pl-2 transition-all duration-200"
+      {/* All Articles Grid Section */}
+      <section className="max-w-7xl mx-auto px-6 md:px-12 py-16 pb-32 border-t border-gray-100 mt-16">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12">
+          <h2 className="text-3xl font-bold tracking-tight">More from the Ecosystem</h2>
+
+          <div className="flex items-center gap-2 overflow-x-auto pb-4 md:pb-0 no-scrollbar">
+            {tags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setActiveTag(tag)}
+                className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${activeTag === tag
+                  ? 'bg-black text-white'
+                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                  }`}
               >
-                {title}
-              </a>
-            </motion.div>
-          ))}
+                {tag}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <AnimatePresence mode='popLayout'>
+            {filteredArticles.map((article) => (
+              <motion.div
+                layout
+                key={article.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <a href={`/blog/${article.slug}`} className="block group h-full">
+                  <div className="relative aspect-[16/10] rounded-2xl overflow-hidden mb-4 shadow-md">
+                    <img
+                      src={article.featuredImage.url}
+                      alt={article.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-4 left-4 flex gap-2">
+                      {article.tags?.slice(0, 1).map((t, idx) => (
+                        <span key={idx} className="bg-black/80 backdrop-blur-sm text-[10px] font-bold px-3 py-1 rounded-full text-white">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="text-[10px] font-bold text-red-600 tracking-wider uppercase mb-2">
+                    {article.category.name}
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-red-600 transition-colors line-clamp-2">
+                    {article.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 line-clamp-3">
+                    {article.excerpt}
+                  </p>
+                </a>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </section>
     </div>
