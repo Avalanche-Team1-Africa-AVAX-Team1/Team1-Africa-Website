@@ -19,6 +19,7 @@ const trendingArticles = [
     title: "Scaling Customer Success in Web3",
     description: "How African projects are building world-class customer success programs on Avalanche. Lessons from scaling from 10 to 10,000 users.",
     author: "Amara Okafor",
+    authorAvatar: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100",
     category: "TESTIMONIAL",
     series: "Talking Builders",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600",
@@ -28,6 +29,7 @@ const trendingArticles = [
     title: "Becoming More Proactive and Efficient",
     description: "Lagos-based fintech shares how Avalanche's subnet architecture enabled real-time payment processing at scale.",
     author: "Adam Cooney",
+    authorAvatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100",
     category: "TESTIMONIAL",
     series: "Talking Builders",
     image: "https://images.unsplash.com/photo-1556740749-887f6717d7e4?w=600",
@@ -37,6 +39,7 @@ const trendingArticles = [
     title: "One Platform for Every Insight",
     description: "How data aggregation on Avalanche transformed decision-making for African enterprises.",
     author: "Catherine De Verteuil",
+    authorAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100",
     category: "TESTIMONIAL",
     series: "Talking Builders",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600",
@@ -61,7 +64,8 @@ const impactArticles = [
   {
     title: "Making Impact Impossible to Ignore",
     description: "Quantifying the transformation happening across African Web3",
-    author: "Team1 Research",
+    author: "Chidi Nwosu",
+    authorAvatar: "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=100",
     date: "Dec 15, 2024",
     image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600",
     slug: "making-impact-impossible-ignore",
@@ -71,6 +75,7 @@ const impactArticles = [
     title: "From Lagos to Nairobi: The Subnet Revolution",
     description: "How custom blockchains are reshaping commerce across Africa",
     author: "Marcus Osei",
+    authorAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100",
     date: "Dec 12, 2024",
     image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=600",
     slug: "lagos-nairobi-subnet-revolution",
@@ -218,10 +223,17 @@ export default function BlogIndex() {
                   {trendingArticles[0].description}
                 </p>
 
-                <div className="flex items-center gap-2 text-[10px] text-gray-500 tracking-wider">
+                <div className="flex items-center gap-3 text-[10px] text-gray-500 tracking-wider">
                   <span className="font-semibold uppercase">{trendingArticles[0].series}</span>
                   <span>—</span>
-                  <span className="uppercase">{trendingArticles[0].author}</span>
+                  <div className="flex items-center gap-2">
+                    {trendingArticles[0].authorAvatar && (
+                      <div className="w-5 h-5 rounded-full overflow-hidden border border-gray-300">
+                        <img src={trendingArticles[0].authorAvatar} alt={trendingArticles[0].author} className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    <span className="uppercase">{trendingArticles[0].author}</span>
+                  </div>
                 </div>
               </div>
             </a>
@@ -267,10 +279,17 @@ export default function BlogIndex() {
                         {article.title}
                       </h3>
 
-                      <div className="flex items-center gap-2 text-[10px] text-gray-500 tracking-wider">
+                      <div className="flex items-center gap-3 text-[10px] text-gray-500 tracking-wider">
                         <span className="font-semibold uppercase">{article.series}</span>
                         <span>—</span>
-                        <span className="uppercase">{article.author}</span>
+                        <div className="flex items-center gap-2">
+                          {article.authorAvatar && (
+                            <div className="w-5 h-5 rounded-full overflow-hidden border border-gray-300">
+                              <img src={article.authorAvatar} alt={article.author} className="w-full h-full object-cover" />
+                            </div>
+                          )}
+                          <span className="uppercase">{article.author}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -352,7 +371,12 @@ export default function BlogIndex() {
                   {article.title}
                 </h3>
                 <p className="text-gray-600 mb-3 text-sm">{article.description}</p>
-                <div className="flex items-center gap-2 text-xs text-gray-500">
+                <div className="flex items-center gap-3 text-xs text-gray-500">
+                  {article.authorAvatar && (
+                    <div className="w-6 h-6 rounded-full overflow-hidden border border-gray-200">
+                      <img src={article.authorAvatar} alt={article.author} className="w-full h-full object-cover" />
+                    </div>
+                  )}
                   <span className="font-medium">{article.author}</span>
                   <span>•</span>
                   <span>{article.date}</span>
@@ -470,6 +494,30 @@ export default function BlogIndex() {
                   <p className="text-sm text-gray-600 line-clamp-3 mb-4">
                     {article.excerpt}
                   </p>
+
+                  {/* Engagement Metrics */}
+                  {article.engagement && (
+                    <div className="flex items-center gap-4 mb-4 text-xs text-gray-500">
+                      <div className="flex items-center gap-1">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                        </svg>
+                        <span className="font-semibold">{article.engagement.likes}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                        </svg>
+                        <span className="font-semibold">{article.engagement.shares}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                        </svg>
+                        <span className="font-semibold">{article.engagement.comments}</span>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Author and Read Time */}
                   <div className="flex items-center gap-3 mt-auto pt-4 border-t border-gray-100">

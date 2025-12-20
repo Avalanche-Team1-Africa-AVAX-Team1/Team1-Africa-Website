@@ -1,17 +1,25 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
+import CommentsSection from '../components/CommentsSection';
+
 
 // Article data structure
 interface Article {
     slug: string;
     title: string;
     author: string;
+    authorAvatar?: string;
     date: string;
     category: string;
     image: string;
     description?: string;
     content: string[];
+    engagement?: {
+        likes: number;
+        shares: number;
+        comments: number;
+    };
 }
 
 // All articles data
@@ -20,10 +28,12 @@ const allArticles: Article[] = [
     {
         slug: "building-avalanche-infrastructure-africa",
         title: "Building Avalanche Infrastructure Across Africa",
-        author: "Team1 Africa",
+        author: "Kwame Mensah",
+        authorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
         date: "December 18, 2024",
         category: "Infrastructure",
         image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200",
+        engagement: { likes: 342, shares: 89, comments: 56 },
         content: [
             "Africa is experiencing a technological renaissance, and blockchain infrastructure is at the forefront of this transformation. Team1 Africa is leading the charge in building robust Avalanche infrastructure across the continent.",
             "Our mission is to create a decentralized ecosystem that empowers African developers, entrepreneurs, and communities to build innovative solutions on the Avalanche blockchain. From Lagos to Nairobi, from Cairo to Cape Town, we're establishing nodes, developer hubs, and educational programs.",
@@ -237,12 +247,47 @@ export default function ArticlePage() {
                         {article.title}
                     </h1>
 
-                    {/* Meta Info */}
-                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-8 pb-8 border-b border-gray-200">
-                        <span className="font-medium">{article.author}</span>
-                        <span>•</span>
-                        <span>{article.date}</span>
+                    {/* Author Info with Avatar */}
+                    <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
+                        {article.authorAvatar && (
+                            <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-200">
+                                <img src={article.authorAvatar} alt={article.author} className="w-full h-full object-cover" />
+                            </div>
+                        )}
+                        <div className="flex-1">
+                            <p className="text-sm font-medium text-gray-900">{article.author}</p>
+                            <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
+                                <span>{article.date}</span>
+                            </div>
+                        </div>
                     </div>
+
+                    {/* Engagement Metrics */}
+                    {article.engagement && (
+                        <div className="flex items-center gap-6 mb-8 pb-6 border-b border-gray-100">
+                            <div className="flex items-center gap-1.5 text-gray-600">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                </svg>
+                                <span className="font-medium text-sm">{article.engagement.likes}</span>
+                                <span className="text-xs text-gray-500">Likes</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 text-gray-600">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                </svg>
+                                <span className="font-medium text-sm">{article.engagement.shares}</span>
+                                <span className="text-xs text-gray-500">Shares</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 text-gray-600">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                </svg>
+                                <span className="font-medium text-sm">{article.engagement.comments}</span>
+                                <span className="text-xs text-gray-500">Comments</span>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Featured Image */}
                     <div className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-12">
@@ -300,6 +345,11 @@ export default function ArticlePage() {
                     </div>
                 </motion.div>
             </article>
+
+            {/* Comments Section */}
+            <div className="max-w-4xl mx-auto px-6 md:px-12">
+                <CommentsSection />
+            </div>
 
             {/* Related Articles */}
             {relatedArticles.length > 0 && (

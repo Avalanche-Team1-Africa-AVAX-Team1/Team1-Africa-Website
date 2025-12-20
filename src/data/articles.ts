@@ -1,12 +1,7 @@
 import type { Article } from '../types/blog'
-import avaxImg from '../assets/avax.png'
-import avaxImgWebp from '../assets/avax.webp'
-import avalancheLogo from '../assets/avalanche_logo.png'
-import avalancheLogoWebp from '../assets/avalanche_logo.webp'
-import communityImg from '../assets/community.png'
-import communityImgWebp from '../assets/community.webp'
 import collageImg from '../assets/collage.png'
 import collageImgWebp from '../assets/collage.webp'
+
 
 // Helper to format ISO date strings consistently
 const toISO = (d: string) => new Date(d).toISOString()
@@ -25,7 +20,8 @@ export const articles: Article[] = [
     author: { name: 'Kwame Mensah', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100' },
     publishedDate: toISO('2024-12-20'),
     readTime: 5,
-    tags: ['Tech talk', 'Infrastructure']
+    tags: ['Tech talk', 'Infrastructure'],
+    engagement: { likes: 342, shares: 89, comments: 56 }
   },
   {
     id: '2',
@@ -38,7 +34,8 @@ export const articles: Article[] = [
     author: { name: 'Amara Okafor', avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100' },
     publishedDate: toISO('2024-12-19'),
     readTime: 5,
-    tags: ['Tech talk', 'IRL Events']
+    tags: ['Tech talk', 'IRL Events'],
+    engagement: { likes: 521, shares: 143, comments: 78 }
   },
   {
     id: '3',
@@ -51,7 +48,8 @@ export const articles: Article[] = [
     author: { name: 'Chidi Nwosu', avatar: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=100' },
     publishedDate: toISO('2024-12-18'),
     readTime: 8,
-    tags: ['Gaming', 'Infrastructure']
+    tags: ['Gaming', 'Infrastructure'],
+    engagement: { likes: 892, shares: 234, comments: 145 }
   },
   {
     id: '4',
@@ -64,7 +62,8 @@ export const articles: Article[] = [
     author: { name: 'Marcus Osei', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100' },
     publishedDate: toISO('2024-12-17'),
     readTime: 4,
-    tags: ['IRL Events', 'Community']
+    tags: ['IRL Events', 'Community'],
+    engagement: { likes: 678, shares: 187, comments: 92 }
   }
 ]
 
