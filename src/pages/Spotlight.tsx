@@ -5,19 +5,15 @@
  * 
  * Features:
  * - Hero slideshow (Top Contributor, Project, Event of Year)
- * - Top 3 Contributors + 10 Honorary Mentions
- * - Top Contributors section with masonry layout + Team1 logo
- * - Projects with real Avalanche projects + Explore More CTA
+ * - Top Contributors section with Bruut-style masonry layout + Team1 logo
+ * - Projects with logo on left, details right, country flags
  * - Events linking to gallery details
- * - Peak Moments section
+ * - Peak Moments section (light background)
  */
 
 import { useEffect, useRef, useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
-
-// Import Team1 logo for center piece
-import team1Logo from '../assets/team1logo.png'
 
 // ==================== TYPES ====================
 
@@ -39,6 +35,7 @@ interface SpotlightProject {
     category: string
     logo: string
     location: string
+    countryCode: string
     liveUrl?: string
     achievement?: string
 }
@@ -84,12 +81,12 @@ const SPOTLIGHT_PEOPLE: SpotlightPerson[] = [
     { id: 'p13', name: 'Tendai Moyo', role: 'Security Researcher', region: 'Zimbabwe', contribution: 'Identified 5 critical vulnerabilities', badge: 'honorary', image: new URL('../assets/testimonial16.jpg', import.meta.url).href },
 ]
 
-// Projects with real Avalanche ecosystem logos
+// Projects with country codes for flags
 const SPOTLIGHT_PROJECTS: SpotlightProject[] = [
-    { id: 1, name: 'Canza Finance', tagline: 'African Forex on-chain', metric: '$2M+ TVL', category: 'DeFi', logo: new URL('../assets/refi.png', import.meta.url).href, location: 'Nigeria', achievement: '🏆 Avalanche Grant Winner', liveUrl: 'https://canza.io' },
-    { id: 2, name: 'Kula Protocol', tagline: 'Impact investment DAO', metric: '$500K deployed', category: 'DAO', logo: new URL('../assets/gitcoin.png', import.meta.url).href, location: 'Kenya', achievement: '🏆 Summit Hackathon Winner', liveUrl: 'https://kula.finance' },
-    { id: 3, name: 'AfriMint', tagline: 'NFT marketplace for African art', metric: '10K+ minted', category: 'NFT', logo: new URL('../assets/spherre.png', import.meta.url).href, location: 'Ghana', achievement: '🏆 Best NFT Project 2024', liveUrl: 'https://afrimint.xyz' },
-    { id: 4, name: 'Baki Exchange', tagline: 'Tokenized African currencies', metric: '3 currencies live', category: 'DeFi', logo: new URL('../assets/dexalot.png', import.meta.url).href, location: 'South Africa', achievement: '🏆 Avalanche Summit Featured', liveUrl: 'https://baki.exchange' },
+    { id: 1, name: 'Canza Finance', tagline: 'African Forex on-chain', metric: '$2M+ TVL', category: 'DeFi', logo: new URL('../assets/refi.png', import.meta.url).href, location: 'Nigeria', countryCode: 'NG', achievement: '🏆 Avalanche Grant Winner', liveUrl: 'https://canza.io' },
+    { id: 2, name: 'Kula Protocol', tagline: 'Impact investment DAO', metric: '$500K deployed', category: 'DAO', logo: new URL('../assets/gitcoin.png', import.meta.url).href, location: 'Kenya', countryCode: 'KE', achievement: '🏆 Summit Hackathon Winner', liveUrl: 'https://kula.finance' },
+    { id: 3, name: 'AfriMint', tagline: 'NFT marketplace for African art', metric: '10K+ minted', category: 'NFT', logo: new URL('../assets/spherre.png', import.meta.url).href, location: 'Ghana', countryCode: 'GH', achievement: '🏆 Best NFT Project 2024', liveUrl: 'https://afrimint.xyz' },
+    { id: 4, name: 'Baki Exchange', tagline: 'Tokenized African currencies', metric: '3 currencies live', category: 'DeFi', logo: new URL('../assets/dexalot.png', import.meta.url).href, location: 'South Africa', countryCode: 'ZA', achievement: '🏆 Avalanche Summit Featured', liveUrl: 'https://baki.exchange' },
 ]
 
 const SPOTLIGHT_EVENTS: SpotlightEvent[] = [
@@ -133,6 +130,9 @@ const MOMENT_IMAGES = [
     new URL('../assets/south6.jpg', import.meta.url).href,
     new URL('../assets/ghana3.JPG', import.meta.url).href,
 ]
+
+// Country flag URLs using flagcdn
+const getCountryFlag = (code: string) => `https://flagcdn.com/w80/${code.toLowerCase()}.png`
 
 // ==================== HERO SLIDESHOW ====================
 
@@ -230,114 +230,36 @@ function HeroSlideshow() {
     )
 }
 
-// ==================== TOP 3 + HONORARY MENTIONS ====================
-
-function TopContributorsPreview() {
-    const top3 = SPOTLIGHT_PEOPLE.filter(p => p.badge === 'yearly' || p.badge === 'top3').slice(0, 3)
-    const honorary = SPOTLIGHT_PEOPLE.filter(p => p.badge === 'honorary').slice(0, 10)
-
-    return (
-        <section className="mb-24">
-            {/* Top 3 Contributors */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="mb-12"
-            >
-                <h3 className="text-3xl md:text-4xl font-black text-black mb-8 flex items-center gap-3">
-                    <span className="text-4xl">🏆</span> Top 3 Contributors of 2024
-                </h3>
-                <div className="grid md:grid-cols-3 gap-6">
-                    {top3.map((person, i) => (
-                        <motion.div
-                            key={person.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.1 }}
-                            className="group relative overflow-hidden rounded-2xl cursor-pointer"
-                        >
-                            <div className="aspect-[3/4] overflow-hidden">
-                                <img
-                                    src={person.image}
-                                    alt={person.name}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
-                            </div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-                            <div className="absolute top-4 left-4">
-                                <span className={`px-3 py-1.5 text-xs font-bold rounded-full ${i === 0 ? 'bg-yellow-500 text-black' : 'bg-white text-black'
-                                    }`}>
-                                    #{i + 1} {i === 0 ? '👑' : ''}
-                                </span>
-                            </div>
-                            <div className="absolute bottom-0 left-0 right-0 p-6">
-                                <h4 className="text-2xl font-black text-white mb-1">{person.name}</h4>
-                                <p className="text-white/70">{person.role} · {person.region}</p>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </motion.div>
-
-            {/* Honorary Mentions */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-            >
-                <h3 className="text-2xl md:text-3xl font-black text-black mb-6 flex items-center gap-3">
-                    <span className="text-3xl">⭐</span> Honorary Mentions
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                    {honorary.map((person, i) => (
-                        <motion.div
-                            key={person.id}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.05 }}
-                            className="group relative overflow-hidden rounded-xl aspect-square cursor-pointer"
-                        >
-                            <img
-                                src={person.image}
-                                alt={person.name}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                                <p className="text-sm font-bold text-white truncate">{person.name}</p>
-                                <p className="text-xs text-white/70">{person.region}</p>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </motion.div>
-        </section>
-    )
-}
-
-// ==================== TOP CONTRIBUTORS ZONE ====================
+// ==================== TOP CONTRIBUTORS ZONE (BRUUT STYLE) ====================
 
 function TopContributorsZone() {
     const [selectedPerson, setSelectedPerson] = useState<SpotlightPerson | null>(null)
     const allContributors = SPOTLIGHT_PEOPLE
 
-    // Masonry layout with varying sizes
-    const getGridClass = (index: number) => {
-        const patterns = [
-            'col-span-2 row-span-2', // Large
-            'col-span-1 row-span-1', // Small
-            'col-span-1 row-span-2', // Tall
-            'col-span-2 row-span-1', // Wide
-            'col-span-1 row-span-1', // Small
-        ]
-        return patterns[index % patterns.length]
-    }
+    // Bruut-style grid positions - 5 columns x 3 rows
+    // Center cell (col 3, row 2) is for logo - SMALL
+    // Surrounding images get MORE space with larger spans
+    const gridPositions = [
+        // Top row - images span into space around center
+        { col: '1 / 2', row: '1 / 3', size: 'tall' },       // 0 - left tall
+        { col: '2 / 3', row: '1 / 2', size: 'normal' },     // 1 - top left of center
+        { col: '3 / 4', row: '1 / 2', size: 'normal' },     // 2 - top of center
+        { col: '4 / 5', row: '1 / 2', size: 'normal' },     // 3 - top right of center
+        { col: '5 / 6', row: '1 / 3', size: 'tall' },       // 4 - right tall
+        // Middle row - center logo + sides
+        { col: '2 / 3', row: '2 / 3', size: 'normal' },     // 5 - left of center
+        // CENTER LOGO: col 3, row 2 (single cell)
+        { col: '4 / 5', row: '2 / 3', size: 'normal' },     // 6 - right of center
+        // Bottom row
+        { col: '1 / 2', row: '3 / 4', size: 'normal' },     // 7 - bottom left corner
+        { col: '2 / 3', row: '3 / 4', size: 'normal' },     // 8 - bottom left of center
+        { col: '3 / 4', row: '3 / 4', size: 'normal' },     // 9 - bottom of center
+        { col: '4 / 5', row: '3 / 4', size: 'normal' },     // 10 - bottom right of center
+        { col: '5 / 6', row: '3 / 4', size: 'normal' },     // 11 - bottom right corner
+    ]
 
     return (
-        <section className="py-24 px-6 md:px-12 lg:px-20">
+        <section className="py-24 px-6 md:px-12 lg:px-20 bg-[#f5f5f5]">
             {/* Zone header */}
             <div className="max-w-7xl mx-auto mb-16">
                 <motion.div
@@ -363,49 +285,72 @@ function TopContributorsZone() {
                 </motion.p>
             </div>
 
-            {/* Masonry layout with Team1 logo in center */}
-            <div className="max-w-7xl mx-auto">
-                <div className="relative grid grid-cols-4 md:grid-cols-6 gap-4 auto-rows-[150px] md:auto-rows-[180px]">
-                    {/* Team1 Logo in center */}
+            {/* Bruut-style grid with perfect center box for logo */}
+            <div className="w-full flex justify-center overflow-x-auto">
+                <div
+                    className="grid gap-4"
+                    style={{
+                        gridTemplateColumns: 'repeat(5, 320px)',
+                        gridTemplateRows: 'repeat(3, 320px)',
+                    }}
+                >
+                    {/* Team1 Logo in center - single cell */}
                     <motion.div
-                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none"
+                        className="flex items-center justify-center p-6 rounded-2xl"
+                        style={{
+                            gridColumn: '3 / 4',
+                            gridRow: '2 / 3',
+                        }}
                         initial={{ opacity: 0, scale: 0 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.5, type: 'spring' }}
+                        transition={{ delay: 0.3, type: 'spring' }}
                     >
-                        <div className="w-32 h-32 md:w-48 md:h-48 bg-white rounded-full shadow-2xl flex items-center justify-center p-4">
-                            <img src={team1Logo} alt="Team1 Africa" className="w-full h-full object-contain" />
-                        </div>
+                        <img src={new URL('../assets/cut_avax_logo.png', import.meta.url).href} alt="Avalanche" className="w-auto h-auto max-w-[250px] max-h-[250px] object-contain" />
                     </motion.div>
 
-                    {allContributors.slice(0, 12).map((person, i) => (
-                        <motion.div
-                            key={person.id}
-                            className={`${getGridClass(i)} relative overflow-hidden rounded-2xl cursor-pointer group`}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.05 }}
-                            onClick={() => setSelectedPerson(person)}
-                        >
-                            <img
-                                src={person.image}
-                                alt={person.name}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
-                            {person.badge === 'yearly' && (
-                                <span className="absolute top-3 left-3 px-2 py-1 bg-red-600 text-white text-xs font-bold rounded-full">
-                                    👑 #1
-                                </span>
-                            )}
-                            <div className="absolute bottom-0 left-0 right-0 p-4">
-                                <h4 className="text-lg font-bold text-white truncate">{person.name}</h4>
-                                <p className="text-sm text-white/70 truncate">{person.role}</p>
-                            </div>
-                        </motion.div>
-                    ))}
+                    {/* Contributors around the center */}
+                    {allContributors.slice(0, 12).map((person, i) => {
+                        const pos = gridPositions[i]
+                        if (!pos) return null
+
+                        return (
+                            <motion.div
+                                key={person.id}
+                                className="relative overflow-hidden cursor-pointer group rounded-2xl"
+                                style={{
+                                    gridColumn: pos.col,
+                                    gridRow: pos.row,
+                                }}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.05 }}
+                                onClick={() => setSelectedPerson(person)}
+                            >
+                                <img
+                                    src={person.image}
+                                    alt={person.name}
+                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                />
+                                {/* Gradient overlay - stronger on hover */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                                {/* Badge for top contributor */}
+                                {person.badge === 'yearly' && (
+                                    <span className="absolute top-2 left-2 px-2 py-1 bg-red-600 text-white text-[10px] font-bold rounded-full">
+                                        👑 #1
+                                    </span>
+                                )}
+
+                                {/* Name & Role - ONLY visible on hover */}
+                                <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                    <p className="text-sm font-bold text-white truncate">{person.name}</p>
+                                    <p className="text-xs text-white/70 truncate">{person.role}</p>
+                                </div>
+                            </motion.div>
+                        )
+                    })}
                 </div>
             </div>
 
@@ -454,7 +399,7 @@ function ProjectsZone() {
     const navigate = useNavigate()
 
     return (
-        <section className="py-24 px-6 md:px-12 lg:px-20 bg-gray-50">
+        <section className="py-24 px-6 md:px-12 lg:px-20 bg-white">
             {/* Zone header */}
             <div className="max-w-7xl mx-auto mb-16">
                 <motion.div
@@ -480,57 +425,65 @@ function ProjectsZone() {
                 </motion.p>
             </div>
 
-            {/* Project cards */}
+            {/* Project cards - Logo on left, details on right */}
             <div className="max-w-7xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-6 mb-12">
                     {SPOTLIGHT_PROJECTS.map((project, i) => (
                         <motion.div
                             key={project.id}
-                            className="relative group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                            className="relative group cursor-pointer bg-gray-50 rounded-3xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: i * 0.1 }}
                             onClick={() => navigate(`/projects/${project.id}`)}
                         >
-                            <div className="p-8 md:p-10">
-                                {/* Achievement badge */}
-                                {project.achievement && (
-                                    <span className="inline-block px-3 py-1.5 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full mb-4">
-                                        {project.achievement}
-                                    </span>
-                                )}
+                            {/* Country flag - top right corner */}
+                            <div className="absolute top-4 right-4 z-10">
+                                <img
+                                    src={getCountryFlag(project.countryCode)}
+                                    alt={project.location}
+                                    className="w-8 h-8 rounded-full object-cover shadow-md border-2 border-white"
+                                />
+                            </div>
 
-                                {/* Logo and name */}
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className="w-16 h-16 rounded-2xl bg-gray-100 p-2 flex items-center justify-center">
-                                        <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-2xl md:text-3xl font-black text-black">{project.name}</h3>
-                                        <p className="text-gray-500">{project.tagline}</p>
-                                    </div>
+                            <div className="flex">
+                                {/* Logo section - left side, full height */}
+                                <div className="w-1/3 bg-white flex items-center justify-center p-6 min-h-[200px]">
+                                    <img
+                                        src={project.logo}
+                                        alt={project.name}
+                                        className="w-full h-auto max-h-24 object-contain group-hover:scale-110 transition-transform duration-300"
+                                    />
                                 </div>
 
-                                {/* Stats */}
-                                <div className="flex items-center gap-6">
-                                    <div>
-                                        <p className="text-3xl font-black text-red-600">{project.metric}</p>
-                                        <p className="text-sm text-gray-400">Key Metric</p>
-                                    </div>
-                                    <div className="w-px h-12 bg-gray-200" />
-                                    <div>
-                                        <span className="px-3 py-1 bg-black text-white text-xs font-bold rounded-full">{project.category}</span>
-                                        <p className="text-sm text-gray-400 mt-1">{project.location}</p>
-                                    </div>
-                                </div>
+                                {/* Details section - right side */}
+                                <div className="flex-1 p-6 flex flex-col justify-center">
+                                    {/* Achievement badge */}
+                                    {project.achievement && (
+                                        <span className="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full mb-3 w-fit">
+                                            {project.achievement}
+                                        </span>
+                                    )}
 
-                                {/* Hover arrow */}
-                                <div className="absolute top-8 right-8 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                    </svg>
+                                    <h3 className="text-2xl font-black text-black mb-1">{project.name}</h3>
+                                    <p className="text-gray-500 text-sm mb-4">{project.tagline}</p>
+
+                                    {/* Stats */}
+                                    <div className="flex items-center gap-4">
+                                        <p className="text-2xl font-black text-red-600">{project.metric}</p>
+                                        <span className="px-3 py-1 bg-black text-white text-xs font-bold rounded-full">
+                                            {project.category}
+                                        </span>
+                                    </div>
                                 </div>
+                            </div>
+
+                            {/* Hover arrow */}
+                            <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
                             </div>
                         </motion.div>
                     ))}
@@ -566,7 +519,7 @@ function EventsZone() {
     const otherEvents = SPOTLIGHT_EVENTS.filter(e => e.badge !== 'event-of-year')
 
     return (
-        <section className="py-24 px-6 md:px-12 lg:px-20">
+        <section className="py-24 px-6 md:px-12 lg:px-20 bg-gray-50">
             {/* Zone header */}
             <div className="max-w-7xl mx-auto mb-16">
                 <motion.div
@@ -631,7 +584,7 @@ function EventsZone() {
                         {otherEvents.map((event, i) => (
                             <motion.div
                                 key={event.id}
-                                className="w-full md:w-64 cursor-pointer group"
+                                className="w-full md:w-64 cursor-pointer group relative"
                                 initial={{ opacity: 0, y: 40 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
@@ -644,16 +597,16 @@ function EventsZone() {
                                         alt={event.title}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                     />
-                                </div>
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-2xl pointer-events-none" />
-                                <div className="absolute bottom-4 left-4 right-4">
-                                    {event.badge && (
-                                        <span className="inline-block px-2 py-1 bg-black text-white text-xs font-bold rounded-full mb-2">
-                                            {event.badge === 'event-of-month' ? '📅 Monthly Top' : '⭐ Top 5'}
-                                        </span>
-                                    )}
-                                    <h4 className="text-lg font-bold text-white">{event.title}</h4>
-                                    <p className="text-white/60 text-sm">{event.date}</p>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-2xl" />
+                                    <div className="absolute bottom-4 left-4 right-4">
+                                        {event.badge && (
+                                            <span className="inline-block px-2 py-1 bg-black text-white text-xs font-bold rounded-full mb-2">
+                                                {event.badge === 'event-of-month' ? '📅 Monthly Top' : '⭐ Top 5'}
+                                            </span>
+                                        )}
+                                        <h4 className="text-lg font-bold text-white">{event.title}</h4>
+                                        <p className="text-white/60 text-sm">{event.date}</p>
+                                    </div>
                                 </div>
                             </motion.div>
                         ))}
@@ -670,7 +623,7 @@ function PeakMomentsZone() {
     const [activeIndex, setActiveIndex] = useState(0)
 
     return (
-        <section className="py-24 px-6 md:px-12 lg:px-20 bg-black text-white overflow-hidden">
+        <section className="py-24 px-6 md:px-12 lg:px-20 bg-white low-hidden">
             {/* Zone header */}
             <div className="max-w-7xl mx-auto mb-16">
                 <motion.div
@@ -679,7 +632,7 @@ function PeakMomentsZone() {
                     viewport={{ once: true }}
                     className="flex items-baseline gap-4 mb-4"
                 >
-                    <h2 className="text-6xl md:text-8xl font-black text-white tracking-tight">
+                    <h2 className="text-6xl md:text-8xl font-black text-black tracking-tight">
                         Peak Moments
                     </h2>
                     <span className="text-red-500 text-2xl font-bold">●</span>
@@ -689,7 +642,7 @@ function PeakMomentsZone() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 }}
-                    className="text-xl text-white/50 max-w-xl"
+                    className="text-xl text-gray-600 max-w-xl"
                 >
                     Those "you had to be there" moments. Pure vibes. No filter. 📸
                 </motion.p>
@@ -730,7 +683,7 @@ function PeakMomentsZone() {
                                     alt={`Peak moment ${i + 1}`}
                                     className="w-full h-full object-cover"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                             </motion.div>
                         )
                     })}
@@ -835,7 +788,8 @@ export default function SpotlightPlatform() {
             <div className="px-6 md:px-12 lg:px-20">
                 <div className="max-w-7xl mx-auto">
                     <HeroSlideshow />
-                    <TopContributorsPreview />
+                    {/* TopContributorsPreview commented out per request */}
+                    {/* <TopContributorsPreview /> */}
                 </div>
             </div>
 
