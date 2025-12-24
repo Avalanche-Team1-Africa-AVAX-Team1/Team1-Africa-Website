@@ -99,6 +99,7 @@ const Navbar = () => {
                             <li><Link to="/about" className={location.pathname === '/about' ? 'font-semibold text-red-400' : 'text-black'}>About</Link></li>
                             <li><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : 'text-black'}>Editorial</Link></li>
                             <li><Link to="/spotlight" className={location.pathname === '/spotlight' ? 'font-semibold text-red-400' : 'text-black'}>Spotlight</Link></li>
+                            <li><Link to="/projects" className={location.pathname === '/projects' || location.pathname.startsWith('/projects/') ? 'font-semibold text-red-400' : 'text-black'}>Projects</Link></li>
                             <li><Link to="/gallery" className={location.pathname === '/gallery' ? 'font-semibold text-red-400' : 'text-black'}>Gallery</Link></li>
                             <div className="flex gap-2">
                                 <li><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
@@ -161,10 +162,9 @@ const Navbar = () => {
                     <li onClick={() => setSidebarOpen(false)}><Link to="/about" className={location.pathname === '/about' ? 'font-semibold text-red-400' : 'text-black'}>About</Link></li>
                     <li onClick={() => setSidebarOpen(false)}><Link to="/blog" className={location.pathname === '/blog' ? 'font-semibold text-red-400' : 'text-black'}>Editorial</Link></li>
                     <li onClick={() => setSidebarOpen(false)}><Link to="/spotlight" className={location.pathname === '/spotlight' ? 'font-semibold text-red-400' : 'text-black'}>Spotlight</Link></li>
+                    <li onClick={() => setSidebarOpen(false)}><Link to="/projects" className={location.pathname === '/projects' || location.pathname.startsWith('/projects/') ? 'font-semibold text-red-400' : 'text-black'}>Projects</Link></li>
                     <li onClick={() => setSidebarOpen(false)}><Link to="/gallery" className={location.pathname === '/gallery' ? 'font-semibold text-red-400' : 'text-black'}>Gallery</Link></li>
                     <li onClick={() => setSidebarOpen(false)}><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
-                    <li onClick={() => setSidebarOpen(false)} className="text-black">Games</li>
-                    <li onClick={() => setSidebarOpen(false)} className="text-black">Community</li>
                 </ul>
                 <div className="mt-12 px-8 lt-768:px-6 lt-480:px-5">
                     <a href="#" className="flex items-center gap-4 text-2xl lt-768:text-xl lt-480:text-lg bg-black text-white px-4 py-3 rounded-full w-full justify-center">
