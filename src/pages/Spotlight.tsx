@@ -65,7 +65,7 @@ interface HeroSlide {
 // Top Contributors
 const SPOTLIGHT_PEOPLE: SpotlightPerson[] = [
     // Top 3 of the Year
-    { id: 'p1', name: 'Kwame Mensah', role: 'Lead Developer', region: 'Ghana', contribution: 'Built 12 production subnets, mentored 50+ developers', badge: 'yearly', image: new URL('../assets/testimonial1.jpg', import.meta.url).href },
+    { id: 'p1', name: 'Feezy Techboy', role: 'AVAX Team1 Community Lead', region: 'Nigeria', contribution: 'Built 12 production subnets, mentored 50+ developers', badge: 'yearly', image: new URL('../assets/testimonial1.jpg', import.meta.url).href },
     { id: 'p2', name: 'Amara Okafor', role: 'Community Lead', region: 'Nigeria', contribution: 'Onboarded 500+ developers to Avalanche', badge: 'top3', image: new URL('../assets/testimonial2.jpg', import.meta.url).href },
     { id: 'p3', name: 'Wanjiku Kimani', role: 'Product Lead', region: 'Kenya', contribution: 'Launched 8 African-founded projects', badge: 'top3', image: new URL('../assets/testimonial3.jpg', import.meta.url).href },
     // Honorary Mentions (10)
@@ -111,7 +111,7 @@ const HERO_SLIDES: HeroSlide[] = [
         title: 'DannyYak',
         subtitle: 'Avalanche Team1 Contributor',
         description: 'Produced high-impact educational and ecosystem content that amplified Avalanche visibility, simplified complex concepts, and consistently engaged the African builder community.',
-        image: new URL('../assets/testimonial12.jpeg', import.meta.url).href,
+        image: new URL('../assets/DannyYak.jpeg', import.meta.url).href,
         badge: '🎬 TOP YAPPER'
     },
     {
@@ -250,7 +250,7 @@ function HeroSlideshow() {
                             </p>
 
                             {/* Description */}
-                            <p className="text-base md:text-lg text-gray-600 leading-relaxed max-w-lg">
+                            <p className="text-base md:text-lg text-gray-600 leading-relaxed max-w-lg line-clamp-3">
                                 {slide.description}
                             </p>
                         </div>
@@ -263,7 +263,7 @@ function HeroSlideshow() {
             {/* Prev Button - Left (Over Image) */}
             <button
                 onClick={goToPrev}
-                className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center hover:bg-black/50 transition-colors z-20 text-white"
+                className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/30 backdrop-blur-sm items-center justify-center hover:bg-black/50 transition-colors z-20 text-white"
             >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -273,7 +273,7 @@ function HeroSlideshow() {
             {/* Next Button - Right (Extreme Right) */}
             <button
                 onClick={goToNext}
-                className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/10 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all z-20 text-black"
+                className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/10 items-center justify-center hover:bg-red-600 hover:text-white transition-all z-20 text-black"
             >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -281,7 +281,7 @@ function HeroSlideshow() {
             </button>
 
             {/* Slide indicators - Bottom Left of Right Section */}
-            <div className="absolute bottom-8 left-6 md:left-[53%] flex gap-2 z-20">
+            <div className="hidden md:flex absolute bottom-8 left-6 md:left-[53%] gap-2 z-20">
                 {HERO_SLIDES.map((_, i) => (
                     <button
                         key={i}
@@ -886,9 +886,8 @@ export default function SpotlightPlatform() {
 
             {/* 💡 RED CONE SPOTLIGHT (TONE-ON-TONE RED GRAIN) */}
             <div
-                className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1300px] h-[1100px] pointer-events-none z-30 transition-opacity duration-700 ease-in-out ${
-                    isSpotlightVisible ? 'opacity-100' : 'opacity-0'
-                }`}
+                className={`hidden lg:block absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1300px] h-[1100px] pointer-events-none z-30 transition-opacity duration-700 ease-in-out ${isSpotlightVisible ? 'opacity-100' : 'opacity-0'
+                    }`}
             >
                 {/* Layer 1: The Red Light Beam (Background Glow) */}
                 <div
@@ -897,7 +896,7 @@ export default function SpotlightPlatform() {
                         clipPath: 'polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%)',
                         // Soft Red Gradient
                         background: 'linear-gradient(180deg, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0.15) 50%, transparent 95%)',
-                        filter: 'blur(50px)', 
+                        filter: 'blur(50px)',
                         mixBlendMode: 'screen',
                     }}
                 />
@@ -916,7 +915,7 @@ export default function SpotlightPlatform() {
                         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.20' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1.0  0 0 0 0 0.5  0 0 0 0 0.5  80 0 0 0 -60'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E")`,
                         backgroundSize: '150px 150px',
                         backgroundRepeat: 'repeat',
-                        mixBlendMode: 'normal', 
+                        mixBlendMode: 'normal',
                         opacity: 0.9,
                     }}
                 />
@@ -952,7 +951,7 @@ export default function SpotlightPlatform() {
             </header>
 
             {/* Hero Slideshow Wrapper - Triggers the Light */}
-            <div 
+            <div
                 className="px-6 md:px-12 lg:px-20 relative z-10"
                 onMouseEnter={() => setIsSpotlightVisible(true)}
                 onMouseLeave={() => setIsSpotlightVisible(false)}
