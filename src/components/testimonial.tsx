@@ -351,16 +351,79 @@ export default function TestimonialSlider() {
     else tl.resume();
   }, [isHovering, expandedKey]);
 
-  // Preload images in background (non-blocking)
+  // Preload and decode ALL images before showing slider
   useEffect(() => {
-    // Immediately set ready - no blocking
-    setIsReady(true);
+    let isMounted = true;
+    if (testimonials.length === 0) {
+      setIsReady(true);
+      return () => {
+        isMounted = false;
+      };
+    }
 
-    // Preload images in background for smoother scrolling
-    testimonials.forEach((item) => {
-      const img = new Image();
-      img.src = item.image;
-    });
+    const preloadAndDecodeImages = async () => {
+      try {
+        // Create image elements for all testimonials
+        const imagePromises = testimonials.map((item) => {
+          return new Promise<void>((resolve) => {
+            const img = new Image();
+
+            img.onload = async () => {
+              try {
+                // Decode the image to ensure it's ready for rendering
+                if ('decode' in img) {
+                  await img.decode();
+                }
+                resolve();
+              } catch (decodeError) {
+                console.warn('Image decode failed:', item.image, decodeError);
+                resolve(); // Still resolve to not block other images
+              }
+            };
+
+            img.onerror = () => {
+              console.warn('Image load failed:', item.image);
+              resolve(); // Resolve anyway to not block
+            };
+
+            // Set explicit dimensions to prevent layout shift
+            img.width = 800;
+            img.height = 800;
+            img.src = item.image;
+
+            // If already cached and complete, decode immediately
+            if (img.complete) {
+              if ('decode' in img) {
+                img.decode().then(resolve).catch(() => resolve());
+              } else {
+                resolve();
+              }
+            }
+          });
+        });
+
+        // Wait for all images to load and decode
+        await Promise.all(imagePromises);
+
+        // Add small delay to ensure GPU has processed everything
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        if (isMounted) {
+          setIsReady(true);
+        }
+      } catch (error) {
+        console.error('Image preloading error:', error);
+        if (isMounted) {
+          setIsReady(true); // Show anyway
+        }
+      }
+    };
+
+    preloadAndDecodeImages();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleCardClick = (renderIndex: number) => {

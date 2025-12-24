@@ -100,35 +100,43 @@ const SPOTLIGHT_EVENTS: SpotlightEvent[] = [
 const HERO_SLIDES: HeroSlide[] = [
     {
         type: 'contributor',
-        title: 'Kwame Mensah',
-        subtitle: 'Contributor of the Year',
-        description: 'Built 12 production subnets and mentored 50+ developers across Africa',
-        image: new URL('../assets/testimonial1.jpg', import.meta.url).href,
-        badge: '👑 2024 CHAMPION'
+        title: 'Feezy Techboy',
+        subtitle: 'Community Lead, Team1 Nigeria',
+        description: 'Built and led Team1 Nigeria into one of the most active Avalanche communities, driving contributor onboarding, local events, and sustained ecosystem participation.',
+        image: new URL('../assets/Feezy.jpg', import.meta.url).href,
+        badge: '🏆 CONTRIBUTOR OF THE YEAR'
     },
     {
         type: 'contributor',
-        title: 'Fatima Bello',
-        subtitle: 'Content Creator of the Year',
-        description: 'Created 100+ educational resources and tutorials on Avalanche development',
+        title: 'Sylogbu',
+        subtitle: 'Avalanche Team1 Contributor',
+        description: 'Produced high-impact educational and ecosystem content that amplified Avalanche visibility, simplified complex concepts, and consistently engaged the African builder community.',
         image: new URL('../assets/testimonial12.jpeg', import.meta.url).href,
         badge: '🎬 TOP CREATOR'
     },
     {
-        type: 'project',
-        title: 'Canza Finance',
-        subtitle: 'Project of the Year',
-        description: 'Revolutionizing African forex with on-chain tokenized currencies',
-        image: new URL('../assets/south7.jpg', import.meta.url).href,
-        badge: '🚀 TOP PROJECT'
+        type: 'contributor',
+        title: 'Deon',
+        subtitle: 'Ecosystem Streamer & Community Host',
+        description: 'Delivered consistent live streams covering Avalanche development, ecosystem updates, and community discussions, bringing real-time education and visibility to African builders.',
+        image: new URL('../assets/Deon.jpeg', import.meta.url).href,
+        badge: '🎙️ TOP STREAMER'
     },
     {
         type: 'event',
-        title: 'Lagos Summit 2024',
-        subtitle: 'Event of the Year',
-        description: '1,200+ builders gathered for the largest Avalanche event in Africa',
+        title: 'Team1 Africa Builder Summit',
+        subtitle: 'Top Event of the Year',
+        description: 'The most impactful Team1 Africa gathering of the year, bringing builders, contributors, and partners together to launch projects, share knowledge, and strengthen the Avalanche ecosystem.',
         image: new URL('../assets/south1.jpg', import.meta.url).href,
-        badge: '🎉 LEGENDARY'
+        badge: '🎉 LEGENDARY EVENT'
+    },
+    {
+        type: 'project',
+        title: 'BloodLoop',
+        subtitle: 'Project of the Year',
+        description: 'A 5v5 hero shooter integrating Avalanche Subnets for a seamless battle experience with true asset ownership.',
+        image: new URL('../assets/BloodLoop.png', import.meta.url).href,
+        badge: '🚀 TOP PROJECT'
     },
 ]
 
@@ -188,102 +196,108 @@ function HeroSlideshow() {
         setIsAutoPlaying(false)
     }
 
-    // Slide variants for horizontal movement - NO opacity fade
+    // Slide variants for image horizontal slide
     const slideVariants = {
         enter: (dir: number) => ({
             x: dir > 0 ? '100%' : '-100%',
-            zIndex: 1,
+            opacity: 1,
         }),
         center: {
             x: 0,
-            zIndex: 1,
+            opacity: 1,
         },
         exit: (dir: number) => ({
             x: dir > 0 ? '-100%' : '100%',
-            zIndex: 0,
+            opacity: 1,
         }),
     }
 
-    return (
-        <section className="relative w-full h-[600px] md:h-[700px] overflow-hidden rounded-3xl mb-16 bg-black">
-            {/* Background images with horizontal slide transition - both visible during transition */}
-            <AnimatePresence initial={false} custom={direction}>
-                <motion.div
-                    key={currentSlide}
-                    custom={direction}
-                    variants={slideVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.5, ease: 'linear' }}
-                    className="absolute inset-0"
-                >
-                    <img
-                        src={slide.image}
-                        alt={slide.title}
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-                </motion.div>
-            </AnimatePresence>
 
-            {/* Content */}
-            <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-16 z-10">
-                <AnimatePresence mode="wait" custom={direction}>
+
+    return (
+        <section className="relative w-full overflow-hidden rounded-3xl mb-16 bg-[#f5f5f5] min-h-[550px] md:h-[600px]">
+            {/* Sliding Content Container */}
+            <div className="absolute inset-0">
+                <AnimatePresence initial={false} custom={direction}>
                     <motion.div
                         key={currentSlide}
                         custom={direction}
-                        initial={{ opacity: 0, x: direction > 0 ? 50 : -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: direction > 0 ? -50 : 50 }}
-                        transition={{ duration: 0.4, delay: 0.1 }}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+                        className="absolute inset-0 flex flex-col md:flex-row"
                     >
-                        <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-full mb-4">
-                            {slide.badge}
-                        </span>
-                        <h2 className="text-5xl md:text-7xl font-black text-white mb-2">
-                            {slide.title}
-                        </h2>
-                        <p className="text-xl md:text-2xl text-red-400 font-bold mb-4">
-                            {slide.subtitle}
-                        </p>
-                        <p className="text-lg text-white/80 max-w-2xl">
-                            {slide.description}
-                        </p>
+                        {/* Left Side - Image */}
+                        <div className="relative w-full md:w-1/2 h-[300px] md:h-full p-2 md:p-4">
+                            <img
+                                src={slide.image}
+                                alt={slide.title}
+                                className="w-full h-full rounded-2xl md:rounded-3xl shadow-lg object-cover"
+                            />
+                        </div>
+
+                        {/* Right Side - Text Content */}
+                        <div className="relative w-full md:w-1/2 p-6 md:p-10 lg:p-16 flex flex-col justify-center">
+                            {/* Badge */}
+                            <span className="inline-block w-fit px-4 py-2 bg-red-600 text-white text-xs md:text-sm font-bold rounded-full mb-4">
+                                {slide.badge}
+                            </span>
+
+                            {/* Title */}
+                            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-black mb-3 leading-tight">
+                                {slide.title}
+                            </h2>
+
+                            {/* Subtitle */}
+                            <p className="text-lg md:text-xl lg:text-2xl text-red-500 font-bold mb-4">
+                                {slide.subtitle}
+                            </p>
+
+                            {/* Description */}
+                            <p className="text-base md:text-lg text-gray-600 leading-relaxed max-w-lg">
+                                {slide.description}
+                            </p>
+                        </div>
                     </motion.div>
                 </AnimatePresence>
-            </div>
+            </div >
 
-            {/* Slide indicators */}
-            <div className="absolute bottom-8 right-8 flex gap-3 z-20">
+            {/* STATIC CONTROLS */}
+
+            {/* Prev Button - Left (Over Image) */}
+            <button
+                onClick={goToPrev}
+                className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center hover:bg-black/50 transition-colors z-20 text-white"
+            >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+
+            {/* Next Button - Right (Extreme Right) */}
+            <button
+                onClick={goToNext}
+                className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/10 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all z-20 text-black"
+            >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+
+            {/* Slide indicators - Bottom Left of Right Section */}
+            <div className="absolute bottom-8 left-6 md:left-[53%] flex gap-2 z-20">
                 {HERO_SLIDES.map((_, i) => (
                     <button
                         key={i}
                         onClick={() => goToSlide(i)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-red-600 w-8' : 'bg-white/50 hover:bg-white'
+                        className={`h-3 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-red-600 w-8' : 'bg-gray-300 hover:bg-gray-400 w-3'
                             }`}
                     />
                 ))}
             </div>
-
-            {/* Navigation arrows */}
-            <button
-                onClick={goToPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors z-20"
-            >
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <button
-                onClick={goToNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors z-20"
-            >
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-        </section>
+        </section >
     )
 }
 
@@ -338,7 +352,6 @@ function TopContributorsZone() {
                     className="text-xl text-gray-500 max-w-2xl"
                 >
                     These are the African geniuses reshaping the meta, building brick by brick.
-                    <span className="text-red-500 font-semibold"> Are you down with the movement? 🧱</span>
                 </motion.p>
             </div>
 
@@ -900,7 +913,7 @@ export default function SpotlightPlatform() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                     >
-                        Celebrating the builders, projects, and events driving Africa's blockchain ecosystem.
+                        A living showcase of Africa’s most impactful builders, projects, contributors, and creators shaping Avalanche’s ecosystem.
                     </motion.p>
                 </div>
             </header>
