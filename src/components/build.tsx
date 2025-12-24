@@ -104,17 +104,19 @@ const Build = () => {
                             Africa has the talent. We provide the resources. Through, hackathons, workshops, and global partnerships, we're connecting African innovators with everything they need to lead the blockchain revolution with Avalanche.
                         </p>
 
-                        <MagneticButton className="group bg-white text-black px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-gray-100 transition-colors cursor-pointer shadow-xl">
-                            <span>Start Building</span>
-                            <motion.img
-                                src={arrowup}
-                                width={20}
-                                height={20}
-                                className="invert"
-                                animate={{ x: [0, 5, 0] }}
-                                transition={{ repeat: Infinity, duration: 1.5 }}
-                            />
-                        </MagneticButton>
+                        <a href="https://build.avax.network/" target="_blank" rel="noopener noreferrer">
+                            <MagneticButton className="group bg-white text-black px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-gray-100 transition-colors cursor-pointer shadow-xl">
+                                <span>Start Building</span>
+                                <motion.img
+                                    src={arrowup}
+                                    width={20}
+                                    height={20}
+                                    className="invert"
+                                    animate={{ x: [0, 5, 0] }}
+                                    transition={{ repeat: Infinity, duration: 1.5 }}
+                                />
+                            </MagneticButton>
+                        </a>
                     </div>
 
                     {/* Background Grid */}
@@ -217,10 +219,12 @@ const Build = () => {
                             Africa has the talent. We provide the resources. Through, hackathons, workshops, and global partnerships, we're connecting African innovators with everything they need to lead the blockchain revolution with Avalanche.
                         </p>
 
-                        <MagneticButton className="group bg-white text-black px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-black hover:text-white transition-colors cursor-pointer md:mx-auto w-fit">
-                            <span>Start Building</span>
-                            <img src={arrowup} width={20} height={20} className="bg-black hover:bg-white" />
-                        </MagneticButton>
+                        <a href="https://build.avax.network/" target="_blank" rel="noopener noreferrer">
+                            <MagneticButton className="group bg-white text-black px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-black hover:text-white transition-colors cursor-pointer md:mx-auto w-fit">
+                                <span>Start Building</span>
+                                <img src={arrowup} width={20} height={20} className="bg-black hover:bg-white" />
+                            </MagneticButton>
+                        </a>
                     </div>
 
                     <AnimatedSection staggerChildren={0.2} className="space-y-8">

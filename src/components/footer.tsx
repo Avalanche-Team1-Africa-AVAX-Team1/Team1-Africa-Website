@@ -13,20 +13,20 @@ const Footer = () => {
     const [email, setEmail] = useState('');
 
     const socialLinks = [
-        { icon: telegram, alt: 'telegram', url: '#' },
-        { icon: youtube, alt: 'youtube', url: '#' },
-        { icon: x, alt: 'x', url: '#' },
-        { icon: discord, alt: 'discord', url: '#' },
-        { icon: instagram, alt: 'instagram', url: '#' },
-        { icon: reddit, alt: 'reddit', url: '#' },
-        { icon: github, alt: 'github', url: '#' }
+        { icon: telegram, alt: 'telegram', url: 'https://t.me/team1africa' },
+        { icon: youtube, alt: 'youtube', url: 'https://www.youtube.com/@Avalanche_Africa' },
+        { icon: x, alt: 'x', url: 'https://x.com/avalaborange' },
+        { icon: discord, alt: 'discord', url: 'https://discord.gg/avalanche' },
+        { icon: instagram, alt: 'instagram', url: 'https://www.instagram.com/team1africa/' },
+        { icon: reddit, alt: 'reddit', url: 'https://www.reddit.com/r/Avax/' },
+        { icon: github, alt: 'github', url: 'https://github.com/ava-labs' }
     ];
 
     const navLinks = [
         { label: 'About', href: '/about' },
         { label: 'Events', href: '/events' },
         { label: 'Editorial', href: '/blog' },
-        { label: 'Contact', href: '#contact' }
+        { label: 'Gallery', href: '/gallery' }
     ];
 
     const handleSubscribe = (e: React.FormEvent) => {
@@ -60,26 +60,25 @@ const Footer = () => {
 
                         {/* Social Icons */}
                         <AnimatedText variant="fadeIn" delay={0.2}>
-                            <div className="flex gap-4">
+                            <div className="flex gap-5">
                                 {socialLinks.map((social, index) => (
                                     <a
                                         key={index}
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                                        className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500 transition-colors"
                                     >
-                                        <img src={social.icon} alt={social.alt} className="w-4 h-4 invert brightness-0 filter" />
+                                        <img src={social.icon} alt={social.alt} className="w-10 h-10" />
                                     </a>
                                 ))}
                             </div>
                         </AnimatedText>
                     </div>
 
-                    {/* Middle Row: Huge CTA */}
                     <div className="mb-32">
                         <AnimatedText variant="slideUp" delay={0.3}>
-                            <a href="#contact" className="group block w-full">
+                            <a href="mailto:team1africa@gmail.com" className="group block w-full">
                                 <h2 className="text-4xl lt-768:text-4xl md:text-6xl lg:text-8xl xl:text-[10rem] leading-[0.9] font-black tracking-tighter uppercase transition-colors group-hover:text-gray-300">
                                     Shall we <br />
                                     <span className="italic font-serif font-normal group-hover:text-red-500 transition-colors duration-300">work together?</span>

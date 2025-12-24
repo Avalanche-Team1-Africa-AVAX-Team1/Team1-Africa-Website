@@ -107,10 +107,12 @@ const Navbar = () => {
                         </ul>
                     </div>
 
-                    {/* Desktop Button - Blank Link */}
+                    {/* Desktop Button - Join Community */}
                     <div className="hidden md:flex relative">
                         <a
-                            href="#"
+                            href="https://t.me/team1africa"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="group relative flex items-center gap-4 text-2xl lt-1440:text-xl lt-1024:text-lg bg-black text-white px-4 py-3 cursor-pointer z-50 rounded-full border-0 w-fit overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-105"
                         >
                             {/* Animated Background Gradient */}
@@ -167,7 +169,7 @@ const Navbar = () => {
                     <li onClick={() => setSidebarOpen(false)}><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
                 </ul>
                 <div className="mt-12 px-8 lt-768:px-6 lt-480:px-5">
-                    <a href="#" className="flex items-center gap-4 text-2xl lt-768:text-xl lt-480:text-lg bg-black text-white px-4 py-3 rounded-full w-full justify-center">
+                    <a href="https://t.me/team1africa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-2xl lt-768:text-xl lt-480:text-lg bg-black text-white px-4 py-3 rounded-full w-full justify-center">
                         <span className="text-lg lt-768:text-base lt-480:text-sm">Join the community</span>
                         <img src={arrowUp} alt="arrow" width={30} height={30} className="lt-1440:w-[26px] lt-1440:h-[26px] lt-1024:w-6 lt-1024:h-6" />
                     </a>

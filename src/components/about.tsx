@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import communityImg from '../assets/community.png'
 import arrow from '../assets/white-arrow.svg'
 import arrowup from '../assets/arrow-up.svg'
@@ -42,12 +43,14 @@ const AboutUs = () => {
 
                 {/* Shrink CTA padding and gap on smaller screens */}
                 <AnimatedText variant="fadeIn" delay={0.4}>
-                  <MagneticButton className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 lt-1024:px-5 lt-1024:py-2.5 lt-768:px-4 lt-768:py-2 rounded-full font-medium transition-colors flex items-center gap-2 lt-768:gap-1.5 group'>
-                    About Us
-                    {/* Scale icons down on smaller screens */}
-                    <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden lt-768:w-4 lt-768:h-4' />
-                    <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden lt-768:w-4 lt-768:h-4' />
-                  </MagneticButton>
+                  <Link to="/about">
+                    <MagneticButton className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 lt-1024:px-5 lt-1024:py-2.5 lt-768:px-4 lt-768:py-2 rounded-full font-medium transition-colors flex items-center gap-2 lt-768:gap-1.5 group'>
+                      About Us
+                      {/* Scale icons down on smaller screens */}
+                      <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden lt-768:w-4 lt-768:h-4' />
+                      <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden lt-768:w-4 lt-768:h-4' />
+                    </MagneticButton>
+                  </Link>
                 </AnimatedText>
               </div>
             </div>

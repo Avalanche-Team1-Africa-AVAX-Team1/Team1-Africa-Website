@@ -31,6 +31,7 @@ interface Game {
   platforms: string[];
   image: string;
   imageWebp: string;
+  website: string;
 }
 
 const FeaturedGames: React.FC = () => {
@@ -51,7 +52,8 @@ const FeaturedGames: React.FC = () => {
       genre: "Survival / Extraction",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Nintendo Switch"],
       image: providenceImg,
-      imageWebp: providenceWebp
+      imageWebp: providenceWebp,
+      website: "https://playprovidence.io/"
     },
     {
       id: 2,
@@ -60,7 +62,8 @@ const FeaturedGames: React.FC = () => {
       genre: "Action-RPG / Extraction Royale",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam"],
       image: offTheGridImg,
-      imageWebp: offTheGridWebp
+      imageWebp: offTheGridWebp,
+      website: "https://gameoffthegrid.com/"
     },
     {
       id: 3,
@@ -69,7 +72,8 @@ const FeaturedGames: React.FC = () => {
       genre: "MMORPG / Fantasy Sandbox",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Epic"],
       image: domiImg,
-      imageWebp: domiWebp
+      imageWebp: domiWebp,
+      website: "https://domionline.io/"
     },
     {
       id: 4,
@@ -78,7 +82,8 @@ const FeaturedGames: React.FC = () => {
       genre: "Extraction Shooter / FPS",
       platforms: ["Windows", "PlayStation", "Xbox", "Nintendo Switch"],
       image: shrapnelImg,
-      imageWebp: shrapnelWebp
+      imageWebp: shrapnelWebp,
+      website: "https://www.shrapnel.com/"
     },
     {
       id: 5,
@@ -87,16 +92,18 @@ const FeaturedGames: React.FC = () => {
       genre: "Fantasy RPG / GameFi",
       platforms: ["Windows", "PlayStation", "Steam", "Epic"],
       image: defiKingdomImg,
-      imageWebp: defiKingdomWebp
+      imageWebp: defiKingdomWebp,
+      website: "https://defikingdoms.com/"
     },
     {
       id: 6,
-      title: "MapleStory",
+      title: "MapleStory Universe",
       description: "Nexon's legendary MMORPG reimagined for Web3 on Avalanche. Return to the beloved 2D side-scrolling world with blockchain-powered ownership. Tokenize items and characters, design user-generated content, and earn rewards. Nostalgia meets modern Web3 functionality in this iconic franchise reborn.",
       genre: "MMORPG / UGC",
       platforms: ["Windows", "Xbox", "Steam"],
       image: maplestoryImg,
-      imageWebp: maplestoryWebp
+      imageWebp: maplestoryWebp,
+      website: "https://msu.io/"
     }
 
   ], []);
@@ -320,10 +327,10 @@ const FeaturedGames: React.FC = () => {
                   <p className="text-gray-900 font-medium">{game.genre}</p>
                 </div>
 
-                <button className="w-full bg-[#1C1D1F] hover:bg-gray-800 text-white py-3 px-6 flex items-center justify-center gap-2 transition-colors duration-200">
+                <a href={game.website} target="_blank" rel="noopener noreferrer" className="w-full bg-[#1C1D1F] hover:bg-gray-800 text-white py-3 px-6 flex items-center justify-center gap-2 transition-colors duration-200">
                   WEBSITE
                   <ExternalLink size={18} />
-                </button>
+                </a>
               </div>
             </AnimatedItem>
           ))}
@@ -390,10 +397,10 @@ const FeaturedGames: React.FC = () => {
                   {games[currentGameIndex].description}
                 </p>
 
-                <button className="bg-red-500 hover:bg-red-600 text-white px-6 py-3.5 lg:px-8 lg:py-4 rounded-xl font-semibold flex items-center justify-center gap-2.5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-500/20 text-sm lg:text-base w-full lg:w-auto">
+                <a href={games[currentGameIndex].website} target="_blank" rel="noopener noreferrer" className="bg-red-500 hover:bg-red-600 text-white px-6 py-3.5 lg:px-8 lg:py-4 rounded-xl font-semibold flex items-center justify-center gap-2.5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-red-500/20 text-sm lg:text-base w-full lg:w-auto">
                   VISIT WEBSITE
                   <ExternalLink size={18} className="lg:w-5 lg:h-5" />
-                </button>
+                </a>
               </div>
 
               {/* Bottom section - Metadata & Navigation */}

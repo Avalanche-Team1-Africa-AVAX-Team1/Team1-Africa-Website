@@ -98,9 +98,9 @@ export default function NotFound() {
               <span className="text-gray-300">•</span>
               <Link to="/blog" className="text-gray-600 hover:text-red-500 transition-colors">Blog</Link>
               <span className="text-gray-300">•</span>
-              <a href="#about" className="text-gray-600 hover:text-red-500 transition-colors">About</a>
+              <Link to="/about" className="text-gray-600 hover:text-red-500 transition-colors">About</Link>
               <span className="text-gray-300">•</span>
-              <a href="#events" className="text-gray-600 hover:text-red-500 transition-colors">Events</a>
+              <Link to="/events" className="text-gray-600 hover:text-red-500 transition-colors">Events</Link>
             </div>
           </div>
         </div>
