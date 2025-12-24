@@ -342,8 +342,44 @@ function TopContributorsZone() {
                 </motion.p>
             </div>
 
-            {/* Bruut-style grid with perfect center box for logo */}
-            <div className="w-full flex justify-center overflow-x-auto">
+            {/* Mobile: 2-column grid like Bruut (no logo) */}
+            <div className="md:hidden grid grid-cols-2 gap-3">
+                {allContributors.slice(0, 12).map((person, i) => (
+                    <motion.div
+                        key={person.id}
+                        className="relative aspect-[3/4] overflow-hidden cursor-pointer group rounded-2xl"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.05 }}
+                        onClick={() => setSelectedPerson(person)}
+                    >
+                        <img
+                            src={person.image}
+                            alt={person.name}
+                            className="w-full h-full object-cover"
+                        />
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+
+                        {/* Badge for top contributor */}
+                        {person.badge === 'yearly' && (
+                            <span className="absolute top-2 left-2 px-2 py-1 bg-red-600 text-white text-[10px] font-bold rounded-full">
+                                👑 #1
+                            </span>
+                        )}
+
+                        {/* Name & Role - always visible on mobile */}
+                        <div className="absolute bottom-0 left-0 right-0 p-3">
+                            <p className="text-sm font-bold text-white truncate">{person.name}</p>
+                            <p className="text-xs text-white/70 truncate">{person.role}</p>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+
+            {/* Desktop: Bruut-style grid with perfect center box for logo */}
+            <div className="hidden md:flex w-full justify-center overflow-x-auto">
                 <div
                     className="grid gap-4"
                     style={{
@@ -482,9 +518,9 @@ function ProjectsZone() {
                 </motion.p>
             </div>
 
-            {/* Project cards - Clean design with gray background */}
+            {/* Project cards - Matching Projects page design */}
             <div className="max-w-7xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-6 mb-12">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                     {SPOTLIGHT_PROJECTS.map((project, i) => (
                         <motion.div
                             key={project.id}
@@ -497,7 +533,7 @@ function ProjectsZone() {
                             onClick={() => navigate(`/projects/${project.id}`)}
                         >
                             <div className="bg-[#f5f5f5] rounded-2xl p-6 h-full flex flex-col relative hover:shadow-xl transition-shadow duration-300">
-                                {/* Top row: Logo + Name + Country flag */}
+                                {/* Top row: Logo + Name + Social Icons */}
                                 <div className="flex items-start justify-between mb-3">
                                     <div className="flex items-center gap-3">
                                         {/* Project Logo */}
@@ -508,12 +544,27 @@ function ProjectsZone() {
                                             {project.name}
                                         </h3>
                                     </div>
-                                    {/* Country flag */}
-                                    <img
-                                        src={getCountryFlag(project.countryCode)}
-                                        alt={project.location}
-                                        className="w-8 h-8 rounded-full object-cover shadow-md border-2 border-white"
-                                    />
+                                    {/* Social Icons */}
+                                    <div className="flex items-center gap-2">
+                                        <a
+                                            href="#"
+                                            className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <svg className="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                            </svg>
+                                        </a>
+                                        <a
+                                            href="#"
+                                            className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                                            </svg>
+                                        </a>
+                                    </div>
                                 </div>
 
                                 {/* Tags */}
@@ -522,26 +573,55 @@ function ProjectsZone() {
                                         {project.category}
                                     </span>
                                     {project.achievement && (
-                                        <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full">
+                                        <span className="px-3 py-1 bg-gray-200 text-gray-700 text-xs font-bold rounded-full">
                                             {project.achievement}
                                         </span>
                                     )}
                                 </div>
 
                                 {/* Description */}
-                                <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
+                                <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
                                     {project.tagline}
                                 </p>
 
-                                {/* Bottom row: View More + Metric */}
+                                {/* Bottom row: View More + Animated Avatars */}
                                 <div className="flex items-center justify-between mt-auto">
-                                    <span className="px-6 py-2.5 bg-red-600 text-white text-sm font-bold rounded-full group-hover:bg-red-700 transition-colors">
+                                    <span className="px-6 py-2.5 bg-black/80 text-white text-sm font-semibold rounded-lg group-hover:bg-red-700 transition-colors">
                                         View More
                                     </span>
 
-                                    <span className="text-xl font-black text-red-600">
-                                        {project.metric}
-                                    </span>
+                                    {/* Animated user avatars with cyan rings + count */}
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex -space-x-1">
+                                            {['Felix', 'Aneka', 'Max'].map((seed, idx) => (
+                                                <motion.div
+                                                    key={idx}
+                                                    className="relative rounded-full"
+                                                    animate={{
+                                                        boxShadow: [
+                                                            '0 0 0 3px #22d3ee, 0 0 8px 2px rgba(34, 211, 238, 0.4)',
+                                                            '0 0 0 3px #22d3ee, 0 0 12px 4px rgba(34, 211, 238, 0.6)',
+                                                            '0 0 0 3px #22d3ee, 0 0 8px 2px rgba(34, 211, 238, 0.4)'
+                                                        ]
+                                                    }}
+                                                    transition={{
+                                                        duration: 1.5,
+                                                        repeat: Infinity,
+                                                        delay: idx * 0.2
+                                                    }}
+                                                >
+                                                    <img
+                                                        src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&backgroundColor=b6e3f4`}
+                                                        alt="User"
+                                                        className="w-10 h-10 rounded-full object-cover bg-white"
+                                                    />
+                                                </motion.div>
+                                            ))}
+                                        </div>
+                                        <span className="text-sm font-bold text-gray-600">
+                                            {project.metric.split(' ')[0]}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
@@ -822,24 +902,6 @@ export default function SpotlightPlatform() {
                     >
                         Celebrating the builders, projects, and events driving Africa's blockchain ecosystem.
                     </motion.p>
-
-                    {/* Zone quick links */}
-                    <motion.div
-                        className="flex flex-wrap gap-4 mt-12"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                    >
-                        {['Top Contributors', 'Winning Builds', 'Top Events', 'Peak Moments'].map((zone, i) => (
-                            <a
-                                key={zone}
-                                href={`#${['contributors', 'projects', 'events', 'moments'][i]}`}
-                                className="px-6 py-3 bg-black text-white text-sm font-bold rounded-full hover:bg-red-600 transition-colors"
-                            >
-                                {zone}
-                            </a>
-                        ))}
-                    </motion.div>
                 </div>
             </header>
 
