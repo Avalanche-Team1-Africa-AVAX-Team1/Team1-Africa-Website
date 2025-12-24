@@ -1,0 +1,251 @@
+/**
+ * Community Wrapped — Global Styles
+ * Cinematic scroll experience styling
+ */
+
+/* Bebas Neue for headlines - already imported in index.css */
+
+/* Custom scrollbar for wrapped experience */
+.wrapped-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.wrapped-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.wrapped-scroll::-webkit-scrollbar-thumb {
+    background: rgba(229, 57, 53, 0.4);
+    border-radius: 2px;
+}
+
+.wrapped-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(229, 57, 53, 0.8);
+}
+
+/* Character animation for split text */
+.char {
+    display: inline-block;
+    transform-origin: center bottom;
+    will-change: transform, opacity;
+}
+
+/* Word animation helper */
+.word {
+    display: inline-block;
+    will-change: opacity;
+}
+
+/* Smooth text gradient animation */
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animated-gradient-text {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+}
+
+/* Glow effects */
+.glow-red {
+    box-shadow: 0 0 60px rgba(229, 57, 53, 0.3),
+                0 0 120px rgba(229, 57, 53, 0.15);
+}
+
+.text-glow-red {
+    text-shadow: 0 0 40px rgba(229, 57, 53, 0.4),
+                 0 0 80px rgba(229, 57, 53, 0.2);
+}
+
+/* Noise overlay for cinematic texture */
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Reveal animations */
+@keyframes reveal-up {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes reveal-scale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Pulse animation for scroll indicator */
+@keyframes pulse-scroll {
+    0%, 100% {
+        opacity: 0.6;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(4px);
+    }
+}
+
+.pulse-scroll {
+    animation: pulse-scroll 2s ease-in-out infinite;
+}
+
+/* Horizontal scroll helper classes */
+.horizontal-scroll-container {
+    display: flex;
+    flex-wrap: nowrap;
+    will-change: transform;
+}
+
+.horizontal-scroll-panel {
+    flex-shrink: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 3D card perspective */
+.card-3d {
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-3d:hover {
+    transform: translateZ(20px);
+}
+
+/* Timeline styling */
+.timeline-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(229, 57, 53, 0.5) 20%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent
+    );
+}
+
+.timeline-node {
+    position: relative;
+    z-index: 10;
+}
+
+.timeline-node::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #E53935;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px rgba(229, 57, 53, 0.5);
+}
+
+.timeline-node::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Metric counter styling */
+.metric-counter {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+/* Section transitions */
+.section-fade {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.section-fade.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* CTA button hover effect */
+.cta-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .horizontal-scroll-panel {
+        width: 90vw;
+    }
+    
+    .card-3d:hover {
+        transform: none; /* Disable 3D on touch */
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .char,
+    .word,
+    .animated-gradient-text,
+    .pulse-scroll {
+        animation: none !important;
+    }
+    
+    * {
+        transition-duration: 0.01ms !important;
+    }
+}

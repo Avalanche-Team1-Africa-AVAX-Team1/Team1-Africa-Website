@@ -1,367 +1,916 @@
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform, useInView, useSpring } from 'framer-motion'
-import { ReactLenis } from 'lenis/react'
+/**
+ * 🎯 SPOTLIGHT PLATFORM
+ * 
+ * Recognition Hub | Editorial Gallery | Living Archive
+ * 
+ * This is NOT a "Wrapped" microsite. This is a Spotlight Platform.
+ * 
+ * Design Principles:
+ * - WHITE dominant, black/red as accents
+ * - Image-first, image-heavy (images ARE the UI)
+ * - Multiple interaction layers (hover, click, idle, pointer)
+ * - Alive even when idle
+ * - No scroll hijacking
+ * - Discrete spotlight zones, not linear narrative
+ * 
+ * Zones:
+ * - People Zone (Contributors)
+ * - Projects Zone (African-founded projects)
+ * - Events Zone
+ * - Moments Zone
+ */
 
+import { useEffect, useRef, useState, useMemo } from 'react'
+import { gsap } from 'gsap'
+import { motion, AnimatePresence } from 'framer-motion'
 
-// --- Types & Data ---
+// ==================== TYPES ====================
 
-type SpotlightItem = {
-    id: number
-    badge: string
-    title: string
-    subtitle?: string
-    role?: string
-    description: string
+interface SpotlightPerson {
+    id: string
+    name: string
+    role: string
+    region: string
+    contribution: string
     image: string
-    color: 'red' | 'black'
+    badge?: 'monthly' | 'yearly' | 'top5'
 }
 
-const spotlights: SpotlightItem[] = [
-    {
-        id: 1,
-        badge: '1st Place',
-        title: 'Most Cracked Contributor of the Year – 2025',
-        subtitle: 'Kwame Mensah',
-        role: 'Lead Developer & Community Builder',
-        description: 'Built 12 production subnets, trained 500+ developers across 8 African countries, and shipped the most-used Avalanche toolkit in the ecosystem.',
-        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
-        color: 'red'
-    },
-    {
-        id: 2,
-        badge: 'Event of the Year',
-        title: 'Top IRL Event of 2025',
-        subtitle: 'Avalanche Africa Summit – Lagos',
-        description: '1,200+ attendees, 45 projects launched, $8M in funding secured. The largest blockchain infrastructure event in African history.',
-        image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200',
-        color: 'red'
-    },
-    {
-        id: 3,
-        badge: 'Product of the Year',
-        title: 'Product of the Year – 2025',
-        subtitle: 'AfriPay Cross-Border Network',
-        description: 'Processed $24M across 12 African countries. 15,000+ merchants, sub-second settlements, zero failed transactions. Built entirely on Avalanche subnets.',
-        image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200',
-        color: 'red'
-    },
-    {
-        id: 4,
-        badge: 'Top 5',
-        title: 'Top Contributors of the Year',
-        subtitle: 'The Builders Who Shaped 2025',
-        description: 'Amara Okafor, Chidi Nwosu, Marcus Osei, Catherine De Verteuil, and Adam Cooney – the unstoppable force behind Africa\'s Avalanche growth.',
-        image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200',
-        color: 'black'
-    },
-    {
-        id: 5,
-        badge: 'December MVP',
-        title: 'Top Contributors of December',
-        subtitle: 'Closing the Year Strong',
-        description: 'December\'s standout builders shipped 8 major updates, hosted 15 workshops, and onboarded 300+ new developers in the final month.',
-        image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200',
-        color: 'black'
-    }
+interface SpotlightProject {
+    id: number
+    name: string
+    tagline: string
+    metric: string
+    category: string
+    color: string
+    location: string
+}
+
+interface SpotlightEvent {
+    id: string
+    title: string
+    date: string
+    location: string
+    attendees: number
+    image: string
+    badge?: 'event-of-year' | 'event-of-month' | 'top5'
+}
+
+// ==================== DATA ====================
+
+// Using actual images from assets
+const SPOTLIGHT_PEOPLE: SpotlightPerson[] = [
+    { id: 'p1', name: 'Kwame Mensah', role: 'Lead Developer', region: 'Ghana', contribution: 'Built 12 production subnets', badge: 'yearly', image: new URL('../assets/testimonial1.jpg', import.meta.url).href },
+    { id: 'p2', name: 'Amara Okafor', role: 'Community Lead', region: 'Nigeria', contribution: 'Onboarded 500+ developers', badge: 'monthly', image: new URL('../assets/testimonial2.jpg', import.meta.url).href },
+    { id: 'p3', name: 'Wanjiku Kimani', role: 'Product Lead', region: 'Kenya', contribution: 'Launched 8 African projects', badge: 'top5', image: new URL('../assets/testimonial3.jpg', import.meta.url).href },
+    { id: 'p4', name: 'Thabo Nkosi', role: 'DeFi Architect', region: 'South Africa', contribution: 'Processed $24M in transactions', badge: 'top5', image: new URL('../assets/south5.jpg', import.meta.url).href },
+    { id: 'p5', name: 'Faraji Mwamburi', role: 'Mobile Pioneer', region: 'Tanzania', contribution: 'Mobile payments for 15K users', badge: 'top5', image: new URL('../assets/testimonial5.jpg', import.meta.url).href },
 ]
 
-// --- Components ---
+const SPOTLIGHT_PROJECTS: SpotlightProject[] = [
+    { id: 1, name: 'AfriPay', tagline: 'Cross-border payments', metric: '$24M processed', category: 'DeFi', color: '#E53935', location: 'Nigeria' },
+    { id: 2, name: 'Harvest Protocol', tagline: 'Farm-to-market transparency', metric: '45K tracked', category: 'Infrastructure', color: '#43A047', location: 'Kenya' },
+    { id: 3, name: 'Sankofa NFT', tagline: 'Cultural heritage on-chain', metric: '$680K sales', category: 'NFT', color: '#1E88E5', location: 'Ghana' },
+    { id: 4, name: 'Jamii DAO', tagline: 'Community governance', metric: '67 funded', category: 'DAO', color: '#8E24AA', location: 'Ethiopia' },
+]
 
-function AnimatedCounter({ value, label }: { value: string, label: string }) {
-    const ref = useRef<HTMLDivElement>(null)
-    const isInView = useInView(ref, { once: true, margin: "-50px" })
+const SPOTLIGHT_EVENTS: SpotlightEvent[] = [
+    { id: 'e1', title: 'Lagos Summit', date: 'Feb 2025', location: 'Nigeria', attendees: 1200, badge: 'event-of-year', image: new URL('../assets/south1.jpg', import.meta.url).href },
+    { id: 'e2', title: 'Nairobi Hackathon', date: 'Apr 2025', location: 'Kenya', attendees: 450, badge: 'event-of-month', image: new URL('../assets/south2.jpg', import.meta.url).href },
+    { id: 'e3', title: 'Accra Dev Week', date: 'Jun 2025', location: 'Ghana', attendees: 680, badge: 'top5', image: new URL('../assets/ghana1.JPG', import.meta.url).href },
+    { id: 'e4', title: 'Cape Town Build', date: 'Aug 2025', location: 'South Africa', attendees: 520, badge: 'top5', image: new URL('../assets/south3.jpg', import.meta.url).href },
+]
 
-    // Extract number from string (e.g. "500+" -> 500)
-    const numericValue = parseInt(value.replace(/[^0-9]/g, '')) || 0
-    const suffix = value.replace(/[0-9]/g, '')
+// Community moment images
+const MOMENT_IMAGES = [
+    new URL('../assets/south4.jpg', import.meta.url).href,
+    new URL('../assets/ghana2.JPG', import.meta.url).href,
+    new URL('../assets/south6.jpg', import.meta.url).href,
+    new URL('../assets/ghana3.JPG', import.meta.url).href,
+]
 
-    const count = useSpring(0, { duration: 2000, bounce: 0 })
-    const rounded = useTransform(count, (latest) => Math.round(latest))
+// ==================== AMBIENT MOTION HOOK ====================
 
+function useIdleMotion(ref: React.RefObject<HTMLElement | null>, intensity: number = 1) {
     useEffect(() => {
-        if (isInView) {
-            count.set(numericValue)
+        if (!ref.current) return
+
+        const element = ref.current
+        let animationId: number
+
+        // Subtle breathing / drift animation when idle
+        const animate = () => {
+            const time = Date.now() * 0.001
+            const x = Math.sin(time * 0.5) * 2 * intensity
+            const y = Math.cos(time * 0.3) * 2 * intensity
+            const scale = 1 + Math.sin(time * 0.2) * 0.005 * intensity
+
+            gsap.set(element, {
+                x,
+                y,
+                scale,
+            })
+
+            animationId = requestAnimationFrame(animate)
         }
-    }, [isInView, numericValue, count])
+
+        animate()
+
+        return () => cancelAnimationFrame(animationId)
+    }, [ref, intensity])
+}
+
+// ==================== POINTER TRACKING HOOK ====================
+
+function usePointerParallax(ref: React.RefObject<HTMLElement | null>, strength: number = 20) {
+    useEffect(() => {
+        if (!ref.current) return
+
+        const element = ref.current
+
+        const handleMouseMove = (e: MouseEvent) => {
+            const rect = element.getBoundingClientRect()
+            const centerX = rect.left + rect.width / 2
+            const centerY = rect.top + rect.height / 2
+
+            const deltaX = (e.clientX - centerX) / rect.width
+            const deltaY = (e.clientY - centerY) / rect.height
+
+            gsap.to(element, {
+                x: deltaX * strength,
+                y: deltaY * strength,
+                rotateX: -deltaY * 5,
+                rotateY: deltaX * 5,
+                duration: 0.5,
+                ease: 'power2.out',
+            })
+        }
+
+        const handleMouseLeave = () => {
+            gsap.to(element, {
+                x: 0,
+                y: 0,
+                rotateX: 0,
+                rotateY: 0,
+                duration: 0.5,
+            })
+        }
+
+        window.addEventListener('mousemove', handleMouseMove)
+        element.addEventListener('mouseleave', handleMouseLeave)
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove)
+            element.removeEventListener('mouseleave', handleMouseLeave)
+        }
+    }, [ref, strength])
+}
+
+// ==================== SPOTLIGHT IMAGE COMPONENT ====================
+
+interface SpotlightImageProps {
+    src: string
+    alt: string
+    className?: string
+    onClick?: () => void
+    badge?: string
+    overlayContent?: React.ReactNode
+    idleMotion?: boolean
+}
+
+function SpotlightImage({ src, alt, className = '', onClick, badge, overlayContent, idleMotion = true }: SpotlightImageProps) {
+    const containerRef = useRef<HTMLDivElement>(null)
+    const imageRef = useRef<HTMLImageElement>(null)
+    const [isHovered, setIsHovered] = useState(false)
+    const [imageLoaded, setImageLoaded] = useState(false)
+
+    // Idle breathing animation
+    useEffect(() => {
+        if (!idleMotion || !imageRef.current || isHovered) return
+
+        const image = imageRef.current
+        let animationId: number
+        const startTime = Date.now()
+
+        const animate = () => {
+            const elapsed = (Date.now() - startTime) * 0.001
+            const scale = 1 + Math.sin(elapsed * 0.5) * 0.02
+
+            gsap.set(image, { scale })
+            animationId = requestAnimationFrame(animate)
+        }
+
+        animate()
+        return () => cancelAnimationFrame(animationId)
+    }, [idleMotion, isHovered])
 
     return (
         <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow duration-300"
+            ref={containerRef}
+            className={`relative overflow-hidden cursor-pointer group ${className}`}
+            onClick={onClick}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            style={{ perspective: '1000px' }}
         >
-            <div className="text-5xl md:text-6xl font-bold text-red-600 mb-2 flex items-baseline">
-                <motion.span>{rounded}</motion.span>
-                <span>{suffix}</span>
-            </div>
-            <div className="text-base text-gray-500 font-medium uppercase tracking-wide">{label}</div>
+            {/* Image */}
+            <motion.img
+                ref={imageRef}
+                src={src}
+                alt={alt}
+                onLoad={() => setImageLoaded(true)}
+                className="w-full h-full object-cover transition-all duration-700"
+                style={{
+                    filter: isHovered ? 'brightness(1.1)' : 'brightness(1)',
+                    opacity: imageLoaded ? 1 : 0,
+                }}
+                animate={{
+                    scale: isHovered ? 1.08 : 1,
+                }}
+                transition={{ duration: 0.6 }}
+            />
+
+            {/* Gradient overlay */}
+            <div
+                className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+            />
+
+            {/* Noise texture overlay */}
+            <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
+                style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                }}
+            />
+
+            {/* Badge */}
+            {badge && (
+                <motion.div
+                    className="absolute top-4 left-4 z-10"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                >
+                    <span className={`
+                        px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full
+                        ${badge === 'yearly' || badge === 'event-of-year' ? 'bg-red-600 text-white' : ''}
+                        ${badge === 'monthly' || badge === 'event-of-month' ? 'bg-black text-white' : ''}
+                        ${badge === 'top5' ? 'bg-white text-black' : ''}
+                    `}>
+                        {badge === 'yearly' && '★ Contributor of the Year'}
+                        {badge === 'monthly' && 'Monthly MVP'}
+                        {badge === 'top5' && 'Top 5'}
+                        {badge === 'event-of-year' && '★ Event of the Year'}
+                        {badge === 'event-of-month' && 'Event of the Month'}
+                    </span>
+                </motion.div>
+            )}
+
+            {/* Overlay content */}
+            <motion.div
+                className="absolute bottom-0 left-0 right-0 p-6 z-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: isHovered ? 1 : 0.8, y: isHovered ? 0 : 10 }}
+                transition={{ duration: 0.4 }}
+            >
+                {overlayContent}
+            </motion.div>
+
+            {/* Hover reveal border */}
+            <motion.div
+                className="absolute inset-0 border-2 border-white/0 group-hover:border-white/30 transition-colors duration-500 pointer-events-none"
+            />
         </motion.div>
     )
 }
 
-function VideoSection() {
-    const ref = useRef(null)
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start end", "end start"]
-    })
+// ==================== EXPANDED SPOTLIGHT MODAL ====================
 
-    // Parallax effect for video image
-    const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"])
-    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.05, 1])
+interface SpotlightModalProps {
+    isOpen: boolean
+    onClose: () => void
+    content: {
+        type: 'person' | 'project' | 'event'
+        data: SpotlightPerson | SpotlightProject | SpotlightEvent
+    } | null
+}
 
+function SpotlightModal({ isOpen, onClose, content }: SpotlightModalProps) {
     return (
-        <div ref={ref} className="relative aspect-video rounded-3xl overflow-hidden bg-black shadow-2xl group cursor-pointer">
-            <motion.div style={{ y, scale }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
-                <img
-                    src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200"
-                    alt="2025 Wrapped Video"
-                    className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
-                />
-            </motion.div>
-
-            <div className="absolute inset-0 flex items-center justify-center z-10">
-                <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-24 h-24 bg-red-600/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg shadow-red-600/20"
+        <AnimatePresence>
+            {isOpen && content && (
+                <motion.div
+                    className="fixed inset-0 z-50 flex items-center justify-center p-8"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
                 >
-                    <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                    </svg>
-                </motion.button>
-            </div>
+                    {/* Backdrop */}
+                    <motion.div
+                        className="absolute inset-0 bg-white/95 backdrop-blur-sm"
+                        onClick={onClose}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    />
 
-            <div className="absolute bottom-8 left-8 text-white">
-                <motion.p
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    className="text-lg font-bold mb-1"
-                >
-                    2025 Year in Review
-                </motion.p>
-                <p className="text-sm text-gray-300">Watch the full story</p>
-            </div>
-        </div>
+                    {/* Modal content */}
+                    <motion.div
+                        className="relative z-10 max-w-5xl w-full bg-white shadow-2xl rounded-2xl overflow-hidden"
+                        initial={{ scale: 0.9, y: 40 }}
+                        animate={{ scale: 1, y: 0 }}
+                        exit={{ scale: 0.9, y: 40 }}
+                        transition={{ type: 'spring', damping: 25 }}
+                    >
+                        {content.type === 'person' && (
+                            <div className="grid md:grid-cols-2">
+                                <div className="aspect-[4/5] bg-gray-100">
+                                    <img
+                                        src={(content.data as SpotlightPerson).image}
+                                        alt={(content.data as SpotlightPerson).name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <div className="p-12 flex flex-col justify-center">
+                                    <span className="text-red-600 text-sm font-bold uppercase tracking-wider mb-4">
+                                        {(content.data as SpotlightPerson).region}
+                                    </span>
+                                    <h2 className="text-5xl font-black text-black mb-2">
+                                        {(content.data as SpotlightPerson).name}
+                                    </h2>
+                                    <p className="text-xl text-gray-500 mb-6">
+                                        {(content.data as SpotlightPerson).role}
+                                    </p>
+                                    <p className="text-lg text-gray-700 leading-relaxed">
+                                        {(content.data as SpotlightPerson).contribution}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Close button */}
+                        <button
+                            onClick={onClose}
+                            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center hover:bg-red-600 transition-colors"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     )
 }
 
-// --- Main Page Component ---
+// ==================== ZONE: PEOPLE ====================
 
-export default function Spotlight() {
-    const [currentIndex, setCurrentIndex] = useState(0)
-    const [isHovered, setIsHovered] = useState(false)
-    const currentSpotlight = spotlights[currentIndex]
-
-    // Auto-transition
-    useEffect(() => {
-        if (isHovered) return
-        const interval = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % spotlights.length)
-        }, 7000)
-        return () => clearInterval(interval)
-    }, [isHovered])
-
-    const goToNext = () => setCurrentIndex((prev) => (prev + 1) % spotlights.length)
-    const goToPrev = () => setCurrentIndex((prev) => (prev - 1 + spotlights.length) % spotlights.length)
-
-    // Animation Variants
-    const fadeUpVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: (i: number) => ({
-            opacity: 1,
-            y: 0,
-            transition: { delay: i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }
-        }),
-        exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
-    }
+function PeopleZone() {
+    const [selectedPerson, setSelectedPerson] = useState<SpotlightPerson | null>(null)
+    const yearlyContributor = SPOTLIGHT_PEOPLE.find(p => p.badge === 'yearly')
+    const monthlyContributor = SPOTLIGHT_PEOPLE.find(p => p.badge === 'monthly')
+    const top5 = SPOTLIGHT_PEOPLE.filter(p => p.badge === 'top5')
 
     return (
-        <ReactLenis root>
-            <div className="min-h-screen bg-white font-sans selection:bg-red-100 selection:text-red-900">
-
-                {/* Hero Spotlight Section */}
-                <section className="pt-24 md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
-                    {/* Decorative Background Elements */}
-                    <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-                        <div className="absolute -top-20 -right-20 w-[500px] h-[500px] bg-gray-100 rounded-full blur-3xl opacity-50" />
-                        <div className="absolute top-40 -left-20 w-[300px] h-[300px] bg-red-50 rounded-full blur-3xl opacity-50" />
-                    </div>
-
-                    <div className="max-w-7xl mx-auto px-6 md:px-12">
-                        {/* Section Header */}
-                        <div className="mb-16">
-                            <motion.h1
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
-                                className="text-6xl md:text-8xl font-extrabold text-black mb-6 tracking-tight"
-                            >
-                                2025 Spotlight
-                            </motion.h1>
-                            <motion.p
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 0.2 }}
-                                className="text-xl md:text-2xl text-gray-500 max-w-2xl leading-relaxed"
-                            >
-                                Celebrating the biggest wins, boldest builders, and breakthrough moments that defined our year.
-                            </motion.p>
-                        </div>
-
-                        {/* Spotlight Box */}
-                        <motion.div
-                            className="relative group perspective-1000"
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
-                        >
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={currentIndex}
-                                    initial={{ opacity: 0, scale: 0.98 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.98 }}
-                                    transition={{ duration: 0.5 }}
-                                    className="bg-gray-50 rounded-[2.5rem] p-8 md:p-12 shadow-2xl ring-1 ring-black/5 relative overflow-hidden"
-                                >
-                                    {/* Progress Bar for Auto-play */}
-                                    {!isHovered && (
-                                        <motion.div
-                                            initial={{ scaleX: 0 }}
-                                            animate={{ scaleX: 1 }}
-                                            transition={{ duration: 7, ease: "linear" }}
-                                            className="absolute top-0 left-0 right-0 h-1.5 bg-red-600 origin-left z-20"
-                                        />
-                                    )}
-
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
-                                        {/* Left: Text Content */}
-                                        <div className="flex flex-col justify-center relative z-10">
-                                            {/* Badge */}
-                                            <motion.div variants={fadeUpVariants} custom={0} initial="hidden" animate="visible" exit="exit" className="mb-8">
-                                                <span className={`inline-flex items-center gap-2 px-4 py-2 ${currentSpotlight.color === 'red' ? 'bg-red-600 shadow-red-200' : 'bg-gray-900 shadow-gray-200'} shadow-lg text-white text-xs font-bold rounded-full tracking-wide uppercase`}>
-                                                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                    </svg>
-                                                    {currentSpotlight.badge}
-                                                </span>
-                                            </motion.div>
-
-                                            {/* Title */}
-                                            <motion.h2 variants={fadeUpVariants} custom={1} initial="hidden" animate="visible" exit="exit" className="text-3xl md:text-5xl lg:text-5xl font-bold text-gray-900 mb-6 leading-[1.1]">
-                                                {currentSpotlight.title}
-                                            </motion.h2>
-
-                                            {/* Subtitle */}
-                                            {currentSpotlight.subtitle && (
-                                                <motion.p variants={fadeUpVariants} custom={2} initial="hidden" animate="visible" exit="exit" className="text-xl md:text-2xl text-gray-900 font-semibold mb-3">
-                                                    {currentSpotlight.subtitle}
-                                                </motion.p>
-                                            )}
-
-                                            {/* Role */}
-                                            {currentSpotlight.role && (
-                                                <motion.p variants={fadeUpVariants} custom={3} initial="hidden" animate="visible" exit="exit" className="text-sm md:text-base text-gray-500 mb-8 font-medium">
-                                                    {currentSpotlight.role}
-                                                </motion.p>
-                                            )}
-
-                                            {/* Description */}
-                                            <motion.p variants={fadeUpVariants} custom={4} initial="hidden" animate="visible" exit="exit" className="text-base md:text-lg text-gray-600 leading-relaxed mb-10 max-w-lg">
-                                                {currentSpotlight.description}
-                                            </motion.p>
-
-                                            {/* Navigation Dots */}
-                                            <motion.div variants={fadeUpVariants} custom={5} initial="hidden" animate="visible" exit="exit" className="flex items-center gap-3">
-                                                {spotlights.map((_, index) => (
-                                                    <button
-                                                        key={index}
-                                                        onClick={() => setCurrentIndex(index)}
-                                                        className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                                                            ? 'w-10 bg-red-600'
-                                                            : 'w-2 bg-gray-300 hover:bg-gray-400'
-                                                            }`}
-                                                        aria-label={`Go to slide ${index + 1}`}
-                                                    />
-                                                ))}
-                                            </motion.div>
-                                        </div>
-
-                                        {/* Right: Image */}
-                                        <motion.div
-                                            initial={{ opacity: 0, x: 20, rotate: 2 }}
-                                            animate={{ opacity: 1, x: 0, rotate: 0 }}
-                                            exit={{ opacity: 0, x: -20 }}
-                                            transition={{ duration: 0.6, delay: 0.2 }}
-                                            className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-xl"
-                                        >
-                                            <img
-                                                src={currentSpotlight.image}
-                                                alt={currentSpotlight.title}
-                                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                                            />
-                                            {/* Subtle gradient overlay */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
-                                        </motion.div>
-                                    </div>
-                                </motion.div>
-                            </AnimatePresence>
-
-                            {/* Navigation Arrows - Appear on Hover */}
-                            <motion.button
-                                initial={{ opacity: 0, x: 10 }}
-                                animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : 10 }}
-                                onClick={goToPrev}
-                                className="absolute left-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/90 backdrop-blur rounded-full shadow-lg flex items-center justify-center hover:bg-white text-gray-800 hover:text-red-600 transition-colors z-20"
-                            >
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </motion.button>
-                            <motion.button
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
-                                onClick={goToNext}
-                                className="absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/90 backdrop-blur rounded-full shadow-lg flex items-center justify-center hover:bg-white text-gray-800 hover:text-red-600 transition-colors z-20"
-                            >
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </motion.button>
-                        </motion.div>
-                    </div>
-                </section>
-
-                {/* 2025 Wrapped Section */}
-                <section className="py-24 bg-[#F8FAFC]">
-                    <div className="max-w-7xl mx-auto px-6 md:px-12">
-                        {/* Section Header */}
-                        <div className="mb-16 md:flex md:items-end md:justify-between">
-                            <div className="max-w-2xl">
-                                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
-                                    2025 Wrapped: <span className="text-red-600">Impact</span>
-                                </h2>
-                                <p className="text-lg text-gray-600 leading-relaxed">
-                                    From Lagos to Nairobi, from Cape Town to Cairo – 2025 was the year African builders proved that the future of blockchain is being built here.
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Stats Grid with Animated Counters */}
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-                            <AnimatedCounter value="500+" label="Contributors Onboarded" />
-                            <AnimatedCounter value="45" label="Events Hosted" />
-                            <AnimatedCounter value="120+" label="Products Shipped" />
-                            <AnimatedCounter value="$24M" label="Transaction Volume" />
-                        </div>
-
-                        {/* Interactive Video Section */}
-                        <VideoSection />
-                    </div>
-                </section>
+        <section className="py-24 px-6 md:px-12 lg:px-20">
+            {/* Zone header */}
+            <div className="max-w-7xl mx-auto mb-16">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="flex items-baseline gap-4 mb-4"
+                >
+                    <h2 className="text-6xl md:text-8xl font-black text-black tracking-tight">
+                        People
+                    </h2>
+                    <span className="text-red-600 text-2xl font-bold">●</span>
+                </motion.div>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                    className="text-xl text-gray-500 max-w-xl"
+                >
+                    The builders, leaders, and visionaries shaping Africa's blockchain future.
+                </motion.p>
             </div>
-        </ReactLenis>
+
+            {/* Asymmetric image layout */}
+            <div className="max-w-7xl mx-auto">
+                <div className="grid grid-cols-12 gap-4 md:gap-6">
+                    {/* Yearly contributor - large feature */}
+                    {yearlyContributor && (
+                        <motion.div
+                            className="col-span-12 md:col-span-7 row-span-2"
+                            initial={{ opacity: 0, x: -40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                        >
+                            <SpotlightImage
+                                src={yearlyContributor.image}
+                                alt={yearlyContributor.name}
+                                className="h-[600px] md:h-[700px] rounded-2xl"
+                                badge="yearly"
+                                onClick={() => setSelectedPerson(yearlyContributor)}
+                                overlayContent={
+                                    <div>
+                                        <h3 className="text-3xl md:text-4xl font-black text-white mb-1">
+                                            {yearlyContributor.name}
+                                        </h3>
+                                        <p className="text-white/70 text-lg">
+                                            {yearlyContributor.role} · {yearlyContributor.region}
+                                        </p>
+                                    </div>
+                                }
+                            />
+                        </motion.div>
+                    )}
+
+                    {/* Monthly + Top 5 stack */}
+                    <div className="col-span-12 md:col-span-5 flex flex-col gap-4 md:gap-6">
+                        {/* Monthly MVP */}
+                        {monthlyContributor && (
+                            <motion.div
+                                initial={{ opacity: 0, x: 40 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.1 }}
+                            >
+                                <SpotlightImage
+                                    src={monthlyContributor.image}
+                                    alt={monthlyContributor.name}
+                                    className="h-[280px] md:h-[340px] rounded-2xl"
+                                    badge="monthly"
+                                    onClick={() => setSelectedPerson(monthlyContributor)}
+                                    overlayContent={
+                                        <div>
+                                            <h3 className="text-2xl font-black text-white mb-1">
+                                                {monthlyContributor.name}
+                                            </h3>
+                                            <p className="text-white/70">
+                                                {monthlyContributor.role}
+                                            </p>
+                                        </div>
+                                    }
+                                />
+                            </motion.div>
+                        )}
+
+                        {/* Top 5 thumbnails */}
+                        <div className="grid grid-cols-3 gap-4">
+                            {top5.slice(0, 3).map((person, i) => (
+                                <motion.div
+                                    key={person.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.4, delay: 0.2 + i * 0.1 }}
+                                >
+                                    <SpotlightImage
+                                        src={person.image}
+                                        alt={person.name}
+                                        className="aspect-square rounded-xl"
+                                        onClick={() => setSelectedPerson(person)}
+                                        idleMotion={false}
+                                        overlayContent={
+                                            <p className="text-sm font-bold text-white truncate">
+                                                {person.name}
+                                            </p>
+                                        }
+                                    />
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Modal */}
+            <SpotlightModal
+                isOpen={!!selectedPerson}
+                onClose={() => setSelectedPerson(null)}
+                content={selectedPerson ? { type: 'person', data: selectedPerson } : null}
+            />
+        </section>
+    )
+}
+
+// ==================== ZONE: PROJECTS ====================
+
+function ProjectsZone() {
+    const containerRef = useRef<HTMLDivElement>(null)
+    const [hoveredProject, setHoveredProject] = useState<number | null>(null)
+
+    return (
+        <section className="py-24 px-6 md:px-12 lg:px-20 bg-gray-50">
+            {/* Zone header */}
+            <div className="max-w-7xl mx-auto mb-16">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="flex items-baseline gap-4 mb-4"
+                >
+                    <h2 className="text-6xl md:text-8xl font-black text-black tracking-tight">
+                        Projects
+                    </h2>
+                    <span className="text-red-600 text-2xl font-bold">●</span>
+                </motion.div>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                    className="text-xl text-gray-500 max-w-xl"
+                >
+                    African-founded projects building on Avalanche.
+                </motion.p>
+            </div>
+
+            {/* Project cards - hover reveals */}
+            <div ref={containerRef} className="max-w-7xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-6">
+                    {SPOTLIGHT_PROJECTS.map((project, i) => (
+                        <motion.div
+                            key={project.id}
+                            className="relative group cursor-pointer"
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: i * 0.1 }}
+                            onMouseEnter={() => setHoveredProject(project.id)}
+                            onMouseLeave={() => setHoveredProject(null)}
+                            style={{ perspective: '1000px' }}
+                        >
+                            <motion.div
+                                className="relative p-8 md:p-12 rounded-2xl h-64 md:h-80 flex flex-col justify-between overflow-hidden"
+                                style={{ backgroundColor: project.color }}
+                                animate={{
+                                    rotateX: hoveredProject === project.id ? -2 : 0,
+                                    rotateY: hoveredProject === project.id ? 3 : 0,
+                                    scale: hoveredProject === project.id ? 1.02 : 1,
+                                }}
+                                transition={{ duration: 0.4 }}
+                            >
+                                {/* Category pill */}
+                                <div>
+                                    <span className="inline-block px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white text-xs font-bold rounded-full mb-4">
+                                        {project.category}
+                                    </span>
+                                </div>
+
+                                {/* Content */}
+                                <div>
+                                    <motion.h3
+                                        className="text-4xl md:text-5xl font-black text-white mb-2"
+                                        animate={{ y: hoveredProject === project.id ? -8 : 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        {project.name}
+                                    </motion.h3>
+                                    <p className="text-white/80 text-lg mb-4">
+                                        {project.tagline}
+                                    </p>
+                                    <motion.div
+                                        className="flex items-center gap-4"
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: hoveredProject === project.id ? 1 : 0.6, y: hoveredProject === project.id ? 0 : 10 }}
+                                    >
+                                        <span className="text-2xl font-black text-white">{project.metric}</span>
+                                        <span className="text-white/60">·</span>
+                                        <span className="text-white/60">{project.location}</span>
+                                    </motion.div>
+                                </div>
+
+                                {/* Decorative circle */}
+                                <motion.div
+                                    className="absolute -right-20 -bottom-20 w-60 h-60 rounded-full bg-white/10"
+                                    animate={{
+                                        scale: hoveredProject === project.id ? 1.3 : 1,
+                                        x: hoveredProject === project.id ? -20 : 0,
+                                    }}
+                                    transition={{ duration: 0.5 }}
+                                />
+                            </motion.div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )
+}
+
+// ==================== ZONE: EVENTS ====================
+
+function EventsZone() {
+    const [selectedEvent, setSelectedEvent] = useState<SpotlightEvent | null>(null)
+    const eventOfYear = SPOTLIGHT_EVENTS.find(e => e.badge === 'event-of-year')
+    const eventOfMonth = SPOTLIGHT_EVENTS.find(e => e.badge === 'event-of-month')
+    const top5Events = SPOTLIGHT_EVENTS.filter(e => e.badge === 'top5')
+
+    return (
+        <section className="py-24 px-6 md:px-12 lg:px-20">
+            {/* Zone header */}
+            <div className="max-w-7xl mx-auto mb-16">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="flex items-baseline gap-4 mb-4"
+                >
+                    <h2 className="text-6xl md:text-8xl font-black text-black tracking-tight">
+                        Events
+                    </h2>
+                    <span className="text-red-600 text-2xl font-bold">●</span>
+                </motion.div>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                    className="text-xl text-gray-500 max-w-xl"
+                >
+                    Hackathons, summits, and community gatherings across Africa.
+                </motion.p>
+            </div>
+
+            {/* Overlapping image layout */}
+            <div className="max-w-7xl mx-auto">
+                <div className="relative">
+                    {/* Event of the Year - large background */}
+                    {eventOfYear && (
+                        <motion.div
+                            className="relative z-10"
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                        >
+                            <SpotlightImage
+                                src={eventOfYear.image}
+                                alt={eventOfYear.title}
+                                className="w-full h-[500px] md:h-[600px] rounded-3xl"
+                                badge="event-of-year"
+                                onClick={() => setSelectedEvent(eventOfYear)}
+                                overlayContent={
+                                    <div className="flex items-end justify-between">
+                                        <div>
+                                            <h3 className="text-4xl md:text-5xl font-black text-white mb-2">
+                                                {eventOfYear.title}
+                                            </h3>
+                                            <p className="text-white/70 text-lg">
+                                                {eventOfYear.location} · {eventOfYear.attendees.toLocaleString()}+ attendees
+                                            </p>
+                                        </div>
+                                        <span className="text-6xl font-black text-white/20">
+                                            {eventOfYear.date}
+                                        </span>
+                                    </div>
+                                }
+                            />
+                        </motion.div>
+                    )}
+
+                    {/* Floating sub-events - overlapping */}
+                    <div className="flex flex-wrap gap-4 mt-6 md:-mt-24 md:ml-16 relative z-20">
+                        {eventOfMonth && (
+                            <motion.div
+                                className="w-full md:w-72"
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                <SpotlightImage
+                                    src={eventOfMonth.image}
+                                    alt={eventOfMonth.title}
+                                    className="h-48 md:h-56 rounded-2xl shadow-xl"
+                                    badge="event-of-month"
+                                    onClick={() => setSelectedEvent(eventOfMonth)}
+                                    overlayContent={
+                                        <div>
+                                            <h4 className="text-xl font-black text-white">{eventOfMonth.title}</h4>
+                                            <p className="text-white/60 text-sm">{eventOfMonth.date}</p>
+                                        </div>
+                                    }
+                                />
+                            </motion.div>
+                        )}
+
+                        {top5Events.map((event, i) => (
+                            <motion.div
+                                key={event.id}
+                                className="w-40 md:w-48"
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.3 + i * 0.1 }}
+                            >
+                                <SpotlightImage
+                                    src={event.image}
+                                    alt={event.title}
+                                    className="h-32 md:h-40 rounded-xl shadow-lg"
+                                    onClick={() => setSelectedEvent(event)}
+                                    idleMotion={false}
+                                    overlayContent={
+                                        <p className="text-sm font-bold text-white truncate">{event.title}</p>
+                                    }
+                                />
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+// ==================== ZONE: MOMENTS ====================
+
+function MomentsZone() {
+    const [activeIndex, setActiveIndex] = useState(0)
+
+    return (
+        <section className="py-24 px-6 md:px-12 lg:px-20 bg-black text-white overflow-hidden">
+            {/* Zone header */}
+            <div className="max-w-7xl mx-auto mb-16">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="flex items-baseline gap-4 mb-4"
+                >
+                    <h2 className="text-6xl md:text-8xl font-black text-white tracking-tight">
+                        Moments
+                    </h2>
+                    <span className="text-red-500 text-2xl font-bold">●</span>
+                </motion.div>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 }}
+                    className="text-xl text-white/50 max-w-xl"
+                >
+                    Community snapshots that capture the energy.
+                </motion.p>
+            </div>
+
+            {/* Image cluster with hover interaction */}
+            <div className="max-w-7xl mx-auto">
+                <div className="relative h-[500px] md:h-[600px]">
+                    {MOMENT_IMAGES.map((src, i) => {
+                        // Calculate layered positions
+                        const positions = [
+                            { left: '0%', top: '10%', width: '45%', height: '70%', zIndex: 1 },
+                            { left: '35%', top: '0%', width: '40%', height: '50%', zIndex: 2 },
+                            { left: '55%', top: '40%', width: '45%', height: '60%', zIndex: 3 },
+                            { left: '20%', top: '55%', width: '35%', height: '45%', zIndex: 4 },
+                        ]
+                        const pos = positions[i]
+
+                        return (
+                            <motion.div
+                                key={i}
+                                className="absolute rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
+                                style={{
+                                    left: pos.left,
+                                    top: pos.top,
+                                    width: pos.width,
+                                    height: pos.height,
+                                    zIndex: activeIndex === i ? 10 : pos.zIndex,
+                                }}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                                whileHover={{ scale: 1.05, zIndex: 10 }}
+                                onHoverStart={() => setActiveIndex(i)}
+                            >
+                                <img
+                                    src={src}
+                                    alt={`Community moment ${i + 1}`}
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                            </motion.div>
+                        )
+                    })}
+                </div>
+            </div>
+        </section>
+    )
+}
+
+// ==================== MAIN COMPONENT ====================
+
+export default function SpotlightPlatform() {
+    const containerRef = useRef<HTMLDivElement>(null)
+
+    // Ambient floating dots
+    const floatingDots = useMemo(() => {
+        return Array.from({ length: 20 }, (_, i) => ({
+            id: i,
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            size: Math.random() * 4 + 2,
+            duration: Math.random() * 20 + 10,
+        }))
+    }, [])
+
+    return (
+        <div ref={containerRef} className="min-h-screen bg-white relative">
+            {/* Ambient floating dots - alive when idle */}
+            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+                {floatingDots.map((dot) => (
+                    <motion.div
+                        key={dot.id}
+                        className="absolute rounded-full bg-red-500/10"
+                        style={{
+                            left: `${dot.x}%`,
+                            top: `${dot.y}%`,
+                            width: dot.size,
+                            height: dot.size,
+                        }}
+                        animate={{
+                            y: [0, -30, 0],
+                            x: [0, 15, 0],
+                            opacity: [0.3, 0.6, 0.3],
+                        }}
+                        transition={{
+                            duration: dot.duration,
+                            repeat: Infinity,
+                            ease: 'linear',
+                        }}
+                    />
+                ))}
+            </div>
+
+            {/* Page header */}
+            <header className="pt-32 pb-16 px-6 md:px-12 lg:px-20 relative z-10">
+                <div className="max-w-7xl mx-auto">
+                    <motion.span
+                        className="inline-block text-red-600 text-sm font-bold uppercase tracking-[0.3em] mb-6"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                    >
+                        Recognition Hub
+                    </motion.span>
+                    <motion.h1
+                        className="text-7xl md:text-9xl font-black text-black tracking-tight leading-[0.85] mb-8"
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                    >
+                        Spotlight
+                    </motion.h1>
+                    <motion.p
+                        className="text-xl md:text-2xl text-gray-500 max-w-2xl"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        Celebrating the builders, projects, and events driving Africa's blockchain ecosystem.
+                    </motion.p>
+
+                    {/* Zone quick links */}
+                    <motion.div
+                        className="flex flex-wrap gap-4 mt-12"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                    >
+                        {['People', 'Projects', 'Events', 'Moments'].map((zone) => (
+                            <a
+                                key={zone}
+                                href={`#${zone.toLowerCase()}`}
+                                className="px-6 py-3 bg-black text-white text-sm font-bold rounded-full hover:bg-red-600 transition-colors"
+                            >
+                                {zone}
+                            </a>
+                        ))}
+                    </motion.div>
+                </div>
+            </header>
+
+            {/* Spotlight Zones */}
+            <div id="people">
+                <PeopleZone />
+            </div>
+            <div id="projects">
+                <ProjectsZone />
+            </div>
+            <div id="events">
+                <EventsZone />
+            </div>
+            <div id="moments">
+                <MomentsZone />
+            </div>
+        </div>
     )
 }
