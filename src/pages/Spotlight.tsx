@@ -108,11 +108,11 @@ const HERO_SLIDES: HeroSlide[] = [
     },
     {
         type: 'contributor',
-        title: 'Sylogbu',
+        title: 'DannyYak',
         subtitle: 'Avalanche Team1 Contributor',
         description: 'Produced high-impact educational and ecosystem content that amplified Avalanche visibility, simplified complex concepts, and consistently engaged the African builder community.',
         image: new URL('../assets/testimonial12.jpeg', import.meta.url).href,
-        badge: '🎬 TOP CREATOR'
+        badge: '🎬 TOP YAPPER'
     },
     {
         type: 'contributor',
@@ -148,7 +148,6 @@ const MOMENT_IMAGES = [
 ]
 
 // ==================== HERO SLIDESHOW ====================
-
 function HeroSlideshow() {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [direction, setDirection] = useState(1) // 1 = right, -1 = left
@@ -209,10 +208,8 @@ function HeroSlideshow() {
         }),
     }
 
-
-
     return (
-        <section className="relative w-full overflow-hidden rounded-3xl mb-16 bg-[#f5f5f5] min-h-[550px] md:h-[600px]">
+        <section className="relative w-full overflow-hidden rounded-3xl mb-16 bg-[#f5f5f5] min-h-[550px] md:h-[600px] group">
             {/* Sliding Content Container */}
             <div className="absolute inset-0">
                 <AnimatePresence initial={false} custom={direction}>
@@ -846,6 +843,7 @@ function PeakMomentsZone() {
 
 export default function SpotlightPlatform() {
     const containerRef = useRef<HTMLDivElement>(null)
+    const [isSpotlightVisible, setIsSpotlightVisible] = useState(false)
 
     // Ambient floating dots
     const floatingDots = useMemo(() => {
@@ -886,6 +884,44 @@ export default function SpotlightPlatform() {
                 ))}
             </div>
 
+            {/* 💡 RED CONE SPOTLIGHT (TONE-ON-TONE RED GRAIN) */}
+            <div
+                className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1300px] h-[1100px] pointer-events-none z-30 transition-opacity duration-700 ease-in-out ${
+                    isSpotlightVisible ? 'opacity-100' : 'opacity-0'
+                }`}
+            >
+                {/* Layer 1: The Red Light Beam (Background Glow) */}
+                <div
+                    className="absolute inset-0 w-full h-full"
+                    style={{
+                        clipPath: 'polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%)',
+                        // Soft Red Gradient
+                        background: 'linear-gradient(180deg, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0.15) 50%, transparent 95%)',
+                        filter: 'blur(50px)', 
+                        mixBlendMode: 'screen',
+                    }}
+                />
+
+                {/* Layer 2: The "Tone-on-Tone Red Grain" Texture */}
+                <div
+                    className="absolute inset-0 w-full h-full"
+                    style={{
+                        clipPath: 'polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%)',
+                        // UPDATED SVG SETTINGS:
+                        // 1. baseFrequency='0.20' -> Big, chunky grains.
+                        // 2. Color Matrix (Rows 1-3): '0 0 0 0 1.0 ... 0.5 ... 0.5' 
+                        //    -> Sets color to Soft Red (R=255, G=128, B=128). 
+                        //    This matches the red hue but is slightly lighter so it doesn't disappear.
+                        // 3. Alpha Matrix (Row 4): '80 0 0 0 -60' -> Keeps the sparse density (70% less).
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.20' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1.0  0 0 0 0 0.5  0 0 0 0 0.5  80 0 0 0 -60'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E")`,
+                        backgroundSize: '150px 150px',
+                        backgroundRepeat: 'repeat',
+                        mixBlendMode: 'normal', 
+                        opacity: 0.9,
+                    }}
+                />
+            </div>
+
             {/* Page header */}
             <header className="pt-32 pb-16 px-6 md:px-12 lg:px-20 relative z-10">
                 <div className="max-w-7xl mx-auto">
@@ -915,26 +951,28 @@ export default function SpotlightPlatform() {
                 </div>
             </header>
 
-            {/* Hero Slideshow */}
-            <div className="px-6 md:px-12 lg:px-20">
+            {/* Hero Slideshow Wrapper - Triggers the Light */}
+            <div 
+                className="px-6 md:px-12 lg:px-20 relative z-10"
+                onMouseEnter={() => setIsSpotlightVisible(true)}
+                onMouseLeave={() => setIsSpotlightVisible(false)}
+            >
                 <div className="max-w-7xl mx-auto">
                     <HeroSlideshow />
-                    {/* TopContributorsPreview commented out per request */}
-                    {/* <TopContributorsPreview /> */}
                 </div>
             </div>
 
             {/* Spotlight Zones */}
-            <div id="contributors">
+            <div id="contributors" className="relative z-10">
                 <TopContributorsZone />
             </div>
-            <div id="projects">
+            <div id="projects" className="relative z-10">
                 <ProjectsZone />
             </div>
-            <div id="events">
+            <div id="events" className="relative z-10">
                 <EventsZone />
             </div>
-            <div id="moments">
+            <div id="moments" className="relative z-10">
                 <PeakMomentsZone />
             </div>
         </div>
