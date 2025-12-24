@@ -138,29 +138,77 @@ const getCountryFlag = (code: string) => `https://flagcdn.com/w80/${code.toLower
 
 function HeroSlideshow() {
     const [currentSlide, setCurrentSlide] = useState(0)
+    const [direction, setDirection] = useState(1) // 1 = right, -1 = left
     const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
+    // Auto-advance every 7 seconds
     useEffect(() => {
         if (!isAutoPlaying) return
         const interval = setInterval(() => {
+            setDirection(1) // Auto-advance goes right
             setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length)
-        }, 5000)
+        }, 7000)
         return () => clearInterval(interval)
+    }, [isAutoPlaying])
+
+    // Resume auto-play after 10 seconds of inactivity
+    useEffect(() => {
+        if (isAutoPlaying) return
+        const resumeTimer = setTimeout(() => {
+            setIsAutoPlaying(true)
+        }, 10000)
+        return () => clearTimeout(resumeTimer)
     }, [isAutoPlaying])
 
     const slide = HERO_SLIDES[currentSlide]
 
+    const goToPrev = () => {
+        setDirection(-1)
+        setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)
+        setIsAutoPlaying(false)
+    }
+
+    const goToNext = () => {
+        setDirection(1)
+        setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length)
+        setIsAutoPlaying(false)
+    }
+
+    const goToSlide = (index: number) => {
+        setDirection(index > currentSlide ? 1 : -1)
+        setCurrentSlide(index)
+        setIsAutoPlaying(false)
+    }
+
+    // Slide variants for horizontal movement - NO opacity fade
+    const slideVariants = {
+        enter: (dir: number) => ({
+            x: dir > 0 ? '100%' : '-100%',
+            zIndex: 1,
+        }),
+        center: {
+            x: 0,
+            zIndex: 1,
+        },
+        exit: (dir: number) => ({
+            x: dir > 0 ? '-100%' : '100%',
+            zIndex: 0,
+        }),
+    }
+
     return (
-        <section className="relative w-full h-[600px] md:h-[700px] overflow-hidden rounded-3xl mb-16">
-            {/* Background images with transition */}
-            <AnimatePresence mode="wait">
+        <section className="relative w-full h-[600px] md:h-[700px] overflow-hidden rounded-3xl mb-16 bg-black">
+            {/* Background images with horizontal slide transition - both visible during transition */}
+            <AnimatePresence initial={false} custom={direction}>
                 <motion.div
                     key={currentSlide}
+                    custom={direction}
+                    variants={slideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.5, ease: 'linear' }}
                     className="absolute inset-0"
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.8 }}
                 >
                     <img
                         src={slide.image}
@@ -172,14 +220,15 @@ function HeroSlideshow() {
             </AnimatePresence>
 
             {/* Content */}
-            <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-16">
-                <AnimatePresence mode="wait">
+            <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-16 z-10">
+                <AnimatePresence mode="wait" custom={direction}>
                     <motion.div
                         key={currentSlide}
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.5 }}
+                        custom={direction}
+                        initial={{ opacity: 0, x: direction > 0 ? 50 : -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: direction > 0 ? -50 : 50 }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
                     >
                         <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-full mb-4">
                             {slide.badge}
@@ -198,11 +247,11 @@ function HeroSlideshow() {
             </div>
 
             {/* Slide indicators */}
-            <div className="absolute bottom-8 right-8 flex gap-3">
+            <div className="absolute bottom-8 right-8 flex gap-3 z-20">
                 {HERO_SLIDES.map((_, i) => (
                     <button
                         key={i}
-                        onClick={() => { setCurrentSlide(i); setIsAutoPlaying(false) }}
+                        onClick={() => goToSlide(i)}
                         className={`w-3 h-3 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-red-600 w-8' : 'bg-white/50 hover:bg-white'
                             }`}
                     />
@@ -211,16 +260,16 @@ function HeroSlideshow() {
 
             {/* Navigation arrows */}
             <button
-                onClick={() => { setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length); setIsAutoPlaying(false) }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors"
+                onClick={goToPrev}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors z-20"
             >
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
             <button
-                onClick={() => { setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length); setIsAutoPlaying(false) }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors"
+                onClick={goToNext}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors z-20"
             >
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
