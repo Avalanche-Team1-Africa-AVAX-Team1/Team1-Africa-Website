@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { articles } from '../data/articles'
 import AnimatedText from './AnimatedText'
-import AnimatedSection, { AnimatedItem } from './AnimatedSection'
+import AnimatedSection from './AnimatedSection'
 import { motion } from 'framer-motion'
 
 export default function Blog() {

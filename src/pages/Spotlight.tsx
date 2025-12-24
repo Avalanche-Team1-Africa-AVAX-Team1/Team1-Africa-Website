@@ -139,9 +139,6 @@ const MOMENT_IMAGES = [
     new URL('../assets/ghana3.JPG', import.meta.url).href,
 ]
 
-// Country flag URLs using flagcdn
-const getCountryFlag = (code: string) => `https://flagcdn.com/w80/${code.toLowerCase()}.png`
-
 // ==================== HERO SLIDESHOW ====================
 
 function HeroSlideshow() {

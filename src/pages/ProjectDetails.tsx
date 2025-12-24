@@ -5,7 +5,6 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { PROJECTS } from './Projects'
-import type { Project } from './Projects'
 
 // Country flag URL helper
 const getCountryFlag = (code: string) => `https://flagcdn.com/w80/${code.toLowerCase()}.png`
