@@ -107,6 +107,14 @@ const HERO_SLIDES: HeroSlide[] = [
         badge: '👑 2024 CHAMPION'
     },
     {
+        type: 'contributor',
+        title: 'Fatima Bello',
+        subtitle: 'Content Creator of the Year',
+        description: 'Created 100+ educational resources and tutorials on Avalanche development',
+        image: new URL('../assets/testimonial12.jpeg', import.meta.url).href,
+        badge: '🎬 TOP CREATOR'
+    },
+    {
         type: 'project',
         title: 'Canza Finance',
         subtitle: 'Project of the Year',
@@ -474,65 +482,61 @@ function ProjectsZone() {
                 </motion.p>
             </div>
 
-            {/* Project cards - Logo on left, details on right */}
+            {/* Project cards - Clean design with gray background */}
             <div className="max-w-7xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-6 mb-12">
                     {SPOTLIGHT_PROJECTS.map((project, i) => (
                         <motion.div
                             key={project.id}
-                            className="relative group cursor-pointer bg-gray-50 rounded-3xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
-                            initial={{ opacity: 0, y: 40 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: i * 0.1 }}
+                            transition={{ duration: 0.4, delay: i * 0.1 }}
+                            whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                            className="group cursor-pointer"
                             onClick={() => navigate(`/projects/${project.id}`)}
                         >
-                            {/* Country flag - top right corner */}
-                            <div className="absolute top-4 right-4 z-10">
-                                <img
-                                    src={getCountryFlag(project.countryCode)}
-                                    alt={project.location}
-                                    className="w-8 h-8 rounded-full object-cover shadow-md border-2 border-white"
-                                />
-                            </div>
-
-                            <div className="flex">
-                                {/* Logo section - left side, full height */}
-                                <div className="w-1/3 bg-white flex items-center justify-center p-6 min-h-[200px]">
+                            <div className="bg-[#f5f5f5] rounded-2xl p-6 h-full flex flex-col relative hover:shadow-xl transition-shadow duration-300">
+                                {/* Top row: Name + Country flag */}
+                                <div className="flex items-start justify-between mb-3">
+                                    <h3 className="text-2xl font-black text-black leading-tight">
+                                        {project.name}
+                                    </h3>
+                                    {/* Country flag */}
                                     <img
-                                        src={project.logo}
-                                        alt={project.name}
-                                        className="w-full h-auto max-h-24 object-contain group-hover:scale-110 transition-transform duration-300"
+                                        src={getCountryFlag(project.countryCode)}
+                                        alt={project.location}
+                                        className="w-8 h-8 rounded-full object-cover shadow-md border-2 border-white"
                                     />
                                 </div>
 
-                                {/* Details section - right side */}
-                                <div className="flex-1 p-6 flex flex-col justify-center">
-                                    {/* Achievement badge */}
+                                {/* Tags */}
+                                <div className="flex flex-wrap gap-2 mb-4">
+                                    <span className="px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full">
+                                        {project.category}
+                                    </span>
                                     {project.achievement && (
-                                        <span className="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full mb-3 w-fit">
+                                        <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full">
                                             {project.achievement}
                                         </span>
                                     )}
-
-                                    <h3 className="text-2xl font-black text-black mb-1">{project.name}</h3>
-                                    <p className="text-gray-500 text-sm mb-4">{project.tagline}</p>
-
-                                    {/* Stats */}
-                                    <div className="flex items-center gap-4">
-                                        <p className="text-2xl font-black text-red-600">{project.metric}</p>
-                                        <span className="px-3 py-1 bg-black text-white text-xs font-bold rounded-full">
-                                            {project.category}
-                                        </span>
-                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Hover arrow */}
-                            <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
+                                {/* Description */}
+                                <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-grow">
+                                    {project.tagline}
+                                </p>
+
+                                {/* Bottom row: View More + Metric */}
+                                <div className="flex items-center justify-between mt-auto">
+                                    <span className="px-6 py-2.5 bg-red-600 text-white text-sm font-bold rounded-full group-hover:bg-red-700 transition-colors">
+                                        View More
+                                    </span>
+
+                                    <span className="text-xl font-black text-red-600">
+                                        {project.metric}
+                                    </span>
+                                </div>
                             </div>
                         </motion.div>
                     ))}
