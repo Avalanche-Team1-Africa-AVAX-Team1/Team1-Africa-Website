@@ -180,6 +180,13 @@ const PROJECTS: Project[] = [
 const CATEGORIES = ['All', 'DeFi', 'NFT', 'DAO', 'Infrastructure']
 const COUNTRIES = ['All', 'Nigeria', 'Kenya', 'Ghana', 'South Africa', 'Ethiopia']
 
+// Animated avatar URLs - colorful cartoon style avatars
+const ANIMATED_AVATARS = [
+    'https://api.dicebear.com/7.x/adventurer/svg?seed=Felix&backgroundColor=b6e3f4',
+    'https://api.dicebear.com/7.x/adventurer/svg?seed=Aneka&backgroundColor=c0aede',
+    'https://api.dicebear.com/7.x/adventurer/svg?seed=Max&backgroundColor=d1f4a5',
+]
+
 // Country flag URL helper
 const getCountryFlag = (code: string) => `https://flagcdn.com/w40/${code.toLowerCase()}.png`
 
@@ -241,8 +248,8 @@ export default function ProjectsPage() {
                                     key={cat}
                                     onClick={() => setSelectedCategory(cat)}
                                     className={`px-5 py-2.5 text-sm font-bold rounded-lg transition-all ${selectedCategory === cat
-                                        ? 'bg-red-600 text-white'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                            ? 'bg-red-600 text-white'
+                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
                                     {cat}
@@ -264,8 +271,8 @@ export default function ProjectsPage() {
                                     key={country}
                                     onClick={() => setSelectedCountry(country)}
                                     className={`px-5 py-2.5 text-sm font-bold rounded-lg transition-all flex items-center gap-2 ${selectedCountry === country
-                                        ? 'bg-red-600 text-white'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                            ? 'bg-red-600 text-white'
+                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
                                     {country !== 'All' && (
@@ -289,7 +296,7 @@ export default function ProjectsPage() {
                 </div>
             </div>
 
-            {/* Projects Grid - Updated Card Design */}
+            {/* Projects Grid */}
             <div className="px-6 md:px-12 lg:px-20 pb-24">
                 <div className="max-w-7xl mx-auto">
                     <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -306,11 +313,17 @@ export default function ProjectsPage() {
                                     className="group"
                                 >
                                     <div className="bg-[#f5f5f5] rounded-2xl p-6 h-full flex flex-col relative hover:shadow-xl transition-shadow duration-300">
-                                        {/* Top row: Name + Social Icons */}
+                                        {/* Top row: Logo + Name + Social Icons */}
                                         <div className="flex items-start justify-between mb-3">
-                                            <h3 className="text-2xl font-black text-black leading-tight">
-                                                {project.name}
-                                            </h3>
+                                            <div className="flex items-center gap-3">
+                                                {/* Project Logo */}
+                                                <div className="w-10 h-10 rounded-lg bg-white p-1.5 flex items-center justify-center flex-shrink-0 shadow-sm">
+                                                    <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
+                                                </div>
+                                                <h3 className="text-xl font-black text-black leading-tight">
+                                                    {project.name}
+                                                </h3>
+                                            </div>
                                             <div className="flex items-center gap-2">
                                                 {project.twitterUrl && (
                                                     <a
@@ -362,36 +375,35 @@ export default function ProjectsPage() {
                                         <div className="flex items-center justify-between mt-auto">
                                             <Link
                                                 to={`/projects/${project.id}`}
-                                                className="px-6 py-2.5 bg-red-600 text-white text-sm font-bold rounded-full hover:bg-red-700 transition-colors"
+                                                className="px-6 py-2.5 bg-black/80 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-colors"
                                             >
                                                 View More
                                             </Link>
 
-                                            {/* Animated user avatars + count */}
-                                            <div className="flex items-center gap-2">
-                                                <div className="flex -space-x-2">
-                                                    {project.founders.slice(0, 3).map((founder, idx) => (
+                                            {/* Animated user avatars with cyan rings + count */}
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex -space-x-1">
+                                                    {ANIMATED_AVATARS.map((avatarUrl, idx) => (
                                                         <motion.div
                                                             key={idx}
-                                                            className="relative"
+                                                            className="relative rounded-full"
                                                             animate={{
                                                                 boxShadow: [
-                                                                    '0 0 0 2px rgba(6, 182, 212, 0.5)',
-                                                                    '0 0 0 4px rgba(6, 182, 212, 0.3)',
-                                                                    '0 0 0 2px rgba(6, 182, 212, 0.5)'
+                                                                    '0 0 0 3px #22d3ee, 0 0 8px 2px rgba(34, 211, 238, 0.4)',
+                                                                    '0 0 0 3px #22d3ee, 0 0 12px 4px rgba(34, 211, 238, 0.6)',
+                                                                    '0 0 0 3px #22d3ee, 0 0 8px 2px rgba(34, 211, 238, 0.4)'
                                                                 ]
                                                             }}
                                                             transition={{
-                                                                duration: 2,
+                                                                duration: 1.5,
                                                                 repeat: Infinity,
-                                                                delay: idx * 0.3
+                                                                delay: idx * 0.2
                                                             }}
-                                                            style={{ borderRadius: '50%' }}
                                                         >
                                                             <img
-                                                                src={founder.image}
-                                                                alt={founder.name}
-                                                                className="w-9 h-9 rounded-full border-2 border-cyan-400 object-cover"
+                                                                src={avatarUrl}
+                                                                alt="User"
+                                                                className="w-10 h-10 rounded-full object-cover bg-white"
                                                             />
                                                         </motion.div>
                                                     ))}
@@ -410,7 +422,7 @@ export default function ProjectsPage() {
             </div>
 
             {/* CTA Section */}
-            <section className="py-24 px-6 md:px-12 lg:px-20 bg-black text-white">
+            {/* <section className="py-24 px-6 md:px-12 lg:px-20 bg-black text-white">
                 <div className="max-w-4xl mx-auto text-center">
                     <motion.h2
                         className="text-4xl md:text-6xl font-black mb-6"
@@ -440,7 +452,7 @@ export default function ProjectsPage() {
                         Submit Your Project →
                     </motion.a>
                 </div>
-            </section>
+            </section> */}
         </div>
     )
 }

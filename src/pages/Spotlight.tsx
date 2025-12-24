@@ -497,11 +497,17 @@ function ProjectsZone() {
                             onClick={() => navigate(`/projects/${project.id}`)}
                         >
                             <div className="bg-[#f5f5f5] rounded-2xl p-6 h-full flex flex-col relative hover:shadow-xl transition-shadow duration-300">
-                                {/* Top row: Name + Country flag */}
+                                {/* Top row: Logo + Name + Country flag */}
                                 <div className="flex items-start justify-between mb-3">
-                                    <h3 className="text-2xl font-black text-black leading-tight">
-                                        {project.name}
-                                    </h3>
+                                    <div className="flex items-center gap-3">
+                                        {/* Project Logo */}
+                                        <div className="w-10 h-10 rounded-lg bg-white p-1.5 flex items-center justify-center flex-shrink-0 shadow-sm">
+                                            <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
+                                        </div>
+                                        <h3 className="text-xl font-black text-black leading-tight">
+                                            {project.name}
+                                        </h3>
+                                    </div>
                                     {/* Country flag */}
                                     <img
                                         src={getCountryFlag(project.countryCode)}
