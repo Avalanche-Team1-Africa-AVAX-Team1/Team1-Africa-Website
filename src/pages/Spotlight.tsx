@@ -132,10 +132,10 @@ const HERO_SLIDES: HeroSlide[] = [
     },
     {
         type: 'project',
-        title: 'BloodLoop',
+        title: 'Off The Grid',
         subtitle: 'Project of the Year',
         description: 'A 5v5 hero shooter integrating Avalanche Subnets for a seamless battle experience with true asset ownership.',
-        image: new URL('../assets/BloodLoop.png', import.meta.url).href,
+        image: new URL('../assets/otg_offthegrid.jpg', import.meta.url).href,
         badge: '🚀 TOP PROJECT'
     },
 ]
@@ -208,90 +208,107 @@ function HeroSlideshow() {
         }),
     }
 
+
     return (
-        <section className="relative w-full overflow-hidden rounded-3xl mb-16 bg-[#f5f5f5] min-h-[550px] md:h-[600px] group">
-            {/* Sliding Content Container */}
-            <div className="absolute inset-0">
-                <AnimatePresence initial={false} custom={direction}>
-                    <motion.div
-                        key={currentSlide}
-                        custom={direction}
-                        variants={slideVariants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-                        className="absolute inset-0 flex flex-col md:flex-row"
-                    >
-                        {/* Left Side - Image */}
-                        <div className="relative w-full md:w-1/2 h-[300px] md:h-full p-2 md:p-4">
-                            <img
-                                src={slide.image}
-                                alt={slide.title}
-                                className="w-full h-full rounded-2xl md:rounded-3xl shadow-lg object-cover"
-                            />
-                        </div>
-
-                        {/* Right Side - Text Content */}
-                        <div className="relative w-full md:w-1/2 p-6 md:p-10 lg:p-16 flex flex-col justify-center">
-                            {/* Badge */}
-                            <span className="inline-block w-fit px-4 py-2 bg-red-600 text-white text-xs md:text-sm font-bold rounded-full mb-4">
-                                {slide.badge}
-                            </span>
-
-                            {/* Title */}
-                            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-black mb-3 leading-tight">
-                                {slide.title}
-                            </h2>
-
-                            {/* Subtitle */}
-                            <p className="text-lg md:text-xl lg:text-2xl text-red-500 font-bold mb-4">
-                                {slide.subtitle}
-                            </p>
-
-                            {/* Description */}
-                            <p className="text-base md:text-lg text-gray-600 leading-relaxed max-w-lg line-clamp-3">
-                                {slide.description}
-                            </p>
-                        </div>
-                    </motion.div>
-                </AnimatePresence>
-            </div >
-
-            {/* STATIC CONTROLS */}
-
-            {/* Prev Button - Left (Over Image) */}
-            <button
-                onClick={goToPrev}
-                className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/30 backdrop-blur-sm items-center justify-center hover:bg-black/50 transition-colors z-20 text-white"
-            >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-
-            {/* Next Button - Right (Extreme Right) */}
-            <button
-                onClick={goToNext}
-                className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/10 items-center justify-center hover:bg-red-600 hover:text-white transition-all z-20 text-black"
-            >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-
-            {/* Slide indicators - Bottom Left of Right Section */}
-            <div className="hidden md:flex absolute bottom-8 left-6 md:left-[53%] gap-2 z-20">
-                {HERO_SLIDES.map((_, i) => (
-                    <button
-                        key={i}
-                        onClick={() => goToSlide(i)}
-                        className={`h-3 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-red-600 w-8' : 'bg-gray-300 hover:bg-gray-400 w-3'
-                            }`}
-                    />
-                ))}
+        <div className="relative w-full mb-16 group">
+            {/* Floating Project Icons - positioned outside the main container */}
+            {/* <div className="hidden lg:block absolute -top-12 -left-12 w-20 h-20 rounded-2xl bg-green-400 shadow-lg p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 rotate-12">
+                <img src={new URL('../assets/refi.png', import.meta.url).href} alt="ReFi" className="w-full h-full object-contain" />
             </div>
-        </section >
+
+            <div className="hidden lg:block absolute -top-12 -right-12 w-20 h-20 rounded-full bg-blue-400 shadow-lg p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 -rotate-45">
+                <img src={new URL('../assets/dexalot.png', import.meta.url).href} alt="Dexalot" className="w-full h-full object-contain" />
+            </div>
+
+            <div className="hidden lg:block absolute -bottom-10 -left-12 w-28 h-28 rounded-2xl bg-cyan-200 shadow-lg p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 rotate-45 border-2 border-green-600">
+                <img src={new URL('../assets/onlydust.png', import.meta.url).href} alt="OnlyDust" className="w-full h-full object-contain" />
+            </div> */}
+
+            {/* Main slideshow section */}
+            <section className="relative w-full overflow-hidden rounded-3xl bg-[#f5f5f5] min-h-[550px] md:h-[600px]">
+                {/* Sliding Content Container */}
+                <div className="absolute inset-0">
+                    <AnimatePresence initial={false} custom={direction}>
+                        <motion.div
+                            key={currentSlide}
+                            custom={direction}
+                            variants={slideVariants}
+                            initial="enter"
+                            animate="center"
+                            exit="exit"
+                            transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+                            className="absolute inset-0 flex flex-col md:flex-row"
+                        >
+                            {/* Left Side - Image */}
+                            <div className="relative w-full md:w-1/2 h-[300px] md:h-full p-2 md:p-4">
+                                <img
+                                    src={slide.image}
+                                    alt={slide.title}
+                                    className="w-full h-full rounded-2xl md:rounded-3xl shadow-lg object-cover"
+                                />
+                            </div>
+
+                            {/* Right Side - Text Content */}
+                            <div className="relative w-full md:w-1/2 p-6 md:p-10 lg:p-16 flex flex-col justify-center">
+                                {/* Badge */}
+                                <span className="inline-block w-fit px-4 py-2 bg-red-600 text-white text-xs md:text-sm font-bold rounded-full mb-4">
+                                    {slide.badge}
+                                </span>
+
+                                {/* Title */}
+                                <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-black mb-3 leading-tight">
+                                    {slide.title}
+                                </h2>
+
+                                {/* Subtitle */}
+                                <p className="text-lg md:text-xl lg:text-2xl text-red-500 font-bold mb-4">
+                                    {slide.subtitle}
+                                </p>
+
+                                {/* Description */}
+                                <p className="text-base md:text-lg text-gray-600 leading-relaxed max-w-lg line-clamp-3">
+                                    {slide.description}
+                                </p>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
+                </div >
+
+                {/* STATIC CONTROLS */}
+
+                {/* Prev Button - Left (Over Image) */}
+                <button
+                    onClick={goToPrev}
+                    className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/30 backdrop-blur-sm items-center justify-center hover:bg-black/50 transition-colors z-20 text-white"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+
+                {/* Next Button - Right (Extreme Right) */}
+                <button
+                    onClick={goToNext}
+                    className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/10 items-center justify-center hover:bg-red-600 hover:text-white transition-all z-20 text-black"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+
+                {/* Slide indicators - Bottom Left of Right Section */}
+                <div className="hidden md:flex absolute bottom-8 left-6 md:left-[53%] gap-2 z-20">
+                    {HERO_SLIDES.map((_, i) => (
+                        <button
+                            key={i}
+                            onClick={() => goToSlide(i)}
+                            className={`h-3 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-red-600 w-8' : 'bg-gray-300 hover:bg-gray-400 w-3'
+                                }`}
+                        />
+                    ))}
+                </div>
+            </section>
+        </div>
     )
 }
 
@@ -912,7 +929,7 @@ export default function SpotlightPlatform() {
                         //    -> Sets color to Soft Red (R=255, G=128, B=128). 
                         //    This matches the red hue but is slightly lighter so it doesn't disappear.
                         // 3. Alpha Matrix (Row 4): '80 0 0 0 -60' -> Keeps the sparse density (70% less).
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.20' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1.0  0 0 0 0 0.5  0 0 0 0 0.5  80 0 0 0 -60'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E")`,
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.20' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1.0  0 0 0 0 0.5  0 0 0 0 0.5  80 0 0 0 -65'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E")`,
                         backgroundSize: '150px 150px',
                         backgroundRepeat: 'repeat',
                         mixBlendMode: 'normal',

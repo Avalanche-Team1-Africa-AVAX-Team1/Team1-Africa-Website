@@ -7,6 +7,8 @@ import gamepad from '../assets/gamepad.svg'
 import scroll from '../assets/scroll.svg'
 import pixel from '../assets/pixel-avax.png'
 import arrowup from '../assets/arrow-up.svg'
+import calendar from '../assets/calendar.svg'
+import trophy from '../assets/trophy.svg'
 import MagneticButton from './MagneticButton'
 import AnimatedSection, { AnimatedItem } from './AnimatedSection'
 
@@ -15,44 +17,45 @@ gsap.registerPlugin(ScrollTrigger)
 const cards = [
     {
         id: 1,
-        title: "infra BUIDL(AI)",
-        description: "Up to $15M in funding for developers building AI-powered applications on Avalanche. Early recipients include Cookie.fun and Bitte, with fast-track access to Aethir's $100M Ecosystem Fund for scaling AI projects.",
+        title: "Campus Outreach",
+        description: "Our on-campus events and student programs are designed to introduce Avalanche to the top talent across African universities, builders, creators, founders, and curious minds shaping the future of blockchain.",
         icon: rocket,
         color: "#fc3030bb",
         textColor: "text-white"
     },
     {
         id: 2,
-        title: "Retro 9000",
-        description: "$40M retroactive grant program rewarding builders who launch Avalanche L1 blockchains and developer tooling. Community-driven voting with quarterly snapshots—over 195 projects competing, 19 funded in first cohort.",
+        title: "Community Events",
+        description: "A mix of IRL and virtual events designed to bring the African Avalanche community together through meetups, workshops, talks, and interactive sessions, connecting builders, creators, and ecosystem participants worldwide.",
         icon: gamepad,
         color: "#0e6bd6ff",
         textColor: "text-white"
     },
     {
         id: 3,
-        title: "Codebase Program",
-        description: "Official Avalanche accelerator providing $50K non-dilutive funding, 10-week incubation, dedicated mentorship, and Demo Day with $400K+ prize pools. Includes hackathons with $50K prizes and Innovation House residencies for top builders.",
-        icon: scroll,
-        color: "#0d8033ff",
-        textColor: "text-white"
-    },
-    {
-        id: 4,
         title: "Hackathons & Workshops",
-        description: "Summit London Hackathon features $50K+ prizes across multiple tracks including DeFi, Gaming, and AI. Team1 Chennai brings hands-on ICM workshops and EERC training. Technical sessions on L1 deployment, cross-chain apps, and custom VMs with expert mentors.",
+        description: "Hands-on hackathons and technical workshops focused on building on Avalanche, with guided sessions, expert-led training, and practical experience across core concepts, tooling, and advanced use cases.",
         icon: gamepad,
         color: "#11B55A",
         textColor: "text-white"
     },
     {
         id: 5,
-        title: "Gaming & Education",
-        description: "Off the Grid (7M+ users on Xbox), Shrapnel, and WARP Chain lead Web3 gaming innovation. Avalanche Academy offers free courses from fundamentals to advanced VM customization. GDC showcases and gaming-first L1s with AI-powered NPCs and true asset ownership.",
-        icon: scroll,
-        color: "#2996F3",
+        title: "Weekly Syncs",
+        description: "Recurring community sync calls to align on upcoming events, initiatives, and priorities—providing updates, open discussions, and coordination across campus, events, and ecosystem efforts.",
+        icon: calendar,
+        color: "#6B4EFF",
+        textColor: "text-white"
+    },
+    {
+        id: 6,
+        title: "Bounties",
+        description: "Task-based opportunities to earn rewards by contributing to the Avalanche ecosystem—ranging from content creation and Twitter thread contests to research, community tasks, and event support.",
+        icon: trophy,
+        color: "#F59E0B",
         textColor: "text-white"
     }
+
 ]
 
 const Build = () => {

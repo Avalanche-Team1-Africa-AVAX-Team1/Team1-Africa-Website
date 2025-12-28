@@ -18,9 +18,9 @@ import benqiToken from '../assets/Benqi_Token_Ticker_White 2.png'
 import enclaveMarkets from '../assets/gee.png'
 import offTheGridLogo from '../assets/off-the-grid.jpg'
 import coqInu from '../assets/gunz.png'
-import onlydust from '../assets/onlydust.png'
-import sqauds from '../assets/sqauds.png'
-import refi from '../assets/refi.png'
+// import onlydust from '../assets/onlydust.png'
+// import sqauds from '../assets/sqauds.png'
+// import refi from '../assets/refi.png'
 
 // Images for the left container
 const FLOATING_IMAGES = [
@@ -78,30 +78,6 @@ const FLOATING_IMAGES = [
     width: 90,
     height: 90,
     delay: 0.9,
-    shape: 'rounded' as const,
-  },
-  {
-    src: onlydust,
-    alt: 'OnlyDust',
-    width: 85,
-    height: 85,
-    delay: 1.05,
-    shape: 'circle' as const,
-  },
-  {
-    src: sqauds,
-    alt: 'Squads',
-    width: 95,
-    height: 95,
-    delay: 1.2,
-    shape: 'rounded' as const,
-  },
-  {
-    src: refi,
-    alt: 'ReFi',
-    width: 115,
-    height: 70,
-    delay: 1.35,
     shape: 'rounded' as const,
   },
   {
@@ -186,27 +162,6 @@ const FEATURED_PROJECTS = [
     description: 'Decentralized music streaming',
     category: 'Creator Economy',
     icon: audius,
-  },
-  {
-    rank: 3,
-    name: 'OnlyDust',
-    description: 'Open-source ecosystem grants',
-    category: 'Builder Tools',
-    icon: onlydust,
-  },
-  {
-    rank: 4,
-    name: 'Squauds',
-    description: 'Squad coordination for DAOs',
-    category: 'Collaboration',
-    icon: sqauds,
-  },
-  {
-    rank: 5,
-    name: 'ReFi DAO',
-    description: 'Climate & impact finance',
-    category: 'Impact',
-    icon: refi,
   },
 ] as const
 
