@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { articles } from '../data/articles';
+import testimonial2 from "../assets/testimonial2.jpg";
+import testimonial3 from "../assets/testimonial3.jpg";
+import testimonial10 from "../assets/testimonial10.webp";
+import testimonial13 from "../assets/testimonial13.JPG";
+import testimonial14 from "../assets/testimonial14.JPG";
+import testimonial15 from "../assets/testimonial15.JPG";
+import testimonial21 from "../assets/testimonial21.jpg";
+import testimonial22 from "../assets/testimonial22.jpg";
+import testimonial24 from "../assets/testimonial24.JPG";
+import testimonial25 from "../assets/testimonial25.JPG";
+import testimonial26 from "../assets/testimonial26.jpg";
 
 
 // Blog data matching Planhat editorial structure
@@ -83,27 +94,19 @@ const impactArticles = [
   }
 ];
 
+
 const contributors = [
-  { name: "Eric Szafran", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300", slug: "eric-szafran" },
-  { name: "Alberto Lambert", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300", slug: "alberto-lambert" },
-  { name: "Ardalan Khosrowpour", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300", slug: "ardalan-khosrowpour" },
-  { name: "Marcus Osei", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300", slug: "marcus-osei" },
-  { name: "Amara Okafor", image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300", slug: "amara-okafor" },
-  { name: "Adam Cooney", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300", slug: "adam-cooney" },
-  { name: "Catherine De Verteuil", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300", slug: "catherine-de-verteuil" },
-  { name: "David Mensah", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300", slug: "david-mensah" },
-  { name: "Sarah Jallo", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300", slug: "sarah-jallo" },
-  { name: "Kofi Boaitey", image: "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=300", slug: "kofi-boaitey" },
-  { name: "Fatima Benta", image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=300", slug: "fatima-benta" },
-  { name: "Zainab Abba", image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=300", slug: "zainab-abba" },
-  { name: "Chidi Azeez", image: "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=300", slug: "chidi-azeez" },
-  { name: "Nadine Toure", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300", slug: "nadine-toure" },
-  { name: "Oscar Mbeki", image: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300", slug: "oscar-mbeki" },
-  { name: "Laila Sadiki", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300", slug: "laila-sadiki" },
-  { name: "Bemba Diop", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300", slug: "bemba-diop" },
-  { name: "Yara Gidado", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300", slug: "yara-gidado" },
-  { name: "Tunde Ednut", image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=300", slug: "tunde-ednut" },
-  { name: "Musa Keita", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300", slug: "musa-keita" }
+  { name: "Eric Szafran", image: testimonial2, slug: "eric-szafran" },
+  { name: "Alberto Lambert", image: testimonial3, slug: "alberto-lambert" },
+  { name: "Ardalan Khosrowpour", image: testimonial10, slug: "ardalan-khosrowpour" },
+  { name: "Marcus Osei", image: testimonial13, slug: "marcus-osei" },
+  { name: "Amara Okafor", image: testimonial14, slug: "amara-okafor" },
+  { name: "Adam Cooney", image: testimonial15, slug: "adam-cooney" },
+  { name: "Catherine De Verteuil", image: testimonial21, slug: "catherine-de-verteuil" },
+  { name: "David Mensah", image: testimonial22, slug: "david-mensah" },
+  { name: "Sarah Jallo", image: testimonial24, slug: "sarah-jallo" },
+  { name: "Kofi Boaitey", image: testimonial25, slug: "kofi-boaitey" },
+  { name: "Fatima Benta", image: testimonial26, slug: "fatima-benta" },
 ];
 
 
@@ -392,7 +395,7 @@ export default function BlogIndex() {
         <div className="flex flex-col md:flex-row md:items-center gap-12">
           <div className="flex-shrink-0">
             <h2 className="text-3xl font-black tracking-tighter mb-2">Active Contributors</h2>
-            <p className="text-gray-500 text-sm font-medium">Join 20+ builders shaping the ecosystem</p>
+            <p className="text-gray-500 text-sm font-medium">Join 11+ builders shaping the ecosystem</p>
           </div>
 
           <div className="flex -space-x-2 md:-space-x-3 overflow-visible py-8 px-4 flex-wrap items-center justify-center md:justify-start max-w-2xl">
