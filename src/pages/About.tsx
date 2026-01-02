@@ -117,67 +117,75 @@ const About = () => {
         <div className="min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none" style={{ backgroundColor: '#F8FAFC' }}>
             <CustomCursor />
 
-            {/* Hero Section - Lisk-Style 3-Column Layout */}
-            <section className="relative h-screen w-full flex items-center overflow-hidden">
-                {/* 1. The Video Layer (Bottom) */}
-                <div className="absolute inset-0 z-0 border-2 border-red-600">
+            {/* Hero Section - Centralized Grid Layout */}
+            <section className="relative min-h-[100svh] w-full flex items-center justify-center overflow-hidden bg-[#F8FAFC]">
+                {/* 1. Video Layer (Bottom) */}
+                <div className="absolute inset-0 z-0">
                     <video
                         autoPlay
                         loop
                         muted
                         playsInline
-                        className="w-full h-full object-cover opacity-100"
+                        className="w-full h-full object-cover"
                     >
                         <source src={videoSrc} type="video/mp4" />
                     </video>
                 </div>
 
-                {/* 2. The Mask Layer (Middle) */}
+                {/* 2. Mask & Outline Layer (Middle) */}
                 <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-                    <LogoMask />
+                    <div className="relative w-full h-full flex items-center justify-center">
+                        <LogoMask className="w-[50vw] h-[25vh] md:w-[45vw] md:h-[30vh] lg:w-[32vw] lg:h-[60vh] ultrawide:w-[45vw] ultrawide:h-[75vh] max-w-[500px] ultrawide:max-w-[800px]" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <LogoOutline className="w-[50vw] h-[25vh] md:w-[45vw] md:h-[30vh] lg:w-[32vw] lg:h-[60vh] ultrawide:w-[45vw] ultrawide:h-[75vh] max-w-[500px] ultrawide:max-w-[800px]" />
+                        </div>
+                    </div>
                 </div>
 
-                {/* 3. The Outline Layer (Top) */}
-                <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-                    <LogoOutline />
-                </div>
+                {/* 3. Content Grid Layer (Top) */}
+                <div className="z-30 w-full h-full px-6 md:px-12 laptop:px-20 pointer-events-none">
+                    <div className="max-w-[1920px] mx-auto min-h-[100svh] grid grid-cols-1 lg:grid-cols-12 gap-y-24 lg:gap-y-0 relative py-20 lg:py-0">
 
-                {/* 4. Content Grid - 3 Columns */}
-                <div className="z-30 w-full px-6 md:px-12 laptop:px-20 pointer-events-auto">
-                    <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16 items-start pt-32 md:pt-40 relative">
-
-                        {/* Left Column - Headline */}
-                        <div className="absolute right-[80%] bottom-[99%] w-[70%]">
-                            <div>
-                                <h1 className="text-4xl md:text-5xl lg:text-[2.5vw] font-bold text-black">
-                                    <span >At Team<span className="text-red-600">1</span></span> <br /> We're all about <br /> <span className="text-red-600">Community</span> And <span className="text-red-600">Building</span> cool sh<span className="text-red-600">*</span>t
-                                </h1>
-
-                            </div>
+                        {/* Left Column - Headline (Aligned Top) */}
+                        <div className="lg:col-span-4 pointer-events-auto flex flex-col justify-start pt-16 md:pt-24 lg:pt-32 lg:self-start">
+                            <h1
+                                className="font-bold text-black leading-tight tracking-tight text-[clamp(2rem,5vw,3.5rem)] ultrawide:text-[2.3vw]"
+                            >
+                                <span>At Team<span className="text-red-600">1</span></span> <br className="hidden ultrawide:block" />
+                                We&apos;re all about <br className="hidden ultrawide:block" />
+                                <span className="text-red-600">Community</span> And <br className="hidden ultrawide:block" />
+                                <span className="text-red-600">Building</span> cool sh<span className="text-red-600">*</span>t
+                            </h1>
                         </div>
 
-                        {/* Center Column - Empty (Logo is here via absolute positioning) */}
-                        <div className="hidden lg:block lg:col-span-1" />
+                        {/* Center Column - Logo Space (Empty) */}
+                        <div className="lg:col-span-4 h-[25vh] lg:h-full pointer-events-none flex items-center justify-center">
+                            {/* Empty space for the logo in the layer below */}
+                        </div>
 
-                        {/* Right Column - Description & Buttons */}
-                        <div className="absolute right-[-100%] bottom-[-200%]">
-                            <p className="text-base md:text-lg text-gray-700 leading-relaxed w-[30%]">
-                                Team1 Africa unites builders, developers, creatives, and enthusiasts across the continent. Join our thriving community and be part of the movement shaping Africa's Web3 future.
-                            </p>
+                        {/* Right Column - Description & Buttons (Aligned Bottom) */}
+                        <div className="lg:col-span-4 pointer-events-auto flex flex-col justify-end lg:items-end lg:text-right pb-16 md:pb-24 lg:pb-32 lg:self-end">
+                            <div className="max-w-md lg:max-w-sm xl:max-w-md ml-0 lg:ml-auto">
+                                <p
+                                    className="text-gray-700 text-left leading-relaxed mb-6 lg:mb-8 text-[clamp(0.9rem,1.2vw,1.125rem)] ultrawide:text-[0.7vw]"
+                                >
+                                    Team1 Africa unites builders, developers, creatives, and enthusiasts across the continent. Join our thriving community and be part of the movement shaping Africa&apos;s Web3 future.
+                                </p>
 
-                            <div className="flex flex-col sm:flex-row gap-3 mt-5">
-                                <a
-                                    href="/community"
-                                    className="px-5 py-3 bg-black text-white font-semibold text-sm rounded-md border border-gray-300 text-center"
-                                >
-                                    Join Team1
-                                </a>
-                                <a
-                                    href="/grants"
-                                    className="px-5 py-3 text-white font-semibold text-sm rounded-md border border-gray-300 bg-red-600 transition-colors text-center"
-                                >
-                                    Apply for Funding
-                                </a>
+                                <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-4 items-stretch lg:items-end lg:justify-start">
+                                    <a
+                                        href="/community"
+                                        className="px-8 py-3.5 bg-black text-white font-semibold text-sm rounded-lg border border-gray-300 text-center hover:bg-gray-900 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ultrawide:px-10 ultrawide:py-4 ultrawide:text-base"
+                                    >
+                                        Join Team1
+                                    </a>
+                                    <a
+                                        href="/grants"
+                                        className="px-8 py-3.5 text-white font-semibold text-sm rounded-lg border border-gray-300 bg-red-600 hover:bg-red-700 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] text-center ultrawide:px-10 ultrawide:py-4 ultrawide:text-base"
+                                    >
+                                        Apply for Funding
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -244,7 +252,7 @@ const About = () => {
             <LetsBuildSection />
 
 
-        </div>
+        </div >
     );
 };
 

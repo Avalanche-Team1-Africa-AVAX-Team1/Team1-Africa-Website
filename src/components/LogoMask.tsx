@@ -13,7 +13,7 @@ interface LogoMaskProps {
  */
 // Increased responsive sizes for better visibility
 export const LogoMask: React.FC<LogoMaskProps> = ({
-    className = "w-[85vw] h-[60vh] md:w-[70vw] md:h-[60vh] lg:w-[60vw] lg:h-[70vh] xl:w-[50vw] xl:h-[75vh] 2xl:w-[45vw] 2xl:h-[80vh] max-w-[900px] max-h-[900px]"
+    className = "w-[45vw] h-[30vh] md:w-[40vw] md:h-[35vh] lg:w-[32vw] lg:h-[60vh] max-w-[650px] max-h-[650px]"
 }) => {
     // We combine all logo paths and a large rectangle to create a "cutout" effect (hole punch).
     // The huge rectangle covers the screen, and the logo paths cut holes in it.
@@ -71,7 +71,7 @@ export const LogoMask: React.FC<LogoMaskProps> = ({
  * Creates the outline stroke layer on top using inline SVG with stroke only.
  */
 export const LogoOutline: React.FC<LogoMaskProps> = ({
-    className = "w-[85vw] h-[60vh] md:w-[70vw] md:h-[60vh] lg:w-[60vw] lg:h-[70vh] xl:w-[50vw] xl:h-[75vh] 2xl:w-[45vw] 2xl:h-[80vh] max-w-[900px] max-h-[900px]"
+    className = "w-[45vw] h-[30vh] md:w-[40vw] md:h-[35vh] lg:w-[32vw] lg:h-[60vh] max-w-[650px] max-h-[650px]"
 }) => {
     return (
         <div
