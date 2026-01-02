@@ -23,7 +23,12 @@ function App() {
       {/* Centered content wrapper with consistent max-width */}
       <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
         <Spinner />
-        <Stats />
+      </div>
+
+      {/* Stats Section - Handles its own max-width */}
+      <Stats />
+
+      <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
         <AboutUs />
         <Partners />
       </div>

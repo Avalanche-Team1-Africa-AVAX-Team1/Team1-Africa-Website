@@ -127,7 +127,7 @@ const Stats = () => {
         <div ref={statsRef} className='w-full 2xl:min-h-screen md:min-h-[calc(100vh-20rem)] lt-1024:min-h-[calc(100vh-20rem)] relative flex flex-col justify-center items-center py-[10%] px-[6%] xl:px-0 xl:py-10 xl:h-auto overflow-visible'>
 
             {/* Grid Container */}
-            <div className='w-full max-w-[100vw] 2xl:max-w-[1800px] mx-auto grid grid-cols-1 xl:grid-cols-[200px_1fr_200px] 2xl:grid-cols-[250px_1fr_250px] gap-8 items-stretch px-4 xl:px-8'>
+            <div className='w-full max-w-[100vw] 2xl:max-w-[1800px] mx-auto grid grid-cols-1 xl:grid-cols-[1fr_minmax(0,1000px)_1fr] 2xl:grid-cols-[1fr_minmax(0,1200px)_1fr] gap-4 xl:gap-6 items-stretch px-4 xl:px-8'>
 
                 {/* Left Column - Image Aligned Top */}
                 <div className='hidden xl:flex flex-col justify-start items-start'>
@@ -135,7 +135,7 @@ const Stats = () => {
                         src={event1}
                         srcWebp={event1Webp}
                         alt="event1"
-                        className='w-full aspect-[3/4] rounded-2xl pointer-events-none object-cover shadow-lg'
+                        className='w-full max-w-[280px] aspect-[3/4] rounded-2xl pointer-events-none object-cover shadow-lg'
                     />
                 </div>
 
@@ -147,23 +147,23 @@ const Stats = () => {
                         <AnimatedText
                             variant="slideUp"
                             delay={0.2}
-                            className='w-full text-[2rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[3.2rem] 2xl:text-[3.8rem] font-["Outfit"] font-[300] tracking-[-0.02em] text-black'
+                            className='w-full text-[1.8rem] md:text-[2rem] lg:text-[2.2rem] xl:text-[2.4rem] 2xl:text-[3rem] font-["Outfit"] font-[300] tracking-[-0.02em] text-black'
                         >
                             <div className='text-left leading-[1.2] w-fit mx-auto'>
                                 {/* Line 1 */}
-                                <span className='whitespace-nowrap'>Team1 Africa <span className='inline-block w-[50px] h-[50px] md:w-[70px] md:h-[70px] lg:w-[80px] lg:h-[80px] xl:w-[90px] xl:h-[90px] relative align-middle mx-[0.1em] mb-[-8px] md:mb-[-12px]'>
+                                <span className='whitespace-nowrap'>Team1 Africa <span className='inline-block w-[40px] h-[40px] md:w-[50px] md:h-[50px] lg:w-[55px] lg:h-[55px] xl:w-[60px] xl:h-[60px] relative align-middle mx-[0.1em] mb-[-6px] md:mb-[-8px]'>
                                     <video key="character-video" src={characterVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
                                 </span> is Avalanche's</span>
                                 <br />
                                 {/* Line 2 */}
-                                <span className='whitespace-nowrap'>African <span className='inline-block w-[50px] h-[50px] md:w-[70px] md:h-[70px] lg:w-[80px] lg:h-[80px] xl:w-[90px] xl:h-[90px] relative align-middle mx-[0.1em] mb-[-8px] md:mb-[-12px]'>
+                                <span className='whitespace-nowrap'>African <span className='inline-block w-[40px] h-[40px] md:w-[50px] md:h-[50px] lg:w-[55px] lg:h-[55px] xl:w-[60px] xl:h-[60px] relative align-middle mx-[0.1em] mb-[-6px] md:mb-[-8px]'>
                                     <video key="home-video" src={homeVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
-                                </span> network empowering <span className='inline-block w-[50px] h-[50px] md:w-[70px] md:h-[70px] lg:w-[80px] lg:h-[80px] xl:w-[90px] xl:h-[90px] relative align-middle mx-[0.1em] mb-[-8px] md:mb-[-12px]'>
+                                </span> network empowering <span className='inline-block w-[40px] h-[40px] md:w-[50px] md:h-[50px] lg:w-[55px] lg:h-[55px] xl:w-[60px] xl:h-[60px] relative align-middle mx-[0.1em] mb-[-6px] md:mb-[-8px]'>
                                         <video key="computer-video" src={computerVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
                                     </span></span>
                                 <br />
                                 {/* Line 3 */}
-                                <span className='whitespace-nowrap'>Builders <span className='inline-block w-[50px] h-[50px] md:w-[70px] md:h-[70px] lg:w-[80px] lg:h-[80px] xl:w-[90px] xl:h-[90px] relative align-middle mx-[0.1em] mb-[-8px] md:mb-[-12px]'>
+                                <span className='whitespace-nowrap'>Builders <span className='inline-block w-[40px] h-[40px] md:w-[50px] md:h-[50px] lg:w-[55px] lg:h-[55px] xl:w-[60px] xl:h-[60px] relative align-middle mx-[0.1em] mb-[-6px] md:mb-[-8px]'>
                                     <video key="robot-video" src={robotVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
                                 </span> and Creators</span>
                                 <br />
@@ -178,7 +178,7 @@ const Stats = () => {
                     {/* Stats counters with Advanced Effects */}
                     <div
                         ref={containerRef}
-                        className='w-full max-w-full min-w-fit mx-auto mt-12 xl:mt-24 relative rounded-[32px] overflow-hidden shadow-2xl transition-transform hover:scale-[1.01] duration-500'
+                        className='w-full max-w-full mx-auto mt-12 xl:mt-16 relative rounded-[32px] overflow-hidden shadow-2xl transition-transform hover:scale-[1.01] duration-500'
                         onMouseMove={handleMouseMove}
                         onMouseEnter={() => setIsHovering(true)}
                         onMouseLeave={() => setIsHovering(false)}
@@ -248,32 +248,32 @@ const Stats = () => {
                             <div className='flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-center text-center font-["Outfit"]'>
 
                                 <div className='flex-1'>
-                                    <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>{eventsCount}+</p>
-                                    <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Events</p>
+                                    <p className='text-[2.5rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[2rem] font-[300] text-gray-900 tracking-tight leading-none'>{eventsCount}+</p>
+                                    <p className='text-base md:text-md text-gray-600 font-medium mt-2 uppercase tracking-wider'>Events</p>
                                 </div>
 
                                 {/* Vertical Dividers */}
                                 <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
 
                                 <div className='flex-1'>
-                                    <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>
+                                    <p className='text-[2.5rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[2rem] font-[300] text-gray-900 tracking-tight leading-none'>
                                         {membersCount >= 1000 ? (membersCount / 1000).toFixed(1) : membersCount}k+
                                     </p>
-                                    <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Members</p>
+                                    <p className='text-base md:text-md text-gray-600 font-medium mt-2 uppercase tracking-wider'>Members</p>
                                 </div>
 
                                 <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
 
                                 <div className='flex-1'>
-                                    <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>{toursCount}</p>
-                                    <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Uni Tours</p>
+                                    <p className='text-[2.5rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[2rem] font-[300] text-gray-900 tracking-tight leading-none'>{toursCount}</p>
+                                    <p className='text-base md:text-md text-gray-600 font-medium mt-2 uppercase tracking-wider'>Uni Tours</p>
                                 </div>
 
                                 <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
 
                                 <div className='flex-1'>
-                                    <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>${bountyCount}k+</p>
-                                    <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Bounties</p>
+                                    <p className='text-[2.5rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[2rem] font-[300] text-gray-900 tracking-tight leading-none'>${bountyCount}k+</p>
+                                    <p className='text-base md:text-md text-gray-600 font-medium mt-2 uppercase tracking-wider'>Bounties</p>
                                 </div>
                             </div>
                         </div>
@@ -294,7 +294,7 @@ const Stats = () => {
                         src={event2}
                         srcWebp={event2Webp}
                         alt="event2"
-                        className='w-full aspect-[3/4] rounded-2xl pointer-events-none object-cover shadow-lg'
+                        className='w-full max-w-[280px] aspect-[3/4] rounded-2xl pointer-events-none object-cover shadow-lg'
                     />
                 </div>
             </div>
