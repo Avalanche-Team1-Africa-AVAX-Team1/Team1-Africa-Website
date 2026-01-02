@@ -124,7 +124,7 @@ const Stats = () => {
     };
 
     return (
-        <div ref={statsRef} className='w-full 2xl:min-h-screen md:min-h-[calc(100vh-20rem)] lt-1024:min-h-[calc(100vh-20rem)] relative flex flex-col justify-center items-center py-[10%] px-[6%] xl:py-10 xl:h-auto overflow-visible'>
+        <div ref={statsRef} className='w-full 2xl:min-h-screen md:min-h-[calc(100vh-20rem)] lt-1024:min-h-[calc(100vh-20rem)] relative flex flex-col justify-center items-center py-[10%] px-[6%] xl:px-0 xl:py-10 xl:h-auto overflow-visible'>
 
             {/* Grid Container */}
             <div className='w-full max-w-[100vw] 2xl:max-w-[1800px] mx-auto grid grid-cols-1 xl:grid-cols-[200px_1fr_200px] 2xl:grid-cols-[250px_1fr_250px] gap-8 items-stretch px-4 xl:px-8'>
@@ -140,10 +140,10 @@ const Stats = () => {
                 </div>
 
                 {/* Center Column - Text Content + Stats Card */}
-                <div className='flex flex-col items-center w-full'>
+                <div className='flex flex-col items-center w-full min-w-0'>
 
                     {/* Text Section */}
-                    <div className='w-full max-w-[90%] xl:max-w-[1000px] mx-auto'>
+                    <div className='w-full max-w-[90%] xl:max-w-full mx-auto'>
                         <AnimatedText
                             variant="slideUp"
                             delay={0.2}
@@ -178,7 +178,7 @@ const Stats = () => {
                     {/* Stats counters with Advanced Effects */}
                     <div
                         ref={containerRef}
-                        className='w-full max-w-[100%] xl:max-w-[1200px] mx-auto mt-12 xl:mt-24 relative rounded-[32px] overflow-hidden shadow-2xl transition-transform hover:scale-[1.01] duration-500'
+                        className='w-full max-w-full min-w-fit mx-auto mt-12 xl:mt-24 relative rounded-[32px] overflow-hidden shadow-2xl transition-transform hover:scale-[1.01] duration-500'
                         onMouseMove={handleMouseMove}
                         onMouseEnter={() => setIsHovering(true)}
                         onMouseLeave={() => setIsHovering(false)}
