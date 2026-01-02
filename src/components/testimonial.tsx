@@ -4,7 +4,7 @@ import gsap from "gsap";
 import AnimatedText from './AnimatedText';
 
 import testimonial1 from "../assets/testimonial1.jpg";
-import chidi from "../assets/0xchidi.JPG";
+import chidi from "../assets/0xchidi.jpg";
 import testimonial3 from "../assets/testimonial3.jpg";
 import testimonial4 from "../assets/testimonial4.jpg";
 import testimonial5 from "../assets/testimonial5.jpg";
