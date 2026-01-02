@@ -50,12 +50,48 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         return () => cancelAnimationFrame(animationFrameId)
     }, [onComplete])
 
+    // Responsive configuration based on screen size
+    const [imageCount] = useState(() => {
+        const width = window.innerWidth
+        if (width < 768) return 4          // Mobile
+        if (width < 1024) return 6         // Tablet
+        if (width < 1280) return 8         // Small Laptop
+        if (width < 1440) return 10        // Desktop
+        return 12                          // Large Desktop
+    })
+
+    const [imageSize] = useState(() => {
+        const width = window.innerWidth
+        if (width < 768) return 200        // Mobile: smaller images
+        if (width < 1024) return 240       // Tablet
+        if (width < 1280) return 280       // Small Laptop
+        return 320                         // Desktop & up: full size
+    })
+
     // Generate scattered positions with guaranteed spacing
     const [slidePositions] = useState(() => {
         const positions: { xPos: number; yPos: number; rotation: number; delay: number; zIndex: number }[] = []
 
-        // Minimum distance between image centers (in viewport units)
-        const MIN_DISTANCE = 25 // 25vw/vh minimum separation
+        // Responsive canvas spread
+        const width = window.innerWidth
+        let canvasWidth = 85
+        let canvasHeight = 75
+        let minDistance = 25
+
+        // Adjust canvas and spacing for smaller screens
+        if (width < 768) {
+            canvasWidth = 70
+            canvasHeight = 65
+            minDistance = 30  // More spacing on mobile
+        } else if (width < 1024) {
+            canvasWidth = 75
+            canvasHeight = 70
+            minDistance = 28
+        } else if (width < 1280) {
+            canvasWidth = 80
+            canvasHeight = 72
+            minDistance = 26
+        }
 
         interface PlacedImage {
             x: number
@@ -63,7 +99,10 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         }
         const placed: PlacedImage[] = []
 
-        for (let i = 0; i < photos.length; i++) {
+        // Only place the number of images appropriate for this screen size
+        const numImages = width < 768 ? 4 : width < 1024 ? 6 : width < 1280 ? 8 : width < 1440 ? 10 : 12
+
+        for (let i = 0; i < numImages; i++) {
             let bestX = 0
             let bestY = 0
             let bestDistance = 0
@@ -71,8 +110,8 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             // Try many random positions and pick the one furthest from others
             for (let attempt = 0; attempt < 2000; attempt++) {
                 // Random position across viewport
-                const x = (Math.random() - 0.5) * 85 // -42.5vw to +42.5vw
-                const y = (Math.random() - 0.5) * 75 // -37.5vh to +37.5vh
+                const x = (Math.random() - 0.5) * canvasWidth
+                const y = (Math.random() - 0.5) * canvasHeight
 
                 // Find minimum distance to any existing image
                 let minDist = Infinity
@@ -90,13 +129,13 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             }
 
             // Only add position if it meets minimum distance OR if we have no choice
-            if (placed.length === 0 || bestDistance >= MIN_DISTANCE * 0.6) {
+            if (placed.length === 0 || bestDistance >= minDistance * 0.6) {
                 placed.push({ x: bestX, y: bestY })
             } else {
                 // Force placement anyway but try to spread it out
-                const angle = (i / photos.length) * Math.PI * 2
-                bestX = Math.cos(angle) * 35 + (Math.random() - 0.5) * 15
-                bestY = Math.sin(angle) * 30 + (Math.random() - 0.5) * 15
+                const angle = (i / numImages) * Math.PI * 2
+                bestX = Math.cos(angle) * (canvasWidth * 0.4) + (Math.random() - 0.5) * 15
+                bestY = Math.sin(angle) * (canvasHeight * 0.4) + (Math.random() - 0.5) * 15
                 placed.push({ x: bestX, y: bestY })
             }
 
@@ -105,7 +144,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                 yPos: bestY,
                 rotation: (Math.random() - 0.5) * 50, // -25 to +25 degrees
                 delay: i * 0.4,
-                zIndex: Math.floor(Math.random() * 12) + 1
+                zIndex: Math.floor(Math.random() * numImages) + 1
             }
         }
 
@@ -130,13 +169,22 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
 
             {/* Scattered Slides */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {photos.map((src, i) => {
+                {photos.slice(0, imageCount).map((src, i) => {
                     const pos = slidePositions[i]
+                    if (!pos) return null
 
                     return (
                         <motion.div
                             key={i}
-                            className="absolute left-1/2 top-1/2 w-80 h-80 bg-white p-4 shadow-xl"
+                            className="absolute left-1/2 top-1/2 bg-white shadow-xl"
+                            style={{
+                                width: imageSize,
+                                height: imageSize,
+                                padding: imageSize * 0.0125, // 4px for 320px, scales proportionally
+                                marginLeft: -(imageSize / 2),
+                                marginTop: -(imageSize / 2),
+                                boxShadow: '0 20px 50px rgba(0,0,0,0.15)'
+                            }}
                             initial={{ x: 1000, y: 1000, rotate: 90, opacity: 0 }}
                             animate={{
                                 x: `${pos.xPos}vw`,
@@ -151,11 +199,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                                 stiffness: 60,
                                 delay: pos.delay
                             }}
-                            style={{
-                                marginLeft: '-8rem',
-                                marginTop: '-8rem',
-                                boxShadow: '0 20px 50px rgba(0,0,0,0.15)'
-                            }}
+
                         >
                             {/* Slide Frame Content */}
                             <div className="w-full h-[85%] bg-black relative overflow-hidden">
