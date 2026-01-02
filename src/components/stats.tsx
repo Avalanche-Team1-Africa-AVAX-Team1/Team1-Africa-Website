@@ -267,7 +267,7 @@ const Stats = () => {
 
                         <div className='flex-1'>
                             <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>{toursCount}</p>
-                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Uni Tours</p>
+                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Campus Tours</p>
                         </div>
 
                         <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
