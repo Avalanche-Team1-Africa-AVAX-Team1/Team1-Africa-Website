@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import arrow from '../assets/white-arrow.svg'
 import arrowup from '../assets/arrow-up.svg'
 import AnimatedText from './AnimatedText'
 import MagneticButton from './MagneticButton'
@@ -262,11 +261,10 @@ const Events = () => {
                     <AnimatedText variant="fadeIn" delay={0.5}>
                         <MagneticButton
                             onClick={() => navigate('/events')}
-                            className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'
+                            className='w-fit btn-outline border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer lg:hover:text-white lg:hover:border-red-500'
                         >
-                            See All Events
-                            <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
-                            <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
+                            <span className="relative z-10">See All Events</span>
+                            <img src={arrowup} alt="" width={20} height={20} className='relative z-10' />
                         </MagneticButton>
                     </AnimatedText>
                 </div>
@@ -286,11 +284,10 @@ const Events = () => {
                 <AnimatedText variant="fadeIn" delay={0.5}>
                     <MagneticButton
                         onClick={() => navigate('/events')}
-                        className='w-fit fill-left hover:text-white border-2 border-gray-200 text-gray-700 px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'
+                        className='w-fit bg-black text-white px-6 py-3 mx-auto rounded-full font-medium transition-colors flex items-center gap-2 group cursor-pointer'
                     >
                         See All Events
-                        <img src={arrow} alt="" width={20} height={20} className='group-hover:hidden' />
-                        <img src={arrowup} alt="" width={20} height={20} className='group-hover:block hidden' />
+                        <img src={arrowup} alt="" width={20} height={20} />
                     </MagneticButton>
                 </AnimatedText>
             </div>

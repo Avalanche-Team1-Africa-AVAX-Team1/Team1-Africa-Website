@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 // import logo from '../assets/logo.png';
-import arrowUp from '../assets/arrow-up.svg';
+import arrowup from '../assets/arrow-up.svg';
 import logo from '../assets/team1logo.png';
+import MagneticButton from './MagneticButton';
 
 const Navbar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -108,25 +109,16 @@ const Navbar = () => {
                     </div>
 
                     {/* Desktop Button - Join Community */}
-                    <div className="hidden md:flex relative">
+                    <div className="hidden md:flex">
                         <a
                             href="https://t.me/team1africa"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative flex items-center gap-4 text-2xl lt-1440:text-xl lt-1024:text-lg bg-black text-white px-4 py-3 cursor-pointer z-50 rounded-full border-0 w-fit overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-105"
                         >
-                            {/* Animated Background Gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-
-                            <div className="relative z-10 text-lg lt-1440:text-base lt-1024:text-sm font-semibold">Join the community</div>
-                            <img
-                                src={arrowUp}
-                                alt="arrow"
-                                width={30}
-                                height={30}
-                                className="lt-1440:w-[26px] lt-1440:h-[26px] lt-1024:w-6 lt-1024:h-6 relative z-10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                            />
+                            <MagneticButton className='btn-black px-6 py-3 lt-1024:px-5 lt-1024:py-2.5 rounded-full font-medium transition-colors flex items-center gap-2 group'>
+                                <span className="relative z-10 text-lg lt-1440:text-base lt-1024:text-sm font-semibold">Join the community</span>
+                                <img src={arrowup} alt="" width={24} height={24} className='lt-1024:w-5 lt-1024:h-5 relative z-10' />
+                            </MagneticButton>
                         </a>
                     </div>
 
@@ -171,7 +163,7 @@ const Navbar = () => {
                 <div className="mt-12 px-8 lt-768:px-6 lt-480:px-5">
                     <a href="https://t.me/team1africa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-2xl lt-768:text-xl lt-480:text-lg bg-black text-white px-4 py-3 rounded-full w-full justify-center">
                         <span className="text-lg lt-768:text-base lt-480:text-sm">Join the community</span>
-                        <img src={arrowUp} alt="arrow" width={30} height={30} className="lt-1440:w-[26px] lt-1440:h-[26px] lt-1024:w-6 lt-1024:h-6" />
+                        <img src={arrowup} alt="arrow" width={30} height={30} className="lt-1440:w-[26px] lt-1440:h-[26px] lt-1024:w-6 lt-1024:h-6" />
                     </a>
                 </div>
             </aside>

@@ -1,5 +1,5 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
 import TeamGrid from '../components/TeamGrid';
 import LetsBuildSection from '../components/LetsBuildSection';
 import { team1AfricaMembers } from '../data/team-members';
@@ -7,8 +7,109 @@ import CustomCursor from '../components/CustomCursor';
 import videoSrc from '../assets/videos/video.mp4';
 import { LogoMask, LogoOutline } from '../components/LogoMask';
 import AnimatedText from '../components/AnimatedText';
-import { AnimatedItem } from '../components/AnimatedSection';
 import AfricaPresence from '../components/AfricaPresence';
+
+// Mission section data
+const missionItems = [
+    {
+        id: 1,
+        number: "01",
+        title: "Our Origins",
+        desc: "Launched as a regional chapter of the global AvaxTeam1 network, Team1Africa builds on successes like Nigerian events and draws from Avalanche's MENA expansions for compliant growth models."
+    },
+    {
+        id: 2,
+        number: "02",
+        title: "Community Events",
+        desc: "We host hackathons, workshops, and blockchain weeks in cities all around Africa, creating vital touchpoints for builders, creators, and enthusiasts to connect and collaborate."
+    },
+    {
+        id: 3,
+        number: "03",
+        title: "Web3 Education",
+        desc: "Through university partnerships, we deliver Web3 training tailored to youth in fintech and gaming, equipping the next generation with future-ready skills."
+    },
+    {
+        id: 4,
+        number: "04",
+        title: "Strategic Initiatives",
+        desc: "From grants for African devs to cultural integrations like art and NFTs, we drive innovation through direct support and collaborations with the global AvaxTeam1 network."
+    }
+];
+
+// Accordion Item Component
+function MissionAccordionItem({ item, index }: { item: typeof missionItems[0], index: number }) {
+    const [isExpanded, setIsExpanded] = useState(index === 0); // First item expanded by default
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1 }}
+            className="border-t border-white/10 py-6 group"
+        >
+            <button
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="w-full flex items-center justify-between text-left"
+            >
+                <div className="flex items-center gap-4 md:gap-6">
+                    {/* Number Box */}
+                    <div className="relative flex-shrink-0">
+                        <div className={`w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-all duration-300 ${isExpanded ? 'bg-red-600' : 'bg-white group-hover:bg-red-600'}`}>
+                            <span className={`text-2xl md:text-3xl font-black transition-colors duration-300 ${isExpanded ? 'text-white' : 'text-black group-hover:text-white'}`} style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                {item.number}
+                            </span>
+                        </div>
+                        {/* Accent square */}
+                        <div className={`absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 transition-colors duration-300 ${isExpanded ? 'bg-white' : 'bg-red-500 group-hover:bg-white'}`}></div>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className={`text-xl lt-768:text-xl md:text-3xl lg:text-4xl font-black tracking-tight transition-colors duration-300 ${isExpanded ? 'text-red-600' : 'text-white group-hover:text-red-600'}`}>
+                        {item.title}
+                    </h3>
+                </div>
+
+                {/* Chevron */}
+                <motion.div
+                    animate={{ rotate: isExpanded ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="ml-4 text-white"
+                >
+                    <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                </motion.div>
+            </button>
+
+            {/* Expandable Content */}
+            <AnimatePresence>
+                {isExpanded && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="overflow-hidden"
+                    >
+                        <div className="pt-4 pl-16 md:pl-24">
+                            <p className="text-base md:text-lg text-gray-400 leading-relaxed max-w-2xl">
+                                {item.desc}
+                            </p>
+                            {/* Decorative lines */}
+                            <div className="mt-4 flex gap-2">
+                                <div className="h-1 w-12 bg-red-500"></div>
+                                <div className="h-1 w-8 bg-white"></div>
+                                <div className="h-1 w-4 bg-red-500"></div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
+    );
+}
 
 const About = () => {
 
@@ -49,11 +150,9 @@ const About = () => {
                         <div className="absolute right-[80%] bottom-[99%] w-[70%]">
                             <div>
                                 <h1 className="text-4xl md:text-5xl lg:text-[2.5vw] font-bold text-black">
-                                    <span className="text-red-600">Build</span> Cool <span className="text-red-600">Sh*t</span>. <br />
-                                    Touch Grass. <br />
-                                    Get <span className="text-red-600">Recognized</span>.
+                                    <span >At Team<span className="text-red-600">1</span></span> <br /> We're all about <br /> <span className="text-red-600">Community</span> And <span className="text-red-600">Building</span> cool sh<span className="text-red-600">*</span>t
                                 </h1>
-                                
+
                             </div>
                         </div>
 
@@ -61,21 +160,21 @@ const About = () => {
                         <div className="hidden lg:block lg:col-span-1" />
 
                         {/* Right Column - Description & Buttons */}
-                        <div className="absolute right-[-80%] bottom-[-50%]">
+                        <div className="absolute right-[-100%] bottom-[-200%]">
                             <p className="text-base md:text-lg text-gray-700 leading-relaxed w-[30%]">
-                                Across Africa, Southeast Asia, and Latin America, we combine local programs, a $5M fund, and an Ethereum-aligned L2 so you can build locally and scale globally.
+                                Team1 Africa unites builders, developers, creatives, and enthusiasts across the continent. Join our thriving community and be part of the movement shaping Africa's Web3 future.
                             </p>
 
-                            <div className="flex flex-col sm:flex-row gap-3">
+                            <div className="flex flex-col sm:flex-row gap-3 mt-5">
                                 <a
                                     href="/community"
-                                    className="px-5 py-3 bg-white text-black font-semibold text-sm rounded-md border border-gray-300 hover:bg-gray-50 transition-colors text-center"
+                                    className="px-5 py-3 bg-black text-white font-semibold text-sm rounded-md border border-gray-300 text-center"
                                 >
-                                    Join as Incubatee
+                                    Join Team1
                                 </a>
                                 <a
                                     href="/grants"
-                                    className="px-5 py-3 bg-white text-black font-semibold text-sm rounded-md border border-gray-300 hover:bg-gray-50 transition-colors text-center"
+                                    className="px-5 py-3 text-white font-semibold text-sm rounded-md border border-gray-300 bg-red-600 transition-colors text-center"
                                 >
                                     Apply for Funding
                                 </a>
@@ -105,70 +204,14 @@ const About = () => {
                             </AnimatedText>
                         </div>
 
-                        <div className="space-y-0 relative">
-                            {[{
-                                title: "Our Origins",
-                                desc: "Launched as a regional chapter of the global AvaxTeam1 network, Team1Africa builds on successes like Nigerian events and draws from Avalanche's MENA expansions for compliant growth models."
-                            }, {
-                                title: "Community Events",
-                                desc: "We host hackathons, workshops, and blockchain weeks in cities all around Africa, creating vital touchpoints for builders, creators, and enthusiasts to connect and collaborate."
-                            }, {
-                                title: "Web3 Education",
-                                desc: "Through university partnerships, we deliver Web3 training tailored to youth in fintech and gaming, equipping the next generation with future-ready skills."
-                            }, {
-                                title: "Strategic Initiatives",
-                                desc: "From grants for African devs to cultural integrations like art and NFTs, we drive innovation through direct support and collaborations with the global AvaxTeam1 network."
-                            }].map((item, i) => (
-                                <AnimatedItem key={i}>
-                                    <div className="group relative mb-16 md:mb-24">
-                                        {/* Rotated background number */}
-                                        <div className="absolute -left-4 md:-left-8 top-0 -rotate-12 opacity-10 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none">
-                                            <span className="text-[12rem] md:text-[15rem] font-black text-white/5 leading-none" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-                                                {i + 1}
-                                            </span>
-                                        </div>
-
-                                        {/* Content container with offset */}
-                                        <div className={`relative ${i % 2 === 0 ? 'md:ml-0' : 'md:ml-12'}`}>
-                                            {/* Large number indicator */}
-                                            <div className="flex items-start gap-8 mb-6">
-                                                <div className="relative">
-                                                    <div className="w-16 h-16 md:w-20 md:h-20 bg-white group-hover:bg-red-600 transition-all duration-300 flex items-center justify-center rotate-3 group-hover:rotate-0 group-hover:scale-110">
-                                                        <span className="text-4xl md:text-5xl font-black text-black group-hover:text-white" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
-                                                            {i + 1}
-                                                        </span>
-                                                    </div>
-                                                    {/* Accent square */}
-                                                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-red-500 group-hover:bg-white transition-colors duration-300"></div>
-                                                </div>
-
-                                                {/* Title */}
-                                                <div className="flex-1 pt-2">
-                                                    <h3 className="text-3xl md:text-4xl font-black text-white mb-2 leading-tight tracking-tight group-hover:text-red-600 transition-colors duration-300">
-                                                        {item.title}
-                                                    </h3>
-                                                    {/* Decorative line */}
-                                                    <div className="h-1 bg-white w-0 group-hover:w-full transition-all duration-500 ease-out"></div>
-                                                </div>
-                                            </div>
-
-                                            {/* Description with reveal effect */}
-                                            <div className="relative overflow-hidden">
-                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none"></div>
-                                                <p className="text-base md:text-lg text-gray-400 leading-relaxed pl-0 md:pl-28 relative">
-                                                    {item.desc}
-                                                </p>
-                                            </div>
-
-                                            {/* Decorative elements */}
-                                            <div className="mt-6 flex gap-2 pl-0 md:pl-28">
-                                                <div className="h-1 w-12 bg-red-500 group-hover:w-24 transition-all duration-300"></div>
-                                                <div className="h-1 w-8 bg-white group-hover:w-16 transition-all duration-300 delay-75"></div>
-                                                <div className="h-1 w-4 bg-red-500 group-hover:w-12 transition-all duration-300 delay-150"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </AnimatedItem>
+                        {/* Accordion Section */}
+                        <div className="space-y-0">
+                            {missionItems.map((item, index) => (
+                                <MissionAccordionItem
+                                    key={item.id}
+                                    item={item}
+                                    index={index}
+                                />
                             ))}
                         </div>
                     </div>

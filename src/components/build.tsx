@@ -108,13 +108,13 @@ const Build = () => {
                         </p>
 
                         <a href="https://build.avax.network/" target="_blank" rel="noopener noreferrer">
-                            <MagneticButton className="group bg-white text-black px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-gray-100 transition-colors cursor-pointer shadow-xl">
-                                <span>Start Building</span>
+                            <MagneticButton className="group btn-white px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-colors cursor-pointer shadow-xl lg:hover:text-white">
+                                <span className="relative z-10">Start Building</span>
                                 <motion.img
                                     src={arrowup}
                                     width={20}
                                     height={20}
-                                    className="invert"
+                                    className="invert relative z-10"
                                     animate={{ x: [0, 5, 0] }}
                                     transition={{ repeat: Infinity, duration: 1.5 }}
                                 />
@@ -223,9 +223,9 @@ const Build = () => {
                         </p>
 
                         <a href="https://build.avax.network/" target="_blank" rel="noopener noreferrer">
-                            <MagneticButton className="group bg-white text-black px-8 py-4 rounded-full font-bold flex items-center gap-3 hover:bg-black hover:text-white transition-colors cursor-pointer md:mx-auto w-fit">
+                            <MagneticButton className="group bg-white text-black px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-colors cursor-pointer md:mx-auto w-fit">
                                 <span>Start Building</span>
-                                <img src={arrowup} width={20} height={20} className="bg-black hover:bg-white" />
+                                <img src={arrowup} width={20} height={20} className="invert" alt="" />
                             </MagneticButton>
                         </a>
                     </div>
