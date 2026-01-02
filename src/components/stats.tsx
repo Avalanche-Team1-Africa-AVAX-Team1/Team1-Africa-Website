@@ -244,7 +244,6 @@ const Stats = () => {
                         </div>
 
                         {/* Text content layer - completely separate, unaffected by distortion */}
-                        {/* Text content layer - completely separate, unaffected by distortion */}
                 <div className='relative z-20 w-full p-8 md:p-12 xl:p-16 bg-white/5 backdrop-blur-[2px]'>
                     <div className='flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-center text-center font-["Outfit"]'>
 
