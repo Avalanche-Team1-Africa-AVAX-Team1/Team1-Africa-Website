@@ -82,8 +82,7 @@ const AppImage: React.FC<AppImageProps> = ({
                         className={cn(
                             "w-full h-full object-cover transition-opacity duration-500",
                             isLoaded ? "opacity-100" : "opacity-0",
-                            // If explicit aspect ratio not set on container, rely on img
-                            // But we handled container style above.
+                            className
                         )}
                         {...props}
                     />

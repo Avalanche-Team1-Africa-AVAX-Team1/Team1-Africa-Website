@@ -5,17 +5,11 @@ import AnimatedSection, { AnimatedItem } from './AnimatedSection';
 import AppImage from './ui/AppImage';
 
 import providenceImg from '../assets/providence.jpg';
-import providenceWebp from '../assets/providence.webp';
-import offTheGridImg from '../assets/off-the-grid.jpg';
-import offTheGridWebp from '../assets/off-the-grid.webp';
-import domiImg from '../assets/domi.png';
-import domiWebp from '../assets/domi.webp';
-import shrapnelImg from '../assets/shrapnel.png';
-import shrapnelWebp from '../assets/shrapnel.webp';
-import defiKingdomImg from '../assets/kingdom.png';
-import defiKingdomWebp from '../assets/kingdom.webp';
-import maplestoryImg from '../assets/maple.png';
-import maplestoryWebp from '../assets/maple.webp';
+import offTheGridImg from '../assets/otg.jpg';
+import domiImg from '../assets/domionline.jpg';
+import bloodloopImg from '../assets/bloodloop.jpg';
+import defiKingdomImg from '../assets/defikingdom.png';
+import maplestoryImg from '../assets/maplestory.webp';
 
 import steamIcon from '../assets/steam.svg';
 import windowsIcon from '../assets/windows.svg';
@@ -52,7 +46,7 @@ const FeaturedGames: React.FC = () => {
       genre: "Survival / Extraction",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Nintendo Switch"],
       image: providenceImg,
-      imageWebp: providenceWebp,
+      imageWebp: providenceImg,
       website: "https://playprovidence.io/"
     },
     {
@@ -62,7 +56,7 @@ const FeaturedGames: React.FC = () => {
       genre: "Action-RPG / Extraction Royale",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam"],
       image: offTheGridImg,
-      imageWebp: offTheGridWebp,
+      imageWebp: offTheGridImg,
       website: "https://gameoffthegrid.com/"
     },
     {
@@ -72,38 +66,38 @@ const FeaturedGames: React.FC = () => {
       genre: "MMORPG / Fantasy Sandbox",
       platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Epic"],
       image: domiImg,
-      imageWebp: domiWebp,
+      imageWebp: domiImg,
       website: "https://domionline.io/"
     },
     {
       id: 4,
-      title: "Shrapnel",
-      description: "A next-gen extraction shooter on Avalanche. Enter The Sacrifice Zone to recover rare Sigma resources—death means losing gear. Beyond intense FPS gameplay, create maps, skins, and mods, mint them as NFTs, and trade freely. AAA visuals meet blockchain ownership and community creation tools.",
-      genre: "Extraction Shooter / FPS",
-      platforms: ["Windows", "PlayStation", "Xbox", "Nintendo Switch"],
-      image: shrapnelImg,
-      imageWebp: shrapnelWebp,
-      website: "https://www.shrapnel.com/"
-    },
-    {
-      id: 5,
       title: "DeFi Kingdoms",
       description: "Pixel-art fantasy RPG meets decentralized finance. Summon NFT Heroes, quest in PvE/PvP, and engage in staking and liquidity mining. The Crystalvale expansion on Avalanche introduced $CRYSTAL token for summoning and upgrades. A living DeFi ecosystem disguised as a fantasy adventure.",
       genre: "Fantasy RPG / GameFi",
       platforms: ["Windows", "PlayStation", "Steam", "Epic"],
       image: defiKingdomImg,
-      imageWebp: defiKingdomWebp,
+      imageWebp: defiKingdomImg,
       website: "https://defikingdoms.com/"
     },
     {
-      id: 6,
+      id: 5,
       title: "MapleStory Universe",
       description: "Nexon's legendary MMORPG reimagined for Web3 on Avalanche. Return to the beloved 2D side-scrolling world with blockchain-powered ownership. Tokenize items and characters, design user-generated content, and earn rewards. Nostalgia meets modern Web3 functionality in this iconic franchise reborn.",
       genre: "MMORPG / UGC",
       platforms: ["Windows", "Xbox", "Steam"],
       image: maplestoryImg,
-      imageWebp: maplestoryWebp,
+      imageWebp: maplestoryImg,
       website: "https://msu.io/"
+    },
+    {
+      id: 6,
+      title: "BloodLoop",
+      description: "A 5v5 tactical hero-shooter on Avalanche. Built on UE5, it combines precision gunplay with unique hero abilities in a competitive landscape. Features include a player-owned economy, crafting systems, and decentralized tournaments on its own dedicated subnet.",
+      genre: "Tactical Hero-Shooter",
+      platforms: ["Windows", "Steam", "Epic"],
+      image: bloodloopImg,
+      imageWebp: bloodloopImg,
+      website: "https://bloodloop.com/"
     }
 
   ], []);
@@ -311,7 +305,7 @@ const FeaturedGames: React.FC = () => {
         <AnimatedSection staggerChildren={0.15} className="space-y-6">
           {games.slice(0, visibleGames).map((game) => (
             <AnimatedItem key={game.id} className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100">
-              <AppImage src={game.image} srcWebp={game.imageWebp} alt={game.title} className="w-full h-48 object-cover" />
+              <AppImage src={game.image} srcWebp={game.imageWebp} alt={game.title} className="w-full h-48 object-cover object-top" />
 
               <div className="p-5">
                 <h2 className="text-2xl font-bold text-gray-900 mb-3">{game.title}</h2>
@@ -444,7 +438,7 @@ const FeaturedGames: React.FC = () => {
           </div>
 
           {/* Sliding Image Cards Container */}
-          <div className="relative flex-1 h-full overflow-hidden lt-1024:rounded-2xl bg-gray-100">
+          <div className="relative flex-1 h-full overflow-hidden rounded-r-2xl lt-1024:rounded-2xl bg-gray-100">
             {[-1, 0, 1, 2].map((relativeIndex) => { // Render 4 slots relative to current index
               const gameIndex = getGameAtPosition(relativeIndex);
               const game = games[gameIndex];
@@ -515,7 +509,7 @@ const FeaturedGames: React.FC = () => {
                     src={game.image}
                     srcWebp={game.imageWebp}
                     alt={game.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top rounded-r-2xl lt-1024:rounded-2xl"
                     priority={visualPosition === 0 || visualPosition === 1 || visualPosition === -1}
                   />
 
@@ -532,7 +526,7 @@ const FeaturedGames: React.FC = () => {
                 src={games[currentGameIndex].image}
                 srcWebp={games[currentGameIndex].imageWebp}
                 alt={games[currentGameIndex].title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top rounded-2xl"
                 priority={true}
               />
 

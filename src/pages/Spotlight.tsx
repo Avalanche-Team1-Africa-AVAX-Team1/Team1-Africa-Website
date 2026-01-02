@@ -65,7 +65,7 @@ interface HeroSlide {
 // Top Contributors
 const SPOTLIGHT_PEOPLE: SpotlightPerson[] = [
     // Top 3 of the Year
-    { id: 'p1', name: 'Feezy Techboy', role: 'AVAX Team1 Community Lead', region: 'Nigeria', contribution: 'Built 12 production subnets, mentored 50+ developers', badge: 'yearly', image: new URL('../assets/testimonial1.jpg', import.meta.url).href },
+    { id: 'p1', name: 'Feezy', role: 'AVAX Team1 Community Lead', region: 'Nigeria', contribution: 'Built 12 production subnets, mentored 50+ developers', badge: 'yearly', image: new URL('../assets/testimonial1.jpg', import.meta.url).href },
     { id: 'p2', name: 'Amara Okafor', role: 'Community Lead', region: 'Nigeria', contribution: 'Onboarded 500+ developers to Avalanche', badge: 'top3', image: new URL('../assets/testimonial2.jpg', import.meta.url).href },
     { id: 'p3', name: 'Wanjiku Kimani', role: 'Product Lead', region: 'Kenya', contribution: 'Launched 8 African-founded projects', badge: 'top3', image: new URL('../assets/testimonial3.jpg', import.meta.url).href },
     // Honorary Mentions (10)
@@ -100,8 +100,8 @@ const SPOTLIGHT_EVENTS: SpotlightEvent[] = [
 const HERO_SLIDES: HeroSlide[] = [
     {
         type: 'contributor',
-        title: 'Feezy Techboy',
-        subtitle: 'Community Lead, Team1 Nigeria',
+        title: 'Feezy',
+        subtitle: 'Lead Team1 Africa',
         description: 'Built and led Team1 Nigeria into one of the most active Avalanche communities, driving contributor onboarding, local events, and sustained ecosystem participation.',
         image: new URL('../assets/Feezy.jpg', import.meta.url).href,
         badge: '🏆 CONTRIBUTOR OF THE YEAR'
@@ -117,7 +117,7 @@ const HERO_SLIDES: HeroSlide[] = [
     {
         type: 'contributor',
         title: 'Deon',
-        subtitle: 'Ecosystem Streamer & Community Host',
+        subtitle: 'Software Developer & Content Creator',
         description: 'Delivered consistent live streams covering Avalanche development, ecosystem updates, and community discussions, bringing real-time education and visibility to African builders.',
         image: new URL('../assets/Deon.jpeg', import.meta.url).href,
         badge: '🎙️ TOP STREAMER'

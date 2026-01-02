@@ -76,7 +76,7 @@ const TeamGrid = ({ members }: TeamGridProps) => {
                             <img
                                 src={members[activeIndex].headshotUrl}
                                 alt={members[activeIndex].name}
-                                className="w-full h-full object-cover blur-sm"
+                                className="w-full h-full object-cover object-top blur-sm"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                         </motion.div>
@@ -113,7 +113,7 @@ const TeamGrid = ({ members }: TeamGridProps) => {
                             <img
                                 src={members[activeIndex].headshotUrl}
                                 alt=""
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover object-top"
                             />
                             <div className="absolute inset-0 rounded-xl pointer-events-none" />
                         </motion.div>
@@ -140,40 +140,71 @@ const TeamGrid = ({ members }: TeamGridProps) => {
                             className="group relative border-b border-white/10 py-8 md:py-12 transition-colors duration-300 hover:bg-white/5"
                             data-cursor="View Profile"
                         >
-                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-12 px-4">
-                                {/* Name & Role */}
+                            <div className="px-4 flex items-center justify-between gap-6">
+                                {/* Left Content: Name, Role, and Socials (Mobile) */}
                                 <div className="flex-1">
-                                    <h3 className="text-3xl md:text-5xl font-bold text-white mb-2 group-hover:translate-x-4 transition-transform duration-300">
+                                    <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-2 group-hover:translate-x-4 transition-transform duration-300">
                                         {member.name}
                                     </h3>
-                                    <p className="text-red-500 font-mono text-sm md:text-base tracking-widest uppercase">
+                                    <p className="text-red-500 font-mono text-xs sm:text-sm md:text-base tracking-widest uppercase mb-4 md:mb-0">
                                         {member.role}
                                     </p>
+
+                                    {/* Socials (Mobile only) */}
+                                    <div className="flex md:hidden gap-3 mt-4">
+                                        {member.socials.map((social, idx) => (
+                                            <a
+                                                key={idx}
+                                                href={social.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-white hover:text-red-500 transition-colors p-2 bg-white/10 rounded-full"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                {social.platform === 'twitter' && <FaTwitter size={16} />}
+                                                {social.platform === 'linkedin' && <FaLinkedin size={16} />}
+                                                {social.platform === 'github' && <FaGithub size={16} />}
+                                                {social.platform === 'telegram' && <FaTelegram size={16} />}
+                                            </a>
+                                        ))}
+                                    </div>
                                 </div>
 
-                                {/* Location & Region */}
-                                <div className="hidden md:block text-right text-gray-400 font-light">
-                                    <p className="text-lg">{member.location}</p>
-                                    <p className="text-sm opacity-50">{member.region}</p>
-                                </div>
+                                {/* Right Content: Mobile Image or Desktop Info */}
+                                <div className="flex items-center gap-12">
+                                    {/* Mobile Image */}
+                                    <div className="md:hidden w-20 h-24 sm:w-24 sm:h-28 rounded-xl overflow-hidden border border-white/20 shadow-2xl flex-shrink-0">
+                                        <img
+                                            src={member.headshotUrl}
+                                            alt={member.name}
+                                            className="w-full h-full object-cover object-top"
+                                        />
+                                    </div>
 
-                                {/* Socials (Visible on Hover/Mobile) */}
-                                <div className="flex gap-4 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
-                                    {member.socials.map((social, idx) => (
-                                        <a
-                                            key={idx}
-                                            href={social.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-white hover:text-red-500 transition-colors p-2 bg-white/10 rounded-full"
-                                            onClick={(e) => e.stopPropagation()}
-                                        >
-                                            {social.platform === 'twitter' && <FaTwitter size={20} />}
-                                            {social.platform === 'linkedin' && <FaLinkedin size={20} />}
-                                            {social.platform === 'github' && <FaGithub size={20} />}
-                                            {social.platform === 'telegram' && <FaTelegram size={20} />}
-                                        </a>
-                                    ))}
+                                    {/* Location (Desktop only) */}
+                                    <div className="hidden md:block text-right text-gray-400 font-light">
+                                        <p className="text-lg">{member.location}</p>
+                                        <p className="text-sm opacity-50">{member.region}</p>
+                                    </div>
+
+                                    {/* Socials (Desktop only - Shown on Hover) */}
+                                    <div className="hidden md:flex gap-4 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                                        {member.socials.map((social, idx) => (
+                                            <a
+                                                key={idx}
+                                                href={social.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-white hover:text-red-500 transition-colors p-2 bg-white/10 rounded-full"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                {social.platform === 'twitter' && <FaTwitter size={20} />}
+                                                {social.platform === 'linkedin' && <FaLinkedin size={20} />}
+                                                {social.platform === 'github' && <FaGithub size={20} />}
+                                                {social.platform === 'telegram' && <FaTelegram size={20} />}
+                                            </a>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>

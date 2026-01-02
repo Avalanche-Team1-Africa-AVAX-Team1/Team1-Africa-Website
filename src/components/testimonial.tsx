@@ -4,7 +4,7 @@ import gsap from "gsap";
 import AnimatedText from './AnimatedText';
 
 import testimonial1 from "../assets/testimonial1.jpg";
-import testimonial2 from "../assets/testimonial2.jpg";
+import chidi from "../assets/0xchidi.JPG";
 import testimonial3 from "../assets/testimonial3.jpg";
 import testimonial4 from "../assets/testimonial4.jpg";
 import testimonial5 from "../assets/testimonial5.jpg";
@@ -13,22 +13,6 @@ import testimonial7 from "../assets/testimonial7.jpg";
 import testimonial8 from "../assets/testimonial8.jpg";
 import testimonial9 from "../assets/testimonial9.jpg";
 import testimonial10 from "../assets/testimonial10.jpg";
-import testimonial11 from "../assets/testimonial11.jpeg";
-import testimonial12 from "../assets/testimonial12.jpeg";
-import testimonial13 from "../assets/testimonial13.JPG";
-import testimonial14 from "../assets/testimonial14.JPG";
-import testimonial15 from "../assets/testimonial15.JPG";
-import testimonial16 from "../assets/testimonial16.jpg";
-import testimonial17 from "../assets/testimonial17.jpg";
-import testimonial18 from "../assets/testimonial18.JPG";
-import testimonial19 from "../assets/testimonial19.JPG";
-import testimonial20 from "../assets/testimonial20.jpg";
-import testimonial21 from "../assets/testimonial21.jpg";
-import testimonial22 from "../assets/testimonial22.jpg";
-import testimonial23 from "../assets/testimonial23.jpg";
-import testimonial24 from "../assets/testimonial24.JPG";
-import testimonial25 from "../assets/testimonial25.JPG";
-import testimonial26 from "../assets/testimonial26.jpg";
 
 const testimonials = [
   {
@@ -42,12 +26,12 @@ const testimonials = [
   },
   {
     id: 2,
-    name: "Kwame Mensah",
-    title: "Developer Advocate - Accra",
-    image: testimonial2,
+    name: "0xchidi",
+    title: "Business Developer - Accra",
+    image: chidi,
     text:
       "Team1's hackathon in Accra was incredible! I met developers from across West Africa and we built a cross-border payment dApp in 48 hours. The mentors from Avalanche really knew their stuff.",
-    signature: "Kwame Mensah",
+    signature: "Chidi Ugwu",
   },
   {
     id: 3,
@@ -121,150 +105,6 @@ const testimonials = [
       "Mentoring at Team1's Addis Ababa hackathon was incredible. Watching teams build innovative dApps on Avalanche in just one weekend showed me the untapped talent across Ethiopia.",
     signature: "Selam Tadesse",
   },
-  {
-    id: 11,
-    name: "Oluwatobi Babalola",
-    title: "Technical Writer - Ibadan",
-    image: testimonial11,
-    text:
-      "Team1's content creation workshop in Ibadan helped me understand how to explain Avalanche's technology in ways that resonate with African developers. The feedback from other contributors was invaluable.",
-    signature: "Oluwatobi Babalola",
-  },
-  {
-    id: 12,
-    name: "Yara El Ghazal",
-    title: "Partnerships Lead - Casablanca",
-    image: testimonial12,
-    text:
-      "At Team1's partnership summit in Casablanca, I connected with Avalanche ecosystem projects looking to expand into North Africa. Those relationships turned into real collaborations within weeks.",
-    signature: "Yara El Ghazal",
-  },
-  {
-    id: 13,
-    name: "Nkosi Dlamini",
-    title: "Innovation Fellow - Mbabane",
-    image: testimonial13,
-    text:
-      "Team1's innovation week in Mbabane was exactly what our community needed. The hands-on Avalanche development sessions and the networking gave us momentum to keep building together.",
-    signature: "Nkosi Dlamini",
-  },
-  {
-    id: 14,
-    name: "Leila Faraji",
-    title: "Program Coordinator - Marrakech",
-    image: testimonial14,
-    text:
-      "Coordinating Team1 events in Marrakech has been rewarding. Every session on Avalanche attracts curious builders, and watching the community grow from meetup to meetup is truly special.",
-    signature: "Leila Faraji",
-  },
-  {
-    id: 15,
-    name: "Chinedu Eze",
-    title: "Startups Liaison - Enugu",
-    image: testimonial15,
-    text:
-      "Team1's founder meetup in Enugu connected me with investors who understand Avalanche and African markets. The pitch sessions and mentorship have been game-changing for local startups.",
-    signature: "Chinedu Eze",
-  },
-  {
-    id: 16,
-    name: "Zainab Hassan",
-    title: "Community Trainer - Kano",
-    image: testimonial16,
-    text:
-      "Training new developers at Team1 workshops in Kano is my passion. Avalanche's developer-friendly tools make it easy to get beginners building real projects quickly.",
-    signature: "Zainab Hassan",
-  },
-  {
-    id: 17,
-    name: "Kofi Boateng",
-    title: "Operations Lead - Kumasi",
-    image: testimonial17,
-    text:
-      "Team1's community building session in Kumasi taught me how to keep builders engaged. The challenges we run using Avalanche keep our members excited and shipping consistently.",
-    signature: "Kofi Boateng",
-  },
-  {
-    id: 18,
-    name: "Maya Omondi",
-    title: "Youth Advocate - Mombasa",
-    image: testimonial18,
-    text:
-      "Bringing Team1 to youth clubs in Mombasa has been amazing. Students get excited when they see Avalanche transactions happen in real-time and realize they can build the future of finance.",
-    signature: "Maya Omondi",
-  },
-  {
-    id: 19,
-    name: "Sifiso Khumalo",
-    title: "Blockchain Lecturer - Pretoria",
-    image: testimonial19,
-    text:
-      "Team1's academic workshop in Pretoria gave me updated curriculum materials on Avalanche. My students now get hands-on experience with subnets and understand why speed and scalability matter.",
-    signature: "Sifiso Khumalo",
-  },
-  {
-    id: 20,
-    name: "Iman Suleiman",
-    title: "Women in Web3 Lead - Khartoum",
-    image: testimonial20,
-    text:
-      "Team1's Women in Web3 gathering in Khartoum created a supportive space for us to learn about Avalanche together. The mentorship and friendships from that event continue to empower us daily.",
-    signature: "Iman Suleiman",
-  },
-  {
-    id: 21,
-    name: "Bongani Mokoena",
-    title: "Regional Connector - Durban",
-    image: testimonial21,
-    text:
-      "Team1's Southern Africa summit in Durban brought together leaders from five countries. The sessions on Avalanche's cross-chain capabilities sparked collaborations we're still building on today.",
-    signature: "Bongani Mokoena",
-  },
-  {
-    id: 22,
-    name: "Farida Diallo",
-    title: "Innovation Hub Lead - Dakar",
-    image: testimonial22,
-    text:
-      "Our innovation hub in Dakar hosted a Team1 demo day where teams showcased Avalanche projects. The micro-grants and feedback helped several teams move from prototype to launch.",
-    signature: "Farida Diallo",
-  },
-  {
-    id: 23,
-    name: "Tasnim Bensalem",
-    title: "Technical PM - Algiers",
-    image: testimonial23,
-    text:
-      "Team1's technical sprint in Algiers was intense but worth it. Building on Avalanche with experienced mentors guiding us through best practices elevated our entire team's capabilities.",
-    signature: "Tasnim Bensalem",
-  },
-  {
-    id: 24,
-    name: "Mpho Seabi",
-    title: "Community Designer - Gaborone",
-    image: testimonial24,
-    text:
-      "Attending Team1's design thinking workshop in Gaborone helped me reimagine how African users can interact with Avalanche dApps. The collaborative environment encouraged bold, creative solutions.",
-    signature: "Mpho Seabi",
-  },
-  {
-    id: 25,
-    name: "Abena Owusu",
-    title: "Programs Analyst - Cape Coast",
-    image: testimonial25,
-    text:
-      "Team1's data workshop in Cape Coast taught me to measure community impact effectively. Tracking Avalanche adoption metrics helps us prove that African builders are driving real growth.",
-    signature: "Abena Owusu",
-  },
-  {
-    id: 26,
-    name: "Lebo Molefe",
-    title: "Ecosystem Builder - Port Elizabeth",
-    image: testimonial26,
-    text:
-      "Team1's onboarding event in Port Elizabeth made Avalanche accessible to local entrepreneurs. The guided challenges and supportive community make the learning journey genuinely enjoyable.",
-    signature: "Lebo Molefe",
-  },
 ];
 
 export default function TestimonialSlider() {
@@ -276,6 +116,11 @@ export default function TestimonialSlider() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [cardWidth, setCardWidth] = useState(800);
   const [visibleMobileTestimonials, setVisibleMobileTestimonials] = useState(4);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartX = useRef(0);
+  const scrollStartX = useRef(0);
+  const dragThreshold = 5; // Pixels to move before it counting as a drag
+  const [hasMoved, setHasMoved] = useState(false);
   const GAP = 24;
   const SCROLL_DURATION = 150;
 
@@ -316,21 +161,15 @@ export default function TestimonialSlider() {
 
     // Animate container's x translation from 0 to -totalWidth continuously.
     // Use modifiers + gsap.utils.wrap to keep it seamless.
-    const t = gsap.to(container, {
-      x: `-=${totalWidth}`,
-      duration: SCROLL_DURATION,
-      ease: "none",
-      repeat: -1,
-      modifiers: {
-        x: (x) => {
-          // parse current x (string like "123px" or "-456.78px")
-          const v = parseFloat(x);
-          // wrap between -totalWidth and 0
-          const wrapped = gsap.utils.wrap(-totalWidth, 0, v);
-          return `${wrapped}px`;
-        },
-      },
-    });
+    const t = gsap.fromTo(container,
+      { x: 0 },
+      {
+        x: -totalWidth,
+        duration: SCROLL_DURATION,
+        ease: "none",
+        repeat: -1,
+      }
+    );
 
     tlRef.current = t;
 
@@ -427,7 +266,7 @@ export default function TestimonialSlider() {
   }, []);
 
   const handleCardClick = (renderIndex: number) => {
-    if (isAnimating) return; // Prevent clicks during animation
+    if (isAnimating || hasMoved) return; // Prevent clicks during animation or after dragging
 
     setIsAnimating(true);
 
@@ -442,6 +281,102 @@ export default function TestimonialSlider() {
       setIsAnimating(false);
     }, 900); // Match the longest animation duration
   };
+
+  // --- DRAG & SCROLL LOGIC ---
+
+  const handleStart = (clientX: number) => {
+    if (expandedKey !== null || isAnimating) return;
+    setIsDragging(true);
+    setHasMoved(false);
+    dragStartX.current = clientX;
+    scrollStartX.current = gsap.getProperty(containerRef.current, "x") as number;
+    if (tlRef.current) tlRef.current.pause();
+  };
+
+  const handleMove = (clientX: number) => {
+    if (!isDragging || !containerRef.current) return;
+    const dx = clientX - dragStartX.current;
+
+    if (Math.abs(dx) > dragThreshold) {
+      setHasMoved(true);
+    }
+
+    const newX = scrollStartX.current + dx;
+    const totalWidth = (cardWidth + GAP) * originalCount;
+    const wrappedX = gsap.utils.wrap(-totalWidth, 0, newX);
+
+    gsap.set(containerRef.current, { x: wrappedX });
+  };
+
+  const handleEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    // Sync the timeline progress to the manual position
+    if (tlRef.current && containerRef.current) {
+      const totalWidth = (cardWidth + GAP) * originalCount;
+      const currentX = gsap.getProperty(containerRef.current, "x") as number;
+      // Calculate progress (0 to 1) based on currentX position
+      const progress = gsap.utils.normalize(-totalWidth, 0, currentX);
+      tlRef.current.progress(1 - progress);
+    }
+
+    // Delay setting hasMoved to false to prevent click trigger immediately
+    setTimeout(() => {
+      setHasMoved(false);
+    }, 50);
+
+    if (!isHovering && expandedKey === null && tlRef.current) {
+      tlRef.current.resume();
+    }
+  };
+
+  const handleWheelScroll = (e: React.WheelEvent) => {
+    if (expandedKey !== null || isAnimating || window.innerWidth < 768) return;
+
+    // Normalize scroll delta
+    const delta = e.deltaX || e.deltaY;
+    if (Math.abs(delta) < 2) return;
+
+    if (tlRef.current) tlRef.current.pause();
+
+    const container = containerRef.current;
+    if (!container) return;
+
+    const currentX = gsap.getProperty(container, "x") as number;
+    const totalWidth = (cardWidth + GAP) * originalCount;
+    const newX = currentX - delta;
+    const wrappedX = gsap.utils.wrap(-totalWidth, 0, newX);
+
+    gsap.set(container, { x: wrappedX });
+
+    // Sync progress so it resumes from here
+    if (tlRef.current) {
+      const progress = gsap.utils.normalize(-totalWidth, 0, wrappedX);
+      tlRef.current.progress(1 - progress);
+    }
+  };
+
+  useEffect(() => {
+    const onMouseMove = (e: MouseEvent) => handleMove(e.clientX);
+    const onMouseUp = () => handleEnd();
+    const onTouchMove = (e: TouchEvent) => handleMove(e.touches[0].clientX);
+    const onTouchEnd = () => handleEnd();
+
+    if (isDragging) {
+      window.addEventListener("mousemove", onMouseMove);
+      window.addEventListener("mouseup", onMouseUp);
+      window.addEventListener("touchmove", onTouchMove);
+      window.addEventListener("touchend", onTouchEnd);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [isDragging, cardWidth, originalCount]);
 
   return (
     <section className="relative w-full overflow-hidden bg-[#f8f8f8] py-20">
@@ -482,7 +417,7 @@ export default function TestimonialSlider() {
                     width={1600}
                     height={800}
                     decoding="sync"
-                    className="h-full w-full object-cover object-center"
+                    className="h-full w-full object-cover object-top"
                   />
                   <div className="absolute inset-0 bg-black/20" />
                 </div>
@@ -540,7 +475,16 @@ export default function TestimonialSlider() {
       <AnimatedText variant="fadeIn" delay={0.3} className={`hidden md:block relative transition-opacity duration-700 ${isReady ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         <div
           onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
+          onMouseLeave={() => {
+            setIsHovering(false);
+            if (!isDragging && expandedKey === null && tlRef.current) {
+              tlRef.current.resume();
+            }
+          }}
+          onMouseDown={(e) => handleStart(e.clientX)}
+          onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+          onWheel={handleWheelScroll}
+          className={`cursor-grab active:cursor-grabbing select-none`}
         >
           {/* containerRef will move horizontally */}
           <div
@@ -590,7 +534,7 @@ export default function TestimonialSlider() {
                         width={1600}
                         height={800}
                         decoding="sync"
-                        className="h-full w-full object-cover object-center"
+                        className="h-full w-full object-cover object-top"
                         style={{
                           transform: 'translateZ(0)',
                           backfaceVisibility: 'hidden',
