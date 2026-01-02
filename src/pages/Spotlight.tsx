@@ -860,7 +860,7 @@ function PeakMomentsZone() {
 
 export default function SpotlightPlatform() {
     const containerRef = useRef<HTMLDivElement>(null)
-    const [isSpotlightVisible, setIsSpotlightVisible] = useState(false)
+    // const [isSpotlightVisible, setIsSpotlightVisible] = useState(false)
 
     // Ambient floating dots
     const floatingDots = useMemo(() => {
@@ -902,11 +902,13 @@ export default function SpotlightPlatform() {
             </div>
 
             {/* 💡 RED CONE SPOTLIGHT (TONE-ON-TONE RED GRAIN) */}
+            {/* 
             <div
                 className={`hidden lg:block absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1300px] h-[1100px] pointer-events-none z-30 transition-opacity duration-700 ease-in-out ${isSpotlightVisible ? 'opacity-100' : 'opacity-0'
                     }`}
             >
                 {/* Layer 1: The Red Light Beam (Background Glow) */}
+            {/* 
                 <div
                     className="absolute inset-0 w-full h-full"
                     style={{
@@ -917,8 +919,10 @@ export default function SpotlightPlatform() {
                         mixBlendMode: 'screen',
                     }}
                 />
+                */}
 
-                {/* Layer 2: The "Tone-on-Tone Red Grain" Texture */}
+            {/* Layer 2: The "Tone-on-Tone Red Grain" Texture */}
+            {/* 
                 <div
                     className="absolute inset-0 w-full h-full"
                     style={{
@@ -937,6 +941,7 @@ export default function SpotlightPlatform() {
                     }}
                 />
             </div>
+            */}
 
             {/* Page header */}
             <header className="pt-32 pb-16 px-6 md:px-12 lg:px-20 relative z-10">
@@ -970,8 +975,8 @@ export default function SpotlightPlatform() {
             {/* Hero Slideshow Wrapper - Triggers the Light */}
             <div
                 className="px-6 md:px-12 lg:px-20 relative z-10"
-                onMouseEnter={() => setIsSpotlightVisible(true)}
-                onMouseLeave={() => setIsSpotlightVisible(false)}
+            // onMouseEnter={() => setIsSpotlightVisible(true)}
+            // onMouseLeave={() => setIsSpotlightVisible(false)}
             >
                 <div className="max-w-7xl mx-auto">
                     <HeroSlideshow />
