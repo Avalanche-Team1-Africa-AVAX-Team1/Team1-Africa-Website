@@ -134,9 +134,9 @@ const About = () => {
                 {/* 2. Mask & Outline Layer (Middle) */}
                 <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
                     <div className="relative w-full h-full flex items-center justify-center">
-                        <LogoMask className="w-[50vw] h-[25vh] md:w-[45vw] md:h-[30vh] lg:w-[32vw] lg:h-[60vh] ultrawide:w-[45vw] ultrawide:h-[75vh] max-w-[500px] ultrawide:max-w-[800px]" />
+                        <LogoMask className="w-[40vw] h-[20vh] md:w-[45vw] md:h-[30vh] lg:w-[32vw] lg:h-[60vh] ultrawide:w-[45vw] ultrawide:h-[75vh] max-w-[280px] md:max-w-[500px] ultrawide:max-w-[800px]" />
                         <div className="absolute inset-0 flex items-center justify-center">
-                            <LogoOutline className="w-[50vw] h-[25vh] md:w-[45vw] md:h-[30vh] lg:w-[32vw] lg:h-[60vh] ultrawide:w-[45vw] ultrawide:h-[75vh] max-w-[500px] ultrawide:max-w-[800px]" />
+                            <LogoOutline className="w-[40vw] h-[20vh] md:w-[45vw] md:h-[30vh] lg:w-[32vw] lg:h-[60vh] ultrawide:w-[45vw] ultrawide:h-[75vh] max-w-[280px] md:max-w-[500px] ultrawide:max-w-[800px]" />
                         </div>
                     </div>
                 </div>
@@ -158,13 +158,13 @@ const About = () => {
                         </div>
 
                         {/* Center Column - Logo Space (Empty) */}
-                        <div className="lg:col-span-4 h-[25vh] lg:h-full pointer-events-none flex items-center justify-center">
+                        <div className="lg:col-span-4 h-[30vh] md:h-[25vh] lg:h-full pointer-events-none flex items-center justify-center">
                             {/* Empty space for the logo in the layer below */}
                         </div>
 
                         {/* Right Column - Description & Buttons (Aligned Bottom) */}
-                        <div className="lg:col-span-4 pointer-events-auto flex flex-col justify-end lg:items-end lg:text-right pb-16 md:pb-24 lg:pb-32 lg:self-end">
-                            <div className="max-w-md lg:max-w-sm xl:max-w-md ml-0 lg:ml-auto">
+                        <div className="lg:col-span-4 pointer-events-auto flex flex-col justify-end lg:items-end lg:text-right md:pb-24 lg:pb-32 lg:self-end">
+                            <div className="max-w-md lg:max-w-sm xl:max-w-md ml-0 lg:ml-auto bg-[#F8FAFC] lg:bg-transparent p-5 lg:p-0 rounded-2xl shadow-lg lg:shadow-none">
                                 <p
                                     className="text-gray-700 text-left leading-relaxed mb-6 lg:mb-8 text-[clamp(0.9rem,1.2vw,1.125rem)] ultrawide:text-[0.7vw]"
                                 >
