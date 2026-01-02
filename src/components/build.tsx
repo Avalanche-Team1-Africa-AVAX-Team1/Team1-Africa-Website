@@ -13,6 +13,7 @@ import event2 from '../assets/event2-img.png'
 import communityImg from '../assets/community.png'
 import MagneticButton from './MagneticButton'
 import AnimatedSection, { AnimatedItem } from './AnimatedSection'
+import Silk from './ui/Silk'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -94,6 +95,13 @@ const Build = () => {
             {/* DESKTOP: Pinned Scroll-Lock Section */}
             <div className="hidden lg:block">
                 <section ref={pinnedRef} className="h-screen bg-black text-white overflow-hidden flex items-center relative">
+
+                    {/* Silk Animated Background */}
+                    <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
+                        {/* Faint red tint: #1c1212 (Subtle warmth) */}
+                         <Silk color="#1a1a1a" speed={2} scale={1.2} />
+                    </div>
+
                     {/* Header - Top Left */}
                     <div className="absolute left-12 z-20 max-w-xl">
                         <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
@@ -129,11 +137,12 @@ const Build = () => {
                         </a>
                     </div>
 
-                    {/* Background Grid */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#ff000008_1px,transparent_1px),linear-gradient(to_bottom,#ff000008_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
+                    {/* Background Grid with Fade Mask */}
+                    {/* Increased opacity from 0a to 15 (tiny bit more obvious) */}
+                    <div className="absolute inset-0 z-10 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:200px_200px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] pointer-events-none" />
 
                     {/* Right Side: Vertically Stacked Cards with Peek */}
-                    <div className="absolute right-0 top-0 h-full w-1/2 flex items-center justify-center overflow-hidden">
+                    <div className="absolute right-0 top-0 h-full w-1/2 flex items-center justify-center overflow-hidden z-20">
                         <div className="relative w-full max-w-xl h-full flex items-center">
                             <AnimatePresence mode="sync">
                                 {cards.map((card, index) => {
