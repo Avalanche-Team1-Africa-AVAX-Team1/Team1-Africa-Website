@@ -77,6 +77,31 @@ html.lenis body {
   animation: infiniteScroll 20s linear infinite;
 }
 
+/* Blob animation for glassmorphism backgrounds */
+@keyframes blob {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  25% {
+    transform: translate(10%, 15%) scale(1.1);
+  }
+
+  50% {
+    transform: translate(-5%, 10%) scale(0.95);
+  }
+
+  75% {
+    transform: translate(15%, -10%) scale(1.05);
+  }
+}
+
+.animate-blob {
+  animation: blob 8s ease-in-out infinite;
+}
+
 /* Hide native scrollbars while preserving scroll behavior */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -100,4 +125,85 @@ html.lenis body {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Stats background wave animation - left to right traveling effect */
+.stats-bg-image {
+  position: relative;
+  will-change: transform;
+}
+
+.stats-bg-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 25%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0.15) 75%,
+      transparent 100%);
+  background-size: 200% 100%;
+  animation: stats-wave-sweep 6s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+@keyframes stats-wave-sweep {
+  0% {
+    background-position: -100% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Mouse magnify lens effect */
+.stats-magnify-lens {
+  background: radial-gradient(circle 120px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0.1) 30%,
+      transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  mix-blend-mode: overlay;
+}
+
+.is-hovering .stats-magnify-lens {
+  opacity: 1;
+}
+
+/* Additional distortion effect on hover - pseudo element for ripple */
+.is-hovering .stats-bg-container::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: calc(var(--mouse-x, 50%) - 100px);
+  top: calc(var(--mouse-y, 50%) - 100px);
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 3;
+  animation: magnify-pulse 1.5s ease-in-out infinite;
+  mix-blend-mode: soft-light;
+}
+
+@keyframes magnify-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 0.5;
+  }
 }
