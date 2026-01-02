@@ -7,8 +7,10 @@ import event1Webp from '../assets/event1-img.webp'
 import event2 from '../assets/event2-img.png'
 import event2Webp from '../assets/event2-img.webp'
 import avaxlogo from '../assets/logo.png'
-import otgVideo from '../assets/videos/otg.mp4'
-import bloodloopVideo from '../assets/videos/bloodloop-use.mp4'
+import characterVideo from '../assets/videos/character.mp4'
+import computerVideo from '../assets/videos/computer.mp4'
+import homeVideo from '../assets/videos/home.mp4'
+import robotVideo from '../assets/videos/robot.mp4'
 
 const Stats = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -101,36 +103,41 @@ const Stats = () => {
                 <AnimatedText
                     variant="slideUp"
                     delay={0.2}
-                    className='w-full text-[2.75rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[34px] 2xl:text-[40px] font-inter tracking-tight'
+                    className='w-full text-[2.75rem] md:text-[3.5rem] lg:text-[4rem] xl:text-[4.5rem] 2xl:text-[60px] font-["Outfit"] font-[350] tracking-tight text-black'
                 >
-                    <p className='font-normal text-left xl:text-center leading-[1.1] md:leading-[1.2] lg:leading-[1.25] xl:leading-none'>
-                        Team1 <span className='text-[#ef4444]'>Africa</span>
-                        <span className='inline-block w-[1.2em] h-[1.2em] xl:w-28 xl:h-28 xl:-mb-3 relative align-middle mx-[0.15em]'>
-                            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHBxaXg0bTFmOGZnYjN3YWJ6dGJxNWJxenBoZjV0OXl5enJ5dHZ6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6MbtUNOSRhgVPTFK/giphy.gif" alt="" className='w-full h-full object-contain' />
+                    <p className='text-left xl:text-center leading-[1.1] md:leading-[1.15] lg:leading-[1.15]'>
+                        Team1 Africa
+                        <span className='inline-block w-[2em] h-[2em] relative align-middle mx-[0.1em] -mt-2'>
+                            <video key="character-video" src={characterVideo} autoPlay loop muted playsInline />
                         </span>
                         is Avalanche's
-                        <span className='inline-block w-[1.2em] h-[1.2em] xl:w-28 xl:h-28 xl:-mb-6 relative align-middle mx-[0.15em]'>
-                            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXQ3ZTh5YmpoNWRnbWIzcmg5Nnp3eXI3Mjk0OHR4eHZ5bDBydzVpaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlQXlQ3nHyLMvte/giphy.gif" alt="" className='w-full h-full object-contain' />
+                        <span className='inline-block w-[2em] h-[2em] relative align-middle mx-[0.1em] -mt-2'>
+                            <video key="computer-video" src={computerVideo} autoPlay loop muted playsInline />
                         </span>
+                        <br className="hidden xl:block" />
                         African
-                        <span className='inline-block w-[2em] h-[1em] xl:w-40 xl:h-20 relative align-middle mx-[0.2em]'>
-                            <video key="bloodloop-video" src={bloodloopVideo} autoPlay loop muted playsInline className='w-full h-full object-cover rounded-full border-2 border-white' />
+                        <span className='inline-block w-[2em] h-[2em] relative align-middle mx-[0.1em] -mt-2'>
+                            <video key="home-video" src={homeVideo} autoPlay loop muted playsInline  />
                         </span>
-                        network empowering <span className='text-[#ef4444]'>Builders</span> and Creators
-                        <span className='inline-block w-[2em] h-[1em] xl:w-40 xl:h-20 relative align-middle mx-[0.2em]'>
-                            <video key="otg-video" src={otgVideo} autoPlay loop muted playsInline className='w-full h-full object-cover rounded-full border-2 border-white' />
+                        network empowering
+                        <br className="hidden xl:block" />
+                        Builders and Creators
+                        <span className='inline-block w-[2em] h-[2em] relative align-middle mx-[0.1em] -mt-2'>
+                            <video key="robot-video" src={robotVideo} autoPlay loop muted playsInline />
                         </span>
-                        with resources to thrive on
-                        <span className='inline-block relative align-middle mx-[0.15em]'>
-                            <img src={avaxlogo} alt="logo" className='w-[0.9em] h-[0.9em] xl:w-10 xl:h-10 object-contain' />
+                        with resources
+                        <br className="hidden xl:block" />
+                        to thrive on
+                        <span className='inline-block relative align-middle mx-[0.05em] w-[0.8em] h-[0.8em] -mt-1'>
+                            <img src={avaxlogo} alt="logo" className='w-full h-full object-contain' />
                         </span>
-                        <span>valanche.</span>
+                        valanche.
                     </p>
                 </AnimatedText>
             </div>
 
             {/* Stats counters */}
-            <div className='flex flex-col md:flex-row gap-[10%] md:gap-[8%] xl:gap-16 2xl:gap-20 text-center mt-[15%] md:mt-[10%] xl:mt-6 xl:ml-12'>
+            <div className='flex flex-col md:flex-row gap-[10%] md:gap-[8%] xl:gap-24 2xl:gap-32 text-center mt-[15%] md:mt-[8%] xl:mt-12 xl:ml-0 justify-center w-full font-["Outfit"]'>
                 <div className='leading-tight mb-[8%] md:mb-0'>
                     <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px]'>{eventsCount}</p>
                     <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold mt-[0.3em]'>Events</p>
