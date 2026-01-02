@@ -126,165 +126,178 @@ const Stats = () => {
     return (
         <div ref={statsRef} className='w-full 2xl:min-h-screen md:min-h-[calc(100vh-20rem)] lt-1024:min-h-[calc(100vh-20rem)] relative flex flex-col justify-center items-center py-[10%] px-[6%] xl:py-10 xl:h-auto overflow-visible'>
 
-            {/* Main content container */}
-            <div className='w-full max-w-[95%] md:max-w-[90%] lg:max-w-[85%] xl:max-w-[1400px] 2xl:max-w-[1600px] mx-auto relative'>
-                {/* Side images - positioned at extreme corners */}
-                <AppImage
-                    src={event1}
-                    srcWebp={event1Webp}
-                    alt="event1"
-                    className='hidden xl:block absolute aspect-[3/4] rounded-2xl pointer-events-none z-0 xl:w-[240px] xl:left-[-280px] xl:top-0 2xl:w-[280px] 2xl:left-[-320px] 2xl:top-[-80%]'
-                />
-                <AppImage
-                    src={event2}
-                    srcWebp={event2Webp}
-                    alt="event2"
-                    className='hidden xl:block absolute aspect-[3/4] rounded-2xl pointer-events-none z-0 xl:w-[240px] xl:right-[-280px] xl:bottom-0 2xl:w-[280px] 2xl:right-[-320px] 2xl:bottom-[-80%]'
-                />
-                {/* Text content */}
-                <AnimatedText
-                    variant="slideUp"
-                    delay={0.2}
-                    className='w-full text-[2.5rem] md:text-[3.25rem] lg:text-[3.75rem] xl:text-[4.25rem] 2xl:text-[60px] font-["Outfit"] font-[300] tracking-[-0.02em] text-black'
-                >
-                    <div className='text-left leading-[1.08] md:leading-[1.1] lg:leading-[1.08] xl:leading-[1.05] w-fit mx-auto'>
-                        Team1 Africa <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
-                            <video key="character-video" src={characterVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
-                        </span> is Avalanche's
-                        <br className="block" />
-                        African
-                        <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
-                            <video key="home-video" src={homeVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
-                        </span>
-                        network empowering <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
-                            <video key="computer-video" src={computerVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
-                        </span>
-                        <br className="block" />
-                        Builders <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
-                            <video key="robot-video" src={robotVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
-                        </span> and Creators
-                        <br className="block" />
-                        with resources to thrive on
-                        <span className='inline-block relative align-middle mx-[0.15em] mb-[0.1em] w-[0.7em] h-[0.7em]'>
-                            <img src={avaxlogo} alt="logo" className='w-full h-full object-contain' />
-                        </span>
-                        valanche.
-                    </div>
-                </AnimatedText>
-            </div>
+            {/* Grid Container */}
+            <div className='w-full max-w-[100vw] 2xl:max-w-[1800px] mx-auto grid grid-cols-1 xl:grid-cols-[200px_1fr_200px] 2xl:grid-cols-[250px_1fr_250px] gap-8 items-stretch px-4 xl:px-8'>
 
-            {/* Stats counters with Advanced Effects */}
-            <div
-                ref={containerRef}
-                className='w-full max-w-[95%] md:max-w-[90%] xl:max-w-[1400px] mx-auto mt-[10%] md:mt-[6%] xl:mt-12 relative rounded-[32px] overflow-hidden'
-                onMouseMove={handleMouseMove}
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
-            >
-                {/* Background image */}
-                <div className='absolute inset-0'>
-                    <img
-                        src={abstractBg}
-                        alt=""
-                        className='w-full h-full object-cover'
-                        aria-hidden="true"
-                    />
-
-                    {/* Traveling wave effect - animated light band moving left to right */}
-                    <div
-                        className='absolute inset-0 pointer-events-none'
-                        style={{
-                            background: `linear-gradient(90deg, 
-                                transparent 0%, 
-                                transparent ${waveOffset}%, 
-                                rgba(255,255,255,0.4) ${waveOffset + 10}%, 
-                                rgba(255,255,255,0.6) ${waveOffset + 15}%, 
-                                rgba(255,255,255,0.4) ${waveOffset + 20}%, 
-                                transparent ${waveOffset + 30}%, 
-                                transparent 100%)`,
-                            mixBlendMode: 'overlay'
-                        }}
-                    />
-
-                    {/* Mouse-following magnify/distortion lens */}
-                    <div
-                        className='absolute inset-0 pointer-events-none transition-opacity duration-300'
-                        style={{
-                            opacity: isHovering ? 1 : 0,
-                            background: `radial-gradient(circle 150px at ${mousePos.x}% ${mousePos.y}%, 
-                                rgba(255,255,255,0.5) 0%, 
-                                rgba(255,255,255,0.3) 20%,
-                                rgba(255,255,255,0.1) 40%,
-                                transparent 70%)`,
-                            mixBlendMode: 'overlay'
-                        }}
-                    />
-
-                    {/* Distortion ring around mouse cursor */}
-                    <div
-                        className='absolute pointer-events-none transition-opacity duration-300'
-                        style={{
-                            opacity: isHovering ? 1 : 0,
-                            width: '200px',
-                            height: '200px',
-                            left: `calc(${mousePos.x}% - 100px)`,
-                            top: `calc(${mousePos.y}% - 100px)`,
-                            borderRadius: '50%',
-                            border: '2px solid rgba(255,255,255,0.3)',
-                            boxShadow: `
-                                0 0 30px rgba(255,255,255,0.2),
-                                inset 0 0 30px rgba(255,255,255,0.1)
-                            `,
-                            transform: 'scale(1)',
-                            animation: isHovering ? 'pulse-ring 2s ease-in-out infinite' : 'none'
-                        }}
+                {/* Left Column - Image Aligned Top */}
+                <div className='hidden xl:flex flex-col justify-start items-start -translate-y-12 -translate-x-12 2xl:-translate-y-16 2xl:-translate-x-16'>
+                    <AppImage
+                        src={event1}
+                        srcWebp={event1Webp}
+                        alt="event1"
+                        className='w-full aspect-[3/4] rounded-2xl pointer-events-none object-cover shadow-lg'
                     />
                 </div>
 
-                {/* Text content layer - completely separate, unaffected by distortion */}
-                <div className='relative z-20 w-full p-8 md:p-12 xl:p-16 bg-white/5 backdrop-blur-[2px]'>
-                    <div className='flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-center text-center font-["Outfit"]'>
+                {/* Center Column - Text Content + Stats Card */}
+                <div className='flex flex-col items-center w-full'>
 
-                        <div className='flex-1'>
-                            <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>{eventsCount}+</p>
-                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Events</p>
+                    {/* Text Section */}
+                    <div className='w-full max-w-[90%] xl:max-w-[1000px] mx-auto'>
+                        <AnimatedText
+                            variant="slideUp"
+                            delay={0.2}
+                            className='w-full text-[2rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[3.2rem] 2xl:text-[3.8rem] font-["Outfit"] font-[300] tracking-[-0.02em] text-black'
+                        >
+                            <div className='text-left leading-[1.2] w-fit mx-auto'>
+                                {/* Line 1 */}
+                                <span className='whitespace-nowrap'>Team1 Africa <span className='inline-block w-[50px] h-[50px] md:w-[70px] md:h-[70px] lg:w-[80px] lg:h-[80px] xl:w-[90px] xl:h-[90px] relative align-middle mx-[0.1em] mb-[-8px] md:mb-[-12px]'>
+                                    <video key="character-video" src={characterVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
+                                </span> is Avalanche's</span>
+                                <br />
+                                {/* Line 2 */}
+                                <span className='whitespace-nowrap'>African <span className='inline-block w-[50px] h-[50px] md:w-[70px] md:h-[70px] lg:w-[80px] lg:h-[80px] xl:w-[90px] xl:h-[90px] relative align-middle mx-[0.1em] mb-[-8px] md:mb-[-12px]'>
+                                    <video key="home-video" src={homeVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
+                                </span> network empowering <span className='inline-block w-[50px] h-[50px] md:w-[70px] md:h-[70px] lg:w-[80px] lg:h-[80px] xl:w-[90px] xl:h-[90px] relative align-middle mx-[0.1em] mb-[-8px] md:mb-[-12px]'>
+                                        <video key="computer-video" src={computerVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
+                                    </span></span>
+                                <br />
+                                {/* Line 3 */}
+                                <span className='whitespace-nowrap'>Builders <span className='inline-block w-[50px] h-[50px] md:w-[70px] md:h-[70px] lg:w-[80px] lg:h-[80px] xl:w-[90px] xl:h-[90px] relative align-middle mx-[0.1em] mb-[-8px] md:mb-[-12px]'>
+                                    <video key="robot-video" src={robotVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
+                                </span> and Creators</span>
+                                <br />
+                                {/* Line 4 */}
+                                <span className='whitespace-nowrap'>with resources to thrive on<span className='inline-block relative align-middle mx-[0.1em] mb-[0.05em] w-[0.65em] h-[0.65em]'>
+                                    <img src={avaxlogo} alt="logo" className='w-full h-full object-contain' />
+                                </span>valanche.</span>
+                            </div>
+                        </AnimatedText>
+                    </div>
+
+                    {/* Stats counters with Advanced Effects */}
+                    <div
+                        ref={containerRef}
+                        className='w-full max-w-[100%] xl:max-w-[1200px] mx-auto mt-12 xl:mt-24 relative rounded-[32px] overflow-hidden shadow-2xl transition-transform hover:scale-[1.01] duration-500'
+                        onMouseMove={handleMouseMove}
+                        onMouseEnter={() => setIsHovering(true)}
+                        onMouseLeave={() => setIsHovering(false)}
+                    >
+                        {/* Background image */}
+                        <div className='absolute inset-0'>
+                            <img
+                                src={abstractBg}
+                                alt=""
+                                className='w-full h-full object-cover'
+                                aria-hidden="true"
+                            />
+
+                            {/* Traveling wave effect - animated light band moving left to right */}
+                            <div
+                                className='absolute inset-0 pointer-events-none'
+                                style={{
+                                    background: `linear-gradient(90deg,
+                                        transparent 0%,
+                                        transparent ${waveOffset}%,
+                                        rgba(255,255,255,0.4) ${waveOffset + 10}%,
+                                        rgba(255,255,255,0.6) ${waveOffset + 15}%,
+                                        rgba(255,255,255,0.4) ${waveOffset + 20}%,
+                                        transparent ${waveOffset + 30}%,
+                                        transparent 100%)`,
+                                    mixBlendMode: 'overlay'
+                                }}
+                            />
+
+                            {/* Mouse-following magnify/distortion lens */}
+                            <div
+                                className='absolute inset-0 pointer-events-none transition-opacity duration-300'
+                                style={{
+                                    opacity: isHovering ? 1 : 0,
+                                    background: `radial-gradient(circle 150px at ${mousePos.x}% ${mousePos.y}%,
+                                        rgba(255,255,255,0.5) 0%,
+                                        rgba(255,255,255,0.3) 20%,
+                                        rgba(255,255,255,0.1) 40%,
+                                        transparent 70%)`,
+                                    mixBlendMode: 'overlay'
+                                }}
+                            />
+
+                            {/* Distortion ring around mouse cursor */}
+                            <div
+                                className='absolute pointer-events-none transition-opacity duration-300'
+                                style={{
+                                    opacity: isHovering ? 1 : 0,
+                                    width: '200px',
+                                    height: '200px',
+                                    left: `calc(${mousePos.x}% - 100px)`,
+                                    top: `calc(${mousePos.y}% - 100px)`,
+                                    borderRadius: '50%',
+                                    border: '2px solid rgba(255,255,255,0.3)',
+                                    boxShadow: `
+                                        0 0 30px rgba(255,255,255,0.2),
+                                        inset 0 0 30px rgba(255,255,255,0.1)
+                                    `,
+                                    transform: 'scale(1)',
+                                    animation: isHovering ? 'pulse-ring 2s ease-in-out infinite' : 'none'
+                                }}
+                            />
                         </div>
 
-                        {/* Vertical Dividers */}
-                        <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
+                        {/* Text content layer - completely separate, unaffected by distortion */}
+                        <div className='relative z-20 w-full p-8 md:p-12 xl:p-16 bg-white/5 backdrop-blur-[2px]'>
+                            <div className='flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-center text-center font-["Outfit"]'>
 
-                        <div className='flex-1'>
-                            <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>
-                                {membersCount >= 1000 ? (membersCount / 1000).toFixed(1) : membersCount}k+
-                            </p>
-                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Members</p>
+                                <div className='flex-1'>
+                                    <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>{eventsCount}+</p>
+                                    <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Events</p>
+                                </div>
+
+                                {/* Vertical Dividers */}
+                                <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
+
+                                <div className='flex-1'>
+                                    <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>
+                                        {membersCount >= 1000 ? (membersCount / 1000).toFixed(1) : membersCount}k+
+                                    </p>
+                                    <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Members</p>
+                                </div>
+
+                                <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
+
+                                <div className='flex-1'>
+                                    <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>{toursCount}</p>
+                                    <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Uni Tours</p>
+                                </div>
+
+                                <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
+
+                                <div className='flex-1'>
+                                    <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>${bountyCount}k+</p>
+                                    <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Bounties</p>
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
-
-                        <div className='flex-1'>
-                            <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>{toursCount}</p>
-                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Uni Tours</p>
-                        </div>
-
-                        <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
-
-                        <div className='flex-1'>
-                            <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>${bountyCount}k+</p>
-                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Bounties</p>
-                        </div>
+                        {/* Keyframes for pulse ring animation */}
+                        <style>{`
+                            @keyframes pulse-ring {
+                                0%, 100% { transform: scale(1); opacity: 0.8; }
+                                50% { transform: scale(1.1); opacity: 0.4; }
+                            }
+                        `}</style>
                     </div>
                 </div>
 
-                {/* Keyframes for pulse ring animation */}
-                <style>{`
-                    @keyframes pulse-ring {
-                        0%, 100% { transform: scale(1); opacity: 0.8; }
-                        50% { transform: scale(1.1); opacity: 0.4; }
-                    }
-                `}</style>
+                {/* Right Column - Image Aligned Bottom */}
+                <div className='hidden xl:flex flex-col justify-end items-end translate-y-12 translate-x-12 2xl:translate-y-16 2xl:translate-x-16'>
+                    <AppImage
+                        src={event2}
+                        srcWebp={event2Webp}
+                        alt="event2"
+                        className='w-full aspect-[3/4] rounded-2xl pointer-events-none object-cover shadow-lg'
+                    />
+                </div>
             </div>
-
         </div>
     );
 }
