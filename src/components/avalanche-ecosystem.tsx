@@ -18,9 +18,9 @@ import benqiToken from '../assets/Benqi_Token_Ticker_White 2.png'
 import enclaveMarkets from '../assets/gee.png'
 import offTheGridLogo from '../assets/off-the-grid.jpg'
 import coqInu from '../assets/gunz.png'
-import onlydust from '../assets/onlydust.png'
-import sqauds from '../assets/sqauds.png'
-import refi from '../assets/refi.png'
+// import onlydust from '../assets/onlydust.png'
+// import sqauds from '../assets/sqauds.png'
+// import refi from '../assets/refi.png'
 
 // Images for the left container
 const FLOATING_IMAGES = [
@@ -78,30 +78,6 @@ const FLOATING_IMAGES = [
     width: 90,
     height: 90,
     delay: 0.9,
-    shape: 'rounded' as const,
-  },
-  {
-    src: onlydust,
-    alt: 'OnlyDust',
-    width: 85,
-    height: 85,
-    delay: 1.05,
-    shape: 'circle' as const,
-  },
-  {
-    src: sqauds,
-    alt: 'Squads',
-    width: 95,
-    height: 95,
-    delay: 1.2,
-    shape: 'rounded' as const,
-  },
-  {
-    src: refi,
-    alt: 'ReFi',
-    width: 115,
-    height: 70,
-    delay: 1.35,
     shape: 'rounded' as const,
   },
   {
@@ -186,27 +162,6 @@ const FEATURED_PROJECTS = [
     description: 'Decentralized music streaming',
     category: 'Creator Economy',
     icon: audius,
-  },
-  {
-    rank: 3,
-    name: 'OnlyDust',
-    description: 'Open-source ecosystem grants',
-    category: 'Builder Tools',
-    icon: onlydust,
-  },
-  {
-    rank: 4,
-    name: 'Squauds',
-    description: 'Squad coordination for DAOs',
-    category: 'Collaboration',
-    icon: sqauds,
-  },
-  {
-    rank: 5,
-    name: 'ReFi DAO',
-    description: 'Climate & impact finance',
-    category: 'Impact',
-    icon: refi,
   },
 ] as const
 
@@ -458,7 +413,7 @@ export default function AvalancheEcosystem() {
               initial={{ rotate: -12 }}
               className="inline-block bg-red-600 px-6 py-3 rounded-xl text-base text-white font-semibold mb-6 shadow-lg"
             >
-              Tokens & Trends
+              Ecosystem
             </motion.div>
           </div>
         </AnimatedText>
@@ -468,10 +423,23 @@ export default function AvalancheEcosystem() {
           </h2>
         </AnimatedText>
         <AnimatedText variant="slideUp" delay={0.3}>
-          <p className="text-gray-600 text-base md:text-lg max-w-2xl leading-relaxed">
+          <p className="text-gray-600 text-base md:text-lg max-w-2xl leading-relaxed mb-8">
             Discover a wide variety of apps, blockchains, wallets and explorers,
             built on the Avalanche ecosystem by developers and contributors from across the globe
           </p>
+        </AnimatedText>
+        <AnimatedText variant="fadeIn" delay={0.4}>
+          <a
+            href="https://core.app/discover"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-red-600 text-white text-lg font-semibold rounded-lg hover:bg-red-700 transition-colors shadow-lg hover:shadow-xl"
+          >
+            Explore Ecosystem
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
         </AnimatedText>
       </div>
 

@@ -162,9 +162,9 @@ const LetsBuildSection = () => {
                                         </div>
 
                                         {/* CTA */}
-                                        <button className="px-8 py-3 bg-white text-black font-bold text-base xl:text-lg rounded-full hover:bg-red-600 hover:text-white transition-all duration-300 flex items-center gap-3 group w-fit">
-                                            {activity.cta}
-                                            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <button className="btn-white px-8 py-3 font-bold text-base xl:text-lg rounded-full transition-all duration-300 flex items-center gap-3 group w-fit lg:hover:text-white">
+                                            <span className="relative z-10">{activity.cta}</span>
+                                            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                             </svg>
                                         </button>
@@ -224,7 +224,7 @@ const LetsBuildSection = () => {
                                 </button>
 
                                 {/* CTA */}
-                                <button className="w-full bg-white text-black font-bold py-4 rounded-full hover:bg-red-600 hover:text-white transition-all duration-300">
+                                <button className="w-full bg-white text-black font-bold py-4 rounded-full transition-all duration-300">
                                     {activity.cta}
                                 </button>
                             </div>

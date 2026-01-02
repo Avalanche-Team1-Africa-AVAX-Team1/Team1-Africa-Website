@@ -98,7 +98,7 @@ const Partners = () => {
 
             <div className='text-left lg:text-center mb-16'>
                 <AnimatedText variant="slideUp" delay={0.2}>
-                    <p className='text-2xl md:text-4xl lg:text-6xl font-semibold leading-tight tracking-tighter'>Our ecosystem <span className='text-red-500'>partners</span> accelerate what's possible. Together, we're building Africa's <span className='text-red-500'>blockchain infrastructure</span>—from education to <span className='text-red-500'>funding opportunities</span>.</p>
+                    <p className='text-2xl md:text-4xl lg:text-6xl font-semibold leading-tight tracking-tighter'>Our ecosystem <span className='text-red-500'>partners</span> accelerate what's possible. Together, we're building Africa's <span className='text-red-500'>blockchain infrastructure</span>, from education to <span className='text-red-500'>funding opportunities</span>.</p>
                 </AnimatedText>
                 <AnimatedText variant="slideUp" delay={0.3}>
                     <p className='text-sm md:text-sm text-gray-600 pt-1 md:pt-4'>We proudly collaborate with organizations that believe in Africa's potential.</p>
@@ -111,8 +111,9 @@ const Partners = () => {
                 <div className='w-full border-dashed border-gray-300 mb-0'></div>
 
                 {/* Table content - responsive */}
+                {/* Table content - responsive */}
                 <AnimatedSection staggerChildren={0.1} delay={0.4}>
-                    <div className='grid grid-cols-1 md:grid-cols-4 border-dashed border-gray-300'>
+                    <div className='grid grid-cols-1 md:grid-cols-4 border-dashed border-gray-300 border-l-2 border-r-2 md:border-l-0 md:border-r-0'>
                         {/* Row 1 */}
                         {partners.slice(0, 4).map((partner, index) => (
                             <AnimatedItem key={partner.name}>
@@ -120,7 +121,7 @@ const Partners = () => {
                                     href={partner.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className={`flex flex-col items-center py-8 px-4 md:py-12 md:px-8 ${index < 3 ? 'border-b-2 md:border-b-0 md:border-r-2' : ''} border-dashed border-gray-300 cursor-pointer transition-all duration-300 ${partner.bgColor} shadow-lg md:bg-transparent md:shadow-none ${partner.hoverBg} md:hover:shadow-lg group h-full w-full`}
+                                    className={`flex flex-col items-center py-8 px-4 md:py-12 md:px-8 ${index < 3 ? 'border-b-2 md:border-b-0 md:border-r-2' : 'border-b-2 md:border-b-0'} border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-transparent shadow-none md:bg-transparent md:shadow-none ${partner.hoverBg} md:hover:shadow-lg group h-full w-full`}
                                 >
                                     <p className={`text-sm text-center transition-colors duration-300 ${partner.textColor} font-semibold md:text-gray-600 md:font-normal ${partner.hoverText} md:group-hover:font-semibold`}>{partner.name}</p>
                                     <img src={partner.logo} alt={partner.name} loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
@@ -128,7 +129,15 @@ const Partners = () => {
                             </AnimatedItem>
                         ))}
 
-                        {/* Horizontal dashed line between rows */}
+                        {/* Horizontal dashed line between rows - visible on ALL screens now, but effectively hidden by border collapse logic or layout on mobile if not careful. 
+                            Actually, on mobile this div takes up a slot. The user wanted a line. 
+                            If I add border-b-2 to the 4th item (index 3), that creates the line.
+                            In my code above, I changed the condition to: index < 3 ? ... : 'border-b-2 md:border-b-0'.
+                            This ensures the 4th item (index 3) gets a bottom border on mobile.
+                            Then we don't strictly *need* the separator div on mobile if the item itself has the border.
+                            Using the separator div on mobile might create a double border or an empty row which looks wide.
+                            I will keep the separator HIDDEN on mobile, and instead apply the border-b-2 to the LAST item of the first row (MapleStory) specifically on mobile.
+                        */}
                         <div className='col-span-1 md:col-span-4 border-t-2 border-dashed border-gray-300 hidden md:block'></div>
 
                         {/* Row 2 */}
@@ -138,7 +147,7 @@ const Partners = () => {
                                     href={partner.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className={`flex flex-col items-center py-8 px-4 md:py-12 md:px-8 ${index < 3 ? 'border-b-2 md:border-b-0 md:border-r-2' : ''} border-dashed border-gray-300 cursor-pointer transition-all duration-300 ${partner.bgColor} shadow-lg md:bg-transparent md:shadow-none ${partner.hoverBg} md:hover:shadow-lg group h-full w-full`}
+                                    className={`flex flex-col items-center py-8 px-4 md:py-12 md:px-8 ${index < 3 ? 'border-b-2 md:border-b-0 md:border-r-2' : ''} border-dashed border-gray-300 cursor-pointer transition-all duration-300 bg-transparent shadow-none md:bg-transparent md:shadow-none ${partner.hoverBg} md:hover:shadow-lg group h-full w-full`}
                                 >
                                     <p className={`text-sm text-center transition-colors duration-300 ${partner.textColor} font-semibold md:text-gray-600 md:font-normal ${partner.hoverText} md:group-hover:font-semibold`}>{partner.name}</p>
                                     <img src={partner.logo} alt={partner.name} loading="lazy" className='w-40 md:w-56 h-20 md:h-24 object-contain mb-4 transition-transform duration-300 scale-110 md:scale-100 md:group-hover:scale-110' />
