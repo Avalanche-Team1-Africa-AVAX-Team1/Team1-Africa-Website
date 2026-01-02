@@ -89,13 +89,13 @@ const Stats = () => {
                     src={event1}
                     srcWebp={event1Webp}
                     alt="event1"
-                    className='hidden xl:block absolute aspect-[3/4] rounded-2xl pointer-events-none z-0 xl:w-[240px] xl:left-[-280px] xl:top-0 2xl:w-[280px] 2xl:left-[-320px]'
+                    className='hidden xl:block absolute aspect-[3/4] rounded-2xl pointer-events-none z-0 xl:w-[240px] xl:left-[-280px] xl:top-0 2xl:w-[280px] 2xl:left-[-320px] 2xl:top-[-80%]'
                 />
                 <AppImage
                     src={event2}
                     srcWebp={event2Webp}
                     alt="event2"
-                    className='hidden xl:block absolute aspect-[3/4] rounded-2xl pointer-events-none z-0 xl:w-[240px] xl:right-[-280px] xl:bottom-0 2xl:w-[280px] 2xl:right-[-320px]'
+                    className='hidden xl:block absolute aspect-[3/4] rounded-2xl pointer-events-none z-0 xl:w-[240px] xl:right-[-280px] xl:bottom-0 2xl:w-[280px] 2xl:right-[-320px] 2xl:bottom-[-80%]'
                 />
                 {/* Text content */}
                 <AnimatedText
@@ -103,22 +103,22 @@ const Stats = () => {
                     delay={0.2}
                     className='w-full text-[2.5rem] md:text-[3.25rem] lg:text-[3.75rem] xl:text-[4.25rem] 2xl:text-[60px] font-["Outfit"] font-[300] tracking-[-0.02em] text-black'
                 >
-                    <div className='text-left leading-[1.05] md:leading-[1.08] lg:leading-[1.1] w-fit mx-auto'>
-                        <p className='mb-1'>Team1 Africa <span className='inline-block w-[100px] h-[100px] relative align-middle mx-[0.15em] mb-[-15px]'>
-                            <video key="character-video" src={characterVideo} autoPlay loop muted playsInline />
-                        </span> is Avalanche's</p>
+                    <div className='text-left leading-[1.08] md:leading-[1.1] lg:leading-[1.08] xl:leading-[1.05] w-fit mx-auto'>
+                        Team1 Africa <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
+                            <video key="character-video" src={characterVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
+                        </span> is Avalanche's
+                        <br className="block" />
                         African
-                        <span className='inline-block w-[100px] h-[100px] relative align-middle mx-[0.15em] mb-[-15px]'>
-                            <video key="home-video" src={homeVideo} autoPlay loop muted playsInline />
+                        <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
+                            <video key="home-video" src={homeVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
                         </span>
-                        network empowering <span className='inline-block w-[100px] h-[100px] relative align-middle mx-[0.15em] mb-[-15px]'>
-                            <video key="computer-video" src={computerVideo} autoPlay loop muted playsInline />
+                        network empowering <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
+                            <video key="computer-video" src={computerVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
                         </span>
                         <br className="block" />
-                        Builders <span className='inline-block w-[100px] h-[100px] relative align-middle mx-[0.15em] mb-[-15px]'>
-                            <video key="robot-video" src={robotVideo} autoPlay loop muted playsInline />
+                        Builders <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
+                            <video key="robot-video" src={robotVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
                         </span> and Creators
-
                         <br className="block" />
                         with resources to thrive on
                         <span className='inline-block relative align-middle mx-[0.15em] mb-[0.1em] w-[0.7em] h-[0.7em]'>
@@ -132,16 +132,16 @@ const Stats = () => {
             {/* Stats counters */}
             <div className='flex flex-col md:flex-row gap-[10%] md:gap-[8%] xl:gap-24 2xl:gap-32 text-center mt-[15%] md:mt-[8%] xl:mt-12 xl:ml-0 justify-center w-full font-["Outfit"]'>
                 <div className='leading-tight mb-[8%] md:mb-0'>
-                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px]'>{eventsCount}</p>
-                    <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold mt-[0.3em]'>Events</p>
+                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px] font-[300]'>{eventsCount}</p>
+                    <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-medium mt-[0.3em]'>Events</p>
                 </div>
                 <div className='leading-tight mb-[8%] md:mb-0'>
-                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px]'>{membersCount}+</p>
-                    <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold mt-[0.3em]'>Community Members</p>
+                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px] font-[300]'>{membersCount}+</p>
+                    <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-medium mt-[0.3em]'>Community Members</p>
                 </div>
                 <div className='leading-tight'>
-                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px]'>{partnersCount}</p>
-                    <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-semibold mt-[0.3em]'>Game Partners</p>
+                    <p className='text-[4.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[70px] font-[300]'>{partnersCount}</p>
+                    <p className='text-[1.125rem] md:text-[1.125rem] lg:text-[1.25rem] font-medium mt-[0.3em]'>Game Partners</p>
                 </div>
             </div>
 
