@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import TeamGrid from '../components/TeamGrid';
 import LetsBuildSection from '../components/LetsBuildSection';
@@ -13,13 +13,13 @@ import AfricaPresence from '../components/AfricaPresence';
 const About = () => {
 
     return (
-        <div className="bg-black min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none">
+        <div className="min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none" style={{ backgroundColor: '#F8FAFC' }}>
             <CustomCursor />
 
-            {/* Hero Section - Video Mask Logo */}
-            <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
+            {/* Hero Section - Lisk-Style 3-Column Layout */}
+            <section className="relative h-screen w-full flex items-center overflow-hidden">
                 {/* 1. The Video Layer (Bottom) */}
-                <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 z-0 border-2 border-red-600">
                     <video
                         autoPlay
                         loop
@@ -32,7 +32,7 @@ const About = () => {
                 </div>
 
                 {/* 2. The Mask Layer (Middle) */}
-                <div className="absolute inset-0 z-10 bg-black mix-blend-multiply flex items-center justify-center">
+                <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
                     <LogoMask />
                 </div>
 
@@ -41,19 +41,52 @@ const About = () => {
                     <LogoOutline />
                 </div>
 
-                {/* Scroll Indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1, duration: 1 }}
-                    className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30"
-                >
-                    <p className="text-sm font-mono animate-bounce text-white/50">KEEP SCROLLING</p>
-                </motion.div>
+                {/* 4. Content Grid - 3 Columns */}
+                <div className="z-30 w-full px-6 md:px-12 laptop:px-20 pointer-events-auto">
+                    <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16 items-start pt-32 md:pt-40 relative">
+
+                        {/* Left Column - Headline */}
+                        <div className="absolute right-[80%] bottom-[99%] w-[70%]">
+                            <div>
+                                <h1 className="text-4xl md:text-5xl lg:text-[2.5vw] font-bold text-black">
+                                    <span className="text-red-600">Build</span> Cool <span className="text-red-600">Sh*t</span>. <br />
+                                    Touch Grass. <br />
+                                    Get <span className="text-red-600">Recognized</span>.
+                                </h1>
+                                
+                            </div>
+                        </div>
+
+                        {/* Center Column - Empty (Logo is here via absolute positioning) */}
+                        <div className="hidden lg:block lg:col-span-1" />
+
+                        {/* Right Column - Description & Buttons */}
+                        <div className="absolute right-[-80%] bottom-[-50%]">
+                            <p className="text-base md:text-lg text-gray-700 leading-relaxed w-[30%]">
+                                Across Africa, Southeast Asia, and Latin America, we combine local programs, a $5M fund, and an Ethereum-aligned L2 so you can build locally and scale globally.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-3">
+                                <a
+                                    href="/community"
+                                    className="px-5 py-3 bg-white text-black font-semibold text-sm rounded-md border border-gray-300 hover:bg-gray-50 transition-colors text-center"
+                                >
+                                    Join as Incubatee
+                                </a>
+                                <a
+                                    href="/grants"
+                                    className="px-5 py-3 bg-white text-black font-semibold text-sm rounded-md border border-gray-300 hover:bg-gray-50 transition-colors text-center"
+                                >
+                                    Apply for Funding
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             {/* Manifesto / Mission */}
-            <section className="py-20 md:py-32 px-6 md:px-12 laptop:px-20 bg-white text-black relative z-10 rounded-t-[2rem] md:rounded-t-[3rem] -mt-10">
+            <section className="py-20 md:py-32 px-6 md:px-12 laptop:px-20 bg-black text-white relative z-10 rounded-t-[2rem] md:rounded-t-[3rem] -mt-10">
                 <div className="max-w-[90vw] mx-auto">
                     <div className="grid grid-cols-1 laptop:grid-cols-2 gap-12 laptop:gap-12 xl:gap-24 items-start">
                         <div className="laptop:sticky laptop:top-32">
@@ -65,8 +98,8 @@ const About = () => {
                                 </h2>
                             </AnimatedText>
                             <AnimatedText variant="slideUp" delay={0.3}>
-                                <p className="text-lg md:text-xl font-medium text-gray-600 max-w-md">
-                                    Team1 is built for Africans shaping the next greastest technological innovations, from gaming to blockchain and creator platforms to scalable software and custom blockchains on Avalanche.
+                                <p className="text-lg md:text-xl font-medium text-gray-400 max-w-lg">
+                                    Team1 Africa unites African builders, developers, creatives, gamers, and enthusiasts to drive Avalanche adoption across the continent. It supports local projects through grants, events, and education, fostering Web3 innovation tailored to African challenges like remittances and DeFi accessibility.
 
                                 </p>
                             </AnimatedText>
@@ -74,20 +107,23 @@ const About = () => {
 
                         <div className="space-y-0 relative">
                             {[{
-                                title: "Built for an Emerging Market",
-                                desc: "Africa is one of the world's fastest-emerging markets, and Team1 exists to help Africans build for it first. From games and creator platforms to scalable software, we support builders using Avalanche to solve real problems at massive scale."
+                                title: "Our Origins",
+                                desc: "Launched as a regional chapter of the global AvaxTeam1 network, Team1Africa builds on successes like Nigerian events and draws from Avalanche's MENA expansions for compliant growth models."
                             }, {
-                                title: "Avalanche as the Backbone",
-                                desc: "Emerging markets need infrastructure that doesn't break under pressure. Avalanche's low fees, fast finality, and custom L1s give African builders the freedom to launch games, platforms, and digital economies designed for growth from day one."
+                                title: "Community Events",
+                                desc: "We host hackathons, workshops, and blockchain weeks in cities all around Africa, creating vital touchpoints for builders, creators, and enthusiasts to connect and collaborate."
                             }, {
-                                title: "Local Builders, Global Impact",
-                                desc: "Team1 helps Africans turn local insight into global products — connecting builders from an emerging market to the Avalanche ecosystem so they can compete, scale, and win on a worldwide stage."
+                                title: "Web3 Education",
+                                desc: "Through university partnerships, we deliver Web3 training tailored to youth in fintech and gaming, equipping the next generation with future-ready skills."
+                            }, {
+                                title: "Strategic Initiatives",
+                                desc: "From grants for African devs to cultural integrations like art and NFTs, we drive innovation through direct support and collaborations with the global AvaxTeam1 network."
                             }].map((item, i) => (
                                 <AnimatedItem key={i}>
                                     <div className="group relative mb-16 md:mb-24">
                                         {/* Rotated background number */}
-                                        <div className="absolute -left-4 md:-left-8 top-0 -rotate-12 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
-                                            <span className="text-[12rem] md:text-[15rem] font-black text-red-500 leading-none" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                        <div className="absolute -left-4 md:-left-8 top-0 -rotate-12 opacity-10 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none">
+                                            <span className="text-[12rem] md:text-[15rem] font-black text-white/5 leading-none" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                                                 {i + 1}
                                             </span>
                                         </div>
@@ -97,29 +133,29 @@ const About = () => {
                                             {/* Large number indicator */}
                                             <div className="flex items-start gap-8 mb-6">
                                                 <div className="relative">
-                                                    <div className="w-16 h-16 md:w-20 md:h-20 bg-black group-hover:bg-red-600 transition-all duration-300 flex items-center justify-center rotate-3 group-hover:rotate-0 group-hover:scale-110">
-                                                        <span className="text-4xl md:text-5xl font-black text-white" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                                                    <div className="w-16 h-16 md:w-20 md:h-20 bg-white group-hover:bg-red-600 transition-all duration-300 flex items-center justify-center rotate-3 group-hover:rotate-0 group-hover:scale-110">
+                                                        <span className="text-4xl md:text-5xl font-black text-black group-hover:text-white" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                                                             {i + 1}
                                                         </span>
                                                     </div>
                                                     {/* Accent square */}
-                                                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-red-500 group-hover:bg-black transition-colors duration-300"></div>
+                                                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-red-500 group-hover:bg-white transition-colors duration-300"></div>
                                                 </div>
 
                                                 {/* Title */}
                                                 <div className="flex-1 pt-2">
-                                                    <h3 className="text-3xl md:text-4xl font-black text-black mb-2 leading-tight tracking-tight group-hover:text-red-600 transition-colors duration-300">
+                                                    <h3 className="text-3xl md:text-4xl font-black text-white mb-2 leading-tight tracking-tight group-hover:text-red-600 transition-colors duration-300">
                                                         {item.title}
                                                     </h3>
                                                     {/* Decorative line */}
-                                                    <div className="h-1 bg-black w-0 group-hover:w-full transition-all duration-500 ease-out"></div>
+                                                    <div className="h-1 bg-white w-0 group-hover:w-full transition-all duration-500 ease-out"></div>
                                                 </div>
                                             </div>
 
                                             {/* Description with reveal effect */}
                                             <div className="relative overflow-hidden">
-                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none"></div>
-                                                <p className="text-base md:text-lg text-gray-700 leading-relaxed pl-0 md:pl-28 relative">
+                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none"></div>
+                                                <p className="text-base md:text-lg text-gray-400 leading-relaxed pl-0 md:pl-28 relative">
                                                     {item.desc}
                                                 </p>
                                             </div>
@@ -127,7 +163,7 @@ const About = () => {
                                             {/* Decorative elements */}
                                             <div className="mt-6 flex gap-2 pl-0 md:pl-28">
                                                 <div className="h-1 w-12 bg-red-500 group-hover:w-24 transition-all duration-300"></div>
-                                                <div className="h-1 w-8 bg-black group-hover:w-16 transition-all duration-300 delay-75"></div>
+                                                <div className="h-1 w-8 bg-white group-hover:w-16 transition-all duration-300 delay-75"></div>
                                                 <div className="h-1 w-4 bg-red-500 group-hover:w-12 transition-all duration-300 delay-150"></div>
                                             </div>
                                         </div>

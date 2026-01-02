@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 // import logo from '../assets/logo.png';
 import arrowUp from '../assets/arrow-up.svg';
-import logo from '../assets/avaxteam.svg';
+import logo from '../assets/team1logo.png';
 
 const Navbar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -88,8 +88,8 @@ const Navbar = () => {
                 {/* Reduced vertical padding on smaller screens; ≥1920px unchanged */}
                 <div className="w-full flex items-center justify-between py-4 lt-1024:py-3 lt-768:py-2 px-4 md:px-6 lg:px-8 max-w-site-nav mx-auto"
                 >
-                    <Link to="/" className="flex items-center bg-black p-4 rounded-full cursor-pointer hover:scale-105 transition-transform duration-200">
-                        <img src={logo} alt="team1-logo" width={20} height={20} />
+                    <Link to="/" className="flex items-center cursor-pointer">
+                        <img src={logo} alt="team1-logo" width={70} height={70} />
                     </Link>
 
                     {/* Desktop Tabs */}

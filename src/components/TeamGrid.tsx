@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
 import type { TeamMember } from '../data/team-members';
 import { FaTwitter, FaLinkedin, FaGithub, FaTelegram } from 'react-icons/fa';
 
@@ -16,9 +16,6 @@ const TeamGrid = ({ members }: TeamGridProps) => {
 
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
-
-    const smoothMouseX = useSpring(mouseX, { stiffness: 150, damping: 15, mass: 0.1 });
-    const smoothMouseY = useSpring(mouseY, { stiffness: 150, damping: 15, mass: 0.1 });
 
     useEffect(() => {
         const handleUpdate = () => {
@@ -87,14 +84,12 @@ const TeamGrid = ({ members }: TeamGridProps) => {
                 </AnimatePresence>
             </div>
 
-            {/* Floating Cursor Image (The "Sticker" Effect for Team) */}
+            {/* Floating Center Image (Fixed Position, 2.5x Bigger) */}
             <motion.div
-                className="absolute top-0 left-0 w-48 h-64 pointer-events-none z-50 hidden md:block rounded-xl overflow-hidden shadow-2xl"
+                className="fixed top-1/2 left-1/2 w-[30rem] h-[40rem] pointer-events-none z-50 hidden md:block rounded-xl overflow-hidden shadow-2xl"
                 style={{
-                    x: smoothMouseX,
-                    y: smoothMouseY,
-                    translateX: "20px",
-                    translateY: "20px",
+                    x: "-50%",
+                    y: "-50%",
                 }}
                 animate={{
                     opacity: activeIndex !== null ? 1 : 0,
@@ -120,7 +115,7 @@ const TeamGrid = ({ members }: TeamGridProps) => {
                                 alt=""
                                 className="w-full h-full object-cover"
                             />
-                            <div className="absolute inset-0 border-4 border-white/30 rounded-xl pointer-events-none" />
+                            <div className="absolute inset-0 rounded-xl pointer-events-none" />
                         </motion.div>
                     )}
                 </AnimatePresence>
