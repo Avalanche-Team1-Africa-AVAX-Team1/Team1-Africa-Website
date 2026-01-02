@@ -82,57 +82,50 @@ const Stats = () => {
     return (
         <div ref={statsRef} className='w-full 2xl:min-h-screen md:min-h-[calc(100vh-20rem)] lt-1024:min-h-[calc(100vh-20rem)] relative flex flex-col justify-center items-center py-[10%] px-[6%] xl:py-10 xl:h-auto overflow-visible'>
 
-            {/* Main content container - everything percentage-based, but fixed on XL */}
-            <div className='w-full max-w-[92%] md:max-w-[85%] lg:max-w-[80%] xl:w-[calc(100%-14rem)] 2xl:w-[calc(100%-24rem)] xl:max-w-none mx-auto relative'>
-
-                {/* Side images positioned with percentages */}
+            {/* Main content container */}
+            <div className='w-full max-w-[95%] md:max-w-[90%] lg:max-w-[85%] xl:max-w-[1400px] 2xl:max-w-[1600px] mx-auto relative'>
+                {/* Side images - positioned at extreme corners */}
                 <AppImage
                     src={event1}
                     srcWebp={event1Webp}
                     alt="event1"
-                    className='hidden md:block absolute aspect-[3/4] rounded-xl pointer-events-none z-0 md:w-24 md:-left-[20%] md:top-[-30%] lg:w-32 xl:left-[-45%] xl:top-[-60%] 2xl:w-[350px]'
+                    className='hidden xl:block absolute aspect-[3/4] rounded-2xl pointer-events-none z-0 xl:w-[240px] xl:left-[-280px] xl:top-0 2xl:w-[280px] 2xl:left-[-320px]'
                 />
                 <AppImage
                     src={event2}
                     srcWebp={event2Webp}
                     alt="event2"
-                    className='hidden md:block absolute aspect-[3/4] rounded-xl pointer-events-none z-0 md:w-24 md:-right-[20%] md:bottom-[-20%] lg:w-32 xl:right-[-45%] xl:bottom-[-60%] 2xl:w-[350px]'
+                    className='hidden xl:block absolute aspect-[3/4] rounded-2xl pointer-events-none z-0 xl:w-[240px] xl:right-[-280px] xl:bottom-0 2xl:w-[280px] 2xl:right-[-320px]'
                 />
-
                 {/* Text content */}
                 <AnimatedText
                     variant="slideUp"
                     delay={0.2}
-                    className='w-full text-[2.75rem] md:text-[3.5rem] lg:text-[4rem] xl:text-[4.5rem] 2xl:text-[60px] font-["Outfit"] font-[350] tracking-tight text-black'
+                    className='w-full text-[2.5rem] md:text-[3.25rem] lg:text-[3.75rem] xl:text-[4.25rem] 2xl:text-[60px] font-["Outfit"] font-[300] tracking-[-0.02em] text-black'
                 >
-                    <p className='text-left xl:text-center leading-[1.1] md:leading-[1.15] lg:leading-[1.15]'>
-                        Team1 Africa
-                        <span className='inline-block w-[2em] h-[2em] relative align-middle mx-[0.1em] -mt-2'>
+                    <div className='text-left leading-[1.05] md:leading-[1.08] lg:leading-[1.1] w-fit mx-auto'>
+                        <p className='mb-1'>Team1 Africa <span className='inline-block w-[100px] h-[100px] relative align-middle mx-[0.15em] mb-[-15px]'>
                             <video key="character-video" src={characterVideo} autoPlay loop muted playsInline />
+                        </span> is Avalanche's</p>
+                        African
+                        <span className='inline-block w-[100px] h-[100px] relative align-middle mx-[0.15em] mb-[-15px]'>
+                            <video key="home-video" src={homeVideo} autoPlay loop muted playsInline />
                         </span>
-                        is Avalanche's
-                        <span className='inline-block w-[2em] h-[2em] relative align-middle mx-[0.1em] -mt-2'>
+                        network empowering <span className='inline-block w-[100px] h-[100px] relative align-middle mx-[0.15em] mb-[-15px]'>
                             <video key="computer-video" src={computerVideo} autoPlay loop muted playsInline />
                         </span>
-                        <br className="hidden xl:block" />
-                        African
-                        <span className='inline-block w-[2em] h-[2em] relative align-middle mx-[0.1em] -mt-2'>
-                            <video key="home-video" src={homeVideo} autoPlay loop muted playsInline  />
-                        </span>
-                        network empowering
-                        <br className="hidden xl:block" />
-                        Builders and Creators
-                        <span className='inline-block w-[2em] h-[2em] relative align-middle mx-[0.1em] -mt-2'>
+                        <br className="block" />
+                        Builders <span className='inline-block w-[100px] h-[100px] relative align-middle mx-[0.15em] mb-[-15px]'>
                             <video key="robot-video" src={robotVideo} autoPlay loop muted playsInline />
-                        </span>
-                        with resources
-                        <br className="hidden xl:block" />
-                        to thrive on
-                        <span className='inline-block relative align-middle mx-[0.05em] w-[0.8em] h-[0.8em] -mt-1'>
+                        </span> and Creators
+
+                        <br className="block" />
+                        with resources to thrive on
+                        <span className='inline-block relative align-middle mx-[0.15em] mb-[0.1em] w-[0.7em] h-[0.7em]'>
                             <img src={avaxlogo} alt="logo" className='w-full h-full object-contain' />
                         </span>
                         valanche.
-                    </p>
+                    </div>
                 </AnimatedText>
             </div>
 
