@@ -154,43 +154,60 @@ const Build = () => {
                                             transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
                                         >
                                             {/* Stack Container - No Box */}
-                                            <div className="relative min-h-[55vh] flex items-center justify-center p-4">
+                                            <div className="relative min-h-[55vh] flex items-center justify-center p-4 perspective-1000">
 
                                                 {/* Background Polaroids (Stack & Fan) */}
                                                 {card.images.map((img, i) => {
-                                                    // Determine fan properties
-                                                    const rotation = isActive ? (i - 1) * 12 : (i - 1) * 2;
-                                                    const xOffset = isActive ? (i - 1) * 80 : 0;
-                                                    const yOffset = isActive ? (i === 1 ? -40 : 10) : 0;
+                                                    // "Messy" random-looking values
+                                                    // Inactive: Tight pile with random rotations
+                                                    // Active: Fanned out wide
 
-                                                    // Top image acts as cover
-                                                    // const isTop = i === 1;
+                                                    // Index 1 is center/top, 0 is left, 2 is right (in logic)
+                                                    // Let's reorder visually: Left, Right, Center (top)
+
+                                                    // Defined states based on index
+                                                    const isCenter = i === 1;
+                                                    const isLeft = i === 0;
+                                                    const isRight = i === 2;
+
+                                                    // Inactive State (Messy Pile)
+                                                    const inactiveRotate = isLeft ? -6 : isRight ? 4 : -2;
+                                                    const inactiveX = isLeft ? -10 : isRight ? 10 : 0;
+                                                    const inactiveY = isLeft ? 5 : isRight ? 5 : 0;
+
+                                                    // Active State (Fanned Out)
+                                                    const activeRotate = isLeft ? -15 : isRight ? 15 : 0;
+                                                    const activeX = isLeft ? -120 : isRight ? 120 : 0;
+                                                    const activeY = isCenter ? -40 : 10;
 
                                                     return (
                                                         <motion.div
                                                             key={i}
-                                                            className="absolute w-[320px] h-[400px] bg-white p-3 shadow-2xl rounded-sm transform origin-bottom-center"
+                                                            className="absolute w-[300px] h-[380px] bg-white p-3 shadow-2xl rounded-sm transform origin-bottom-center"
                                                             animate={{
-                                                                rotate: rotation,
-                                                                x: xOffset,
-                                                                y: yOffset,
+                                                                rotate: isActive ? activeRotate : inactiveRotate,
+                                                                x: isActive ? activeX : inactiveX,
+                                                                y: isActive ? activeY : inactiveY,
                                                                 scale: isActive ? 1 : 0.9,
-                                                                zIndex: i === 1 ? 2 : 1
+                                                                zIndex: isCenter ? 2 : 1
                                                             }}
-                                                            transition={{ duration: 0.8, ease: "backOut" }}
+                                                            transition={{
+                                                                duration: 0.8,
+                                                                ease: [0.34, 1.56, 0.64, 1] // Spring-like feel
+                                                            }}
                                                         >
-                                                            <div className="w-full h-[320px] bg-gray-100 overflow-hidden mb-3">
+                                                            <div className="w-full h-[300px] bg-gray-100 overflow-hidden mb-3 filter contrast-110">
                                                                 <img src={img} alt="" className="w-full h-full object-cover" />
                                                             </div>
                                                             {/* Polaroid Footer */}
-                                                            <div className="h-8"></div>
+                                                            <div className="h-6"></div>
                                                         </motion.div>
                                                     )
                                                 })}
 
-                                                {/* Content Overlay (Glassmorphism) */}
+                                                {/* Content Overlay (Dark Glass Card) */}
                                                 <div className="absolute bottom-0 left-0 w-full z-10 translate-y-6">
-                                                    <div className="relative backdrop-blur-md bg-black/40 border border-white/10 p-8 rounded-3xl overflow-hidden">
+                                                    <div className="relative backdrop-blur-xl bg-black/80 border border-white/10 p-8 rounded-3xl overflow-hidden shadow-2xl">
                                                         {/* Color Accent Glow */}
                                                         <div
                                                             className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[60px] opacity-60 pointer-events-none"
