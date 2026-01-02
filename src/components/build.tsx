@@ -8,6 +8,9 @@ import pixel from '../assets/pixel-avax.png'
 import arrowup from '../assets/arrow-up.svg'
 import calendar from '../assets/calendar.svg'
 import trophy from '../assets/trophy.svg'
+import event1 from '../assets/event1-img.png'
+import event2 from '../assets/event2-img.png'
+import communityImg from '../assets/community.png'
 import MagneticButton from './MagneticButton'
 import AnimatedSection, { AnimatedItem } from './AnimatedSection'
 
@@ -20,7 +23,8 @@ const cards = [
         description: "Our on-campus events and student programs are designed to introduce Avalanche to the top talent across African universities, builders, creators, founders, and curious minds shaping the future of blockchain.",
         icon: rocket,
         color: "#fc3030bb",
-        textColor: "text-white"
+        textColor: "text-white",
+        images: [event1, event2, communityImg]
     },
     {
         id: 2,
@@ -28,7 +32,8 @@ const cards = [
         description: "A mix of IRL and virtual events designed to bring the African Avalanche community together through meetups, workshops, talks, and interactive sessions, connecting builders, creators, and ecosystem participants worldwide.",
         icon: gamepad,
         color: "#0e6bd6ff",
-        textColor: "text-white"
+        textColor: "text-white",
+        images: [communityImg, event1, event2]
     },
     {
         id: 3,
@@ -36,7 +41,8 @@ const cards = [
         description: "Hands-on hackathons and technical workshops focused on building on Avalanche, with guided sessions, expert-led training, and practical experience across core concepts, tooling, and advanced use cases.",
         icon: gamepad,
         color: "#11B55A",
-        textColor: "text-white"
+        textColor: "text-white",
+        images: [event2, communityImg, event1]
     },
     {
         id: 5,
@@ -44,7 +50,8 @@ const cards = [
         description: "Recurring community sync calls to align on upcoming events, initiatives, and priorities—providing updates, open discussions, and coordination across campus, events, and ecosystem efforts.",
         icon: calendar,
         color: "#6B4EFF",
-        textColor: "text-white"
+        textColor: "text-white",
+        images: [event1, event2, communityImg]
     },
     {
         id: 6,
@@ -52,7 +59,8 @@ const cards = [
         description: "Task-based opportunities to earn rewards by contributing to the Avalanche ecosystem—ranging from content creation and Twitter thread contests to research, community tasks, and event support.",
         icon: trophy,
         color: "#F59E0B",
-        textColor: "text-white"
+        textColor: "text-white",
+        images: [communityImg, event1, event2]
     }
 
 ]
@@ -145,45 +153,86 @@ const Build = () => {
                                             }}
                                             transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
                                         >
-                                            <div
-                                                className="min-h-[55vh] py-10 px-10 rounded-3xl flex flex-col justify-between shadow-2xl border-2 border-white/10"
-                                                style={{ backgroundColor: card.color }}
-                                            >
-                                                <div className="flex justify-between items-start">
-                                                    <motion.div
-                                                        className="p-5 bg-black/20 rounded-2xl backdrop-blur-sm border border-white/20"
-                                                        whileHover={{ rotate: 15, scale: 1.1 }}
-                                                        transition={{ type: "spring", stiffness: 300 }}
-                                                    >
-                                                        <img src={card.icon} alt={card.title} className="w-16 h-16" />
-                                                    </motion.div>
-                                                    <div className="font-black opacity-10 text-black" style={{ fontSize: 'clamp(3rem, 5vw, 6rem)' }}>
-                                                        0{index + 1}
+                                            {/* Stack Container - No Box */}
+                                            <div className="relative min-h-[55vh] flex items-center justify-center p-4">
+
+                                                {/* Background Polaroids (Stack & Fan) */}
+                                                {card.images.map((img, i) => {
+                                                    // Determine fan properties
+                                                    const rotation = isActive ? (i - 1) * 12 : (i - 1) * 2;
+                                                    const xOffset = isActive ? (i - 1) * 80 : 0;
+                                                    const yOffset = isActive ? (i === 1 ? -40 : 10) : 0;
+
+                                                    // Top image acts as cover
+                                                    // const isTop = i === 1;
+
+                                                    return (
+                                                        <motion.div
+                                                            key={i}
+                                                            className="absolute w-[320px] h-[400px] bg-white p-3 shadow-2xl rounded-sm transform origin-bottom-center"
+                                                            animate={{
+                                                                rotate: rotation,
+                                                                x: xOffset,
+                                                                y: yOffset,
+                                                                scale: isActive ? 1 : 0.9,
+                                                                zIndex: i === 1 ? 2 : 1
+                                                            }}
+                                                            transition={{ duration: 0.8, ease: "backOut" }}
+                                                        >
+                                                            <div className="w-full h-[320px] bg-gray-100 overflow-hidden mb-3">
+                                                                <img src={img} alt="" className="w-full h-full object-cover" />
+                                                            </div>
+                                                            {/* Polaroid Footer */}
+                                                            <div className="h-8"></div>
+                                                        </motion.div>
+                                                    )
+                                                })}
+
+                                                {/* Content Overlay (Glassmorphism) */}
+                                                <div className="absolute bottom-0 left-0 w-full z-10 translate-y-6">
+                                                    <div className="relative backdrop-blur-md bg-black/40 border border-white/10 p-8 rounded-3xl overflow-hidden">
+                                                        {/* Color Accent Glow */}
+                                                        <div
+                                                            className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[60px] opacity-60 pointer-events-none"
+                                                            style={{ backgroundColor: card.color }}
+                                                        />
+
+                                                        <div className="relative z-10">
+                                                            <div className="flex justify-between items-center mb-4">
+                                                                <div
+                                                                    className="p-3 rounded-xl backdrop-blur-sm border border-white/20"
+                                                                    style={{ backgroundColor: `${card.color}40` }} // 25% opacity
+                                                                >
+                                                                    <img src={card.icon} alt={card.title} className="w-8 h-8" />
+                                                                </div>
+                                                                <div className="text-4xl font-black opacity-20 text-white">
+                                                                    0{index + 1}
+                                                                </div>
+                                                            </div>
+
+                                                            <h2 className="text-3xl font-black mb-3 uppercase text-white tracking-tight leading-none">
+                                                                {card.title}
+                                                            </h2>
+                                                            <p className="text-sm font-medium leading-relaxed text-gray-200 mb-6 line-clamp-3">
+                                                                {card.description}
+                                                            </p>
+
+                                                            <motion.button
+                                                                whileHover={{ scale: 1.05 }}
+                                                                whileTap={{ scale: 0.95 }}
+                                                                className="flex items-center gap-2 text-sm font-bold text-white group w-fit"
+                                                            >
+                                                                Learn More
+                                                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                                                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                                    </svg>
+                                                                </div>
+                                                            </motion.button>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div className={card.textColor}>
-                                                    <h2 className="font-semibold mb-4 uppercase" style={{ fontSize: 'clamp(1.75rem, 3vw, 3rem)' }}>
-                                                        {card.title}
-                                                    </h2>
-                                                    <p className="leading-relaxed opacity-90 mb-6" style={{ fontSize: 'clamp(0.875rem, 1.1vw, 1.125rem)' }}>
-                                                        {card.description}
-                                                    </p>
-                                                    <motion.button
-                                                        whileHover={{ scale: 1.05 }}
-                                                        whileTap={{ scale: 0.95 }}
-                                                        className={`inline-flex items-center gap-3 font-bold group w-fit px-6 py-3 border-2 rounded-full transition-all ${card.textColor === 'text-black'
-                                                            ? 'border-black hover:bg-black hover:text-white'
-                                                            : 'border-white hover:bg-white hover:text-black'
-                                                            }`}
-                                                        style={{ fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}
-                                                    >
-                                                        Learn More
-                                                        <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                                        </svg>
-                                                    </motion.button>
-                                                </div>
                                             </div>
                                         </motion.div>
                                     )
