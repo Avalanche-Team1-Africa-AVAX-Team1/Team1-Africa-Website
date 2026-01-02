@@ -149,28 +149,28 @@ const Stats = () => {
                             delay={0.2}
                             className='w-full text-[1.8rem] md:text-[2rem] lg:text-[2.2rem] xl:text-[2.4rem] 2xl:text-[3rem] font-["Outfit"] font-[300] tracking-[-0.02em] text-black'
                         >
-                            <div className='text-left leading-[1.2] w-fit mx-auto'>
-                                {/* Line 1 */}
-                                <span className='whitespace-nowrap'>Team1 Africa <span className='inline-block w-[40px] h-[40px] md:w-[50px] md:h-[50px] lg:w-[55px] lg:h-[55px] xl:w-[60px] xl:h-[60px] relative align-middle mx-[0.1em] mb-[-6px] md:mb-[-8px]'>
+                            <div className='text-left leading-[1.08] md:leading-[1.1] lg:leading-[1.08] xl:leading-[1.05] w-fit mx-auto'>
+                                Team1 Africa <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
                                     <video key="character-video" src={characterVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
-                                </span> is Avalanche's</span>
-                                <br />
-                                {/* Line 2 */}
-                                <span className='whitespace-nowrap'>African <span className='inline-block w-[40px] h-[40px] md:w-[50px] md:h-[50px] lg:w-[55px] lg:h-[55px] xl:w-[60px] xl:h-[60px] relative align-middle mx-[0.1em] mb-[-6px] md:mb-[-8px]'>
+                                </span> is Avalanche's
+                                <br className="block" />
+                                African
+                                <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
                                     <video key="home-video" src={homeVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
-                                </span> network empowering <span className='inline-block w-[40px] h-[40px] md:w-[50px] md:h-[50px] lg:w-[55px] lg:h-[55px] xl:w-[60px] xl:h-[60px] relative align-middle mx-[0.1em] mb-[-6px] md:mb-[-8px]'>
-                                        <video key="computer-video" src={computerVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
-                                    </span></span>
-                                <br />
-                                {/* Line 3 */}
-                                <span className='whitespace-nowrap'>Builders <span className='inline-block w-[40px] h-[40px] md:w-[50px] md:h-[50px] lg:w-[55px] lg:h-[55px] xl:w-[60px] xl:h-[60px] relative align-middle mx-[0.1em] mb-[-6px] md:mb-[-8px]'>
+                                </span>
+                                network empowering <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
+                                    <video key="computer-video" src={computerVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
+                                </span>
+                                <br className="block" />
+                                Builders <span className='inline-block w-[70px] h-[70px] md:w-[100px] md:h-[100px] relative align-middle mx-[0.1em] md:mx-[0.15em] mb-[-8px] md:mb-[-15px]'>
                                     <video key="robot-video" src={robotVideo} autoPlay loop muted playsInline className='w-full h-full object-cover' />
-                                </span> and Creators</span>
-                                <br />
-                                {/* Line 4 */}
-                                <span className='whitespace-nowrap'>with resources to thrive on<span className='inline-block relative align-middle mx-[0.1em] mb-[0.05em] w-[0.65em] h-[0.65em]'>
+                                </span> and Creators
+                                <br className="block" />
+                                with resources to thrive on
+                                <span className='inline-block relative align-middle mx-[0.15em] mb-[0.1em] w-[0.7em] h-[0.7em]'>
                                     <img src={avaxlogo} alt="logo" className='w-full h-full object-contain' />
-                                </span>valanche.</span>
+                                </span>
+                                valanche.
                             </div>
                         </AnimatedText>
                     </div>
@@ -244,39 +244,40 @@ const Stats = () => {
                         </div>
 
                         {/* Text content layer - completely separate, unaffected by distortion */}
-                        <div className='relative z-20 w-full p-8 md:p-12 xl:p-16 bg-white/5 backdrop-blur-[2px]'>
-                            <div className='flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-center text-center font-["Outfit"]'>
+                        {/* Text content layer - completely separate, unaffected by distortion */}
+                <div className='relative z-20 w-full p-8 md:p-12 xl:p-16 bg-white/5 backdrop-blur-[2px]'>
+                    <div className='flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-center text-center font-["Outfit"]'>
 
-                                <div className='flex-1'>
-                                    <p className='text-[2.5rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[2rem] font-[300] text-gray-900 tracking-tight leading-none'>{eventsCount}+</p>
-                                    <p className='text-base md:text-md text-gray-600 font-medium mt-2 uppercase tracking-wider'>Events</p>
-                                </div>
-
-                                {/* Vertical Dividers */}
-                                <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
-
-                                <div className='flex-1'>
-                                    <p className='text-[2.5rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[2rem] font-[300] text-gray-900 tracking-tight leading-none'>
-                                        {membersCount >= 1000 ? (membersCount / 1000).toFixed(1) : membersCount}k+
-                                    </p>
-                                    <p className='text-base md:text-md text-gray-600 font-medium mt-2 uppercase tracking-wider'>Members</p>
-                                </div>
-
-                                <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
-
-                                <div className='flex-1'>
-                                    <p className='text-[2.5rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[2rem] font-[300] text-gray-900 tracking-tight leading-none'>{toursCount}</p>
-                                    <p className='text-base md:text-md text-gray-600 font-medium mt-2 uppercase tracking-wider'>Uni Tours</p>
-                                </div>
-
-                                <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
-
-                                <div className='flex-1'>
-                                    <p className='text-[2.5rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[2rem] font-[300] text-gray-900 tracking-tight leading-none'>${bountyCount}k+</p>
-                                    <p className='text-base md:text-md text-gray-600 font-medium mt-2 uppercase tracking-wider'>Bounties</p>
-                                </div>
-                            </div>
+                        <div className='flex-1'>
+                            <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>{eventsCount}+</p>
+                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Events</p>
                         </div>
+
+                        {/* Vertical Dividers */}
+                        <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
+
+                        <div className='flex-1'>
+                            <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>
+                                {membersCount >= 1000 ? (membersCount / 1000).toFixed(1) : membersCount}k+
+                            </p>
+                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Members</p>
+                        </div>
+
+                        <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
+
+                        <div className='flex-1'>
+                            <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>{toursCount}</p>
+                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Uni Tours</p>
+                        </div>
+
+                        <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
+
+                        <div className='flex-1'>
+                            <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>${bountyCount}k+</p>
+                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Bounties</p>
+                        </div>
+                    </div>
+                </div>
 
                         {/* Keyframes for pulse ring animation */}
                         <style>{`
