@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import TeamGrid from '../components/TeamGrid';
 import LetsBuildSection from '../components/LetsBuildSection';
 import { team1AfricaMembers } from '../data/team-members';
-import CustomCursor from '../components/CustomCursor';
+
 import videoSrc from '../assets/videos/video.mp4';
 import { LogoMask, LogoOutline } from '../components/LogoMask';
 import AnimatedText from '../components/AnimatedText';
@@ -114,8 +114,7 @@ function MissionAccordionItem({ item, index }: { item: typeof missionItems[0], i
 const About = () => {
 
     return (
-        <div className="min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white cursor-none" style={{ backgroundColor: '#F8FAFC' }}>
-            <CustomCursor />
+        <div className="min-h-screen text-white overflow-x-hidden selection:bg-red-500 selection:text-white" style={{ backgroundColor: '#F8FAFC' }}>
 
             {/* Hero Section - Centralized Grid Layout */}
             <section className="relative min-h-[100svh] w-full flex items-center justify-center overflow-hidden bg-[#F8FAFC]">
