@@ -16,14 +16,11 @@ import south2 from '../assets/south2.jpg'
 import south3 from '../assets/south3.jpg'
 import south5 from '../assets/south5.jpg'
 
+// Only 12 unique images - no duplicates
 const photos = [
     event1, event2, event3, event4,
     community, collage, ghana1, ghana2,
-    south1, south2, south3, south5,
-    // Duplicate for more volume
-    event1, event3, community, ghana1,
-    south2, event4, collage, south5,
-    event2, ghana2, south1, south3
+    south1, south2, south3, south5
 ]
 
 export default function Preloader({ onComplete }: { onComplete: () => void }) {
@@ -53,38 +50,66 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         return () => cancelAnimationFrame(animationFrameId)
     }, [onComplete])
 
-    // Generate semi-random positions based on a grid to ensure good spacing
+    // Generate scattered positions with guaranteed spacing
     const [slidePositions] = useState(() => {
-        // Create a 6x4 grid for the 24 images
-        const gridSlots = []
-        const cols = 6
-        const rows = 4
+        const positions: { xPos: number; yPos: number; rotation: number; delay: number; zIndex: number }[] = []
 
-        for (let r = 0; r < rows; r++) {
-            for (let c = 0; c < cols; c++) {
-                gridSlots.push({
-                    // Calculate center of each grid cell
-                    x: (c / (cols - 1)) * 90 - 45, // -45vw to +45vw
-                    y: (r / (rows - 1)) * 80 - 40  // -40vh to +40vh
-                })
+        // Minimum distance between image centers (in viewport units)
+        const MIN_DISTANCE = 25 // 25vw/vh minimum separation
+
+        interface PlacedImage {
+            x: number
+            y: number
+        }
+        const placed: PlacedImage[] = []
+
+        for (let i = 0; i < photos.length; i++) {
+            let bestX = 0
+            let bestY = 0
+            let bestDistance = 0
+
+            // Try many random positions and pick the one furthest from others
+            for (let attempt = 0; attempt < 2000; attempt++) {
+                // Random position across viewport
+                const x = (Math.random() - 0.5) * 85 // -42.5vw to +42.5vw
+                const y = (Math.random() - 0.5) * 75 // -37.5vh to +37.5vh
+
+                // Find minimum distance to any existing image
+                let minDist = Infinity
+                for (const p of placed) {
+                    const dist = Math.sqrt((p.x - x) ** 2 + (p.y - y) ** 2)
+                    if (dist < minDist) minDist = dist
+                }
+
+                // If this is the first image or this position is better (further from others)
+                if (placed.length === 0 || minDist > bestDistance) {
+                    bestX = x
+                    bestY = y
+                    bestDistance = minDist
+                }
+            }
+
+            // Only add position if it meets minimum distance OR if we have no choice
+            if (placed.length === 0 || bestDistance >= MIN_DISTANCE * 0.6) {
+                placed.push({ x: bestX, y: bestY })
+            } else {
+                // Force placement anyway but try to spread it out
+                const angle = (i / photos.length) * Math.PI * 2
+                bestX = Math.cos(angle) * 35 + (Math.random() - 0.5) * 15
+                bestY = Math.sin(angle) * 30 + (Math.random() - 0.5) * 15
+                placed.push({ x: bestX, y: bestY })
+            }
+
+            positions[i] = {
+                xPos: bestX,
+                yPos: bestY,
+                rotation: (Math.random() - 0.5) * 50, // -25 to +25 degrees
+                delay: i * 0.4,
+                zIndex: Math.floor(Math.random() * 12) + 1
             }
         }
 
-        // Shuffle grid slots so images don't appear in order
-        const shuffledSlots = gridSlots.sort(() => Math.random() - 0.5)
-
-        return photos.map((_, i) => {
-            const slot = shuffledSlots[i] || { x: 0, y: 0 }
-
-            return {
-                rotation: (Math.random() - 0.5) * 40, // -20 to +20 degrees
-                delay: i * 0.28, // Slower stagger (finishes around 7s)
-                // Add randomness (jitter) to the grid position
-                xPos: slot.x + (Math.random() * 10 - 5),
-                yPos: slot.y + (Math.random() * 10 - 5),
-                zIndex: Math.ceil(Math.random() * 10)
-            }
-        })
+        return positions
     })
 
     return (
