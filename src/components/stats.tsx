@@ -130,7 +130,7 @@ const Stats = () => {
             <div className='w-full max-w-[100vw] 2xl:max-w-[1800px] mx-auto grid grid-cols-1 xl:grid-cols-[200px_1fr_200px] 2xl:grid-cols-[250px_1fr_250px] gap-8 items-stretch px-4 xl:px-8'>
 
                 {/* Left Column - Image Aligned Top */}
-                <div className='hidden xl:flex flex-col justify-start items-center -translate-y-12 -translate-x-8 2xl:-translate-y-64 2xl:-translate-x-14'>
+                <div className='hidden xl:flex flex-col justify-start items-start'>
                     <AppImage
                         src={event1}
                         srcWebp={event1Webp}
@@ -289,7 +289,7 @@ const Stats = () => {
                 </div>
 
                 {/* Right Column - Image Aligned Bottom */}
-                <div className='hidden xl:flex flex-col justify-end items-center translate-y-12 translate-x-8 2xl:translate-y-16 2xl:translate-x-16'>
+                <div className='hidden xl:flex flex-col justify-end items-end'>
                     <AppImage
                         src={event2}
                         srcWebp={event2Webp}
