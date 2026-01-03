@@ -108,10 +108,8 @@ const Build = () => {
                 onUpdate: (self) => {
                     const length = cards.length;
                     const progress = self.progress;
-                    const newIndex = Math.min(Math.floor(progress * length), length - 1);
-
-                    // Only update if index actually changed - prevents unnecessary re-renders
-                    setActiveIndex(prev => prev === newIndex ? prev : newIndex);
+                    const index = Math.min(Math.floor(progress * length), length - 1);
+                    setActiveIndex(index);
                 },
                 onLeave: () => {
                     // Reset z-index when pin releases to prevent overlap
