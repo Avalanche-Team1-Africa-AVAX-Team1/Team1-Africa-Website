@@ -255,6 +255,7 @@ const Build = () => {
                                                                 <motion.div
                                                                     key={i}
                                                                     className="absolute w-[300px] h-[380px] bg-white p-3 shadow-2xl rounded-sm transform origin-bottom-center"
+                                                                    initial={false}
                                                                     animate={{
                                                                         rotate: isActive ? activeRotate : inactiveRotate,
                                                                         x: isActive ? activeX : inactiveX,
@@ -263,8 +264,13 @@ const Build = () => {
                                                                         zIndex: isCenter ? 2 : 1
                                                                     }}
                                                                     transition={{
-                                                                        duration: 0.8,
-                                                                        ease: [0.34, 1.56, 0.64, 1] // Spring-like feel
+                                                                        duration: 0.5,
+                                                                        ease: [0.25, 0.46, 0.45, 0.94] // Smooth cubic-bezier, no spring
+                                                                    }}
+                                                                    style={{
+                                                                        willChange: 'transform',
+                                                                        transform: 'translateZ(0)',
+                                                                        backfaceVisibility: 'hidden'
                                                                     }}
                                                                 >
                                                                     <div className="w-full h-[300px] bg-gray-100 overflow-hidden mb-3 filter contrast-110">
