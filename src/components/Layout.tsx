@@ -1,24 +1,26 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './navbar';
 import Footer from './footer';
-import { useState, useEffect, useCallback } from 'react';
-import Preloader from './Preloader_Concept2';
+import { useState, useCallback, useEffect } from 'react';
+import Preloader from './Preloader_Concept1';
 import ScrollProgress from './ScrollProgress';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Layout = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [transitionFinished, setTransitionFinished] = useState(false);
+    // Initialize state synchronously from sessionStorage to prevent layout flash
+    const hasSeenPreloader = typeof window !== 'undefined' && sessionStorage.getItem('hasSeenPreloader');
+    const [isLoading, setIsLoading] = useState(!hasSeenPreloader);
+    const [transitionFinished, setTransitionFinished] = useState(!!hasSeenPreloader);
 
-    // Check if user has already seen the preloader in this session
+    // Dispatch custom event when layout transition completes - components can listen for this
     useEffect(() => {
-        // TEMPORARILY DISABLED FOR TESTING - Uncomment to enable session caching
-        // const hasSeenPreloader = sessionStorage.getItem('hasSeenPreloader');
-        // if (hasSeenPreloader) {
-        //     setIsLoading(false);
-        //     setTransitionFinished(true);
-        // }
-    }, []);
+        if (transitionFinished) {
+            // Small delay to ensure DOM has updated
+            setTimeout(() => {
+                window.dispatchEvent(new CustomEvent('layoutTransitionComplete'));
+            }, 100);
+        }
+    }, [transitionFinished]);
 
     const handlePreloaderComplete = useCallback(() => {
         // Start the lift animation by setting isLoading to false
