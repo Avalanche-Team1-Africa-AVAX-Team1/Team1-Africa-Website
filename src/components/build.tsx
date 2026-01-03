@@ -99,6 +99,7 @@ const Build = () => {
                 start: "top top",
                 end: () => `+=${pinnedRef.current!.offsetHeight - window.innerHeight}`,
                 pin: '.build-viewport',
+                pinType: 'transform', // Critical: Works with Framer Motion transforms
                 scrub: 1,
                 anticipatePin: 1,
                 invalidateOnRefresh: true,
@@ -109,6 +110,20 @@ const Build = () => {
                     const progress = self.progress;
                     const index = Math.min(Math.floor(progress * length), length - 1);
                     setActiveIndex(index);
+                },
+                onLeave: () => {
+                    // Reset z-index when pin releases to prevent overlap
+                    const viewport = document.querySelector('.build-viewport') as HTMLElement;
+                    if (viewport) {
+                        viewport.style.zIndex = '1';
+                    }
+                },
+                onEnterBack: () => {
+                    // Restore z-index when scrolling back
+                    const viewport = document.querySelector('.build-viewport') as HTMLElement;
+                    if (viewport) {
+                        viewport.style.zIndex = '30';
+                    }
                 }
             });
         }, mainRef);

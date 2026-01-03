@@ -334,8 +334,15 @@ export default function TestimonialSlider() {
   const handleWheelScroll = (e: React.WheelEvent) => {
     if (expandedKey !== null || isAnimating || window.innerWidth < 768) return;
 
-    // Normalize scroll delta
-    const delta = e.deltaX || e.deltaY;
+    // Only respond to HORIZONTAL scroll (Shift+Wheel or trackpad horizontal swipe)
+    // Ignore vertical scrolling to allow normal page scroll
+    const isHorizontalScroll = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+    if (!isHorizontalScroll) return;
+
+    // Prevent default only for horizontal scrolling
+    e.preventDefault();
+
+    const delta = e.deltaX;
     if (Math.abs(delta) < 2) return;
 
     if (tlRef.current) tlRef.current.pause();
