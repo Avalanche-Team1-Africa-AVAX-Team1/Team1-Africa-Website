@@ -94,12 +94,12 @@ const Build = () => {
         <div ref={mainRef}>
             {/* DESKTOP: Pinned Scroll-Lock Section */}
             <div className="hidden lg:block">
-                <section ref={pinnedRef} className="h-screen bg-black text-white overflow-hidden flex items-center relative">
+                <section ref={pinnedRef} className="h-screen bg-black text-white overflow-hidden flex items-center relative z-30">
 
                     {/* Silk Animated Background */}
                     <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
                         {/* Faint red tint: #1c1212 (Subtle warmth) */}
-                         <Silk color="#1a1a1a" speed={2} scale={1.2} />
+                        <Silk color="#1c1212" speed={2} scale={1.2} />
                     </div>
 
                     {/* Header - Top Left */}
