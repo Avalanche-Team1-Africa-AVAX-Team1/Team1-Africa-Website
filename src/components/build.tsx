@@ -147,7 +147,7 @@ const Build = () => {
                     {/* Real scroll height container */}
                     <div style={{ height: `${cards.length * 100}vh` }} className="relative">
                         {/* Sticky viewport - this is what gets pinned */}
-                        <div className="build-viewport sticky top-0 h-screen overflow-hidden">
+                        <div className="build-viewport sticky top-0 h-screen overflow-hidden flex items-center justify-between px-12">
 
                             {/* Silk Animated Background */}
                             <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
@@ -155,8 +155,11 @@ const Build = () => {
                                 <Silk color="#1c1212" speed={2} scale={1.2} />
                             </div>
 
-                            {/* Header - Top Left */}
-                            <div className="absolute left-12 z-20 max-w-xl">
+                            {/* Background Grid with Fade Mask */}
+                            <div className="absolute inset-0 z-10 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:200px_200px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] pointer-events-none" />
+
+                            {/* Left Content */}
+                            <div className="relative z-20 max-w-xl">
                                 <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
@@ -195,11 +198,8 @@ const Build = () => {
                                 </a>
                             </div>
 
-                            {/* Background Grid with Fade Mask */}
-                            <div className="absolute inset-0 z-10 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:200px_200px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] pointer-events-none" />
-
-                            {/* Right Side: Vertically Stacked Cards with Peek */}
-                            <div className="absolute right-0 top-0 h-full w-1/2 flex items-center justify-center overflow-hidden z-20">
+                            {/* Right Side: Vertically Stacked Cards */}
+                            <div className="relative z-20 w-1/2 h-full flex items-center justify-center">
                                 <div className="relative w-full max-w-xl h-full flex items-center">
                                     <AnimatePresence mode="sync">
                                         {cards.map((card, index) => {
@@ -321,12 +321,12 @@ const Build = () => {
                         </div>
                     </div>
                 </section>
-            </div>
+            </div >
 
             {/* MOBILE: Vertical Stack */}
-            <div className="lg:hidden py-20 px-6 bg-black text-white relative">
+            < div className="lg:hidden py-20 px-6 bg-black text-white relative" >
                 {/* Background Grid */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ff000008_1px,transparent_1px),linear-gradient(to_bottom,#ff000008_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
+                < div className="absolute inset-0 bg-[linear-gradient(to_right,#ff000008_1px,transparent_1px),linear-gradient(to_bottom,#ff000008_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
 
                 <div className="max-w-4xl mx-auto relative z-10">
                     <div className="md:text-center mb-16">
@@ -380,7 +380,7 @@ const Build = () => {
                         ))}
                     </AnimatedSection>
                 </div>
-            </div>
+            </div >
         </div >
     )
 }
