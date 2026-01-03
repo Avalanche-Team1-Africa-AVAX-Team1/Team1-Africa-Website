@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 interface PageTransitionProps {
@@ -7,12 +7,18 @@ interface PageTransitionProps {
 
 export default function PageTransition({ children }: PageTransitionProps) {
     const location = useLocation();
+    const isFirstMount = useRef(true);
 
     useEffect(() => {
-        // Scroll to top on route change
+        // Always skip on first mount (page load/refresh)
+        if (isFirstMount.current) {
+            isFirstMount.current = false;
+            return;
+        }
+
+        // Only scroll to top on actual navigation between routes
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
-    // Just render children without any wrapper - no transitions
     return <>{children}</>;
 }

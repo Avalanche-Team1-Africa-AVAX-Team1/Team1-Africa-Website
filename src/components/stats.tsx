@@ -244,7 +244,6 @@ const Stats = () => {
                         </div>
 
                         {/* Text content layer - completely separate, unaffected by distortion */}
-                        {/* Text content layer - completely separate, unaffected by distortion */}
                 <div className='relative z-20 w-full p-8 md:p-12 xl:p-16 bg-white/5 backdrop-blur-[2px]'>
                     <div className='flex flex-col md:flex-row gap-12 md:gap-8 justify-between items-center text-center font-["Outfit"]'>
 
@@ -267,7 +266,7 @@ const Stats = () => {
 
                         <div className='flex-1'>
                             <p className='text-[3.5rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] font-[300] text-gray-900 tracking-tight leading-none'>{toursCount}</p>
-                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Uni Tours</p>
+                            <p className='text-base md:text-lg text-gray-600 font-medium mt-2 uppercase tracking-wider'>Campus Tours</p>
                         </div>
 
                         <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-gray-400/50 to-transparent"></div>
