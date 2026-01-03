@@ -6,11 +6,13 @@ export default function ScrollToTop() {
     const isFirstMount = useRef(true);
 
     useEffect(() => {
-        // Skip scroll on initial mount (page refresh) - only scroll on actual navigation
+        // Always skip on first mount (page load/refresh)
         if (isFirstMount.current) {
             isFirstMount.current = false;
             return;
         }
+
+        // Only scroll to top on actual navigation between routes
         window.scrollTo(0, 0);
     }, [pathname]);
 

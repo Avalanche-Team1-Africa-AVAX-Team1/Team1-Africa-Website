@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useLayoutEffect, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -71,38 +71,63 @@ const Build = () => {
     const pinnedRef = useRef<HTMLDivElement>(null)
     const mainRef = useRef<HTMLDivElement>(null)
 
+    // Save scroll position before unload
     useEffect(() => {
-        let ctx: gsap.Context | null = null;
-
-        const createScrollTrigger = () => {
-            // Clean up any existing ScrollTriggers
-            ScrollTrigger.getAll().forEach(st => {
-                if (st.trigger === pinnedRef.current) {
-                    st.kill();
-                }
-            });
-
-            ctx = gsap.context(() => {
-                ScrollTrigger.create({
-                    trigger: pinnedRef.current,
-                    start: "top top",
-                    end: () => `+=${window.innerHeight * cards.length}`,
-                    pin: true,
-                    scrub: 1,
-                    onUpdate: (self) => {
-                        const length = cards.length;
-                        const progress = self.progress;
-                        const index = Math.min(Math.floor(progress * length), length - 1);
-                        setActiveIndex(index);
-                    }
-                });
-            }, mainRef);
-
-            setTimeout(() => ScrollTrigger.refresh(), 100);
+        const handleBeforeUnload = () => {
+            const y = (window as any).lenis ? (window as any).lenis.scroll : window.scrollY;
+            sessionStorage.setItem('scrollY', String(y));
         };
 
-        // Initialize after a short delay
-        setTimeout(() => createScrollTrigger(), 100);
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, []);
+
+    // Initialize ScrollTrigger BEFORE paint (useLayoutEffect)
+    useLayoutEffect(() => {
+        if (!pinnedRef.current) return;
+
+        // Clean up any existing ScrollTriggers
+        ScrollTrigger.getAll().forEach(st => {
+            if (st.trigger === pinnedRef.current) {
+                st.kill();
+            }
+        });
+
+        const ctx = gsap.context(() => {
+            ScrollTrigger.create({
+                trigger: pinnedRef.current,
+                start: "top top",
+                end: () => `+=${pinnedRef.current!.offsetHeight - window.innerHeight}`,
+                pin: '.build-viewport',
+                scrub: 1,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+                fastScrollEnd: false,
+                preventOverlaps: true,
+                onUpdate: (self) => {
+                    const length = cards.length;
+                    const progress = self.progress;
+                    const index = Math.min(Math.floor(progress * length), length - 1);
+                    setActiveIndex(index);
+                }
+            });
+        }, mainRef);
+
+        // Refresh to ensure pin-spacer is calculated
+        ScrollTrigger.refresh(true);
+
+        // Restore scroll position AFTER ScrollTrigger is ready
+        const savedY = sessionStorage.getItem('scrollY');
+        if (savedY) {
+            requestAnimationFrame(() => {
+                const y = parseInt(savedY, 10);
+                if ((window as any).lenis) {
+                    (window as any).lenis.scrollTo(y, { immediate: true });
+                } else {
+                    window.scrollTo(0, y);
+                }
+            });
+        }
 
         // Handle resize
         const handleResize = () => ScrollTrigger.refresh();
@@ -110,7 +135,7 @@ const Build = () => {
 
         return () => {
             window.removeEventListener('resize', handleResize);
-            if (ctx) ctx.revert();
+            ctx.revert();
         };
     }, [])
 
@@ -118,176 +143,182 @@ const Build = () => {
         <div ref={mainRef}>
             {/* DESKTOP: Pinned Scroll-Lock Section */}
             <div className="hidden lg:block">
-                <section ref={pinnedRef} className="h-screen bg-black text-white overflow-hidden flex items-center relative z-30">
+                <section ref={pinnedRef} className="relative bg-black text-white">
+                    {/* Real scroll height container */}
+                    <div style={{ height: `${cards.length * 100}vh` }} className="relative">
+                        {/* Sticky viewport - this is what gets pinned */}
+                        <div className="build-viewport sticky top-0 h-screen overflow-hidden">
 
-                    {/* Silk Animated Background */}
-                    <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
-                        {/* Faint red tint: #1c1212 (Subtle warmth) */}
-                        <Silk color="#1c1212" speed={2} scale={1.2} />
-                    </div>
-
-                    {/* Header - Top Left */}
-                    <div className="absolute left-12 z-20 max-w-xl">
-                        <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <div className="inline-block bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-bold mb-4 -rotate-6 shadow-lg">
-                                What we do
+                            {/* Silk Animated Background */}
+                            <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
+                                {/* Faint red tint: #1c1212 (Subtle warmth) */}
+                                <Silk color="#1c1212" speed={2} scale={1.2} />
                             </div>
-                            <h2 className="text-6xl font-black mb-6 tracking-tighter uppercase leading-[0.9]">
-                                Educate. <br />
-                                <span className="text-red-500">Build.</span> <br />
-                                Collaborate.
-                            </h2>
-                            <h3 className="text-2xl font-bold text-red-500 mb-6">
-                                On Avalanche. For Africa.
-                            </h3>
-                            <p className="text-lg text-gray-300 mb-8 max-w-md leading-relaxed">
-                                Africa has the talent. We provide the resources. Through hackathons, workshops, and global partnerships, we're connecting African innovators with everything they need to lead the blockchain revolution with Avalanche.
-                            </p>
-                        </motion.div>
 
-                        <a href="https://build.avax.network/" target="_blank" rel="noopener noreferrer">
-                            <MagneticButton className="group btn-white px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-colors cursor-pointer shadow-xl lg:hover:text-white">
-                                <span className="relative z-10">Start Building</span>
-                                <motion.img
-                                    src={arrowup}
-                                    width={20}
-                                    height={20}
-                                    className="invert relative z-10"
-                                    animate={{ x: [0, 5, 0] }}
-                                    transition={{ repeat: Infinity, duration: 1.5 }}
-                                />
-                            </MagneticButton>
-                        </a>
-                    </div>
+                            {/* Header - Top Left */}
+                            <div className="absolute left-12 z-20 max-w-xl">
+                                <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    <div className="inline-block bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-bold mb-4 -rotate-6 shadow-lg">
+                                        What we do
+                                    </div>
+                                    <h2 className="text-6xl font-black mb-6 tracking-tighter uppercase leading-[0.9]">
+                                        Educate. <br />
+                                        <span className="text-red-500">Build.</span> <br />
+                                        Collaborate.
+                                    </h2>
+                                    <h3 className="text-2xl font-bold text-red-500 mb-6">
+                                        On Avalanche. For Africa.
+                                    </h3>
+                                    <p className="text-lg text-gray-300 mb-12 max-w-md leading-relaxed">
+                                        Africa has the talent. We provide the resources. Through hackathons, workshops, and global partnerships, we're connecting African innovators with everything they need to lead the blockchain revolution with Avalanche.
+                                    </p>
+                                </motion.div>
 
-                    {/* Background Grid with Fade Mask */}
-                    <div className="absolute inset-0 z-10 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:200px_200px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] pointer-events-none" />
+                                <a href="https://build.avax.network/" target="_blank" rel="noopener noreferrer">
+                                    <MagneticButton className="group btn-white px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-colors cursor-pointer shadow-xl lg:hover:text-white">
+                                        <span className="relative z-10">Start Building</span>
+                                        <motion.img
+                                            src={arrowup}
+                                            width={20}
+                                            height={20}
+                                            className="invert relative z-10"
+                                            animate={{ x: [0, 5, 0] }}
+                                            transition={{ repeat: Infinity, duration: 1.5 }}
+                                        />
+                                    </MagneticButton>
+                                </a>
+                            </div>
 
-                    {/* Right Side: Vertically Stacked Cards with Peek */}
-                    <div className="absolute right-0 top-0 h-full w-1/2 flex items-center justify-center overflow-hidden z-20">
-                        <div className="relative w-full max-w-xl h-full flex items-center">
-                            <AnimatePresence mode="sync">
-                                {cards.map((card, index) => {
-                                    const offset = index - activeIndex
-                                    const isActive = activeIndex === index
+                            {/* Background Grid with Fade Mask */}
+                            <div className="absolute inset-0 z-10 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:200px_200px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] pointer-events-none" />
 
-                                    return (
-                                        <motion.div
-                                            key={card.id}
-                                            className="absolute left-0 top-1/2 w-full"
-                                            initial={false}
-                                            animate={{
-                                                y: `calc(-50% + ${offset * 80}vh)`, // Card spacing
-                                                scale: 1, // All cards same size
-                                                opacity: isActive ? 1 : 0.5,
-                                                zIndex: isActive ? 10 : 5 - Math.abs(offset),
-                                            }}
-                                            transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
-                                        >
-                                            {/* Stack Container - No Box */}
-                                            <div className="relative min-h-[55vh] flex items-center justify-center p-4 perspective-1000">
+                            {/* Right Side: Vertically Stacked Cards with Peek */}
+                            <div className="absolute right-0 top-0 h-full w-1/2 flex items-center justify-center overflow-hidden z-20">
+                                <div className="relative w-full max-w-xl h-full flex items-center">
+                                    <AnimatePresence mode="sync">
+                                        {cards.map((card, index) => {
+                                            const offset = index - activeIndex
+                                            const isActive = activeIndex === index
 
-                                                {/* Background Polaroids (Stack & Fan) */}
-                                                {card.images.map((img, i) => {
-                                                    const isCenter = i === 1;
-                                                    const isLeft = i === 0;
-                                                    const isRight = i === 2;
+                                            return (
+                                                <motion.div
+                                                    key={card.id}
+                                                    className="absolute left-0 top-1/2 w-full"
+                                                    initial={false}
+                                                    animate={{
+                                                        y: `calc(-50% + ${offset * 80}vh)`, // Card spacing
+                                                        scale: 1, // All cards same size
+                                                        opacity: isActive ? 1 : 0.5,
+                                                        zIndex: isActive ? 10 : 5 - Math.abs(offset),
+                                                    }}
+                                                    transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
+                                                >
+                                                    {/* Stack Container - No Box */}
+                                                    <div className="relative min-h-[55vh] flex items-center justify-center p-4 perspective-1000">
 
-                                                    const inactiveRotate = isLeft ? -6 : isRight ? 4 : -2;
-                                                    const inactiveX = isLeft ? -10 : isRight ? 10 : 0;
-                                                    const inactiveY = isLeft ? 5 : isRight ? 5 : 0;
+                                                        {/* Background Polaroids (Stack & Fan) */}
+                                                        {card.images.map((img, i) => {
+                                                            const isCenter = i === 1;
+                                                            const isLeft = i === 0;
+                                                            const isRight = i === 2;
 
-                                                    const activeRotate = isLeft ? -15 : isRight ? 15 : 0;
-                                                    const activeX = isLeft ? -120 : isRight ? 120 : 0;
-                                                    const activeY = isCenter ? -40 : 10;
+                                                            const inactiveRotate = isLeft ? -6 : isRight ? 4 : -2;
+                                                            const inactiveX = isLeft ? -10 : isRight ? 10 : 0;
+                                                            const inactiveY = isLeft ? 5 : isRight ? 5 : 0;
 
-                                                    return (
-                                                        <motion.div
-                                                            key={i}
-                                                            className="absolute w-[300px] h-[380px] bg-white p-3 shadow-2xl rounded-sm transform origin-bottom-center"
-                                                            animate={{
-                                                                rotate: isActive ? activeRotate : inactiveRotate,
-                                                                x: isActive ? activeX : inactiveX,
-                                                                y: isActive ? activeY : inactiveY,
-                                                                scale: isActive ? 1 : 0.9,
-                                                                zIndex: isCenter ? 2 : 1
-                                                            }}
-                                                            transition={{
-                                                                duration: 0.8,
-                                                                ease: [0.34, 1.56, 0.64, 1] // Spring-like feel
-                                                            }}
-                                                        >
-                                                            <div className="w-full h-[300px] bg-gray-100 overflow-hidden mb-3 filter contrast-110">
-                                                                <img src={img} alt="" className="w-full h-full object-cover" />
-                                                            </div>
-                                                            <div className="h-6"></div>
-                                                        </motion.div>
-                                                    )
-                                                })}
+                                                            const activeRotate = isLeft ? -15 : isRight ? 15 : 0;
+                                                            const activeX = isLeft ? -120 : isRight ? 120 : 0;
+                                                            const activeY = isCenter ? -40 : 10;
 
-                                                {/* Content Overlay (Dark Glass Card) */}
-                                                <div className="absolute bottom-0 left-0 w-full z-10 translate-y-6">
-                                                    <div className="relative backdrop-blur-xl bg-black/80 border border-white/10 p-8 rounded-3xl overflow-hidden shadow-2xl">
-                                                        <div
-                                                            className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[60px] opacity-60 pointer-events-none"
-                                                            style={{ backgroundColor: card.color }}
-                                                        />
-
-                                                        <div className="relative z-10">
-                                                            <div className="flex justify-between items-center mb-4">
-                                                                <div
-                                                                    className="p-3 rounded-xl backdrop-blur-sm border border-white/20"
-                                                                    style={{ backgroundColor: `${card.color}40` }}
+                                                            return (
+                                                                <motion.div
+                                                                    key={i}
+                                                                    className="absolute w-[300px] h-[380px] bg-white p-3 shadow-2xl rounded-sm transform origin-bottom-center"
+                                                                    animate={{
+                                                                        rotate: isActive ? activeRotate : inactiveRotate,
+                                                                        x: isActive ? activeX : inactiveX,
+                                                                        y: isActive ? activeY : inactiveY,
+                                                                        scale: isActive ? 1 : 0.9,
+                                                                        zIndex: isCenter ? 2 : 1
+                                                                    }}
+                                                                    transition={{
+                                                                        duration: 0.8,
+                                                                        ease: [0.34, 1.56, 0.64, 1] // Spring-like feel
+                                                                    }}
                                                                 >
-                                                                    <img src={card.icon} alt={card.title} className="w-8 h-8" />
-                                                                </div>
-                                                                <div className="text-4xl font-black opacity-20 text-white">
-                                                                    0{index + 1}
+                                                                    <div className="w-full h-[300px] bg-gray-100 overflow-hidden mb-3 filter contrast-110">
+                                                                        <img src={img} alt="" className="w-full h-full object-cover" />
+                                                                    </div>
+                                                                    <div className="h-6"></div>
+                                                                </motion.div>
+                                                            )
+                                                        })}
+
+                                                        {/* Content Overlay (Dark Glass Card) */}
+                                                        <div className="absolute bottom-0 left-0 w-full z-10 translate-y-6">
+                                                            <div className="relative backdrop-blur-xl bg-black/80 border border-white/10 p-8 rounded-3xl overflow-hidden shadow-2xl">
+                                                                <div
+                                                                    className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[60px] opacity-60 pointer-events-none"
+                                                                    style={{ backgroundColor: card.color }}
+                                                                />
+
+                                                                <div className="relative z-10">
+                                                                    <div className="flex justify-between items-center mb-4">
+                                                                        <div
+                                                                            className="p-3 rounded-xl backdrop-blur-sm border border-white/20"
+                                                                            style={{ backgroundColor: `${card.color}40` }}
+                                                                        >
+                                                                            <img src={card.icon} alt={card.title} className="w-8 h-8" />
+                                                                        </div>
+                                                                        <div className="text-4xl font-black opacity-20 text-white">
+                                                                            0{index + 1}
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <h2 className="text-3xl font-black mb-3 uppercase text-white tracking-tight leading-none">
+                                                                        {card.title}
+                                                                    </h2>
+                                                                    <p className="text-sm font-medium leading-relaxed text-gray-200 mb-6 line-clamp-3">
+                                                                        {card.description}
+                                                                    </p>
+
+                                                                    <motion.button
+                                                                        whileHover={{ scale: 1.05 }}
+                                                                        whileTap={{ scale: 0.95 }}
+                                                                        className="flex items-center gap-2 text-sm font-bold text-white group w-fit"
+                                                                    >
+                                                                        Learn More
+                                                                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                                                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                                            </svg>
+                                                                        </div>
+                                                                    </motion.button>
                                                                 </div>
                                                             </div>
-
-                                                            <h2 className="text-3xl font-black mb-3 uppercase text-white tracking-tight leading-none">
-                                                                {card.title}
-                                                            </h2>
-                                                            <p className="text-sm font-medium leading-relaxed text-gray-200 mb-6 line-clamp-3">
-                                                                {card.description}
-                                                            </p>
-
-                                                            <motion.button
-                                                                whileHover={{ scale: 1.05 }}
-                                                                whileTap={{ scale: 0.95 }}
-                                                                className="flex items-center gap-2 text-sm font-bold text-white group w-fit"
-                                                            >
-                                                                Learn More
-                                                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                                                                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                                                    </svg>
-                                                                </div>
-                                                            </motion.button>
                                                         </div>
+
                                                     </div>
-                                                </div>
+                                                </motion.div>
+                                            )
+                                        })}
+                                    </AnimatePresence>
+                                </div>
+                            </div>
 
-                                            </div>
-                                        </motion.div>
-                                    )
-                                })}
-                            </AnimatePresence>
+                            {/* Progress Indicators */}
+                            <div className="absolute right-12 top-1/2 -translate-y-1/2 flex flex-col gap-6">
+                                {cards.map((_, i) => (
+                                    <div key={i} className={`w-3 h-3 rounded-full transition-all duration-300 ${i === activeIndex ? 'bg-white h-12' : 'bg-gray-600'}`} />
+                                ))}
+                            </div>
                         </div>
-                    </div>
-
-                    {/* Progress Indicators */}
-                    <div className="absolute right-12 top-1/2 -translate-y-1/2 flex flex-col gap-6">
-                        {cards.map((_, i) => (
-                            <div key={i} className={`w-3 h-3 rounded-full transition-all duration-300 ${i === activeIndex ? 'bg-white h-12' : 'bg-gray-600'}`} />
-                        ))}
                     </div>
                 </section>
             </div>

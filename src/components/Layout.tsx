@@ -7,6 +7,11 @@ import ScrollProgress from './ScrollProgress';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Layout = () => {
+    // Disable native scroll restoration - we handle it manually
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+    }
+
     // Initialize state synchronously from sessionStorage to prevent layout flash
     const hasSeenPreloader = typeof window !== 'undefined' && sessionStorage.getItem('hasSeenPreloader');
     const [isLoading, setIsLoading] = useState(!hasSeenPreloader);
