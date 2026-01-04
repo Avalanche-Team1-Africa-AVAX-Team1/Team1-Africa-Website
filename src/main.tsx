@@ -9,7 +9,7 @@ import NotFound from './pages/NotFound'
 import EventCalendar from './components/EventCalendar'
 import About from './pages/About'
 import Spotlight from './pages/Spotlight'
-import Gallery from './pages/Gallery'
+import Gallery from './pages/Gallery' // Hardcoded version (reverted from API)
 import GalleryAlbum from './pages/GalleryAlbum'
 import CommunityWrapped from './pages/CommunityWrapped'
 import Projects from './pages/Projects'
