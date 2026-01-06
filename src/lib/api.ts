@@ -262,6 +262,22 @@ export const api = {
 
         return jsonResponse.data;
     },
+
+    // ==================== PROJECTS ====================
+
+    /**
+     * Get all projects
+     */
+    async getProjects(): Promise<Project[]> {
+        return apiFetch<Project[]>('/projects');
+    },
+
+    /**
+     * Get a single project by ID
+     */
+    async getProject(id: string): Promise<Project> {
+        return apiFetch<Project>(`/projects/${id}`);
+    },
 };
 
 /**
@@ -322,6 +338,39 @@ export interface Blog {
     publishedAt?: string;
     createdAt?: string;
     updatedAt?: string;
+}
+
+export interface ProjectTeamMember {
+    name: string;
+    role: string;
+    email?: string;
+    avatar?: string;
+}
+
+export interface Project {
+    id: string;
+    name: string;
+    slug: string;
+    tagline: string;
+    description: string;
+    logo?: string;
+    coverImage?: string;
+    category: string;
+    tags: string[];
+    country: string; // 'ng', 'ke', etc.
+    website?: string;
+    twitter?: string;
+    telegram?: string;
+    linkedin?: string;
+    userMetric?: string;
+    launchDate?: string;
+    techStack: string[];
+    team: ProjectTeamMember[];
+    milestones?: string;
+    status: 'live' | 'beta' | 'development' | 'idea';
+    isFeatured: boolean;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export default api;

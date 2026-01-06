@@ -4,15 +4,53 @@
 
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { PROJECTS } from './Projects'
+import { useState, useEffect } from 'react'
+import { api, getImageUrl } from '../lib/api'
+import type { Project } from '../lib/api'
 
 // Country flag URL helper
-const getCountryFlag = (code: string) => `https://flagcdn.com/w80/${code.toLowerCase()}.png`
+const getCountryFlag = (code: string) => `https://flagcdn.com/w80/${code?.toLowerCase()}.png`
+
+// Helper to map country codes to names
+const countryMap: Record<string, string> = {
+    'ng': 'Nigeria',
+    'ke': 'Kenya',
+    'gh': 'Ghana',
+    'za': 'South Africa',
+    'tz': 'Tanzania',
+    'ug': 'Uganda',
+    'et': 'Ethiopia',
+};
+const getCountryName = (code: string) => countryMap[code?.toLowerCase()] || code;
 
 export default function ProjectDetails() {
     const { id } = useParams<{ id: string }>()
     const navigate = useNavigate()
-    const project = PROJECTS.find(p => p.id === Number(id))
+    const [project, setProject] = useState<Project | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProject = async () => {
+            if (!id) return;
+            try {
+                const data = await api.getProject(id);
+                setProject(data);
+            } catch (err) {
+                console.error("Failed to load project:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProject();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-white flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+            </div>
+        )
+    }
 
     if (!project) {
         return (
@@ -28,7 +66,7 @@ export default function ProjectDetails() {
     return (
         <div className="min-h-screen bg-white">
             {/* Back button */}
-            <div className="fixed top-24 left-6 z-40">
+            <div className="fixed top-32 left-6 z-40">
                 <button
                     onClick={() => navigate(-1)}
                     className="flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-black hover:text-white transition-colors"
@@ -41,7 +79,7 @@ export default function ProjectDetails() {
             </div>
 
             {/* Hero Section with Banner */}
-            <header className="pt-24 pb-8 px-6 md:px-12 lg:px-20">
+            <header className="pt-32 pb-8 px-6 md:px-12 lg:px-20">
                 <div className="max-w-6xl mx-auto">
                     {/* Banner Image Area */}
                     <motion.div
@@ -49,13 +87,17 @@ export default function ProjectDetails() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                     >
-                        {/* Decorative pattern */}
-                        <div className="absolute inset-0 opacity-50">
-                            <div className="w-full h-full" style={{
-                                backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.1) 1px, transparent 0)',
-                                backgroundSize: '24px 24px'
-                            }} />
-                        </div>
+                        {project.coverImage && (
+                            <img src={getImageUrl(project.coverImage)} alt="Cover" className="w-full h-full object-cover" />
+                        )}
+                        {!project.coverImage && (
+                            <div className="absolute inset-0 opacity-50">
+                                <div className="w-full h-full" style={{
+                                    backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(0,0,0,0.1) 1px, transparent 0)',
+                                    backgroundSize: '24px 24px'
+                                }} />
+                            </div>
+                        )}
                     </motion.div>
 
                     {/* Logo & Title Section */}
@@ -67,7 +109,7 @@ export default function ProjectDetails() {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.1 }}
                         >
-                            <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
+                            <img src={getImageUrl(project.logo)} alt={project.name} className="w-full h-full object-contain" />
                         </motion.div>
 
                         {/* Project Info */}
@@ -90,7 +132,7 @@ export default function ProjectDetails() {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.3 }}
                                     >
-                                        {project.tags.map((tag) => (
+                                        {project.tags?.map((tag) => (
                                             <span
                                                 key={tag}
                                                 className="px-3 py-1 bg-red-500 text-white text-xs font-bold rounded-full"
@@ -102,7 +144,7 @@ export default function ProjectDetails() {
                                             project.status === 'beta' ? 'bg-yellow-100 text-yellow-700' :
                                                 'bg-gray-100 text-gray-600'
                                             }`}>
-                                            {project.status.toUpperCase()}
+                                            {project.status?.toUpperCase()}
                                         </span>
                                     </motion.div>
                                 </div>
@@ -117,24 +159,24 @@ export default function ProjectDetails() {
                                     {/* User avatars + count */}
                                     <div className="flex items-center gap-2">
                                         <div className="flex -space-x-2">
-                                            {project.founders.slice(0, 3).map((founder, idx) => (
+                                            {project.team?.slice(0, 3).map((member, idx) => (
                                                 <img
                                                     key={idx}
-                                                    src={founder.image}
-                                                    alt={founder.name}
+                                                    src={getImageUrl(member.avatar) || `https://ui-avatars.com/api/?name=${member.name}`}
+                                                    alt={member.name}
                                                     className="w-8 h-8 rounded-full border-2 border-white object-cover"
                                                 />
                                             ))}
                                         </div>
                                         <span className="text-sm font-bold text-gray-600">
-                                            {project.userCount}
+                                            {project.userMetric}
                                         </span>
                                     </div>
 
                                     {/* Contact button */}
-                                    {project.liveUrl && (
+                                    {project.website && (
                                         <a
-                                            href={project.liveUrl}
+                                            href={project.website}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="px-5 py-2 bg-black text-white text-sm font-bold rounded-full hover:bg-red-600 transition-colors"
@@ -158,15 +200,13 @@ export default function ProjectDetails() {
                         viewport={{ once: true }}
                     >
                         <h2 className="text-2xl font-black text-black mb-2">Product Highlights</h2>
-                        <p className="text-gray-600 leading-relaxed max-w-4xl">
-                            {project.description}
-                        </p>
+                        <div className="text-gray-600 leading-relaxed max-w-4xl" dangerouslySetInnerHTML={{ __html: project.description }} />
 
                         {/* Social Links */}
                         <div className="flex items-center gap-3 mt-6">
-                            {project.twitterUrl && (
+                            {project.twitter && (
                                 <a
-                                    href={project.twitterUrl}
+                                    href={project.twitter}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-2 text-gray-500 hover:text-black transition-colors"
@@ -176,9 +216,9 @@ export default function ProjectDetails() {
                                     </svg>
                                 </a>
                             )}
-                            {project.liveUrl && (
+                            {project.website && (
                                 <a
-                                    href={project.liveUrl}
+                                    href={project.website}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-2 text-gray-500 hover:text-black transition-colors"
@@ -204,7 +244,7 @@ export default function ProjectDetails() {
                             viewport={{ once: true }}
                         >
                             <h2 className="text-xl font-black text-black mb-2">Milestones</h2>
-                            <p className="text-gray-600">{project.milestones || project.metric}</p>
+                            <p className="text-gray-600">{project.milestones || project.userMetric}</p>
                         </motion.div>
 
                         {/* Launch Date */}
@@ -233,7 +273,7 @@ export default function ProjectDetails() {
                     >
                         <h2 className="text-xl font-black text-black mb-4">Tech Stack</h2>
                         <div className="flex flex-wrap gap-2">
-                            {project.techStack.map((tech) => (
+                            {project.techStack?.map((tech) => (
                                 <span key={tech} className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">
                                     {tech}
                                 </span>
@@ -256,7 +296,7 @@ export default function ProjectDetails() {
                     </motion.h2>
 
                     <div className="space-y-4">
-                        {project.founders.map((member, i) => (
+                        {project.team?.map((member, i) => (
                             <motion.div
                                 key={member.name}
                                 className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl"
@@ -266,7 +306,7 @@ export default function ProjectDetails() {
                                 transition={{ delay: i * 0.1 }}
                             >
                                 <img
-                                    src={member.image}
+                                    src={getImageUrl(member.avatar) || `https://ui-avatars.com/api/?name=${member.name}`}
                                     alt={member.name}
                                     className="w-12 h-12 rounded-full object-cover"
                                 />
@@ -292,7 +332,7 @@ export default function ProjectDetails() {
                 </div>
             </section>
 
-            {/* Location & Achievement */}
+            {/* Location */}
             <section className="px-6 md:px-12 lg:px-20 py-12 border-t border-gray-100">
                 <div className="max-w-6xl mx-auto">
                     <div className="grid md:grid-cols-2 gap-8">
@@ -304,34 +344,15 @@ export default function ProjectDetails() {
                             viewport={{ once: true }}
                         >
                             <img
-                                src={getCountryFlag(project.countryCode)}
-                                alt={project.location}
+                                src={getCountryFlag(project.country)}
+                                alt={getCountryName(project.country)}
                                 className="w-10 h-10 rounded-full object-cover shadow"
                             />
                             <div>
                                 <p className="text-sm text-gray-500">Location</p>
-                                <p className="font-bold text-black">{project.location}</p>
+                                <p className="font-bold text-black">{getCountryName(project.country)}</p>
                             </div>
                         </motion.div>
-
-                        {/* Achievement */}
-                        {project.achievement && (
-                            <motion.div
-                                className="flex items-center gap-4"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.1 }}
-                            >
-                                <div className="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-xl">
-                                    🏆
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-500">Achievement</p>
-                                    <p className="font-bold text-black">{project.achievement}</p>
-                                </div>
-                            </motion.div>
-                        )}
                     </div>
                 </div>
             </section>
@@ -341,9 +362,9 @@ export default function ProjectDetails() {
                 <div className="max-w-6xl mx-auto flex items-center justify-between">
                     <span className="text-gray-500 font-medium">team1africa</span>
                     <div className="flex items-center gap-3">
-                        {project.twitterUrl && (
+                        {project.twitter && (
                             <a
-                                href={project.twitterUrl}
+                                href={project.twitter}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-10 h-10 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors shadow"
@@ -353,9 +374,9 @@ export default function ProjectDetails() {
                                 </svg>
                             </a>
                         )}
-                        {project.liveUrl && (
+                        {project.website && (
                             <a
-                                href={project.liveUrl}
+                                href={project.website}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-10 h-10 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors shadow"

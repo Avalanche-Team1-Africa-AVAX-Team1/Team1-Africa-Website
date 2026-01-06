@@ -52,19 +52,7 @@ export const spotlightProjects: SpotlightProject[] = [
         color: '#2996F3',
         textColor: 'text-white'
     },
-    {
-        id: 4,
-        name: 'Jamii DAO',
-        tagline: 'Community-governed impact',
-        description: 'Decentralized organization funding 67 social impact projects through transparent community voting',
-        impact: 'Fast consensus enables rapid voting and fund distribution for time-sensitive community needs.',
-        builder: 'Distributed impact team',
-        location: 'Ethiopia',
-        metric: '$420K treasury',
-        category: 'DAO',
-        color: '#0e6bd6',
-        textColor: 'text-white'
-    },
+
     {
         id: 5,
         name: 'Adumu Games',
