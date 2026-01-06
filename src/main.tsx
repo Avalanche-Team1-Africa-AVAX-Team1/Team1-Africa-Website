@@ -1,10 +1,11 @@
 // import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import './custom-prose.css'
 import App from './App.tsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import BlogIndex from './pages/BlogIndex'
-import ArticlePage from './pages/ArticlePage'
+import BlogArticle from './pages/BlogArticle'
 import NotFound from './pages/NotFound'
 import EventCalendar from './components/EventCalendar'
 import About from './pages/About'
@@ -32,7 +33,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<PageTransition><App /></PageTransition>} />
         <Route path="/about" element={<PageTransition><About /></PageTransition>} />
         <Route path="/blog" element={<PageTransition><BlogIndex /></PageTransition>} />
-        <Route path="/blog/:slug" element={<PageTransition><ArticlePage /></PageTransition>} />
+        <Route path="/blog/:slug" element={<PageTransition><BlogArticle /></PageTransition>} />
         <Route path="/spotlight" element={<PageTransition><Spotlight /></PageTransition>} />
         <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
         <Route path="/projects/:id" element={<PageTransition><ProjectDetails /></PageTransition>} />

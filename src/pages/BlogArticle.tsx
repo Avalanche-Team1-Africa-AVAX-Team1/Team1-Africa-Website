@@ -157,7 +157,7 @@ export default function BlogArticle() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-24">
       <article className="px-4 md:px-8 lg:px-16 py-8">
         <div className="mx-auto w-full max-w-6xl">
           {/* Back Button */}
@@ -175,20 +175,30 @@ export default function BlogArticle() {
 
           {/* Title */}
           <div className="max-w-4xl">
-            <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl">{article.title}</h1>
+            <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-5xl">{article.title}</h1>
 
             {/* Author Info with Avatar - PROMINENT */}
-            <div className="mt-6 flex items-center gap-4 pb-6 border-b border-gray-200">
+            <div className="mt-8 flex items-center gap-4 pb-8 border-b border-gray-200">
               {(article.customAuthorAvatar || article.author?.avatar) && (
-                <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gray-200 shadow-sm">
+                <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gray-200 shadow-sm shrink-0">
                   <img src={getImageUrl(article.customAuthorAvatar || article.author?.avatar)} alt={article.customAuthorName || article.author?.name} className="w-full h-full object-cover" />
                 </div>
               )}
               <div className="flex-1">
                 {/* Author Name with Flag */}
                 <div className="flex items-center gap-2">
-                  <p className="text-base font-bold text-gray-900">{article.customAuthorName || article.author?.name || 'Unknown'}</p>
-                  <span className="text-xl" title="South Africa">🇿🇦</span>
+                  <p className="text-lg font-bold text-gray-900">{article.customAuthorName || article.author?.name || 'Unknown'}</p>
+                  {article.customAuthorCountry && (
+                    <img
+                      src={`/assets/flags/${article.customAuthorCountry}.svg`}
+                      alt={article.customAuthorCountry}
+                      className="w-5 h-5 rounded-full object-cover shadow-sm border border-black/10"
+                      onError={(e) => {
+                        // Fallback if image fails
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  )}
                 </div>
 
                 <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
@@ -222,9 +232,9 @@ export default function BlogArticle() {
 
 
           {/* Content */}
-          <div className="mt-8 max-w-3xl text-gray-800">
+          <div className="mt-8 w-full max-w-none text-gray-800">
             <div
-              className="prose prose-neutral max-w-none prose-headings:font-semibold prose-a:text-red-600"
+              className="prose prose-lg prose-neutral max-w-none prose-headings:font-semibold prose-a:text-red-600 prose-blockquote:border-l-[3px] prose-blockquote:border-black prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:font-serif prose-blockquote:text-gray-800"
               // API returns HTML content from rich text editor
               dangerouslySetInnerHTML={{ __html: article.content }}
             />

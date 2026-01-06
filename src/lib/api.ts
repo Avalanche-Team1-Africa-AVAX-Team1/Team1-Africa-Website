@@ -313,6 +313,7 @@ export interface Blog {
     tags?: string[];
     customAuthorName?: string;
     customAuthorAvatar?: string;
+    customAuthorCountry?: string;
     publishedAt?: string;
     createdAt?: string;
     updatedAt?: string;
