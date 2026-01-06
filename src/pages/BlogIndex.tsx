@@ -31,10 +31,10 @@ export default function BlogIndex() {
   // Get trending blogs (next 3 after latest)
   const trendingBlogs = blogs.slice(1, 4);
 
-  // Filter blogs by tag
+  // Filter blogs by category
   const filteredBlogs = activeTag === 'All'
     ? blogs
-    : blogs.filter(blog => blog.tags?.includes(activeTag));
+    : blogs.filter(blog => blog.category === activeTag);
 
   if (loading) {
     return (
