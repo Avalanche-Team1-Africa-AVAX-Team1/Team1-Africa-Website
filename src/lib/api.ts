@@ -311,6 +311,8 @@ export interface Blog {
     };
     category?: string;
     tags?: string[];
+    customAuthorName?: string;
+    customAuthorAvatar?: string;
     publishedAt?: string;
     createdAt?: string;
     updatedAt?: string;

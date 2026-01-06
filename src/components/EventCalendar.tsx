@@ -36,28 +36,39 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
 
     return apiEvents
       .filter(e => {
-        // Treat API date as local time (ignore timezone offset)
-        const rawStart = e.startDate.endsWith('Z') ? e.startDate.slice(0, -1) : e.startDate;
-        const eventDate = new Date(rawStart);
-
+        // Parse date directly - let browser handle timezone conversion from UTC to Local
+        const eventDate = new Date(e.startDate);
         const eventDateStr = `${eventDate.getFullYear()}-${(eventDate.getMonth() + 1).toString().padStart(2, '0')}-${eventDate.getDate().toString().padStart(2, '0')}`;
         return eventDateStr === dateStr;
       })
       .map(e => {
-        // Treat API date as local time
-        const rawStart = e.startDate.endsWith('Z') ? e.startDate.slice(0, -1) : e.startDate;
-        const rawEnd = e.endDate.endsWith('Z') ? e.endDate.slice(0, -1) : e.endDate;
 
-        const start = new Date(rawStart);
-        const end = new Date(rawEnd);
 
-        // Format HH:MM
-        // Safer to use getHours/getMinutes
-        const startH = start.getHours().toString().padStart(2, '0');
-        const startM = start.getMinutes().toString().padStart(2, '0');
+        // FORCE WEST AFRICA TIME (UTC+1)
+        // This ensures the website matches the Admin panel (Lagos Time) regardless of the user's browser location.
+        // DB stores 05:00Z -> We want to display 06:00.
 
-        const endH = end.getHours().toString().padStart(2, '0');
-        const endM = end.getMinutes().toString().padStart(2, '0');
+        const utcStart = new Date(e.startDate);
+        const utcEnd = new Date(e.endDate);
+
+        const startH_Num = (utcStart.getUTCHours() + 1) % 24;
+        const endH_Num = (utcEnd.getUTCHours() + 1) % 24;
+
+        const startM_Num = utcStart.getUTCMinutes();
+        const endM_Num = utcEnd.getUTCMinutes();
+
+        // Update the Date objects to represent this "Local" time for formatting purposes
+        const start = new Date(utcStart);
+        start.setHours(startH_Num, startM_Num, 0, 0);
+
+        const end = new Date(utcEnd);
+        end.setHours(endH_Num, endM_Num, 0, 0);
+
+        const startH = startH_Num.toString().padStart(2, '0');
+        const startM = startM_Num.toString().padStart(2, '0');
+
+        const endH = endH_Num.toString().padStart(2, '0');
+        const endM = endM_Num.toString().padStart(2, '0');
 
         return {
           date: dateStr,
@@ -515,7 +526,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                     className="absolute rounded-xl overflow-hidden cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 border-l-4 z-20"
                     style={{
                       top: `${topPosition}px`,
-                      height: `${Math.max(height, 100)}px`, // Minimum 100px height
+                      height: `${Math.max(height, 50)}px`, // Minimum 50px height
                       left: `${leftPosition}px`,
                       width: `${cardWidth}px`,
                       backgroundColor: event.color || '#f3f4f6',
@@ -541,6 +552,9 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                       {/* Header: Title on left, Organizer icon on right */}
                       <div className="flex items-center justify-between p-3 pb-2">
                         <h3 className="font-bold text-sm text-gray-900 leading-tight line-clamp-1 flex-1 pr-2">{event.title}</h3>
+                        <div className="text-[10px] font-bold text-gray-500 bg-white/50 px-1.5 py-0.5 rounded mr-2">
+                          {event.time}
+                        </div>
                         {event.organizer?.avatar && (
                           <img
                             src={event.organizer.avatar}
