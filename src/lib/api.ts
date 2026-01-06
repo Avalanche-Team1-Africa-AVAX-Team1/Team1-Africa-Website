@@ -281,6 +281,11 @@ export interface Event {
     updatedAt?: string;
     registrationCount?: number;
     capacity?: number;
+    organizer?: string;
+    organizerImage?: string;
+    country?: string;
+    lat?: number;
+    lng?: number;
 }
 
 export const getImageUrl = (url?: string) => {

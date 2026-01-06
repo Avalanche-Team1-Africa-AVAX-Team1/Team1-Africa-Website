@@ -80,7 +80,10 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
           location: e.location || 'TBA',
           capacity: e.capacity || 0,
           currentAttendees: e.registrationCount || 0,
-          organizer: { name: 'Team1 Africa', avatar: 'https://ui-avatars.com/api/?name=Team1+Africa&background=random' }, // Placeholder
+          organizer: {
+            name: e.organizer || 'Team1 Africa',
+            avatar: getImageUrl(e.organizerImage) || `https://ui-avatars.com/api/?name=${encodeURIComponent(e.organizer || 'Team1 Africa')}&background=random`
+          },
           attendees: [],
           color: e.status === 'completed' ? '#f3f4f6' : '#dbeafe', // Blue for upcoming, gray for completed
           imageHeader: getImageUrl(e.coverImage),
