@@ -238,7 +238,7 @@ export default function ProjectsPage() {
 
                                         {/* Description */}
                                         <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
-                                            {project.description}
+                                            {project.description?.replace(/<[^>]*>?/gm, '')}
                                         </p>
 
                                         {/* Bottom row: View More + User Count */}

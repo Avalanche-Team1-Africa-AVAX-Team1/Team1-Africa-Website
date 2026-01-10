@@ -15,8 +15,8 @@ const Footer = () => {
     const socialLinks = [
         { icon: telegram, alt: 'telegram', url: 'https://t.me/team1africa' },
         { icon: youtube, alt: 'youtube', url: 'https://www.youtube.com/@Avalanche_Africa' },
-        { icon: x, alt: 'x', url: 'https://x.com/avalaborange' },
-        { icon: discord, alt: 'discord', url: 'https://discord.gg/avalanche' },
+        { icon: x, alt: 'x', url: 'https://x.com/AvaxAfrica?s=20' },
+        { icon: discord, alt: 'discord', url: 'https://discord.gg/mNkGNkxv' },
         { icon: instagram, alt: 'instagram', url: 'https://www.instagram.com/team1africa/' },
         { icon: reddit, alt: 'reddit', url: 'https://www.reddit.com/r/Avax/' },
         { icon: github, alt: 'github', url: 'https://github.com/ava-labs' }
