@@ -4,7 +4,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import rocket from '../assets/rocket.svg'
 import gamepad from '../assets/gamepad.svg'
-import pixel from '../assets/pixel-avax.png'
+// import pixel from '../assets/pixel-avax.png'
 import arrowup from '../assets/arrow-up.svg'
 import calendar from '../assets/calendar.svg'
 import trophy from '../assets/trophy.svg'
@@ -211,7 +211,7 @@ const Build = () => {
 
                         {/* Left Content */}
                         <div className="relative z-20 max-w-xl">
-                            <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" />
+                            {/* <img src={pixel} className="w-full max-w-[300px] opacity-10 absolute -top-16 -left-16" alt="" /> */}
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
