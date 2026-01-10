@@ -15,6 +15,14 @@ const Navbar = () => {
     // Scroll detection for auto-hide navbar
     useEffect(() => {
         const handleScroll = () => {
+            // Check if scroll is locked (inside pinned section)
+            const isScrollLocked = document.body.getAttribute('data-scroll-locked') === 'true';
+            
+            if (isScrollLocked) {
+                // Don't change navbar visibility during scroll-locked sections
+                return;
+            }
+
             const currentScrollY = window.scrollY;
 
             // Show navbar when scrolling up, hide when scrolling down
