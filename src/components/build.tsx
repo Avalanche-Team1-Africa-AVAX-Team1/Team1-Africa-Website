@@ -67,106 +67,119 @@ const cards = [
 
 const Build = () => {
     const [activeIndex, setActiveIndex] = useState(0)
-    const pinnedRef = useRef(null)
-    const mainRef = useRef(null)
-    const scrollTriggerRef = useRef(null)
+    const [isReady, setIsReady] = useState(false)
+    const pinnedRef = useRef<HTMLElement | null>(null)
+    const mainRef = useRef<HTMLDivElement | null>(null)
+    const scrollTriggerRef = useRef<ScrollTrigger | null>(null)
 
     // Initialize ScrollTrigger with proper Lenis integration
     useLayoutEffect(() => {
         if (!pinnedRef.current) return
 
-        // Wait for next frame to ensure DOM is ready
-        requestAnimationFrame(() => {
-            const ctx = gsap.context(() => {
-                // Kill any existing ScrollTriggers on this element
-                ScrollTrigger.getAll().forEach(st => {
-                    if (st.trigger === pinnedRef.current) {
-                        st.kill()
-                    }
-                })
+        // Wait for images to load before initializing ScrollTrigger
+        const images = pinnedRef.current.querySelectorAll('img')
+        const imagePromises = Array.from(images).map((img: HTMLImageElement) => {
+            if (img.complete) return Promise.resolve()
+            return new Promise((resolve) => {
+                img.onload = () => resolve(true)
+                img.onerror = () => resolve(true) // Resolve even on error to prevent hanging
+            })
+        })
 
-                // Create ScrollTrigger with optimized settings
-                scrollTriggerRef.current = ScrollTrigger.create({
-                    trigger: pinnedRef.current,
-                    start: "top top",
-                    end: () => `+=${(cards.length - 1) * window.innerHeight * 0.7}`, // 70vh per card
-                    pin: '.build-viewport',
-                    pinSpacing: true,
-                    scrub: 0.3, // More responsive
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                    markers: false,
-                    snap: {
-                        snapTo: (value) => {
-                            // Custom snap function
-                            const snapPoints = cards.length - 1
-                            const snappedValue = Math.round(value * snapPoints) / snapPoints
-                            return snappedValue
+        Promise.all(imagePromises).then(() => {
+            // Wait for next frame to ensure DOM is ready
+            requestAnimationFrame(() => {
+                const ctx = gsap.context(() => {
+                    // Kill any existing ScrollTriggers on this element
+                    ScrollTrigger.getAll().forEach(st => {
+                        if (st.trigger === pinnedRef.current) {
+                            st.kill()
+                        }
+                    })
+
+                    // Create ScrollTrigger with optimized settings
+                    scrollTriggerRef.current = ScrollTrigger.create({
+                        trigger: pinnedRef.current,
+                        start: "top top",
+                        end: () => `+=${(cards.length - 1) * window.innerHeight * 0.7}`, // 70vh per card
+                        pin: '.build-viewport',
+                        pinSpacing: true,
+                        scrub: 0.3, // More responsive
+                        anticipatePin: 1,
+                        invalidateOnRefresh: true,
+                        markers: false,
+                        snap: {
+                            snapTo: (value: number) => {
+                                // Custom snap function
+                                const snapPoints = cards.length - 1
+                                const snappedValue = Math.round(value * snapPoints) / snapPoints
+                                return snappedValue
+                            },
+                            duration: { min: 0.2, max: 0.5 },
+                            ease: "power2.inOut",
+                            delay: 0.05
                         },
-                        duration: { min: 0.2, max: 0.5 },
-                        ease: "power2.inOut",
-                        delay: 0.05
-                    },
-                    onUpdate: (self) => {
-                        // Better index calculation
-                        const progress = self.progress
-                        const rawIndex = progress * (cards.length - 1)
-                        const newIndex = Math.round(rawIndex)
-                        
-                        // Clamp to valid range
-                        const clampedIndex = Math.max(0, Math.min(newIndex, cards.length - 1))
-                        
-                        if (clampedIndex !== activeIndex) {
-                            setActiveIndex(clampedIndex)
-                        }
-                    },
-                    onEnter: () => {
-                        // Ensure we start at first card when entering
-                        setActiveIndex(0)
-                        const viewport = document.querySelector('.build-viewport')
-                        if (viewport) {
-                            viewport.style.zIndex = '1'
-                        }
-                        // Add flag to body to prevent navbar show on scroll
-                        document.body.setAttribute('data-scroll-locked', 'true')
-                    },
-                    onLeave: () => {
-                        const viewport = document.querySelector('.build-viewport')
-                        if (viewport) {
-                            viewport.style.zIndex = ''
-                        }
-                        // Remove flag when leaving
-                        document.body.removeAttribute('data-scroll-locked')
-                    },
-                    onEnterBack: () => {
-                        // When scrolling back, start at last card
-                        setActiveIndex(cards.length - 1)
-                        const viewport = document.querySelector('.build-viewport')
-                        if (viewport) {
-                            viewport.style.zIndex = '1'
-                        }
-                        // Add flag to body to prevent navbar show on scroll
-                        document.body.setAttribute('data-scroll-locked', 'true')
-                    },
-                    onLeaveBack: () => {
-                        // When leaving back, ensure we're at first card
-                        setActiveIndex(0)
-                        const viewport = document.querySelector('.build-viewport')
-                        if (viewport) {
-                            viewport.style.zIndex = ''
-                        }
-                        // Remove flag when leaving
-                        document.body.removeAttribute('data-scroll-locked')
-                    }
-                })
+                        onUpdate: (self: ScrollTrigger) => {
+                            // Better index calculation
+                            const progress = self.progress
+                            const rawIndex = progress * (cards.length - 1)
+                            const newIndex = Math.round(rawIndex)
 
-                // Refresh after creation
-                ScrollTrigger.refresh()
-            }, mainRef)
+                            // Clamp to valid range
+                            const clampedIndex = Math.max(0, Math.min(newIndex, cards.length - 1))
 
-            return () => {
-                ctx.revert()
-            }
+                            if (clampedIndex !== activeIndex) {
+                                setActiveIndex(clampedIndex)
+                            }
+                        },
+                        onEnter: () => {
+                            // Ensure we start at first card when entering
+                            setActiveIndex(0)
+                            const viewport = document.querySelector('.build-viewport') as HTMLElement
+                            if (viewport) {
+                                viewport.style.zIndex = '1'
+                            }
+                            // Add flag to body to prevent navbar show on scroll
+                            document.body.setAttribute('data-scroll-locked', 'true')
+                        },
+                        onLeave: () => {
+                            const viewport = document.querySelector('.build-viewport') as HTMLElement
+                            if (viewport) {
+                                viewport.style.zIndex = ''
+                            }
+                            // Remove flag when leaving
+                            document.body.removeAttribute('data-scroll-locked')
+                        },
+                        onEnterBack: () => {
+                            // When scrolling back, start at last card
+                            setActiveIndex(cards.length - 1)
+                            const viewport = document.querySelector('.build-viewport') as HTMLElement
+                            if (viewport) {
+                                viewport.style.zIndex = '1'
+                            }
+                            // Add flag to body to prevent navbar show on scroll
+                            document.body.setAttribute('data-scroll-locked', 'true')
+                        },
+                        onLeaveBack: () => {
+                            // When leaving back, ensure we're at first card
+                            setActiveIndex(0)
+                            const viewport = document.querySelector('.build-viewport') as HTMLElement
+                            if (viewport) {
+                                viewport.style.zIndex = ''
+                            }
+                            // Remove flag when leaving
+                            document.body.removeAttribute('data-scroll-locked')
+                        }
+                    })
+
+                    // Refresh after creation
+                    ScrollTrigger.refresh()
+                }, mainRef)
+
+                return () => {
+                    ctx.revert()
+                }
+            })
         })
     }, []) // Only run once on mount
 
@@ -187,7 +200,7 @@ const Build = () => {
                 <section ref={pinnedRef} className="relative bg-black text-white">
                     {/* Viewport that gets pinned */}
                     <div className="build-viewport h-screen overflow-hidden flex items-center justify-between px-12 relative">
-                        
+
                         {/* Silk Animated Background */}
                         <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
                             <Silk color="#1c1212" speed={2} scale={1.2} />
@@ -253,8 +266,8 @@ const Build = () => {
                                                 opacity: isActive ? 1 : 0,
                                                 zIndex: isActive ? 10 : 5 - Math.abs(offset),
                                             }}
-                                            transition={{ 
-                                                duration: 0.5, 
+                                            transition={{
+                                                duration: 0.5,
                                                 ease: [0.43, 0.13, 0.23, 0.96]
                                             }}
                                         >
@@ -356,11 +369,10 @@ const Build = () => {
                         {/* Progress Indicators */}
                         <div className="absolute right-12 top-1/2 -translate-y-1/2 flex flex-col gap-6 z-30">
                             {cards.map((_, i) => (
-                                <div 
-                                    key={i} 
-                                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                        i === activeIndex ? 'bg-white h-12' : 'bg-gray-600'
-                                    }`} 
+                                <div
+                                    key={i}
+                                    className={`w-3 h-3 rounded-full transition-all duration-300 ${i === activeIndex ? 'bg-white h-12' : 'bg-gray-600'
+                                        }`}
                                 />
                             ))}
                         </div>
@@ -369,9 +381,14 @@ const Build = () => {
             </div>
 
             {/* MOBILE: Vertical Stack */}
-            <div className="lg:hidden py-20 px-6 bg-black text-white relative">
-                {/* Background Grid */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ff000008_1px,transparent_1px),linear-gradient(to_bottom,#ff000008_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
+            <div className="lg:hidden py-20 px-6 bg-black text-white relative overflow-hidden">
+                {/* Silk Animated Background matching Desktop */}
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
+                    <Silk color="#1c1212" speed={2} scale={1.2} />
+                </div>
+
+                {/* Background Grid matching Desktop */}
+                <div className="absolute inset-0 z-10 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] pointer-events-none" />
 
                 <div className="max-w-4xl mx-auto relative z-10">
                     <div className="md:text-center mb-16">
@@ -399,26 +416,73 @@ const Build = () => {
                     <AnimatedSection staggerChildren={0.2} className="space-y-8">
                         {cards.map((card, i) => (
                             <AnimatedItem key={i}>
-                                <div
-                                    className="rounded-2xl p-8 flex flex-col gap-6"
-                                    style={{ backgroundColor: card.color }}
-                                >
-                                    <div className="flex justify-between items-start">
-                                        <div className="p-4 bg-black/20 rounded-xl backdrop-blur-sm border border-white/20">
-                                            <img src={card.icon} alt={card.title} className="w-12 h-12" />
-                                        </div>
-                                        <div className="text-5xl font-black opacity-10 text-black">
-                                            0{i + 1}
-                                        </div>
+                                <div className="relative w-full max-w-[340px] mx-auto pt-[240px] pb-8">
+                                    {/* Images Layer */}
+                                    <div className="absolute top-0 inset-x-0 h-[300px] flex items-center justify-center pointer-events-none">
+                                        {card.images.map((img, imgIndex) => {
+                                            const isCenter = imgIndex === 1
+                                            const isLeft = imgIndex === 0
+                                            const isRight = imgIndex === 2
+
+                                            // Tighter visual spread for mobile vertical view
+                                            const rotate = isLeft ? -8 : isRight ? 8 : 0
+                                            const x = isLeft ? -30 : isRight ? 30 : 0
+                                            const y = isCenter ? -10 : 0
+                                            const zIndex = isCenter ? 10 : 0
+
+                                            return (
+                                                <div
+                                                    key={imgIndex}
+                                                    className="absolute w-[220px] h-[280px] bg-white p-2 shadow-xl rounded-sm transition-transform duration-500 ease-out"
+                                                    style={{
+                                                        transform: `translate(${x}px, ${y}px) rotate(${rotate}deg)`,
+                                                        zIndex: zIndex
+                                                    }}
+                                                >
+                                                    <div className="w-full h-[220px] bg-gray-100 overflow-hidden mb-2 filter contrast-110">
+                                                        <img src={img} alt="" className="w-full h-full object-cover" />
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
                                     </div>
 
-                                    <div className={card.textColor}>
-                                        <h2 className="text-4xl lt-768:text-3xl font-black mb-4 uppercase tracking-tight">
-                                            {card.title}
-                                        </h2>
-                                        <p className="text-base font-medium leading-relaxed opacity-90">
-                                            {card.description}
-                                        </p>
+                                    {/* Content Card Overlay */}
+                                    <div className="relative z-20 backdrop-blur-xl bg-black/80 border border-white/10 p-6 rounded-2xl overflow-hidden shadow-2xl -mt-4">
+                                        <div
+                                            className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-[50px] opacity-50 pointer-events-none"
+                                            style={{ backgroundColor: card.color }}
+                                        />
+
+                                        <div className="relative z-10">
+                                            <div className="flex justify-between items-center mb-4">
+                                                <div
+                                                    className="p-2.5 rounded-lg backdrop-blur-sm border border-white/20"
+                                                    style={{ backgroundColor: `${card.color}40` }}
+                                                >
+                                                    <img src={card.icon} alt={card.title} className="w-6 h-6" />
+                                                </div>
+                                                <div className="text-3xl font-black opacity-20 text-white">
+                                                    0{i + 1}
+                                                </div>
+                                            </div>
+
+                                            <h2 className="text-2xl font-black mb-3 uppercase text-white tracking-tight leading-none">
+                                                {card.title}
+                                            </h2>
+                                            <p className="text-sm font-medium leading-relaxed text-gray-200 mb-6">
+                                                {card.description}
+                                            </p>
+
+                                            <div className="flex items-center gap-2 text-sm font-bold text-white group w-fit cursor-pointer">
+                                                Learn More
+                                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center transition-colors">
+                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </AnimatedItem>

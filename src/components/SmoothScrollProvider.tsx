@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import Lenis from 'lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 interface SmoothScrollProviderProps {
     children: ReactNode;
@@ -49,17 +51,24 @@ const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) => {
 
         lenisRef.current = lenis;
 
-        // Request animation frame loop
-        function raf(time: number) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
+        // Integrate with GSAP ScrollTrigger
+        // This fixes the issue where ScrollTrigger loses track of the scroll position
+        lenis.on('scroll', ScrollTrigger.update);
 
-        const rafId = requestAnimationFrame(raf);
+        // Use GSAP's ticker to drive Lenis animations
+        // This ensures both run in the same execution frame
+        const updateLenis = (time: number) => {
+            lenis.raf(time * 1000);
+        };
+
+        gsap.ticker.add(updateLenis);
+
+        // Disable lag smoothing to prevent visual stuttering
+        gsap.ticker.lagSmoothing(0);
 
         // Cleanup
         return () => {
-            cancelAnimationFrame(rafId);
+            gsap.ticker.remove(updateLenis);
             lenis.destroy();
             lenisRef.current = null;
         };
