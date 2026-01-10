@@ -1,5 +1,5 @@
 import { useState, useRef, useLayoutEffect, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import rocket from '../assets/rocket.svg'
@@ -67,7 +67,6 @@ const cards = [
 
 const Build = () => {
     const [activeIndex, setActiveIndex] = useState(0)
-    const [isReady, setIsReady] = useState(false)
     const pinnedRef = useRef<HTMLElement | null>(null)
     const mainRef = useRef<HTMLDivElement | null>(null)
     const scrollTriggerRef = useRef<ScrollTrigger | null>(null)

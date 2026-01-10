@@ -4,7 +4,6 @@ import AnimatedText from './AnimatedText';
 import AnimatedSection, { AnimatedItem } from './AnimatedSection';
 import AppImage from './ui/AppImage';
 
-import providenceImg from '../assets/providence.jpg';
 import offTheGridImg from '../assets/otg.jpg';
 import domiImg from '../assets/domionline.jpg';
 import bloodloopImg from '../assets/bloodloop.jpg';
@@ -48,7 +47,7 @@ const FeaturedGames: React.FC = () => {
       image: offTheGridImg,
       imageWebp: offTheGridImg,
       website: "https://gameoffthegrid.com/"
-    },    
+    },
     {
       id: 2,
       title: "DOMI Online",
