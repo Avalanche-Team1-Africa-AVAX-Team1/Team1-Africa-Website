@@ -41,16 +41,6 @@ const FeaturedGames: React.FC = () => {
   const games: Game[] = React.useMemo(() => [
     {
       id: 1,
-      title: "PROVIDENCE",
-      description: "A sci-fi survival extraction game on Avalanche. Players venture into unstable Slipworlds to scavenge resources and alien tech before the Singularity arrives. Race against collapsing timelines and rival explorers in tense PvE/PvP gameplay. Built with Unreal Engine 5, featuring blockchain ownership and a player-driven economy.",
-      genre: "Survival / Extraction",
-      platforms: ["Windows", "PlayStation", "Xbox", "Steam", "Nintendo Switch"],
-      image: providenceImg,
-      imageWebp: providenceImg,
-      website: "https://playprovidence.io/"
-    },
-    {
-      id: 2,
       title: "Off The Grid",
       description: "A cyberpunk third-person extraction royale by Gunzilla Games. Drop into massive battlegrounds, loot cybernetic upgrades, and extract valuable gear. Harvest enemy cyber-limbs and customize with 30+ augmentations. Features a 60+ hour campaign and blockchain-enabled trading on Avalanche's GUNZ subnet.",
       genre: "Action-RPG / Extraction Royale",
@@ -58,9 +48,9 @@ const FeaturedGames: React.FC = () => {
       image: offTheGridImg,
       imageWebp: offTheGridImg,
       website: "https://gameoffthegrid.com/"
-    },
+    },    
     {
-      id: 3,
+      id: 2,
       title: "DOMI Online",
       description: "A hardcore fantasy MMORPG with no level caps and real death consequences. Explore vast worlds, claim towers, and build strategic houses. Features seasonal leaderboards and blockchain-powered true ownership of items with token-based governance in a sustainable play-to-own economy.",
       genre: "MMORPG / Fantasy Sandbox",
@@ -70,7 +60,7 @@ const FeaturedGames: React.FC = () => {
       website: "https://domionline.io/"
     },
     {
-      id: 4,
+      id: 3,
       title: "DeFi Kingdoms",
       description: "Pixel-art fantasy RPG meets decentralized finance. Summon NFT Heroes, quest in PvE/PvP, and engage in staking and liquidity mining. The Crystalvale expansion on Avalanche introduced $CRYSTAL token for summoning and upgrades. A living DeFi ecosystem disguised as a fantasy adventure.",
       genre: "Fantasy RPG / GameFi",
@@ -80,7 +70,7 @@ const FeaturedGames: React.FC = () => {
       website: "https://defikingdoms.com/"
     },
     {
-      id: 5,
+      id: 4,
       title: "MapleStory Universe",
       description: "Nexon's legendary MMORPG reimagined for Web3 on Avalanche. Return to the beloved 2D side-scrolling world with blockchain-powered ownership. Tokenize items and characters, design user-generated content, and earn rewards. Nostalgia meets modern Web3 functionality in this iconic franchise reborn.",
       genre: "MMORPG / UGC",
@@ -90,7 +80,7 @@ const FeaturedGames: React.FC = () => {
       website: "https://msu.io/"
     },
     {
-      id: 6,
+      id: 5,
       title: "BloodLoop",
       description: "A 5v5 tactical hero-shooter on Avalanche. Built on UE5, it combines precision gunplay with unique hero abilities in a competitive landscape. Features include a player-owned economy, crafting systems, and decentralized tournaments on its own dedicated subnet.",
       genre: "Tactical Hero-Shooter",
