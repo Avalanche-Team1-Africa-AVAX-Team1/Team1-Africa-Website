@@ -32,20 +32,14 @@ function App() {
         <AboutUs />
         <Partners />
       </div>
-
-      {/* Full-width sections */}
-      <Build />
-
-      {/* Gallery - back to centered container */}
-      <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
-        <Gallery />
-      </div>
-
       {/* Testimonial - full-width background */}
       <div className="mt-16 lt-1024:mt-48">
         <TestimonialSlider />
       </div>
-
+      {/* Gallery - back to centered container */}
+      <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+        <Gallery />
+      </div>
       {/* Full-width sections */}
       {/* <Events /> */}
       <Games />

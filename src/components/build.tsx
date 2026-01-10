@@ -219,27 +219,27 @@ const Build = () => {
                                 <div className="inline-block bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-bold mb-4 -rotate-6 shadow-lg">
                                     What we do
                                 </div>
-                                <h2 className="text-6xl font-black mb-6 tracking-tighter uppercase leading-[0.9]">
+                                <h2 className="text-6xl lt-1440:text-5xl lt-1280:text-4xl lt-1024:text-3xl font-black mb-6 lt-1280:mb-5 lt-1024:mb-4 tracking-tighter uppercase leading-[0.9]">
                                     Educate. <br />
                                     <span className="text-red-500">Build.</span> <br />
                                     Collaborate.
                                 </h2>
-                                <h3 className="text-2xl font-bold text-red-500 mb-6">
+                                <h3 className="text-2xl lt-1440:text-xl lt-1280:text-lg lt-1024:text-base font-bold text-red-500 mb-6 lt-1280:mb-5 lt-1024:mb-4">
                                     On Avalanche. For Africa.
                                 </h3>
-                                <p className="text-lg text-gray-300 mb-12 max-w-md leading-relaxed">
+                                <p className="text-lg lt-1440:text-base lt-1280:text-[0.95rem] lt-1024:text-sm text-gray-300 mb-12 lt-1280:mb-10 lt-1024:mb-8 max-w-md leading-relaxed">
                                     Africa has the talent. We provide the resources. Through hackathons, workshops, and global partnerships, we're connecting African innovators with everything they need to lead the blockchain revolution with Avalanche.
                                 </p>
                             </motion.div>
 
                             <a href="https://build.avax.network/" target="_blank" rel="noopener noreferrer">
-                                <MagneticButton className="group bg-white text-black px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-colors cursor-pointer shadow-xl hover:bg-gray-100">
+                                <MagneticButton className="group bg-white text-black px-8 py-4 lt-1440:px-7 lt-1440:py-3.5 lt-1280:px-6 lt-1280:py-3 lt-1024:px-5 lt-1024:py-2.5 rounded-full text-base lt-1280:text-sm font-bold flex items-center gap-3 lt-1280:gap-2.5 lt-1024:gap-2 transition-colors cursor-pointer shadow-xl hover:bg-gray-100">
                                     <span className="relative z-10">Start Building</span>
                                     <motion.img
                                         src={arrowup}
                                         width={20}
                                         height={20}
-                                        className="relative z-10"
+                                        className="relative z-10 lt-1280:w-[18px] lt-1280:h-[18px] lt-1024:w-4 lt-1024:h-4"
                                         animate={{ x: [0, 5, 0] }}
                                         transition={{ repeat: Infinity, duration: 1.5 }}
                                     />
@@ -290,7 +290,7 @@ const Build = () => {
                                                     return (
                                                         <motion.div
                                                             key={i}
-                                                            className="absolute w-[300px] h-[380px] bg-white p-3 shadow-2xl rounded-sm"
+                                                            className="absolute w-[220px] h-[280px] lt-1280:w-[190px] lt-1280:h-[240px] lt-1024:w-[160px] lt-1024:h-[205px] 2xl:w-[300px] 2xl:h-[380px] bg-white p-2 lt-1280:p-1.5 2xl:p-3 shadow-2xl rounded-sm"
                                                             initial={false}
                                                             animate={{
                                                                 rotate: isActive ? activeRotate : inactiveRotate,
@@ -307,50 +307,50 @@ const Build = () => {
                                                                 transformOrigin: 'bottom center'
                                                             }}
                                                         >
-                                                            <div className="w-full h-[300px] bg-gray-100 overflow-hidden mb-3 filter contrast-110">
+                                                            <div className="w-full aspect-[3/4] bg-gray-100 overflow-hidden mb-2 lt-1440:mb-2.5 2xl:mb-3 filter contrast-110">
                                                                 <img src={img} alt="" className="w-full h-full object-cover" />
                                                             </div>
-                                                            <div className="h-6"></div>
+                                                            <div className="h-4 lt-1440:h-5 2xl:h-6"></div>
                                                         </motion.div>
                                                     )
                                                 })}
 
                                                 {/* Content Overlay */}
-                                                <div className="absolute bottom-0 left-0 w-full z-10 translate-y-6">
-                                                    <div className="relative backdrop-blur-xl bg-black/80 border border-white/10 p-8 rounded-3xl overflow-hidden shadow-2xl">
+                                                <div className="absolute bottom-0 left-0 w-full z-10 translate-y-6 lt-1280:translate-y-5 lt-1024:translate-y-4 2xl:translate-y-6">
+                                                    <div className="relative backdrop-blur-xl bg-black/80 border border-white/10 p-6 lt-1280:p-5 lt-1024:p-4 2xl:p-8 rounded-3xl lt-1280:rounded-2xl lt-1024:rounded-xl overflow-hidden shadow-2xl">
                                                         <div
-                                                            className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-[60px] opacity-60 pointer-events-none"
+                                                            className="absolute -top-12 -right-12 lt-1440:-top-16 lt-1440:-right-16 2xl:-top-20 2xl:-right-20 w-28 h-28 lt-1440:w-32 lt-1440:h-32 2xl:w-40 2xl:h-40 rounded-full blur-[45px] lt-1440:blur-[50px] 2xl:blur-[60px] opacity-60 pointer-events-none"
                                                             style={{ backgroundColor: card.color }}
                                                         />
 
                                                         <div className="relative z-10">
-                                                            <div className="flex justify-between items-center mb-4">
+                                                            <div className="flex justify-between items-center mb-3 lt-1440:mb-4">
                                                                 <div
-                                                                    className="p-3 rounded-xl backdrop-blur-sm border border-white/20"
+                                                                    className="p-2 lt-1440:p-2.5 2xl:p-3 rounded-lg lt-1440:rounded-xl backdrop-blur-sm border border-white/20"
                                                                     style={{ backgroundColor: `${card.color}40` }}
                                                                 >
-                                                                    <img src={card.icon} alt={card.title} className="w-8 h-8" />
+                                                                    <img src={card.icon} alt={card.title} className="w-6 h-6 lt-1440:w-7 lt-1440:h-7 2xl:w-8 2xl:h-8" />
                                                                 </div>
-                                                                <div className="text-4xl font-black opacity-20 text-white">
+                                                                <div className="text-3xl lt-1440:text-3xl 2xl:text-4xl font-black opacity-20 text-white">
                                                                     0{index + 1}
                                                                 </div>
                                                             </div>
 
-                                                            <h2 className="text-3xl font-black mb-3 uppercase text-white tracking-tight leading-none">
+                                                            <h2 className="text-xl lt-1440:text-2xl 2xl:text-3xl font-black mb-2 lt-1440:mb-3 uppercase text-white tracking-tight leading-none">
                                                                 {card.title}
                                                             </h2>
-                                                            <p className="text-sm font-medium leading-relaxed text-gray-200 mb-6 line-clamp-3">
+                                                            <p className="text-xs lt-1440:text-sm font-medium leading-relaxed text-gray-200 mb-4 lt-1440:mb-5 2xl:mb-6 line-clamp-3">
                                                                 {card.description}
                                                             </p>
 
                                                             <motion.button
                                                                 whileHover={{ scale: 1.05 }}
                                                                 whileTap={{ scale: 0.95 }}
-                                                                className="flex items-center gap-2 text-sm font-bold text-white group w-fit"
+                                                                className="flex items-center gap-1.5 lt-1440:gap-2 text-xs lt-1440:text-sm font-bold text-white group w-fit"
                                                             >
                                                                 Learn More
-                                                                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                                                                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <div className="w-7 h-7 lt-1440:w-7 lt-1440:h-7 2xl:w-8 2xl:h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                                                    <svg className="w-3 h-3 lt-1440:w-3.5 lt-1440:h-3.5 2xl:w-4 2xl:h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                                                     </svg>
                                                                 </div>
