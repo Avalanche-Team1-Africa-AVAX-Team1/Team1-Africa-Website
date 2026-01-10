@@ -66,6 +66,10 @@ const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) => {
         // Disable lag smoothing to prevent visual stuttering
         gsap.ticker.lagSmoothing(0);
 
+        // Force a resize check to ensure all ScrollTriggers are calculated correctly
+        // once the smooth scroller is active
+        ScrollTrigger.refresh();
+
         // Cleanup
         return () => {
             gsap.ticker.remove(updateLenis);

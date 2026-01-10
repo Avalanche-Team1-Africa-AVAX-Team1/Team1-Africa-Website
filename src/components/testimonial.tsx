@@ -479,148 +479,160 @@ export default function TestimonialSlider() {
       </div>
 
       {/* Desktop view - Scrolling row */}
-      <AnimatedText variant="fadeIn" delay={0.3} className={`hidden md:block relative transition-opacity duration-700 ${isReady ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-        <div
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => {
-            setIsHovering(false);
-            if (!isDragging && expandedKey === null && tlRef.current) {
-              tlRef.current.resume();
-            }
-          }}
-          onMouseDown={(e) => handleStart(e.clientX)}
-          onTouchStart={(e) => handleStart(e.touches[0].clientX)}
-          onWheel={handleWheelScroll}
-          className={`cursor-grab active:cursor-grabbing select-none`}
+      {/* Desktop view - Scrolling row */}
+      {/* 1. Placeholder to reserve space while loading */}
+      {!isReady && (
+        <div className="hidden md:block w-full h-[600px] lt-1440:h-[500px]" />
+      )}
+
+      {/* 2. Actual Slider - Only mount when ready, letting AnimatedText handle the entry fade */}
+      {isReady && (
+        <AnimatedText
+          variant="fadeIn"
+          delay={0.3}
+          className="hidden md:block relative"
         >
-          {/* containerRef will move horizontally */}
           <div
-            ref={containerRef}
-            className="flex gap-6 px-8 items-stretch"
-            style={{
-              willChange: "transform",
-              transform: 'translateZ(0)',
-              backfaceVisibility: 'hidden',
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => {
+              setIsHovering(false);
+              if (!isDragging && expandedKey === null && tlRef.current) {
+                tlRef.current.resume();
+              }
             }}
+            onMouseDown={(e) => handleStart(e.clientX)}
+            onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+            onWheel={handleWheelScroll}
+            className={`cursor-grab active:cursor-grabbing select-none`}
           >
-            {renderedCards.map((item, renderIndex) => {
-              const isExpanded = expandedKey === renderIndex;
-              const isDimmed = expandedKey !== null && !isExpanded;
+            {/* containerRef will move horizontally */}
+            <div
+              ref={containerRef}
+              className="flex gap-6 px-8 items-stretch"
+              style={{
+                willChange: "transform",
+                transform: 'translateZ(0)',
+                backfaceVisibility: 'hidden',
+              }}
+            >
+              {renderedCards.map((item, renderIndex) => {
+                const isExpanded = expandedKey === renderIndex;
+                const isDimmed = expandedKey !== null && !isExpanded;
 
-              // Responsive widths for different screen sizes
-              const accentWidth = cardWidth;
-              const collapsedWidth = accentWidth;
-              const expandedContentWidth = cardWidth * 0.75; // Increased to give text more width
+                // Responsive widths for different screen sizes
+                const accentWidth = cardWidth;
+                const collapsedWidth = accentWidth;
+                const expandedContentWidth = cardWidth * 0.75; // Increased to give text more width
 
-              return (
-                <motion.div
-                  key={`card-${renderIndex}`}
-                  initial={{ width: collapsedWidth }}
-                  animate={{
-                    width: isExpanded ? accentWidth + expandedContentWidth : collapsedWidth,
-                  }}
-                  transition={{
-                    width: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] },
-                  }}
-                  onClick={() => handleCardClick(renderIndex)}
-                  className="flex-shrink-0 h-[600px] lt-1440:h-[500px] rounded-[40px] shadow-xl cursor-pointer overflow-hidden"
-                  style={{
-                    pointerEvents: isAnimating ? 'none' : 'auto',
-                    willChange: 'width',
-                    transform: 'translateZ(0)',
-                    backfaceVisibility: 'hidden',
-                    backgroundColor: 'transparent',
-                  }}
-                >
-                  <div className="relative h-full bg-white rounded-[40px] overflow-hidden">
-                    {/* Image that spans full width - fixed, no scaling */}
-                    <div className="absolute inset-0 h-full w-full overflow-hidden">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        width={1600}
-                        height={800}
-                        decoding="sync"
-                        className="h-full w-full object-cover object-top"
-                        style={{
-                          transform: 'translateZ(0)',
-                          backfaceVisibility: 'hidden',
-                          minWidth: '100%',
-                          minHeight: '100%',
-                        }}
+                return (
+                  <motion.div
+                    key={`card-${renderIndex}`}
+                    initial={{ width: collapsedWidth }}
+                    animate={{
+                      width: isExpanded ? accentWidth + expandedContentWidth : collapsedWidth,
+                    }}
+                    transition={{
+                      width: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] },
+                    }}
+                    onClick={() => handleCardClick(renderIndex)}
+                    className="flex-shrink-0 h-[600px] lt-1440:h-[500px] rounded-[40px] shadow-xl cursor-pointer overflow-hidden"
+                    style={{
+                      pointerEvents: isAnimating ? 'none' : 'auto',
+                      willChange: 'width',
+                      transform: 'translateZ(0)',
+                      backfaceVisibility: 'hidden',
+                      backgroundColor: 'transparent',
+                    }}
+                  >
+                    <div className="relative h-full bg-white rounded-[40px] overflow-hidden">
+                      {/* Image that spans full width - fixed, no scaling */}
+                      <div className="absolute inset-0 h-full w-full overflow-hidden">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          width={1600}
+                          height={800}
+                          decoding="sync"
+                          className="h-full w-full object-cover object-top"
+                          style={{
+                            transform: 'translateZ(0)',
+                            backfaceVisibility: 'hidden',
+                            minWidth: '100%',
+                            minHeight: '100%',
+                          }}
+                        />
+                      </div>
+
+                      {/* Light overlay on image side */}
+                      <motion.div
+                        initial={{ opacity: 0.2 }}
+                        animate={{ opacity: isDimmed ? 0.6 : (isExpanded ? 0.3 : 0.2) }}
+                        transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        className="absolute inset-0 bg-black"
                       />
-                    </div>
 
-                    {/* Light overlay on image side */}
-                    <motion.div
-                      initial={{ opacity: 0.2 }}
-                      animate={{ opacity: isDimmed ? 0.6 : (isExpanded ? 0.3 : 0.2) }}
-                      transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
-                      className="absolute inset-0 bg-black"
-                    />
+                      {/* Content overlay on the right side when expanded - no transitions */}
+                      {isExpanded && (
+                        <div
+                          className="absolute top-0 right-0 h-full text-white"
+                          style={{
+                            width: expandedContentWidth,
+                            transform: 'translateZ(0)',
+                            backfaceVisibility: 'hidden',
+                          }}
+                        >
+                          {/* Very dark overlay panel for text side - clearly distinguished */}
+                          <div className="absolute inset-0 bg-black/60 m-2 rounded-[2em]" />
 
-                    {/* Content overlay on the right side when expanded - no transitions */}
-                    {isExpanded && (
-                      <div
-                        className="absolute top-0 right-0 h-full text-white"
-                        style={{
-                          width: expandedContentWidth,
-                          transform: 'translateZ(0)',
-                          backfaceVisibility: 'hidden',
-                        }}
-                      >
-                        {/* Very dark overlay panel for text side - clearly distinguished */}
-                        <div className="absolute inset-0 bg-black/60 m-2 rounded-[2em]" />
-
-                        <div className="relative flex h-full flex-col justify-between p-10">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (isAnimating) return;
-                              setIsAnimating(true);
-                              setExpandedKey(null);
-                              setTimeout(() => setIsAnimating(false), 900);
-                            }}
-                            className="absolute top-7 right-7 w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
-                          >
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                              <line x1="18" y1="6" x2="6" y2="18" />
-                              <line x1="6" y1="6" x2="18" y2="18" />
-                            </svg>
-                          </button>
-
-                          <div>
-                            <p className="text-[11px] uppercase tracking-[0.28em] text-white/60 font-medium mb-5 ">
-                              Overview
-                            </p>
-                            <h3 className="text-5xl lt-1440:text-4xl font-bold mb-2">{item.name}</h3>
-                            <p className="text-base text-white/70 mb-6">{item.title}</p>
-                            <p className="text-3xl lt-1440:text-2xl leading-relaxed text-white/90 leading-snug font-light">
-                              {item.text}
-                            </p>
-                          </div>
-
-                          <div className="mt-6">
-                            <div
-                              className="text-white text-5xl lt-1440:text-4xl"
-                              style={{
-                                fontFamily: "'Bastliga One', 'Dancing Script', cursive",
+                          <div className="relative flex h-full flex-col justify-between p-10">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (isAnimating) return;
+                                setIsAnimating(true);
+                                setExpandedKey(null);
+                                setTimeout(() => setIsAnimating(false), 900);
                               }}
+                              className="absolute top-7 right-7 w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
                             >
-                              {item.signature}
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                              </svg>
+                            </button>
+
+                            <div>
+                              <p className="text-[11px] uppercase tracking-[0.28em] text-white/60 font-medium mb-5 ">
+                                Overview
+                              </p>
+                              <h3 className="text-5xl lt-1440:text-4xl font-bold mb-2">{item.name}</h3>
+                              <p className="text-base text-white/70 mb-6">{item.title}</p>
+                              <p className="text-3xl lt-1440:text-2xl leading-relaxed text-white/90 leading-snug font-light">
+                                {item.text}
+                              </p>
+                            </div>
+
+                            <div className="mt-6">
+                              <div
+                                className="text-white text-5xl lt-1440:text-4xl"
+                                style={{
+                                  fontFamily: "'Bastliga One', 'Dancing Script', cursive",
+                                }}
+                              >
+                                {item.signature}
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              );
-            })}
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
-
-        </div>
-      </AnimatedText>
+        </AnimatedText>
+      )}
     </section>
   );
 }
