@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Animation styles
 const style = {
   animation: `scroll 40s linear infinite`,
@@ -33,7 +31,7 @@ export default function EventBanner({
   events = defaultTeams,
   className = ''
 }: EventBannerProps) {
-  
+
   // FIX: Repeat the data enough times to naturally fill a wide screen.
   // With 4 items, we repeat them 6 times = 24 items per loop.
   // This ensures the container is physically wider than the screen
@@ -41,31 +39,31 @@ export default function EventBanner({
   const denseEvents = [...events, ...events, ...events, ...events, ...events, ...events];
 
   return (
-    <div 
+    <div
       className={`bg-black py-4 overflow-hidden flex items-center relative ${className}`}
       style={{
-        width: '100vw', 
+        width: '100vw',
         marginLeft: '-50vw',
         left: '50%',
-        position: 'relative' 
+        position: 'relative'
       }}
     >
       <style>{keyframesStyle}</style>
 
       {/* SCROLLING WRAPPER */}
       <div className="flex gap-8 w-max">
-        
+
         {/* Loop 1: Contains 24 items packed tightly */}
         <div className="flex shrink-0 items-center gap-8 w-max" style={style}>
           {denseEvents.map((event, index) => (
-             <TeamItem key={`original-${index}`} event={event} />
+            <TeamItem key={`original-${index}`} event={event} />
           ))}
         </div>
 
         {/* Loop 2: Duplicate of the 24 items for seamless loop */}
         <div className="flex shrink-0 items-center gap-8 w-max" style={style} aria-hidden="true">
           {denseEvents.map((event, index) => (
-             <TeamItem key={`duplicate-${index}`} event={event} />
+            <TeamItem key={`duplicate-${index}`} event={event} />
           ))}
         </div>
 
