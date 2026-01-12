@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import logo from '../assets/avalanche_logo.png';
-import telegram from '../assets/telegram.svg';
+// import telegram from '../assets/telegram.svg';
 import youtube from '../assets/youtube.svg';
 import x from '../assets/x.svg';
 import discord from '../assets/Discord.svg';
@@ -13,7 +13,7 @@ const Footer = () => {
     const [email, setEmail] = useState('');
 
     const socialLinks = [
-        { icon: telegram, alt: 'telegram', url: 'https://t.me/team1africa' },
+        // { icon: telegram, alt: 'telegram', url: 'https://t.me/team1africa' },
         { icon: youtube, alt: 'youtube', url: 'https://www.youtube.com/@Avalanche_Africa' },
         { icon: x, alt: 'x', url: 'https://x.com/AvaxAfrica?s=20' },
         { icon: discord, alt: 'discord', url: 'https://discord.gg/mNkGNkxv' },

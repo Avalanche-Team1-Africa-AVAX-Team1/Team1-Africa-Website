@@ -119,12 +119,12 @@ const Navbar = () => {
                     {/* Desktop Button - Join Community */}
                     <div className="hidden md:flex">
                         <a
-                            href="https://t.me/team1africa"
+                            href="https://discord.gg/aZjHtNxEt6"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             <MagneticButton className='btn-black px-6 py-3 lt-1024:px-5 lt-1024:py-2.5 rounded-full font-medium transition-colors flex items-center gap-2 group'>
-                                <span className="relative z-10 text-lg lt-1440:text-base lt-1024:text-sm font-semibold">Join the community</span>
+                                <span className="relative z-10 text-md lt-1440:text-base lt-1024:text-sm font-semibold">Join the community</span>
                                 <img src={arrowup} alt="" width={24} height={24} className='lt-1024:w-5 lt-1024:h-5 relative z-10' />
                             </MagneticButton>
                         </a>
@@ -169,7 +169,7 @@ const Navbar = () => {
                     <li onClick={() => setSidebarOpen(false)}><Link to="/events" className={location.pathname === '/events' ? 'font-semibold text-red-400' : 'text-black'}>Events</Link></li>
                 </ul>
                 <div className="mt-12 px-8 lt-768:px-6 lt-480:px-5">
-                    <a href="https://t.me/team1africa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-2xl lt-768:text-xl lt-480:text-lg bg-black text-white px-4 py-3 rounded-full w-full justify-center">
+                    <a href="https://discord.gg/aZjHtNxEt6" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-2xl lt-768:text-xl lt-480:text-lg bg-black text-white px-4 py-3 rounded-full w-full justify-center">
                         <span className="text-lg lt-768:text-base lt-480:text-sm">Join the community</span>
                         <img src={arrowup} alt="arrow" width={30} height={30} className="lt-1440:w-[26px] lt-1440:h-[26px] lt-1024:w-6 lt-1024:h-6" />
                     </a>

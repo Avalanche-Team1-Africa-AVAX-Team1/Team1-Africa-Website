@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import arrowup from '../assets/arrow-up.svg';
 
 // Import images from assets
 import img1 from '../assets/Deon.jpeg';
@@ -9,6 +9,8 @@ import img3 from '../assets/Feezy.jpg';
 import img4 from '../assets/testimonial10.jpg';
 import img5 from '../assets/community.webp';
 import img6 from '../assets/0xchidi.jpg';
+import Star from '../assets/Star.svg';
+import MagneticButton from './MagneticButton';
 
 const Hero: React.FC = () => {
     return (
@@ -44,7 +46,7 @@ const Hero: React.FC = () => {
                     transition={{ duration: 0.8 }}
                 >
                     Elevate Your Journey<br />
-                    With <span className="text-red-600">Avalanche</span> Africa
+                    With <span className="text-red-600">Avalanche</span> Team1 Africa
                 </motion.h1>
 
 
@@ -95,10 +97,10 @@ const Hero: React.FC = () => {
                 {/* COLUMN 3 (Center - Button) 
                     On Mobile: Spans 2 columns to break the grid nicely 
                 */}
-                <div className="col-span-2 md:col-span-1 flex flex-col justify-end items-center gap-4 h-full mt-4 md:mt-0 order-last md:order-none">
-                    {/* Hidden on mobile to save space, or remove 'hidden' to show image above button */}
+                <div className="col-span-2 md:col-span-1 flex flex-col items-center h-full mt-4 md:mt-0 order-last md:order-none">
+                    {/* Hidden on mobile to save space */}
                     <motion.div
-                        className="hidden md:block w-full aspect-square bg-gray-100 relative group overflow-hidden mb-auto rounded-[48px]"
+                        className="hidden md:block w-full aspect-square bg-gray-100 relative group overflow-hidden rounded-[48px]"
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.4 }}
@@ -106,16 +108,29 @@ const Hero: React.FC = () => {
                         <img src={img6} alt="0xchidi" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     </motion.div>
 
-                    <motion.a
-                        href="https://discord.gg/aZjHtNxEt6"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full md:w-auto bg-black text-white px-8 py-4 rounded-full flex items-center justify-center gap-2 hover:bg-red-700 transition-colors shadow-lg z-10"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        Join Community <ArrowUpRight size={18} />
-                    </motion.a>
+                    {/* Spinning Star - Fills empty space */}
+                    <div className="hidden md:flex flex-1 items-center justify-center w-full">
+                        <motion.img
+                            src={Star}
+                            alt="Spinning Star"
+                            className="w-28 h-28"
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                        />
+                    </div>
+                    <div className="hidden md:flex">
+                        <a
+                            href="https://discord.gg/aZjHtNxEt6"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <MagneticButton className='btn-black px-6 py-3 lt-1024:px-5 lt-1024:py-2.5 rounded-full font-medium transition-colors flex items-center gap-2 group'>
+                                <span className="relative z-10 text-md lt-1440:text-base lt-1024:text-sm font-semibold">Join the community</span>
+                                <img src={arrowup} alt="" width={24} height={24} className='lt-1024:w-5 lt-1024:h-5 relative z-10' />
+                            </MagneticButton>
+                        </a>
+                    </div>
+                    
                 </div>
 
                 {/* COLUMN 4 (Mid Right - Tall) */}
