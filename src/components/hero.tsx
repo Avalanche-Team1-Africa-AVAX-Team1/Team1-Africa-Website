@@ -40,13 +40,13 @@ const Hero: React.FC = () => {
 
 
                 <motion.h1
-                    className="text-4xl md:text-7xl font-bold text-center tracking-tight leading-[1.1] mb-6 md:mb-4"
+                    className="text-4xl md:text-[8rem] font-base text-center tracking-tight leading-[1.1] mb-6 md:mb-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
                     Elevate Your Journey<br />
-                    With <span className="text-red-600">Avalanche</span> Team1 Africa
+                    Through <span>Team<span className="font-semibold font-lato text-red-700">1</span></span> <span className="font-semibold font-lato text-red-700 text-[8.5rem]">Africa</span>
                 </motion.h1>
 
 
@@ -130,7 +130,7 @@ const Hero: React.FC = () => {
                             </MagneticButton>
                         </a>
                     </div>
-                    
+
                 </div>
 
                 {/* COLUMN 4 (Mid Right - Tall) */}

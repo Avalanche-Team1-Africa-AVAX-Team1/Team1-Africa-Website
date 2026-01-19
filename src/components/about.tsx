@@ -28,7 +28,7 @@ const AboutUs = () => {
                 {/* Scale heading down progressively on smaller screens; 4K unchanged */}
                 <AnimatedText variant="slideUp" delay={0.2}>
                   <h1 className='text-5xl lt-1440:text-4xl lt-1280:text-3xl lt-1024:text-2xl lt-768:text-xl lt-480:text-lg font-bold text-black leading-tight'>
-                    Mobilizing Africa's <span className="text-red-500">Builders.</span> Powered by <span className="text-red-500">Avalanche Through</span> <p className="inline-flex items-center gap-2">Team1<img src={Logo} alt="team1 Logo" className="w-10 h-10" /></p> 
+                    Mobilizing Africa's <span className="text-red-500">Builders Through</span> <p className="inline-flex items-center gap-2">Team1<img src={Logo} alt="team1 Logo" className="w-10 h-10" /></p> 
                   </h1>
                 </AnimatedText>
               </div>
