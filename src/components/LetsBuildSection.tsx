@@ -11,7 +11,8 @@ import ghana1 from '../assets/ghana1.webp';
 import south1 from '../assets/south1.webp';
 
 // Import video
-import mainVideo from '../assets/videos/video.mp4';
+import mainVideo from '../assets/videos/video-web.mp4';
+import mainVideoPoster from '../assets/videos/video-poster.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -104,6 +105,8 @@ const LetsBuildSection = () => {
                                 src={mainVideo}
                                 controls
                                 autoPlay
+                                preload="none"
+                                poster={mainVideoPoster}
                                 className="w-full h-full rounded-2xl"
                             />
                         </motion.div>

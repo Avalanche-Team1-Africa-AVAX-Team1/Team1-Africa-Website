@@ -4,7 +4,8 @@ import TeamGrid from '../components/TeamGrid';
 import LetsBuildSection from '../components/LetsBuildSection';
 import { team1AfricaMembers } from '../data/team-members';
 
-import videoSrc from '../assets/videos/video.mp4';
+import videoSrc from '../assets/videos/video-bg.mp4';
+import videoPoster from '../assets/videos/video-poster.webp';
 import { LogoMask, LogoOutline } from '../components/LogoMask';
 import AnimatedText from '../components/AnimatedText';
 import AfricaPresence from '../components/AfricaPresence';
@@ -125,6 +126,8 @@ const About = () => {
                         loop
                         muted
                         playsInline
+                        preload="none"
+                        poster={videoPoster}
                         className="w-full h-full object-cover"
                     >
                         <source src={videoSrc} type="video/mp4" />
