@@ -65,20 +65,20 @@ interface HeroSlide {
 // Top Contributors
 const SPOTLIGHT_PEOPLE: SpotlightPerson[] = [
     // Top 3 of the Year
-    { id: 'p1', name: 'Feezy', role: 'AVAX Team1 Community Lead', region: 'Nigeria', contribution: 'Built 12 production subnets, mentored 50+ developers', badge: 'yearly', image: new URL('../assets/testimonial1.jpg', import.meta.url).href },
-    { id: 'p2', name: 'Amara Okafor', role: 'Community Lead', region: 'Nigeria', contribution: 'Onboarded 500+ developers to Avalanche', badge: 'top3', image: new URL('../assets/testimonial2.jpg', import.meta.url).href },
-    { id: 'p3', name: 'Wanjiku Kimani', role: 'Product Lead', region: 'Kenya', contribution: 'Launched 8 African-founded projects', badge: 'top3', image: new URL('../assets/testimonial3.jpg', import.meta.url).href },
+    { id: 'p1', name: 'Feezy', role: 'AVAX Team1 Community Lead', region: 'Nigeria', contribution: 'Built 12 production subnets, mentored 50+ developers', badge: 'yearly', image: new URL('../assets/testimonial1.webp', import.meta.url).href },
+    { id: 'p2', name: 'Amara Okafor', role: 'Community Lead', region: 'Nigeria', contribution: 'Onboarded 500+ developers to Avalanche', badge: 'top3', image: new URL('../assets/testimonial2.webp', import.meta.url).href },
+    { id: 'p3', name: 'Wanjiku Kimani', role: 'Product Lead', region: 'Kenya', contribution: 'Launched 8 African-founded projects', badge: 'top3', image: new URL('../assets/testimonial3.webp', import.meta.url).href },
     // Honorary Mentions (10)
-    { id: 'p4', name: 'Thabo Nkosi', role: 'DeFi Architect', region: 'South Africa', contribution: 'Processed $24M in transactions', badge: 'honorary', image: new URL('../assets/south5.jpg', import.meta.url).href },
-    { id: 'p5', name: 'Faraji Mwamburi', role: 'Mobile Pioneer', region: 'Tanzania', contribution: 'Mobile payments for 15K users', badge: 'honorary', image: new URL('../assets/testimonial5.jpg', import.meta.url).href },
-    { id: 'p6', name: 'Chidinma Eze', role: 'Smart Contract Dev', region: 'Nigeria', contribution: 'Audited 20+ DeFi protocols', badge: 'honorary', image: new URL('../assets/testimonial6.jpg', import.meta.url).href },
-    { id: 'p7', name: 'Kofi Asante', role: 'DevRel Lead', region: 'Ghana', contribution: 'Hosted 30+ workshops across Africa', badge: 'honorary', image: new URL('../assets/testimonial7.jpg', import.meta.url).href },
-    { id: 'p8', name: 'Zara Mohamed', role: 'UI/UX Designer', region: 'Kenya', contribution: 'Designed 15 dApp interfaces', badge: 'honorary', image: new URL('../assets/testimonial8.jpg', import.meta.url).href },
-    { id: 'p9', name: 'Oluwaseun Adeyemi', role: 'Protocol Engineer', region: 'Nigeria', contribution: 'Core contributor to subnet tooling', badge: 'honorary', image: new URL('../assets/testimonial9.jpg', import.meta.url).href },
-    { id: 'p10', name: 'Naledi Dlamini', role: 'Growth Lead', region: 'South Africa', contribution: 'Grew community by 300%', badge: 'honorary', image: new URL('../assets/testimonial10.jpg', import.meta.url).href },
-    { id: 'p11', name: 'Hassan Diallo', role: 'Backend Developer', region: 'Senegal', contribution: 'Built indexing infrastructure', badge: 'honorary', image: new URL('../assets/testimonial11.jpeg', import.meta.url).href },
-    { id: 'p12', name: 'Fatima Bello', role: 'Content Lead', region: 'Nigeria', contribution: 'Created 100+ educational resources', badge: 'honorary', image: new URL('../assets/testimonial12.jpeg', import.meta.url).href },
-    { id: 'p13', name: 'Tendai Moyo', role: 'Security Researcher', region: 'Zimbabwe', contribution: 'Identified 5 critical vulnerabilities', badge: 'honorary', image: new URL('../assets/testimonial16.jpg', import.meta.url).href },
+    { id: 'p4', name: 'Thabo Nkosi', role: 'DeFi Architect', region: 'South Africa', contribution: 'Processed $24M in transactions', badge: 'honorary', image: new URL('../assets/south5.webp', import.meta.url).href },
+    { id: 'p5', name: 'Faraji Mwamburi', role: 'Mobile Pioneer', region: 'Tanzania', contribution: 'Mobile payments for 15K users', badge: 'honorary', image: new URL('../assets/testimonial5.webp', import.meta.url).href },
+    { id: 'p6', name: 'Chidinma Eze', role: 'Smart Contract Dev', region: 'Nigeria', contribution: 'Audited 20+ DeFi protocols', badge: 'honorary', image: new URL('../assets/testimonial6.webp', import.meta.url).href },
+    { id: 'p7', name: 'Kofi Asante', role: 'DevRel Lead', region: 'Ghana', contribution: 'Hosted 30+ workshops across Africa', badge: 'honorary', image: new URL('../assets/testimonial7.webp', import.meta.url).href },
+    { id: 'p8', name: 'Zara Mohamed', role: 'UI/UX Designer', region: 'Kenya', contribution: 'Designed 15 dApp interfaces', badge: 'honorary', image: new URL('../assets/testimonial8.webp', import.meta.url).href },
+    { id: 'p9', name: 'Oluwaseun Adeyemi', role: 'Protocol Engineer', region: 'Nigeria', contribution: 'Core contributor to subnet tooling', badge: 'honorary', image: new URL('../assets/testimonial9.webp', import.meta.url).href },
+    { id: 'p10', name: 'Naledi Dlamini', role: 'Growth Lead', region: 'South Africa', contribution: 'Grew community by 300%', badge: 'honorary', image: new URL('../assets/testimonial10.webp', import.meta.url).href },
+    { id: 'p11', name: 'Hassan Diallo', role: 'Backend Developer', region: 'Senegal', contribution: 'Built indexing infrastructure', badge: 'honorary', image: new URL('../assets/testimonial11.webp', import.meta.url).href },
+    { id: 'p12', name: 'Fatima Bello', role: 'Content Lead', region: 'Nigeria', contribution: 'Created 100+ educational resources', badge: 'honorary', image: new URL('../assets/testimonial12.webp', import.meta.url).href },
+    { id: 'p13', name: 'Tendai Moyo', role: 'Security Researcher', region: 'Zimbabwe', contribution: 'Identified 5 critical vulnerabilities', badge: 'honorary', image: new URL('../assets/testimonial16.webp', import.meta.url).href },
 ]
 
 // Projects with country codes for flags
@@ -86,14 +86,14 @@ const SPOTLIGHT_PROJECTS: SpotlightProject[] = [
     { id: 1, name: 'Canza Finance', tagline: 'African Forex on-chain', metric: '$2M+ TVL', category: 'DeFi', logo: new URL('../assets/refi.png', import.meta.url).href, location: 'Nigeria', countryCode: 'NG', achievement: '🏆 Avalanche Grant Winner', liveUrl: 'https://canza.io' },
     { id: 2, name: 'Kula Protocol', tagline: 'Impact investment DAO', metric: '$500K deployed', category: 'DAO', logo: new URL('../assets/gitcoin.png', import.meta.url).href, location: 'Kenya', countryCode: 'KE', achievement: '🏆 Summit Hackathon Winner', liveUrl: 'https://kula.finance' },
     { id: 3, name: 'AfriMint', tagline: 'NFT marketplace for African art', metric: '10K+ minted', category: 'NFT', logo: new URL('../assets/spherre.png', import.meta.url).href, location: 'Ghana', countryCode: 'GH', achievement: '🏆 Best NFT Project 2024', liveUrl: 'https://afrimint.xyz' },
-    { id: 4, name: 'Baki Exchange', tagline: 'Tokenized African currencies', metric: '3 currencies live', category: 'DeFi', logo: new URL('../assets/dexalot.png', import.meta.url).href, location: 'South Africa', countryCode: 'ZA', achievement: '🏆 Avalanche Summit Featured', liveUrl: 'https://baki.exchange' },
+    { id: 4, name: 'Baki Exchange', tagline: 'Tokenized African currencies', metric: '3 currencies live', category: 'DeFi', logo: new URL('../assets/dexalot.webp', import.meta.url).href, location: 'South Africa', countryCode: 'ZA', achievement: '🏆 Avalanche Summit Featured', liveUrl: 'https://baki.exchange' },
 ]
 
 const SPOTLIGHT_EVENTS: SpotlightEvent[] = [
-    { id: 'e1', title: 'Lagos Summit 2024', date: 'Feb 2024', location: 'Nigeria', attendees: 1200, badge: 'event-of-year', image: new URL('../assets/south1.jpg', import.meta.url).href, gallerySlug: 'lagos-blockchain-summit' },
-    { id: 'e2', title: 'Nairobi Hackathon', date: 'Apr 2024', location: 'Kenya', attendees: 450, badge: 'event-of-month', image: new URL('../assets/south2.jpg', import.meta.url).href, gallerySlug: 'nairobi-defi-workshop' },
-    { id: 'e3', title: 'Accra Dev Week', date: 'Jun 2024', location: 'Ghana', attendees: 680, badge: 'top5', image: new URL('../assets/ghana1.JPG', import.meta.url).href, gallerySlug: 'avalanche-africa-summit' },
-    { id: 'e4', title: 'Cape Town Build', date: 'Aug 2024', location: 'South Africa', attendees: 520, badge: 'top5', image: new URL('../assets/south3.jpg', import.meta.url).href, gallerySlug: 'cape-town-subnet-workshop' },
+    { id: 'e1', title: 'Lagos Summit 2024', date: 'Feb 2024', location: 'Nigeria', attendees: 1200, badge: 'event-of-year', image: new URL('../assets/south1.webp', import.meta.url).href, gallerySlug: 'lagos-blockchain-summit' },
+    { id: 'e2', title: 'Nairobi Hackathon', date: 'Apr 2024', location: 'Kenya', attendees: 450, badge: 'event-of-month', image: new URL('../assets/south2.webp', import.meta.url).href, gallerySlug: 'nairobi-defi-workshop' },
+    { id: 'e3', title: 'Accra Dev Week', date: 'Jun 2024', location: 'Ghana', attendees: 680, badge: 'top5', image: new URL('../assets/ghana1.webp', import.meta.url).href, gallerySlug: 'avalanche-africa-summit' },
+    { id: 'e4', title: 'Cape Town Build', date: 'Aug 2024', location: 'South Africa', attendees: 520, badge: 'top5', image: new URL('../assets/south3.webp', import.meta.url).href, gallerySlug: 'cape-town-subnet-workshop' },
 ]
 
 // Hero slideshow data
@@ -103,7 +103,7 @@ const HERO_SLIDES: HeroSlide[] = [
         title: 'Feezy',
         subtitle: 'Lead Team1 Africa',
         description: 'Built and led Team1 Nigeria into one of the most active Avalanche communities, driving contributor onboarding, local events, and sustained ecosystem participation.',
-        image: new URL('../assets/Feezy.jpg', import.meta.url).href,
+        image: new URL('../assets/Feezy.webp', import.meta.url).href,
         badge: '🏆 CONTRIBUTOR OF THE YEAR'
     },
     {
@@ -111,7 +111,7 @@ const HERO_SLIDES: HeroSlide[] = [
         title: 'DannyYak',
         subtitle: 'Avalanche Team1 Contributor',
         description: 'Produced high-impact educational and ecosystem content that amplified Avalanche visibility, simplified complex concepts, and consistently engaged the African builder community.',
-        image: new URL('../assets/DannyYak.jpeg', import.meta.url).href,
+        image: new URL('../assets/DannyYak.webp', import.meta.url).href,
         badge: '🎬 TOP YAPPER'
     },
     {
@@ -119,7 +119,7 @@ const HERO_SLIDES: HeroSlide[] = [
         title: 'Deon',
         subtitle: 'Software Developer & Content Creator',
         description: 'Delivered consistent live streams covering Avalanche development, ecosystem updates, and community discussions, bringing real-time education and visibility to African builders.',
-        image: new URL('../assets/Deon.jpeg', import.meta.url).href,
+        image: new URL('../assets/Deon.webp', import.meta.url).href,
         badge: '🎙️ TOP STREAMER'
     },
     {
@@ -127,7 +127,7 @@ const HERO_SLIDES: HeroSlide[] = [
         title: 'Team1 Africa Builder Summit',
         subtitle: 'Top Event of the Year',
         description: 'The most impactful Team1 Africa gathering of the year, bringing builders, contributors, and partners together to launch projects, share knowledge, and strengthen the Avalanche ecosystem.',
-        image: new URL('../assets/south1.jpg', import.meta.url).href,
+        image: new URL('../assets/south1.webp', import.meta.url).href,
         badge: '🎉 LEGENDARY EVENT'
     },
     {
@@ -135,16 +135,16 @@ const HERO_SLIDES: HeroSlide[] = [
         title: 'Off The Grid',
         subtitle: 'Project of the Year',
         description: 'A 5v5 hero shooter integrating Avalanche Subnets for a seamless battle experience with true asset ownership.',
-        image: new URL('../assets/otg_offthegrid.jpg', import.meta.url).href,
+        image: new URL('../assets/otg_offthegrid.webp', import.meta.url).href,
         badge: '🚀 TOP PROJECT'
     },
 ]
 
 const MOMENT_IMAGES = [
-    new URL('../assets/south4.jpg', import.meta.url).href,
-    new URL('../assets/ghana2.JPG', import.meta.url).href,
-    new URL('../assets/south6.jpg', import.meta.url).href,
-    new URL('../assets/ghana3.JPG', import.meta.url).href,
+    new URL('../assets/south4.webp', import.meta.url).href,
+    new URL('../assets/ghana2.webp', import.meta.url).href,
+    new URL('../assets/south6.webp', import.meta.url).href,
+    new URL('../assets/ghana3.webp', import.meta.url).href,
 ]
 
 // ==================== HERO SLIDESHOW ====================
@@ -217,11 +217,11 @@ function HeroSlideshow() {
             </div>
 
             <div className="hidden lg:block absolute -top-12 -right-12 w-20 h-20 rounded-full bg-blue-400 shadow-lg p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 -rotate-45">
-                <img src={new URL('../assets/dexalot.png', import.meta.url).href} alt="Dexalot" className="w-full h-full object-contain" />
+                <img src={new URL('../assets/dexalot.webp', import.meta.url).href} alt="Dexalot" className="w-full h-full object-contain" />
             </div>
 
             <div className="hidden lg:block absolute -bottom-10 -left-12 w-28 h-28 rounded-2xl bg-cyan-200 shadow-lg p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 rotate-45 border-2 border-green-600">
-                <img src={new URL('../assets/onlydust.png', import.meta.url).href} alt="OnlyDust" className="w-full h-full object-contain" />
+                <img src={new URL('../assets/onlydust.webp', import.meta.url).href} alt="OnlyDust" className="w-full h-full object-contain" />
             </div> */}
 
             {/* Main slideshow section */}

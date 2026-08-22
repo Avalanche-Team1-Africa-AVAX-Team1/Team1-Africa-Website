@@ -14,19 +14,19 @@ import testimonial9 from "./testimonial9.webp";
 import testimonial10 from "./testimonial10.webp";
 import testimonial11 from "./testimonial11.webp";
 import testimonial12 from "./testimonial12.webp";
-import testimonial13 from "./testimonial13.JPG";
-import testimonial14 from "./testimonial14.JPG";
-import testimonial15 from "./testimonial15.JPG";
+import testimonial13 from "./testimonial13.webp";
+import testimonial14 from "./testimonial14.webp";
+import testimonial15 from "./testimonial15.webp";
 import testimonial16 from "./testimonial16.webp";
 import testimonial17 from "./testimonial17.webp";
-import testimonial18 from "./testimonial18.JPG";
-import testimonial19 from "./testimonial19.JPG";
+import testimonial18 from "./testimonial18.webp";
+import testimonial19 from "./testimonial19.webp";
 import testimonial20 from "./testimonial20.webp";
 import testimonial21 from "./testimonial21.webp";
 import testimonial22 from "./testimonial22.webp";
 import testimonial23 from "./testimonial23.webp";
-import testimonial24 from "./testimonial24.JPG";
-import testimonial25 from "./testimonial25.JPG";
+import testimonial24 from "./testimonial24.webp";
+import testimonial25 from "./testimonial25.webp";
 import testimonial26 from "./testimonial26.webp";
 
 const testimonials = [

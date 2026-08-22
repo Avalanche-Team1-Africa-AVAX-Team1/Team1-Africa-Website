@@ -7,7 +7,7 @@ import { IoClose } from 'react-icons/io5';
 
 // Import images
 import community1 from '../assets/community.webp';
-import ghana1 from '../assets/ghana1.JPG';
+import ghana1 from '../assets/ghana1.webp';
 import south1 from '../assets/south1.webp';
 
 // Import video
