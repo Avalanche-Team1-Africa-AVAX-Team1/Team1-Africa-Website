@@ -3,182 +3,27 @@
  * Redesigned with modern card layout
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { api, getImageUrl } from '../lib/api'
+import type { Project } from '../lib/api'
 
-// Project Data
-interface TeamMember {
-    name: string
-    role: string
-    email?: string
-    image: string
-}
+// Helper to map country codes to names
+const countryMap: Record<string, string> = {
+    'ng': 'Nigeria',
+    'ke': 'Kenya',
+    'gh': 'Ghana',
+    'za': 'South Africa',
+    'tz': 'Tanzania',
+    'ug': 'Uganda',
+    'et': 'Ethiopia', // Just in case
+};
 
-interface Project {
-    id: number
-    name: string
-    tagline: string
-    description: string
-    metric: string
-    userCount: string
-    category: string
-    tags: string[]
-    logo: string
-    location: string
-    countryCode: string
-    achievement?: string
-    liveUrl?: string
-    twitterUrl?: string
-    launchDate?: string
-    milestones?: string
-    founders: TeamMember[]
-    techStack: string[]
-    status: 'live' | 'beta' | 'development'
-}
-
-const PROJECTS: Project[] = [
-    {
-        id: 1,
-        name: 'Canza Finance',
-        tagline: 'African Forex on-chain',
-        description: 'Canza Finance is revolutionizing cross-border payments in Africa by bringing forex trading on-chain. Their Baki platform enables trading of tokenized African fiat currencies.',
-        metric: '$2M+ TVL',
-        userCount: '1-10K+',
-        category: 'DeFi',
-        tags: ['Stablecoins', 'Forex'],
-        logo: new URL('../assets/refi.png', import.meta.url).href,
-        location: 'Nigeria',
-        countryCode: 'NG',
-        achievement: '🏆 Avalanche Grant Winner',
-        liveUrl: 'https://canza.io',
-        twitterUrl: 'https://twitter.com/caborange',
-        launchDate: 'March 2023',
-        milestones: '1-10K active users',
-        founders: [
-            { name: 'Pascal Ntsama', role: 'CEO', email: 'pascal@canza.io', image: new URL('../assets/testimonial1.jpg', import.meta.url).href },
-            { name: 'Femi Oye', role: 'CTO', email: 'femi@canza.io', image: new URL('../assets/testimonial2.jpg', import.meta.url).href },
-        ],
-        techStack: ['Avalanche C-Chain', 'Solidity', 'React', 'Node.js'],
-        status: 'live'
-    },
-    {
-        id: 2,
-        name: 'Kula Protocol',
-        tagline: 'Impact investment DAO',
-        description: 'Kula is a decentralized impact investment firm leveraging blockchain governance with real-world assets. They have deployed capital into various African projects.',
-        metric: '$500K deployed',
-        userCount: '1-100+',
-        category: 'DAO',
-        tags: ['RWAs', 'Governance'],
-        logo: new URL('../assets/gitcoin.png', import.meta.url).href,
-        location: 'Kenya',
-        countryCode: 'KE',
-        achievement: '🏆 Summit Hackathon Winner',
-        liveUrl: 'https://kula.finance',
-        twitterUrl: 'https://twitter.com/kulaprotocol',
-        launchDate: 'September 2023',
-        milestones: '1-100 DAO members',
-        founders: [
-            { name: 'Wanjiku Kimani', role: 'Founder', email: 'wanjiku@kula.finance', image: new URL('../assets/testimonial3.jpg', import.meta.url).href },
-        ],
-        techStack: ['Avalanche Subnet', 'Governor', 'IPFS'],
-        status: 'live'
-    },
-    {
-        id: 3,
-        name: 'AfriMint',
-        tagline: 'NFT marketplace for African art',
-        description: 'AfriMint is the premier NFT marketplace celebrating African digital art and cultural heritage. The platform enables African artists to mint, sell, and trade digital creations.',
-        metric: '10K+ minted',
-        userCount: '101-1K+',
-        category: 'NFT',
-        tags: ['Art', 'Collectibles'],
-        logo: new URL('../assets/spherre.png', import.meta.url).href,
-        location: 'Ghana',
-        countryCode: 'GH',
-        achievement: '🏆 Best NFT Project 2024',
-        liveUrl: 'https://afrimint.xyz',
-        twitterUrl: 'https://twitter.com/afrimint',
-        launchDate: 'January 2024',
-        milestones: '101-1K active creators',
-        founders: [
-            { name: 'Kofi Asante', role: 'Lead Developer', email: 'kofi@afrimint.xyz', image: new URL('../assets/testimonial7.jpg', import.meta.url).href },
-            { name: 'Ama Boateng', role: 'Creative Director', email: 'ama@afrimint.xyz', image: new URL('../assets/testimonial8.jpg', import.meta.url).href },
-        ],
-        techStack: ['Avalanche C-Chain', 'ERC-721', 'Next.js', 'IPFS'],
-        status: 'live'
-    },
-    {
-        id: 4,
-        name: 'Baki Exchange',
-        tagline: 'Tokenized African currencies',
-        description: 'Built natively on Avalanche, Baki facilitates on-chain trading of tokenized African fiat currencies, addressing FX scarcity challenges across the continent.',
-        metric: '3 currencies live',
-        userCount: '1-100+',
-        category: 'DeFi',
-        tags: ['Stablecoins', 'Exchange'],
-        logo: new URL('../assets/dexalot.png', import.meta.url).href,
-        location: 'South Africa',
-        countryCode: 'ZA',
-        achievement: '🏆 Avalanche Summit Featured',
-        liveUrl: 'https://baki.exchange',
-        twitterUrl: 'https://twitter.com/bakiexchange',
-        launchDate: 'June 2024',
-        milestones: 'Beta launch complete',
-        founders: [
-            { name: 'Thabo Nkosi', role: 'Protocol Lead', email: 'thabo@baki.exchange', image: new URL('../assets/south5.jpg', import.meta.url).href },
-        ],
-        techStack: ['Avalanche C-Chain', 'Chainlink Oracles', 'Solidity'],
-        status: 'beta'
-    },
-    {
-        id: 5,
-        name: 'Harvest Protocol',
-        tagline: 'Farm-to-market transparency',
-        description: 'Harvest Protocol brings supply chain transparency to African agriculture. Farmers can track produce from farm to market, ensuring fair pricing.',
-        metric: '45K products tracked',
-        userCount: '1-10K+',
-        category: 'Infrastructure',
-        tags: ['Supply Chain', 'IoT'],
-        logo: new URL('../assets/onlydust.png', import.meta.url).href,
-        location: 'Kenya',
-        countryCode: 'KE',
-        liveUrl: 'https://harvest.africa',
-        twitterUrl: 'https://twitter.com/harvestprotocol',
-        launchDate: 'August 2023',
-        milestones: '1-10K farmers onboarded',
-        founders: [
-            { name: 'Faraji Mwamburi', role: 'Founder', email: 'faraji@harvest.africa', image: new URL('../assets/testimonial5.jpg', import.meta.url).href },
-        ],
-        techStack: ['Avalanche Subnet', 'IoT Integration', 'Mobile'],
-        status: 'live'
-    },
-    {
-        id: 6,
-        name: 'Jamii DAO',
-        tagline: 'Community governance platform',
-        description: 'Jamii DAO empowers African communities with decentralized governance tools. Communities can create proposals, vote on initiatives, and manage treasuries.',
-        metric: '67 communities funded',
-        userCount: '1-100+',
-        category: 'DAO',
-        tags: ['Governance', 'Community'],
-        logo: new URL('../assets/sqauds.png', import.meta.url).href,
-        location: 'Ethiopia',
-        countryCode: 'ET',
-        twitterUrl: 'https://twitter.com/jamiidao',
-        launchDate: 'In Development',
-        milestones: 'Alpha testing',
-        founders: [
-            { name: 'Hassan Diallo', role: 'Core Developer', email: 'hassan@jamii.org', image: new URL('../assets/testimonial11.jpeg', import.meta.url).href },
-        ],
-        techStack: ['Avalanche C-Chain', 'Snapshot', 'React'],
-        status: 'development'
-    },
-]
+const getCountryName = (code: string) => countryMap[code?.toLowerCase()] || code;
 
 const CATEGORIES = ['All', 'DeFi', 'NFT', 'DAO', 'Infrastructure']
-const COUNTRIES = ['All', 'Nigeria', 'Kenya', 'Ghana', 'South Africa', 'Ethiopia']
+const COUNTRIES = ['All', 'Nigeria', 'Kenya', 'Ghana', 'South Africa', 'Tanzania', 'Uganda']
 
 // Animated avatar URLs - colorful cartoon style avatars
 const ANIMATED_AVATARS = [
@@ -193,12 +38,36 @@ const getCountryFlag = (code: string) => `https://flagcdn.com/w40/${code.toLower
 export default function ProjectsPage() {
     const [selectedCategory, setSelectedCategory] = useState('All')
     const [selectedCountry, setSelectedCountry] = useState('All')
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const filteredProjects = PROJECTS.filter(p => {
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const data = await api.getProjects();
+                setProjects(data);
+            } catch (err) {
+                console.error("Failed to load projects:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProjects();
+    }, []);
+
+    const filteredProjects = projects.filter(p => {
         const categoryMatch = selectedCategory === 'All' || p.category === selectedCategory
-        const countryMatch = selectedCountry === 'All' || p.location === selectedCountry
+        const countryMatch = selectedCountry === 'All' || getCountryName(p.country) === selectedCountry
         return categoryMatch && countryMatch
     })
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-white flex items-center justify-center pt-32">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+            </div>
+        )
+    }
 
     return (
         <div className="min-h-screen bg-white">
@@ -248,8 +117,8 @@ export default function ProjectsPage() {
                                     key={cat}
                                     onClick={() => setSelectedCategory(cat)}
                                     className={`px-5 py-2.5 text-sm font-bold rounded-lg transition-all ${selectedCategory === cat
-                                            ? 'bg-red-600 text-white'
-                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        ? 'bg-red-600 text-white'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
                                     {cat}
@@ -271,8 +140,8 @@ export default function ProjectsPage() {
                                     key={country}
                                     onClick={() => setSelectedCountry(country)}
                                     className={`px-5 py-2.5 text-sm font-bold rounded-lg transition-all flex items-center gap-2 ${selectedCountry === country
-                                            ? 'bg-red-600 text-white'
-                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        ? 'bg-red-600 text-white'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
                                     {country !== 'All' && (
@@ -282,7 +151,8 @@ export default function ProjectsPage() {
                                                     country === 'Kenya' ? 'ke' :
                                                         country === 'Ghana' ? 'gh' :
                                                             country === 'South Africa' ? 'za' :
-                                                                country === 'Ethiopia' ? 'et' : ''
+                                                                country === 'Tanzania' ? 'tz' :
+                                                                    country === 'Uganda' ? 'ug' : ''
                                             )}
                                             alt={country}
                                             className="w-5 h-4 object-cover rounded-sm"
@@ -318,16 +188,16 @@ export default function ProjectsPage() {
                                             <div className="flex items-center gap-3">
                                                 {/* Project Logo */}
                                                 <div className="w-10 h-10 rounded-lg bg-white p-1.5 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                                    <img src={project.logo} alt={project.name} className="w-full h-full object-contain" />
+                                                    <img src={getImageUrl(project.logo)} alt={project.name} className="w-full h-full object-contain" />
                                                 </div>
-                                                <h3 className="text-xl font-black text-black leading-tight">
+                                                <h3 className="text-xl font-black text-black leading-tight line-clamp-1">
                                                     {project.name}
                                                 </h3>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                {project.twitterUrl && (
+                                                {project.twitter && (
                                                     <a
-                                                        href={project.twitterUrl}
+                                                        href={project.twitter}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors"
@@ -338,9 +208,9 @@ export default function ProjectsPage() {
                                                         </svg>
                                                     </a>
                                                 )}
-                                                {project.liveUrl && (
+                                                {project.website && (
                                                     <a
-                                                        href={project.liveUrl}
+                                                        href={project.website}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition-colors"
@@ -368,7 +238,7 @@ export default function ProjectsPage() {
 
                                         {/* Description */}
                                         <p className="text-gray-600 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
-                                            {project.description}
+                                            {project.description?.replace(/<[^>]*>?/gm, '')}
                                         </p>
 
                                         {/* Bottom row: View More + User Count */}
@@ -409,7 +279,7 @@ export default function ProjectsPage() {
                                                     ))}
                                                 </div>
                                                 <span className="text-sm font-bold text-gray-600">
-                                                    {project.userCount}
+                                                    {project.userMetric}
                                                 </span>
                                             </div>
                                         </div>
@@ -457,6 +327,4 @@ export default function ProjectsPage() {
     )
 }
 
-// Export projects for use in other files
-export { PROJECTS }
-export type { Project, TeamMember }
+

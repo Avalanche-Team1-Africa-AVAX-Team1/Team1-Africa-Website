@@ -28,9 +28,16 @@ export default {
       },
       fontFamily: {
         'inter': ['Inter', 'sans-serif'],
+        'outfit': ['Outfit', 'sans-serif'],
+        'pixel': ['"Press Start 2P"', 'cursive'],
+        'unbounded': ['"Unbounded"', 'sans-serif'],
+        'ballet': ['"Ballet"', 'cursive'],
+        'lato': ['"Lato"', 'sans-serif'],
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
 

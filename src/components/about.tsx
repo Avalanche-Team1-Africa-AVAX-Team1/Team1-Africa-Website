@@ -3,7 +3,7 @@ import communityImg from '../assets/community.png'
 import arrowup from '../assets/arrow-up.svg'
 import AnimatedText from './AnimatedText'
 import MagneticButton from './MagneticButton'
-
+import Logo from '../assets/team1logocrop.png'
 const AboutUs = () => {
   return (
     <div>
@@ -27,15 +27,15 @@ const AboutUs = () => {
               <div className='lg:basis-[60%] md:basis-[120%]'>
                 {/* Scale heading down progressively on smaller screens; 4K unchanged */}
                 <AnimatedText variant="slideUp" delay={0.2}>
-                  <h1 className='text-5xl lt-1440:text-3xl lt-1024:text-2xl lt-768:text-xl lt-480:text-lg font-bold text-black leading-tight'>
-                    Mobilizing Africa's <span className="text-red-500">Builders.</span> Powered by <span className="text-red-500">Avalanche.</span>
+                  <h1 className='text-5xl lt-1440:text-4xl lt-1280:text-3xl lt-1024:text-2xl lt-768:text-xl lt-480:text-lg font-bold text-black leading-tight'>
+                    Mobilizing Africa's <span className="text-red-500">Builders Through</span> <p className="inline-flex items-center gap-2">Team1<img src={Logo} alt="team1 Logo" className="w-10 h-10" /></p> 
                   </h1>
                 </AnimatedText>
               </div>
 
               <div className='lg:basis-[40%] lt-1024:basis-auto lt-1024:max-w-[680px]'> {/* Relax fixed basis on tablet/phone */}
                 <AnimatedText variant="slideUp" delay={0.3}>
-                  <p className='text-lg lt-1440:text-base lt-1024:text-[0.95rem] lt-768:text-[0.9rem] lt-480:text-[0.875rem] text-gray-600 leading-relaxed mb-6'>
+                  <p className='text-lg lt-1440:text-base lt-1280:text-[0.95rem] lt-1024:text-[0.9rem] lt-768:text-[0.875rem] lt-480:text-[0.8rem] text-gray-600 leading-relaxed mb-6'>
                     Team1 Africa fuels the continent's blockchain ecosystem through hands-on workshops, developer grants, hackathons, and partnerships with global protocols. We're not talking about the future—we're building it.
                   </p>
                 </AnimatedText>

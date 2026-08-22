@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import type { Event } from '../types/event';
-import { getEventsForDate } from '../data/events';
+import { api, type Event as ApiEvent, getImageUrl } from '../lib/api';
 import EventDetailPanel from './EventDetailPanel';
 
 
@@ -9,12 +9,88 @@ interface EventCalendarProps {
 }
 
 const EventCalendar: React.FC<EventCalendarProps> = ({
-  initialDate = new Date(2024, 10, 5) // November 5, 2024 (month is 0-indexed) - where events exist
+  initialDate = new Date() // Default to today
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(initialDate);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [apiEvents, setApiEvents] = useState<ApiEvent[]>([]);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  // Fetch events from API
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await api.getEvents({ limit: 100 });
+        setApiEvents(response.items);
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+      }
+    };
+    fetchEvents();
+  }, []);
+
+  // Helper to get events for a specific date
+  const getEventsForDate = useCallback((date: Date): Event[] => {
+    const dateStr = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+
+    return apiEvents
+      .filter(e => {
+        // Parse date directly - let browser handle timezone conversion from UTC to Local
+        const eventDate = new Date(e.startDate);
+        const eventDateStr = `${eventDate.getFullYear()}-${(eventDate.getMonth() + 1).toString().padStart(2, '0')}-${eventDate.getDate().toString().padStart(2, '0')}`;
+        return eventDateStr === dateStr;
+      })
+      .map(e => {
+
+
+        // FORCE WEST AFRICA TIME (UTC+1)
+        // This ensures the website matches the Admin panel (Lagos Time) regardless of the user's browser location.
+        // DB stores 05:00Z -> We want to display 06:00.
+
+        const utcStart = new Date(e.startDate);
+        const utcEnd = new Date(e.endDate);
+
+        const startH_Num = (utcStart.getUTCHours() + 1) % 24;
+        const endH_Num = (utcEnd.getUTCHours() + 1) % 24;
+
+        const startM_Num = utcStart.getUTCMinutes();
+        const endM_Num = utcEnd.getUTCMinutes();
+
+        // Update the Date objects to represent this "Local" time for formatting purposes
+        const start = new Date(utcStart);
+        start.setHours(startH_Num, startM_Num, 0, 0);
+
+        const end = new Date(utcEnd);
+        end.setHours(endH_Num, endM_Num, 0, 0);
+
+        const startH = startH_Num.toString().padStart(2, '0');
+        const startM = startM_Num.toString().padStart(2, '0');
+
+        const endH = endH_Num.toString().padStart(2, '0');
+        const endM = endM_Num.toString().padStart(2, '0');
+
+        return {
+          date: dateStr,
+          title: e.title,
+          description: e.description ? e.description.replace(/<[^>]*>?/gm, '') : '',
+          time: `${start.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} - ${end.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`,
+          startTime: `${startH}:${startM}`,
+          endTime: `${endH}:${endM}`,
+          location: e.location || 'TBA',
+          capacity: e.capacity || 0,
+          currentAttendees: e.registrationCount || 0,
+          organizer: {
+            name: e.organizer || 'Team1 Africa',
+            avatar: getImageUrl(e.organizerImage) || `https://ui-avatars.com/api/?name=${encodeURIComponent(e.organizer || 'Team1 Africa')}&background=random`
+          },
+          attendees: [],
+          color: e.status === 'completed' ? '#f3f4f6' : '#dbeafe', // Blue for upcoming, gray for completed
+          imageHeader: getImageUrl(e.coverImage),
+          room: 'Main Hall'
+        } as Event;
+      });
+  }, [apiEvents]);
 
   // Update current time every minute
   useEffect(() => {
@@ -45,7 +121,25 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
   // Get events for selected date
   const dayEvents = useMemo(() => {
     return getEventsForDate(selectedDate);
-  }, [selectedDate]);
+  }, [selectedDate, getEventsForDate]);
+
+  // Auto-scroll to first event
+  useEffect(() => {
+    if (dayEvents.length > 0 && gridRef.current) {
+      // Find earliest event
+      const sortedEvents = [...dayEvents].sort((a, b) => a.startTime.localeCompare(b.startTime));
+      const firstEvent = sortedEvents[0];
+
+      const [h, m] = firstEvent.startTime.split(':').map(Number);
+      const minutes = h * 60 + m;
+      const scrollPosition = (minutes / 60) * pixelsPerHour;
+
+      gridRef.current.scrollTo({
+        top: Math.max(0, scrollPosition - 50), // 50px buffer
+        behavior: 'smooth'
+      });
+    }
+  }, [dayEvents]);
 
   // Time slots (12:00 AM to 11:30 PM)
   const timeSlots = useMemo(() => {
@@ -65,8 +159,8 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
     return totalMinutes - startMinutes;
   }, []);
 
-  // Height per hour in pixels (1 hour = 120px for more spacing)
-  const pixelsPerHour = 120;
+  // Height per hour in pixels (1 hour = 60px for compact view)
+  const pixelsPerHour = 60;
 
   // Get current time position
   const currentTimePosition = useMemo(() => {
@@ -125,7 +219,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
   }, [selectedDate]);
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
+    <div className="w-full min-h-screen bg-white">
       <div className="w-full max-w-[2000px] mx-auto pt-24 md:pt-32 pb-8 md:pb-12 px-2 sm:px-4 md:px-8">
         {/* Page Title */}
         <div className="mb-6">
@@ -267,23 +361,12 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
 
         {/* Time Grid */}
         <div className="relative bg-white border-2 border-gray-200 rounded-xl overflow-hidden shadow-lg">
-          <style>{`
-            [data-scroll-container]::-webkit-scrollbar {
-              display: none !important;
-              width: 0 !important;
-              height: 0 !important;
-              background: transparent !important;
-            }
-          `}</style>
           <div
             ref={gridRef}
             className="relative overflow-y-auto"
-            data-scroll-container
             style={{
-              minHeight: 'clamp(600px, 70vh, 800px)',
-              maxHeight: 'clamp(600px, 70vh, 800px)',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
+              height: '70vh',
+              minHeight: '600px',
             }}
           >
             {/* Time Labels */}
@@ -446,7 +529,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                     className="absolute rounded-xl overflow-hidden cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 border-l-4 z-20"
                     style={{
                       top: `${topPosition}px`,
-                      height: `${Math.max(height, 100)}px`, // Minimum 100px height
+                      height: `${Math.max(height, 50)}px`, // Minimum 50px height
                       left: `${leftPosition}px`,
                       width: `${cardWidth}px`,
                       backgroundColor: event.color || '#f3f4f6',
@@ -472,6 +555,9 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                       {/* Header: Title on left, Organizer icon on right */}
                       <div className="flex items-center justify-between p-3 pb-2">
                         <h3 className="font-bold text-sm text-gray-900 leading-tight line-clamp-1 flex-1 pr-2">{event.title}</h3>
+                        <div className="text-[10px] font-bold text-gray-500 bg-white/50 px-1.5 py-0.5 rounded mr-2">
+                          {event.time}
+                        </div>
                         {event.organizer?.avatar && (
                           <img
                             src={event.organizer.avatar}
@@ -481,28 +567,26 @@ const EventCalendar: React.FC<EventCalendarProps> = ({
                         )}
                       </div>
 
-                      {/* Event Banner Image - 60% of card height */}
+                      {/* Event Banner Image - Adaptive height but max 140px */}
                       {event.imageHeader && (
                         <div
-                          className="w-full overflow-hidden px-3 mb-2 rounded"
-                          style={{ height: `${Math.max(height * 0.6, 60)}px` }}
+                          className="w-full overflow-hidden px-3 mb-2 rounded flex-shrink-0"
+                          style={{ height: `${Math.min(Math.max(height * 0.5, 60), 140)}px` }}
                         >
                           <img
                             src={event.imageHeader}
                             alt={event.title}
-                            className="w-full h-full object-cover rounded-lg"
+                            className="w-full h-full object-cover object-top rounded-lg"
                           />
                         </div>
                       )}
 
                       {/* Content */}
-                      <div className="flex-1 flex flex-col justify-between px-3 pb-3">
+                      <div className="flex-1 flex flex-col px-3 pb-3 overflow-hidden">
                         <div className="flex-1">
-                          {/* Description with truncation */}
-                          <p className="text-xs text-gray-600 mb-2 line-clamp-2 leading-snug">
-                            {event.description.length > 80
-                              ? `${event.description.substring(0, 80)}...`
-                              : event.description}
+                          {/* Description with truncation - allow more lines for taller cards */}
+                          <p className={`text-xs text-gray-600 mb-2 leading-snug ${height > 200 ? 'line-clamp-6' : 'line-clamp-2'}`}>
+                            {event.description}
                           </p>
 
                           {/* Location */}

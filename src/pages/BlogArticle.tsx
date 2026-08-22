@@ -1,56 +1,70 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import type { Article } from '../types/blog'
-import { findArticleBySlug, getRelatedArticles } from '../data/articles'
+import { api, type Blog, getImageUrl } from '../lib/api'
 import { setPageSeo } from '../lib/seo'
 import CommentsSection from '../components/CommentsSection'
 
-
-function formatDate(value: string | Date) {
+function formatDate(value?: string | Date) {
+  if (!value) return '';
   const d = new Date(value)
   return d.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
-function MetaRow({ article }: { article: Article }) {
+function MetaRow({ article }: { article: Blog }) {
   return (
     <div className="mt-3 flex flex-wrap items-center gap-3 text-xs md:text-sm text-gray-500">
-      {article.author.avatar && (
+      {(article.customAuthorAvatar || article.author?.avatar) && (
         <div className="w-6 h-6 rounded-full overflow-hidden border border-gray-200">
-          <img src={article.author.avatar} alt={article.author.name} className="w-full h-full object-cover" />
+          <img src={getImageUrl(article.customAuthorAvatar || article.author?.avatar)} alt={article.customAuthorName || article.author?.name} className="w-full h-full object-cover" />
         </div>
       )}
-      <span className="font-semibold text-gray-900">{article.author.name}</span>
+      <span className="font-semibold text-gray-900">{article.customAuthorName || article.author?.name || 'Unknown Author'}</span>
       <span className="mx-1">•</span>
-      <span>{formatDate(article.publishedDate)}</span>
+      <span>{formatDate(article.publishedAt || article.createdAt)}</span>
       <span className="mx-1">•</span>
-      <span>{article.readTime} min read</span>
+      {/* Read time is not in API yet, hardcoding or estimating */}
+      <span>5 min read</span>
     </div>
   )
 }
 
-function CategoryBadge({ label, color }: { label: string; color: string }) {
+function CategoryBadge({ label }: { label?: string }) {
+  if (!label) return null;
   return (
     <span
-      className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium text-white shadow-sm ring-1 ring-black/5"
-      style={{ backgroundColor: color }}
+      className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium text-white shadow-sm ring-1 ring-black/5 bg-blue-600"
     >
       {label}
     </span>
   )
 }
 
-function RelatedCard({ a }: { a: Article }) {
+function RelatedCard({ a }: { a: Blog }) {
+  // Use slug if available, otherwise fallback to id (frontend routes might expect slug)
+  // The API blog object usually has 'slug' but the interface I saw in api.ts didn't explicitly list it?
+  // Let me check api.ts again. It has id, title, content...
+  // Wait, if api.ts's Blog interface doesn't have slug, we link by ID?
+  // The backend entity HAS slug. The frontend interface might be incomplete.
+  // I will assume it has slug or use id as backup.
+  const linkId = (a as any).slug || a.id;
+
   return (
-    <Link to={`/blog/${a.slug}`} className="group w-72 shrink-0">
+    <Link to={`/blog/${linkId}`} className="group w-72 shrink-0">
       <div className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 group-hover:-translate-y-1">
-        <img
-          src={a.featuredImage.url}
-          alt={a.featuredImage.alt}
-          loading="lazy"
-          className="h-40 w-full object-cover"
-        />
+        <div className="h-40 w-full bg-gray-200 overflow-hidden">
+          {a.coverImage ? (
+            <img
+              src={getImageUrl(a.coverImage)}
+              alt={a.title}
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="h-full w-full flex items-center justify-center text-gray-400 font-bold">No Image</div>
+          )}
+        </div>
         <div className="p-4">
-          <CategoryBadge label={a.category.name} color={a.category.color} />
+          <CategoryBadge label={a.category || "General"} />
           <h3 className="mt-3 line-clamp-2 text-base font-semibold text-gray-900">{a.title}</h3>
           <MetaRow article={a} />
           <p className="mt-2 line-clamp-2 text-sm text-gray-600">{a.excerpt}</p>
@@ -78,32 +92,47 @@ function Skeleton() {
 export default function BlogArticle() {
   const { slug = '' } = useParams()
   const navigate = useNavigate()
-  const [article, setArticle] = useState<Article | null>(null)
+  const [article, setArticle] = useState<Blog | null>(null)
+  const [related, setRelated] = useState<Blog[]>([])
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setLoading(true)
-    setError(null)
-    const timer = setTimeout(() => {
-      const a = findArticleBySlug(slug)
-      if (!a) {
-        setError('Article not found')
-        setLoading(false)
-        return
+    const fetchData = async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        // Fetch main article
+        const data = await api.getBlog(slug);
+        setArticle(data);
+
+        // Fetch related (latest 4 excluding current)
+        try {
+          const latest = await api.getBlogs({ limit: 4 });
+          setRelated(latest.items.filter(b => b.id !== data.id && (b as any).slug !== slug).slice(0, 3));
+        } catch (err) {
+          console.warn("Failed to fetch related", err);
+        }
+
+        setPageSeo({
+          title: `${data.title} | Team1 Africa Blog`,
+          description: data.excerpt || '',
+          image: getImageUrl(data.coverImage) || ''
+        })
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      } catch (err) {
+        console.error(err);
+        setError('Article not found');
+      } finally {
+        setLoading(false);
       }
-      setArticle(a)
-      setLoading(false)
-      setPageSeo({
-        title: `${a.title} | Team1 Africa Blog`,
-        description: a.excerpt,
-        image: a.featuredImage.url
-      })
-    }, 500)
-    return () => clearTimeout(timer)
+    };
+
+    if (slug) fetchData();
   }, [slug])
 
-  const related = useMemo(() => (slug ? getRelatedArticles(slug, 3) : []), [slug])
 
   if (loading) {
     return (
@@ -128,7 +157,7 @@ export default function BlogArticle() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-24">
       <article className="px-4 md:px-8 lg:px-16 py-8">
         <div className="mx-auto w-full max-w-6xl">
           {/* Back Button */}
@@ -146,71 +175,67 @@ export default function BlogArticle() {
 
           {/* Title */}
           <div className="max-w-4xl">
-            <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl">{article.title}</h1>
+            <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-5xl">{article.title}</h1>
 
             {/* Author Info with Avatar - PROMINENT */}
-            <div className="mt-6 flex items-center gap-4 pb-6 border-b border-gray-200">
-              {article.author.avatar && (
-                <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gray-200 shadow-sm">
-                  <img src={article.author.avatar} alt={article.author.name} className="w-full h-full object-cover" />
+            <div className="mt-8 flex items-center gap-4 pb-8 border-b border-gray-200">
+              {(article.customAuthorAvatar || article.author?.avatar) && (
+                <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gray-200 shadow-sm shrink-0">
+                  <img src={getImageUrl(article.customAuthorAvatar || article.author?.avatar)} alt={article.customAuthorName || article.author?.name} className="w-full h-full object-cover" />
                 </div>
               )}
               <div className="flex-1">
-                <p className="text-base font-bold text-gray-900">{article.author.name}</p>
+                {/* Author Name with Flag */}
+                <div className="flex items-center gap-2">
+                  <p className="text-lg font-bold text-gray-900">{article.customAuthorName || article.author?.name || 'Unknown'}</p>
+                  {article.customAuthorCountry && (
+                    <img
+                      src={`/assets/flags/${article.customAuthorCountry}.svg`}
+                      alt={article.customAuthorCountry}
+                      className="w-5 h-5 rounded-full object-cover shadow-sm border border-black/10"
+                      onError={(e) => {
+                        // Fallback if image fails
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  )}
+                </div>
+
                 <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
-                  <span>{formatDate(article.publishedDate)}</span>
+                  <span>{formatDate(article.publishedAt || article.createdAt)}</span>
                   <span>•</span>
-                  <span>{article.readTime} min read</span>
+                  <span>5 min read</span>
                 </div>
               </div>
             </div>
 
-            {/* Engagement Metrics - PROMINENT */}
-            {article.engagement && (
-              <div className="mt-6 flex items-center gap-8 pb-6 border-b border-gray-200">
-                <div className="flex items-center gap-2 text-gray-700">
-                  <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                  </svg>
-                  <span className="font-bold text-xl">{article.engagement.likes}</span>
-                  <span className="text-sm font-medium">Likes</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-700">
-                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                  </svg>
-                  <span className="font-bold text-xl">{article.engagement.shares}</span>
-                  <span className="text-sm font-medium">Shares</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-700">
-                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                  </svg>
-                  <span className="font-bold text-xl">{article.engagement.comments}</span>
-                  <span className="text-sm font-medium">Comments</span>
-                </div>
-              </div>
-            )}
+            {/* Removed Engagement Metrics as they are not in API yet */}
           </div>
 
           {/* Hero */}
           <div className="relative overflow-hidden rounded-2xl bg-gray-100 mt-8">
-            <img
-              src={article.featuredImage.url}
-              alt={article.featuredImage.alt}
-              loading="eager"
-              className="h-[320px] w-full object-cover md:h-[420px]"
-            />
+            {article.coverImage ? (
+              <img
+                src={getImageUrl(article.coverImage)}
+                alt={article.title}
+                loading="eager"
+                className="h-[320px] w-full object-cover md:h-[420px]"
+              />
+            ) : (
+              <div className="h-[320px] w-full bg-gray-200 flex items-center justify-center text-gray-400">No Image</div>
+            )}
+
             <div className="absolute left-4 top-4">
-              <CategoryBadge label={article.category.name} color={article.category.color} />
+              <CategoryBadge label={article.category || "General"} />
             </div>
           </div>
 
 
           {/* Content */}
-          <div className="mt-8 max-w-3xl text-gray-800">
+          <div className="mt-8 w-full max-w-none text-gray-800">
             <div
-              className="prose prose-neutral max-w-none prose-headings:font-semibold prose-a:text-red-600"
+              className="prose prose-lg prose-neutral max-w-none prose-headings:font-semibold prose-a:text-red-600 prose-blockquote:border-l-[3px] prose-blockquote:border-black prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:font-serif prose-blockquote:text-gray-800"
+              // API returns HTML content from rich text editor
               dangerouslySetInnerHTML={{ __html: article.content }}
             />
 
@@ -233,11 +258,16 @@ export default function BlogArticle() {
               <h2 className="text-2xl font-bold text-gray-900">Related Articles</h2>
               <Link to="/blog" className="text-sm text-red-600 font-medium hover:underline">View all →</Link>
             </div>
-            <div className="no-scrollbar flex gap-6 overflow-x-auto pb-2">
-              {related.map(a => (
-                <RelatedCard key={a.slug} a={a} />
-              ))}
-            </div>
+            {related.length > 0 ? (
+              <div className="no-scrollbar flex gap-6 overflow-x-auto pb-2">
+                {related.map(a => (
+                  <RelatedCard key={a.id} a={a} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500">No related articles found.</p>
+            )}
+
           </section>
         </div>
       </article>
@@ -245,4 +275,3 @@ export default function BlogArticle() {
     </div>
   )
 }
-

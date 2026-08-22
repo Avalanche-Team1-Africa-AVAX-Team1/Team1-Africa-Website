@@ -3,8 +3,8 @@ import Hero from './components/hero'
 import Spinner from './components/spinner'
 import Stats from './components/stats'
 import AboutUs from './components/about'
-import Partners from './components/partners'
-import Build from './components/build'
+// import Partners from './components/partners'
+// import Build from './components/build'
 import Gallery from './components/gallery'
 import TestimonialSlider from './components/testimonial'
 // import Events from './components/events'
@@ -30,22 +30,16 @@ function App() {
 
       <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
         <AboutUs />
-        <Partners />
+        {/* <Partners /> */}
       </div>
-
-      {/* Full-width sections */}
-      <Build />
-
-      {/* Gallery - back to centered container */}
-      <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
-        <Gallery />
-      </div>
-
       {/* Testimonial - full-width background */}
       <div className="mt-16 lt-1024:mt-48">
         <TestimonialSlider />
       </div>
-
+      {/* Gallery - back to centered container */}
+      <div className="mx-auto w-full max-w-site-lg px-2 md:px-8">
+        <Gallery />
+      </div>
       {/* Full-width sections */}
       {/* <Events /> */}
       <Games />
