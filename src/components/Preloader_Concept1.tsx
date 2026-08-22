@@ -3,18 +3,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import logo from '../assets/team1logo.png'
 
 // Import community photos
-import event1 from '../assets/event1-img.webp'
-import event2 from '../assets/event2-img.webp'
-import event3 from '../assets/event3.webp'
-import event4 from '../assets/event4.webp'
-import community from '../assets/community.webp'
-import collage from '../assets/collage.webp'
-import ghana1 from '../assets/ghana1.webp'
-import ghana2 from '../assets/ghana2.webp'
-import south1 from '../assets/south1.webp'
-import south2 from '../assets/south2.webp'
-import south3 from '../assets/south3.webp'
-import south5 from '../assets/south5.webp'
+import event1 from '../assets/event1-img-thumb.webp'
+import event2 from '../assets/event2-img-thumb.webp'
+import event3 from '../assets/event3-thumb.webp'
+import event4 from '../assets/event4-thumb.webp'
+import community from '../assets/community-thumb.webp'
+import collage from '../assets/collage-thumb.webp'
+import ghana1 from '../assets/ghana1-thumb.webp'
+import ghana2 from '../assets/ghana2-thumb.webp'
+import south1 from '../assets/south1-thumb.webp'
+import south2 from '../assets/south2-thumb.webp'
+import south3 from '../assets/south3-thumb.webp'
+import south5 from '../assets/south5-thumb.webp'
 
 // Create columns of photos
 const photos = [
@@ -37,7 +37,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
 
     useEffect(() => {
         const minLoadTime = 1200
-        const maxLoadTime = 6000
+        const maxLoadTime = 10000
         const startTime = Date.now()
         let animationFrameId: number
         let cancelled = false
