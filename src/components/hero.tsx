@@ -6,7 +6,7 @@ import arrowup from '../assets/arrow-up.svg';
 import img1 from '../assets/Deon.jpeg';
 import img2 from '../assets/DannyYak.jpeg';
 import img3 from '../assets/Feezy.jpg';
-import img4 from '../assets/testimonial10.jpg';
+import img4 from '../assets/testimonial10.webp';
 import img5 from '../assets/community.webp';
 import img6 from '../assets/0xchidi.jpg';
 import Star from '../assets/Star.svg';

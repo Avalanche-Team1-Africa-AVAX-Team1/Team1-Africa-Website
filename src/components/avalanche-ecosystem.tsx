@@ -5,20 +5,20 @@ import AnimatedText from './AnimatedText'
 
 // Import the exact images from chat - for left side falling images
 import poiint from '../assets/poiint.png'
-import arenaLogo from '../assets/Arena.png'
+import arenaLogo from '../assets/Arena.webp'
 import avalancheBadge from '../assets/avva.png'
 import arenaBadge from '../assets/arenna.png'
-import dexalot from '../assets/dexalot.png'
+import dexalot from '../assets/dexalot.webp'
 import audius from '../assets/audius.png'
 import ava from '../assets/ava.png'
 
 // Assets for cards
-import yellowKet from '../assets/ket 2.png'
+import yellowKet from '../assets/ket 2.webp'
 import benqiToken from '../assets/Benqi_Token_Ticker_White 2.png'
 import enclaveMarkets from '../assets/gee.png'
-import offTheGridLogo from '../assets/off-the-grid.jpg'
-import coqInu from '../assets/gunz.png'
-// import onlydust from '../assets/onlydust.png'
+import offTheGridLogo from '../assets/off-the-grid.webp'
+import coqInu from '../assets/gunz.webp'
+// import onlydust from '../assets/onlydust.webp'
 // import sqauds from '../assets/sqauds.png'
 // import refi from '../assets/refi.png'
 

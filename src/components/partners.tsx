@@ -5,7 +5,7 @@ import maplestory from '../assets/maplestory.png'
 import blaze from '../assets/blaze_logo.png'
 import core from '../assets/core.webp'
 import salvor from '../assets/salvor.png'
-import ket from '../assets/ket 2.png'
+import ket from '../assets/ket 2.webp'
 import AnimatedText from './AnimatedText'
 import AnimatedSection, { AnimatedItem } from './AnimatedSection'
 

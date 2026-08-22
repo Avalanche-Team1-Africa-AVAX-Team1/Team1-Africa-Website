@@ -3,18 +3,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import logo from '../assets/team1logo.png'
 
 // Import community photos
-import event1 from '../assets/event1-img.png'
-import event2 from '../assets/event2-img.png'
-import event3 from '../assets/event3.png'
-import event4 from '../assets/event4.png'
-import community from '../assets/community.png'
-import collage from '../assets/collage.png'
+import event1 from '../assets/event1-img.webp'
+import event2 from '../assets/event2-img.webp'
+import event3 from '../assets/event3.webp'
+import event4 from '../assets/event4.webp'
+import community from '../assets/community.webp'
+import collage from '../assets/collage.webp'
 import ghana1 from '../assets/ghana1.JPG'
 import ghana2 from '../assets/ghana2.JPG'
-import south1 from '../assets/south1.jpg'
-import south2 from '../assets/south2.jpg'
-import south3 from '../assets/south3.jpg'
-import south5 from '../assets/south5.jpg'
+import south1 from '../assets/south1.webp'
+import south2 from '../assets/south2.webp'
+import south3 from '../assets/south3.webp'
+import south5 from '../assets/south5.webp'
 
 // Create columns of photos
 const photos = [
@@ -36,29 +36,55 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
     const [isComplete, setIsComplete] = useState(false)
 
     useEffect(() => {
-        const minLoadTime = 10000 // 10 seconds
+        const minLoadTime = 1200
+        const maxLoadTime = 6000
         const startTime = Date.now()
         let animationFrameId: number
+        let cancelled = false
+
+        let loaded = 0
+        const total = photos.length
+        let assetsReady = total === 0
+
+        const markLoaded = () => {
+            loaded += 1
+            if (loaded >= total) assetsReady = true
+        }
+
+        photos.forEach((src) => {
+            const img = new Image()
+            img.onload = markLoaded
+            img.onerror = markLoaded
+            img.src = src
+        })
+
+        const finish = () => {
+            if (cancelled) return
+            setProgress(100)
+            setIsComplete(true)
+            setTimeout(onComplete, 800)
+        }
 
         const animateProgress = () => {
             const elapsed = Date.now() - startTime
-            const newProgress = Math.min((elapsed / minLoadTime) * 100, 100)
-            setProgress(newProgress)
+            const loadRatio = total === 0 ? 1 : loaded / total
+            const timeRatio = elapsed / minLoadTime
 
-            if (newProgress < 100) {
-                animationFrameId = requestAnimationFrame(animateProgress)
+            setProgress(Math.min(loadRatio * 100, timeRatio * 100, 100))
+
+            const done = (assetsReady && elapsed >= minLoadTime) || elapsed >= maxLoadTime
+            if (done) {
+                finish()
             } else {
-                // Complete
-                setTimeout(() => {
-                    setIsComplete(true)
-                    // Allow exit animation to play
-                    setTimeout(onComplete, 800)
-                }, 500)
+                animationFrameId = requestAnimationFrame(animateProgress)
             }
         }
 
         animationFrameId = requestAnimationFrame(animateProgress)
-        return () => cancelAnimationFrame(animationFrameId)
+        return () => {
+            cancelled = true
+            cancelAnimationFrame(animationFrameId)
+        }
     }, [onComplete])
 
     return (

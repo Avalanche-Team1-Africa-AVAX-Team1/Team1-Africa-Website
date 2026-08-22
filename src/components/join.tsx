@@ -1,6 +1,6 @@
 import union from '../assets/uni.png'
-import dexalot from '../assets/dexalot.png'
-import arena from '../assets/Arena.png'
+import dexalot from '../assets/dexalot.webp'
+import arena from '../assets/Arena.webp'
 import points from '../assets/Points.png'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import AnimatedText from './AnimatedText'
