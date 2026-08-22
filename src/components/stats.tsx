@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import AnimatedText from './AnimatedText';
 import AppImage from './ui/AppImage';
-import event1 from '../assets/event1-img.png'
+import event1 from '../assets/event1-img.webp'
 import event1Webp from '../assets/event1-img.webp'
-import event2 from '../assets/event2-img.png'
+import event2 from '../assets/event2-img.webp'
 import event2Webp from '../assets/event2-img.webp'
-import avaxlogo from '../assets/logo.png'
-import abstractBg from '../assets/abstract.png'
+import avaxlogo from '../assets/logo.webp'
+import abstractBg from '../assets/abstract.webp'
 import characterVideo from '../assets/videos/character.mp4'
 import computerVideo from '../assets/videos/computer.mp4'
 import homeVideo from '../assets/videos/home.mp4'

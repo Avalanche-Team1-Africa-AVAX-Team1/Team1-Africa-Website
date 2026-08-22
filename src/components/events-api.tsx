@@ -7,21 +7,21 @@ import AppImage from './ui/AppImage';
 import { api, type Event as ApiEvent } from '../lib/api';
 
 // Import fallback images
-import event1 from '../assets/event1-img.png';
+import event1 from '../assets/event1-img.webp';
 import event1Webp from '../assets/event1-img.webp';
-import event2 from '../assets/event2-img.png';
+import event2 from '../assets/event2-img.webp';
 import event2Webp from '../assets/event2-img.webp';
-import event3 from '../assets/event3.png';
+import event3 from '../assets/event3.webp';
 import event3Webp from '../assets/event3.webp';
-import event4 from '../assets/event4.png';
+import event4 from '../assets/event4.webp';
 import event4Webp from '../assets/event4.webp';
-import event5 from '../assets/event5.png';
+import event5 from '../assets/event5.webp';
 import event5Webp from '../assets/event5.webp';
-import event6 from '../assets/event6.png';
+import event6 from '../assets/event6.webp';
 import event6Webp from '../assets/event6.webp';
-import event7 from '../assets/event7.png';
+import event7 from '../assets/event7.webp';
 import event7Webp from '../assets/event7.webp';
-import event8 from '../assets/event8.png';
+import event8 from '../assets/event8.webp';
 import event8Webp from '../assets/event8.webp';
 
 // Type for arch position return value

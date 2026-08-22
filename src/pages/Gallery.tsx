@@ -24,10 +24,10 @@ import south9 from '../assets/south9.webp';
 import south10 from '../assets/south10.webp';
 import south11 from '../assets/south11.webp';
 import south12 from '../assets/south12.webp';
-import ghana1 from '../assets/ghana1.JPG';
-import ghana2 from '../assets/ghana2.JPG';
-import ghana3 from '../assets/ghana3.JPG';
-import ghana4 from '../assets/ghana4.JPG';
+import ghana1 from '../assets/ghana1.webp';
+import ghana2 from '../assets/ghana2.webp';
+import ghana3 from '../assets/ghana3.webp';
+import ghana4 from '../assets/ghana4.webp';
 
 // --- CONFIGURATION ---
 const MIN_IMAGE_SIZE = 300;

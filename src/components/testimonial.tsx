@@ -3,16 +3,16 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import AnimatedText from './AnimatedText';
 
-import testimonial1 from "../assets/testimonial1.jpg";
-import chidi from "../assets/0xchidi.jpg";
-import testimonial3 from "../assets/testimonial3.jpg";
-import testimonial4 from "../assets/testimonial4.jpg";
-import testimonial5 from "../assets/testimonial5.jpg";
-import testimonial6 from "../assets/testimonial6.jpg";
-import testimonial7 from "../assets/testimonial7.jpg";
-import testimonial8 from "../assets/testimonial8.jpg";
-import testimonial9 from "../assets/testimonial9.jpg";
-import testimonial10 from "../assets/testimonial10.jpg";
+import testimonial1 from "../assets/testimonial1.webp";
+import chidi from "../assets/0xchidi.webp";
+import testimonial3 from "../assets/testimonial3.webp";
+import testimonial4 from "../assets/testimonial4.webp";
+import testimonial5 from "../assets/testimonial5.webp";
+import testimonial6 from "../assets/testimonial6.webp";
+import testimonial7 from "../assets/testimonial7.webp";
+import testimonial8 from "../assets/testimonial8.webp";
+import testimonial9 from "../assets/testimonial9.webp";
+import testimonial10 from "../assets/testimonial10.webp";
 
 const testimonials = [
   {

@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import arrowup from '../assets/arrow-up.svg';
 
 // Import images from assets
-import img1 from '../assets/Deon.jpeg';
-import img2 from '../assets/DannyYak.jpeg';
-import img3 from '../assets/Feezy.jpg';
-import img4 from '../assets/testimonial10.jpg';
+import img1 from '../assets/Deon.webp';
+import img2 from '../assets/DannyYak.webp';
+import img3 from '../assets/Feezy.webp';
+import img4 from '../assets/testimonial10.webp';
 import img5 from '../assets/community.webp';
-import img6 from '../assets/0xchidi.jpg';
+import img6 from '../assets/0xchidi.webp';
 import Star from '../assets/Star.svg';
 import MagneticButton from './MagneticButton';
 

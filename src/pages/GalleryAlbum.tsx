@@ -16,10 +16,10 @@ import south2 from '../assets/south2.webp';
 import south3 from '../assets/south3.webp';
 import south4 from '../assets/south4.webp';
 import south5 from '../assets/south5.webp';
-import ghana1 from '../assets/ghana1.JPG';
-import ghana2 from '../assets/ghana2.JPG';
-import ghana3 from '../assets/ghana3.JPG';
-import ghana4 from '../assets/ghana4.JPG';
+import ghana1 from '../assets/ghana1.webp';
+import ghana2 from '../assets/ghana2.webp';
+import ghana3 from '../assets/ghana3.webp';
+import ghana4 from '../assets/ghana4.webp';
 
 // Album data
 const albums = {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-// import logo from '../assets/logo.png';
+// import logo from '../assets/logo.webp';
 import arrowup from '../assets/arrow-up.svg';
 import logo from '../assets/team1logo.png';
 import MagneticButton from './MagneticButton';
