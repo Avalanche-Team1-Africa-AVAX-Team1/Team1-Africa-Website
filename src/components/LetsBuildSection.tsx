@@ -6,9 +6,9 @@ import { FaPlay } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
 
 // Import images
-import community1 from '../assets/community.webp';
-import ghana1 from '../assets/ghana1.webp';
-import south1 from '../assets/south1.webp';
+import community1 from '../assets/community-sm.webp';
+import ghana1 from '../assets/ghana1-sm.webp';
+import south1 from '../assets/south1-sm.webp';
 
 // Import video
 import mainVideo from '../assets/videos/video-web.mp4';

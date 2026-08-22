@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import arrowup from '../assets/arrow-up.svg'
-import collage from '../assets/collage.webp'
+import collage from '../assets/collage-sm.webp'
 import AnimatedText from './AnimatedText'
 import MagneticButton from './MagneticButton'
 

@@ -4,11 +4,11 @@ import AnimatedText from './AnimatedText';
 import AnimatedSection, { AnimatedItem } from './AnimatedSection';
 import AppImage from './ui/AppImage';
 
-import offTheGridImg from '../assets/otg.webp';
+import offTheGridImg from '../assets/otg-sm.webp';
 import domiImg from '../assets/domionline.webp';
-import bloodloopImg from '../assets/bloodloop.webp';
-import defiKingdomImg from '../assets/defikingdom.webp';
-import maplestoryImg from '../assets/maplestory.webp';
+import bloodloopImg from '../assets/bloodloop-sm.webp';
+import defiKingdomImg from '../assets/defikingdom-sm.webp';
+import maplestoryImg from '../assets/maplestory-sm.webp';
 
 import steamIcon from '../assets/steam.svg';
 import windowsIcon from '../assets/windows.svg';

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import communityImg from '../assets/community.webp'
+import communityImg from '../assets/community-sm.webp'
 import arrowup from '../assets/arrow-up.svg'
 import AnimatedText from './AnimatedText'
 import MagneticButton from './MagneticButton'

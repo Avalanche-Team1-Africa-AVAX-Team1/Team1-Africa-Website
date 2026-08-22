@@ -5,21 +5,21 @@ import { motion } from 'framer-motion';
 // Import all images
 import event1 from '../assets/event1-img.webp';
 import event2 from '../assets/event2-img.webp';
-import event3 from '../assets/event3.webp';
-import event4 from '../assets/event4.webp';
-import event5 from '../assets/event5.webp';
+import event3 from '../assets/event3-sm.webp';
+import event4 from '../assets/event4-sm.webp';
+import event5 from '../assets/event5-sm.webp';
 import event6 from '../assets/event6.webp';
 import event7 from '../assets/event7.webp';
 import event8 from '../assets/event8.webp';
-import south1 from '../assets/south1.webp';
-import south2 from '../assets/south2.webp';
-import south3 from '../assets/south3.webp';
-import south4 from '../assets/south4.webp';
-import south5 from '../assets/south5.webp';
-import ghana1 from '../assets/ghana1.webp';
-import ghana2 from '../assets/ghana2.webp';
+import south1 from '../assets/south1-sm.webp';
+import south2 from '../assets/south2-sm.webp';
+import south3 from '../assets/south3-sm.webp';
+import south4 from '../assets/south4-sm.webp';
+import south5 from '../assets/south5-sm.webp';
+import ghana1 from '../assets/ghana1-sm.webp';
+import ghana2 from '../assets/ghana2-sm.webp';
 import ghana3 from '../assets/ghana3.webp';
-import ghana4 from '../assets/ghana4.webp';
+import ghana4 from '../assets/ghana4-sm.webp';
 
 // Album data
 const albums = {
